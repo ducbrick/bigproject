@@ -10,7 +10,7 @@ import threeoone.bigproject.views.View;
 public interface HelloWorldController {
 
   /**
-   * Request to greet user which takes an <code>UserInformation</code> as parameter
+   * Requests to greet user which takes an <code>UserInformation</code> as parameter
    * and returns a <code>View</code> to greet the user.
    *
    * @param userInformation the user's information
@@ -22,7 +22,7 @@ public interface HelloWorldController {
   public View helloWorld(UserInformation userInformation);
 
   /**
-   * Gets a <code>View</code> to obtain user's information.
+   * Requests to obtain user's information.
    *
    * @return a <code>View</code> that will obtain the user's information
    * @see View
