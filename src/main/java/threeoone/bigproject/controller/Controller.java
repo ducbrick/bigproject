@@ -4,7 +4,8 @@ package threeoone.bigproject.controller;
  * A component that exposes multiple methods (dubbed "APIs") for other components to call
  * (dubbed "making requests).
  *
- * @author DUCBRICK
+ * @author DUCBRICK, HUY1902
+ *
  */
 public interface Controller{
   /**
@@ -19,4 +20,8 @@ public interface Controller{
    */
   public void getUserInfo();
 
+  /**
+   * Request to add document
+   */
+  public void addDoc();
 }

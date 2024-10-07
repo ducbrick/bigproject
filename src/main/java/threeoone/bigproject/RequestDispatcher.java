@@ -3,6 +3,7 @@ package threeoone.bigproject;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.Controller;
 import threeoone.bigproject.controller.UserInformation;
+import threeoone.bigproject.views.AddDocView;
 import threeoone.bigproject.views.GetUserInfoView;
 import threeoone.bigproject.views.HelloWorldView;
 import threeoone.bigproject.views.View;
@@ -19,6 +20,7 @@ import threeoone.bigproject.views.View;
 public class RequestDispatcher implements ViewResolver, Controller {
   private final HelloWorldView helloWorldView;
   private final GetUserInfoView getUserInfoView;
+  private final AddDocView AddDocView;
 
   private View currentView;
 
@@ -29,9 +31,10 @@ public class RequestDispatcher implements ViewResolver, Controller {
    * @param helloWorldView a {@code HelloWorldView}
    * @param getUserInfoView a {@code GetUserInfoView}
    */
-  public RequestDispatcher(HelloWorldView helloWorldView, GetUserInfoView getUserInfoView) {
+  public RequestDispatcher(HelloWorldView helloWorldView, GetUserInfoView getUserInfoView, AddDocView addDocView) {
     this.helloWorldView = helloWorldView;
     this.getUserInfoView = getUserInfoView;
+    AddDocView = addDocView;
   }
 
   /**
@@ -65,5 +68,14 @@ public class RequestDispatcher implements ViewResolver, Controller {
   @Override
   public void getUserInfo() {
     resolveView(getUserInfoView);
+  }
+
+  /**
+   * Resolves and renders the {@code AddDocView}.
+   * This method transitions from the current view, if any, to the {@code AddDocView}.
+   */
+  @Override
+  public void addDoc() {
+    resolveView(AddDocView);
   }
 }
