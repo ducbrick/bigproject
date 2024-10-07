@@ -1,10 +1,11 @@
 package threeoone.bigproject.views;
 
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controllers.MasterController;
+import threeoone.bigproject.controller.Controller;
+import threeoone.bigproject.controller.UserInformation;
 
 /**
- * A <code>View</code> that greets the user.
+ * A {@code View} that greets the user.
  * For demonstration purposes only.
  * This class is a singleton bean in Spring container.
  *
@@ -12,25 +13,25 @@ import threeoone.bigproject.controllers.MasterController;
  */
 @Component
 public class HelloWorldView implements View {
-  private String username;
+  private UserInformation userInformation;
 
   /**
-   * Set the username for the <code>HelloWorldView</code> to greet when calling <code>render()</code>.
+   * Set the user's information prior to calling {@code render()}
    *
-   * @param username name of the user for the <code>HelloWorldView</code> to greet
+   * @param userInformation information of the user
    */
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUserInformation(UserInformation userInformation) {
+    this.userInformation = userInformation;
   }
 
   /**
-   * Say hello to user, whose name was set using <code>setUsername()</code>.
+   * Say hello to user, whose information was set using {@code setUserInformation()}.
    *
-   * @param controller a {@code MasterController} to give this {@code View} access to other APIs
+   * @param controller a {@code Controller} to give this {@code View} access to other APIs
    */
   @Override
-  public void render(MasterController controller) {
-    System.out.println("Hello " + username);
+  public void render(Controller controller) {
+    System.out.println("Hello " + userInformation.name());
   }
 
   @Override

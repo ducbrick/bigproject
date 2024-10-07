@@ -1,6 +1,6 @@
 package threeoone.bigproject.views;
 
-import threeoone.bigproject.controllers.MasterController;
+import threeoone.bigproject.controller.Controller;
 
 /**
  * A component that acts as an interface for user interaction.
@@ -16,9 +16,9 @@ public interface View {
   /**
    * Renders data and interactable components to user and waits to make any requests.
    *
-   * @param controller a {@code MasterController} to give this {@code View} access to other APIs
+   * @param controller a {@code Controller} to give this {@code View} access to other APIs
    */
-  public void render(MasterController controller);
+  public void render(Controller controller);
 
   /**
    * Stop rendering the <code>View</code> and reset its properties or pause/stop tasks as required.

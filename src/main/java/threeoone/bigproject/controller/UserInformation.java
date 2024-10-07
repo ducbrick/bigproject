@@ -1,4 +1,4 @@
-package threeoone.bigproject.controllers.helloworldcontroller;
+package threeoone.bigproject.controller;
 
 /**
  * A record for storing user's information.
