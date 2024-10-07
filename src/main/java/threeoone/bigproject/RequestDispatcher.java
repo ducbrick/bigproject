@@ -1,5 +1,6 @@
 package threeoone.bigproject;
 
+import org.springframework.stereotype.Component;
 import threeoone.bigproject.controllers.MasterController;
 import threeoone.bigproject.controllers.helloworldcontroller.ConcreteHelloWorldController;
 import threeoone.bigproject.controllers.helloworldcontroller.HelloWorldController;
@@ -14,19 +15,24 @@ import threeoone.bigproject.views.View;
  * <code>RequestDispatcher</code> delegates any API call to other Controller.
  * Thus, it acts as a proxy for every other Controller in the system.
  * The Views returned by API calls are handle by <code>resolveView</code> method.
+ * This class is a singleton bean in Spring container.
  *
  * @author DUCBRICK
  * @see View
  */
+@Component
 public class RequestDispatcher implements ViewResolver, MasterController {
   private View view;
   private final HelloWorldController helloWorldController;
 
   /**
-   * Initializes other Controllers to delegate requests to.
+   * Autowired constructor that takes multiple other necessary Controllers as parameters.
+   * This constructor will be invoked by Spring container.
+   *
+   * @param helloWorldController a {@code HelloWorldController}
    */
-  public RequestDispatcher() {
-    helloWorldController = new ConcreteHelloWorldController(this);
+  public RequestDispatcher(HelloWorldController helloWorldController) {
+    this.helloWorldController = helloWorldController;
   }
 
   /**
@@ -48,7 +54,7 @@ public class RequestDispatcher implements ViewResolver, MasterController {
     }
 
     this.view = view;
-    view.render();
+    view.render(this);
   }
 
   /**
