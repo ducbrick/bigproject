@@ -28,7 +28,7 @@ public class AddDocView implements View{
 
     String name = scanner.nextLine();
 
-    DocInformation docInformation = new DocInformation(name);
+    //DocInformation docInformation = new DocInformation(name);
 
     System.out.println("You have submitted this document:" + name);
     System.out.println("0. Exit");
@@ -38,7 +38,7 @@ public class AddDocView implements View{
     switch (choice) {
       case 0:
         System.out.println("Exiting...");
-        controller.getUserInfo();
+        controller.openMenu();
         break;
       case 1:
         System.out.println("Add a document selected.");

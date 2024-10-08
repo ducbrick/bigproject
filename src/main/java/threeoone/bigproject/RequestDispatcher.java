@@ -3,10 +3,7 @@ package threeoone.bigproject;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.Controller;
 import threeoone.bigproject.controller.UserInformation;
-import threeoone.bigproject.views.AddDocView;
-import threeoone.bigproject.views.GetUserInfoView;
-import threeoone.bigproject.views.HelloWorldView;
-import threeoone.bigproject.views.View;
+import threeoone.bigproject.views.*;
 
 /**
  * A component that accepts API calls and resolves any generated {@code View}.
@@ -14,14 +11,15 @@ import threeoone.bigproject.views.View;
  *
  * @see View
  *
- * @author DUCBRICK
+ * @author DUCBRICK, HUY1902
  */
 @Component
 public class RequestDispatcher implements ViewResolver, Controller {
   private final HelloWorldView helloWorldView;
   private final GetUserInfoView getUserInfoView;
-  private final AddDocView AddDocView;
-
+  private final AddDocView addDocView;
+  private final MenuView menuView;
+  private final RemoveDocView removeDocView;
   private View currentView;
 
   /**
@@ -31,10 +29,13 @@ public class RequestDispatcher implements ViewResolver, Controller {
    * @param helloWorldView a {@code HelloWorldView}
    * @param getUserInfoView a {@code GetUserInfoView}
    */
-  public RequestDispatcher(HelloWorldView helloWorldView, GetUserInfoView getUserInfoView, AddDocView addDocView) {
+  public RequestDispatcher(HelloWorldView helloWorldView, GetUserInfoView getUserInfoView,
+                           AddDocView addDocView, MenuView menuView, RemoveDocView removeDocView) {
     this.helloWorldView = helloWorldView;
     this.getUserInfoView = getUserInfoView;
-    AddDocView = addDocView;
+    this.addDocView = addDocView;
+    this.menuView = menuView;
+    this.removeDocView = removeDocView;
   }
 
   /**
@@ -76,6 +77,16 @@ public class RequestDispatcher implements ViewResolver, Controller {
    */
   @Override
   public void addDoc() {
-    resolveView(AddDocView);
+    resolveView(addDocView);
+  }
+
+  @Override
+  public void openMenu() {
+    resolveView(menuView);
+  }
+
+  @Override
+  public void removeDoc() {
+    resolveView(removeDocView);
   }
 }

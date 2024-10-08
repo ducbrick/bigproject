@@ -24,4 +24,14 @@ public interface Controller{
    * Request to add document
    */
   public void addDoc();
+
+  /**
+   * Requests to open the menu.
+   */
+  public void openMenu();
+
+  /**
+   * Requests to remove document
+   */
+  void removeDoc();
 }
