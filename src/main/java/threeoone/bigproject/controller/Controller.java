@@ -34,4 +34,6 @@ public interface Controller{
    * Requests to remove document
    */
   void removeDoc();
+
+  public void borrowDoc();
 }

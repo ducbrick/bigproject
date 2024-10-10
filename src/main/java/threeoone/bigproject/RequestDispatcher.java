@@ -20,6 +20,7 @@ public class RequestDispatcher implements ViewResolver, Controller {
   private final AddDocView addDocView;
   private final MenuView menuView;
   private final RemoveDocView removeDocView;
+  private final BorrowDocView borrowDocView;
   private View currentView;
 
   /**
@@ -30,12 +31,13 @@ public class RequestDispatcher implements ViewResolver, Controller {
    * @param getUserInfoView a {@code GetUserInfoView}
    */
   public RequestDispatcher(HelloWorldView helloWorldView, GetUserInfoView getUserInfoView,
-                           AddDocView addDocView, MenuView menuView, RemoveDocView removeDocView) {
+                           AddDocView addDocView, MenuView menuView, RemoveDocView removeDocView, BorrowDocView borrowDocView) {
     this.helloWorldView = helloWorldView;
     this.getUserInfoView = getUserInfoView;
     this.addDocView = addDocView;
     this.menuView = menuView;
     this.removeDocView = removeDocView;
+    this.borrowDocView = borrowDocView;
   }
 
   /**
@@ -89,4 +91,7 @@ public class RequestDispatcher implements ViewResolver, Controller {
   public void removeDoc() {
     resolveView(removeDocView);
   }
+  
+  @Override
+  public void borrowDoc() { resolveView(borrowDocView); }
 }

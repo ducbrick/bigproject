@@ -21,7 +21,7 @@ public class MenuView implements View {
     System.out.println("0. Exit");
     System.out.println("1. Add a document");
     System.out.println("2. Remove a document");
-
+    System.out.println("3. Borrow a document");
     Scanner scanner = new Scanner(System.in);
     int choice = scanner.nextInt();
     switch (choice) {
@@ -35,6 +35,10 @@ public class MenuView implements View {
       case 2:
         System.out.println("Remove a document selected.");
         controller.removeDoc();
+        break;
+      case 3:
+        System.out.println("Remove a document selected.");
+        controller.borrowDoc();
         break;
       default:
         System.out.println("Invalid choice. Please try again.");
