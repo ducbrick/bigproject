@@ -1,5 +1,6 @@
 package threeoone.bigproject;
 
+import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.Controller;
 import threeoone.bigproject.controller.UserInformation;
