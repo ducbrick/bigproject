@@ -40,4 +40,5 @@ public class GetUserInfoView implements View {
   public void stopRendering() {
 
   }
+
 }
