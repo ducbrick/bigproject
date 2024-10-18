@@ -1,27 +1,19 @@
 package threeoone.bigproject;
 
-import org.springframework.boot.SpringApplication;
+import javafx.application.Application;
+import net.rgielen.fxweaver.core.FxWeaver;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.UserInfo;
+import threeoone.bigproject.controller.viewcontrollers.HelloWorldController;
+import threeoone.bigproject.controller.viewcontrollers.ViewController;
 
 @SpringBootApplication
 public class BigprojectApplication {
-
-	/**
-	 * Starts the Spring Boot application.
-	 * @param args command line parameters (if exist)
-	 */
 	public static void main(String[] args) {
-		SpringApplication.run(BigprojectApplication.class, args);
-	}
-
-	/**
-	 * Autowired constructor that acts as entry point of the application.
-	 * Requests the first {@code View}.
-	 *
-	 * @param requestDispatcher a {@code RequestDispatcher}
-	 */
-	public BigprojectApplication(RequestDispatcher requestDispatcher) {
-		requestDispatcher.getUserInfo();
+		Application.launch(JavaFxApplication.class, args);
 	}
 }
