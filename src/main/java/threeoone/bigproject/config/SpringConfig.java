@@ -14,7 +14,7 @@ import threeoone.bigproject.controller.requestbodies.UserInfo;
 public class SpringConfig {
 
   /**
-   * Register a {@link RequestSender} into {@code Spring} context.
+   * Register a {@link RequestSender} of type {@code helloWorldRequest} into {@code Spring} context.
    *
    * @return the {@link RequestSender} to be registered
    */
