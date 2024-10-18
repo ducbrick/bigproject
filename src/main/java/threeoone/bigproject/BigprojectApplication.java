@@ -11,8 +11,18 @@ import threeoone.bigproject.controller.requestbodies.UserInfo;
 import threeoone.bigproject.controller.viewcontrollers.HelloWorldController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 
+/**
+ * Entry point of the application.
+ *
+ * @author DUCBRICK
+ */
 @SpringBootApplication
 public class BigprojectApplication {
+	/**
+	 * Launches a Spring Boot {@link JavaFxApplication}.
+	 *
+	 * @param args arguments
+	 */
 	public static void main(String[] args) {
 		Application.launch(JavaFxApplication.class, args);
 	}
