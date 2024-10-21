@@ -11,7 +11,8 @@ import jakarta.persistence.Table;
 @Table(name = "Document")
 public class Document {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "document_id")
   private int id;
 
   @Column(name = "document_name")
