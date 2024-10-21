@@ -7,6 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/**
+ * ORM Entity representing a {@link Document} in the library database.
+ *
+ * @author DUCBRICK
+ */
 @Entity
 @Table(name = "Document")
 public class Document {
