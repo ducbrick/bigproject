@@ -9,6 +9,9 @@ import jakarta.persistence.Table;
 
 /**
  * ORM Entity representing a {@link Document} in the library database.
+ * A {@link Document} has a primary key {@code id}, {@code name} and {@code description}.
+ *
+ * @see threeoone.bigproject.repositories.DocumentRepo
  *
  * @author DUCBRICK
  */
