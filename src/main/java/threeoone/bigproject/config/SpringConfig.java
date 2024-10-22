@@ -22,4 +22,7 @@ public class SpringConfig {
   public RequestSender <UserInfo> helloWorldRequestSender() {
     return new RequestSender <UserInfo> ();
   }
+
+  @Bean
+  public RequestSender <String> menuRequestSender() { return new RequestSender<String>(); }
 }

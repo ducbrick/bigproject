@@ -1,8 +1,13 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
 import java.util.Scanner;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -15,6 +20,12 @@ public class GetNameController implements ViewController {
   private final RequestSender <UserInfo> helloWorldRequestSender;
   @FXML
   private Parent root;
+  @FXML
+  private TextField nameField;
+  @FXML
+  private Button enterButton;
+  @FXML
+  private Label enterNameLabel;
 
   public GetNameController(RequestSender <UserInfo> helloWorldRequestSender) {
     this.helloWorldRequestSender = helloWorldRequestSender;
@@ -27,12 +38,12 @@ public class GetNameController implements ViewController {
 
   @Override
   public void show() {
-    Thread thread = new Thread(() -> {
-      System.out.print("ENTER YOUR NAME: ");
-      Scanner scanner = new Scanner(System.in);
-      String name = scanner.nextLine();
-      helloWorldRequestSender.send(new UserInfo(name));
-    });
-    thread.start();
+    enterNameLabel.setText("Enter your name");
   }
+
+  public void submit(ActionEvent event) {
+    String name = nameField.getText();
+    helloWorldRequestSender.send(new UserInfo(name));
+  }
+
 }
