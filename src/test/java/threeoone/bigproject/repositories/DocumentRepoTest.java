@@ -1,6 +1,7 @@
 package threeoone.bigproject.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Optional;
@@ -68,5 +69,20 @@ class DocumentRepoTest {
 
     assertThat(name).isEqualTo(queryDocument.getName());
     assertThat(desc).isEqualTo(queryDocument.getDescription());
+  }
+
+  @Test
+  @DisplayName("Insert 2 entities then count")
+  public void insert2Entries_thenCount() {
+    Document doc1 = new Document("name 1", "desc 1");
+    doc1.setId(0);
+
+    Document doc2 = new Document("name 2", "desc 2");
+    doc2.setId(0);
+
+    documentRepo.save(doc1);
+    documentRepo.save(doc2);
+
+    assertThat(documentRepo.count()).isEqualTo(2);
   }
 }
