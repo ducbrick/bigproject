@@ -2,10 +2,7 @@ package threeoone.bigproject.view;
 
 import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.viewcontrollers.GetNameController;
-import threeoone.bigproject.controller.viewcontrollers.HelloWorldController;
-import threeoone.bigproject.controller.viewcontrollers.MenuController;
-import threeoone.bigproject.controller.viewcontrollers.ViewController;
+import threeoone.bigproject.controller.viewcontrollers.*;
 
 /**
  * A component responsible for loading the application's FXML files into their {@link ViewController}.
@@ -27,5 +24,6 @@ public class FxmlControllerLoader {
     fxWeaver.load(HelloWorldController.class);
     fxWeaver.load(GetNameController.class);
     fxWeaver.load(MenuController.class);
+    fxWeaver.load(DocOverviewController.class);
   }
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
+   <children>
+      <TableView fx:id="table" layoutX="97.0" layoutY="104.0" prefHeight="243.0" prefWidth="407.0">
+        <columns>
+          <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="name" prefWidth="96.0" text="Name" />
+            <TableColumn fx:id="description" prefWidth="235.0" text="Description" />
+        </columns>
+      </TableView>
+      <Label layoutX="188.0" layoutY="42.0" prefHeight="46.0" prefWidth="224.0" text="Document Overview">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Button layoutX="30.0" layoutY="347.0" mnemonicParsing="false" onAction="#pressBack" text="BackHome" />
+   </children>
+</AnchorPane>

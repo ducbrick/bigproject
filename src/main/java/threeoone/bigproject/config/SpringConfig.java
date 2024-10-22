@@ -3,6 +3,7 @@ package threeoone.bigproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.requestbodies.UserInfo;
 
 /**
@@ -19,10 +20,17 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  public RequestSender <UserInfo> helloWorldRequestSender() {
-    return new RequestSender <UserInfo> ();
+  public RequestSender<UserInfo> helloWorldRequestSender() {
+    return new RequestSender<UserInfo>();
   }
 
   @Bean
-  public RequestSender <String> menuRequestSender() { return new RequestSender<String>(); }
+  public RequestSender<String> menuRequestSender() {
+    return new RequestSender<String>();
+  }
+
+  @Bean
+  public RequestSender<SwitchScene> switchRequestSender() {
+    return new RequestSender<SwitchScene>();
+  }
 }

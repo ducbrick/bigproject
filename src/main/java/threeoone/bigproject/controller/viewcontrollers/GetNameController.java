@@ -12,12 +12,14 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.requestbodies.UserInfo;
 
 @Component
 @FxmlView("GetName.fxml")
 public class GetNameController implements ViewController {
   private final RequestSender <UserInfo> helloWorldRequestSender;
+  private final RequestSender <SwitchScene> switchSceneRequestSender;
   @FXML
   private Parent root;
   @FXML
@@ -27,8 +29,13 @@ public class GetNameController implements ViewController {
   @FXML
   private Label enterNameLabel;
 
-  public GetNameController(RequestSender <UserInfo> helloWorldRequestSender) {
+  public GetNameController(RequestSender <UserInfo> helloWorldRequestSender, RequestSender<SwitchScene> switchSceneRequestSender) {
     this.helloWorldRequestSender = helloWorldRequestSender;
+    this.switchSceneRequestSender = switchSceneRequestSender;
+  }
+
+  public void pressDocOverview(ActionEvent event) {
+    switchSceneRequestSender.send(new SwitchScene("DocOverview"));
   }
 
   @Override
@@ -45,5 +52,4 @@ public class GetNameController implements ViewController {
     String name = nameField.getText();
     helloWorldRequestSender.send(new UserInfo(name));
   }
-
 }
