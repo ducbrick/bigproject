@@ -4,6 +4,7 @@ import net.rgielen.fxweaver.core.FxWeaver;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.viewcontrollers.GetNameController;
 import threeoone.bigproject.controller.viewcontrollers.HelloWorldController;
+import threeoone.bigproject.controller.viewcontrollers.MenuController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 
 /**
@@ -25,5 +26,6 @@ public class FxmlControllerLoader {
   public FxmlControllerLoader(FxWeaver fxWeaver) {
     fxWeaver.load(HelloWorldController.class);
     fxWeaver.load(GetNameController.class);
+    fxWeaver.load(MenuController.class);
   }
 }
