@@ -21,8 +21,8 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  public RequestSender <UserInfo> helloWorldRequestSender() {
-    return new RequestSender <UserInfo> ();
+  public RequestSender<UserInfo> helloWorldRequestSender() {
+    return new RequestSender<UserInfo>();
   }
 
   @Bean
@@ -33,5 +33,4 @@ public class SpringConfig {
 
   @Bean
   public RequestSender <Document> documentRequestSender() { return new RequestSender<>(); }
-
 }
