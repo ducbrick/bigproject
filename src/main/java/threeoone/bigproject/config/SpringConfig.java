@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.requestbodies.UserInfo;
+import threeoone.bigproject.entities.Document;
 
 /**
  * {@code Spring} configuration class.
@@ -25,12 +26,11 @@ public class SpringConfig {
   }
 
   @Bean
-  public RequestSender<String> menuRequestSender() {
-    return new RequestSender<String>();
-  }
+  public RequestSender <String> menuRequestSender() { return new RequestSender<String>(); }
 
   @Bean
-  public RequestSender<SwitchScene> switchRequestSender() {
-    return new RequestSender<SwitchScene>();
-  }
+  public RequestSender <SwitchScene> switchSceneRequestSender() { return new RequestSender<SwitchScene>();}
+
+  @Bean
+  public RequestSender <Document> documentRequestSender() { return new RequestSender<>(); }
 }

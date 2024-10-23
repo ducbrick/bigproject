@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
+
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.view.ViewSwitcher;
 import threeoone.bigproject.controller.RequestSender;
@@ -16,16 +17,19 @@ import java.util.Queue;
 public class DemoController {
   private final HelloWorldController helloWorldController;
   private final MenuController menuController;
-  private final DocOverviewController docOverviewController;
+  private final YourBooksController yourBooksController;
   private final ViewSwitcher viewSwitcher;
-
+  private final DocOverviewController docOverviewController;
   private final GetNameController getNameController;
 
 
-  public DemoController(HelloWorldController helloWorldController, MenuController menuController, DocOverviewController docOverviewController, ViewSwitcher viewSwitcher, GetNameController getNameController) {
+  public DemoController(HelloWorldController helloWorldController, MenuController menuController, YourBooksController yourBooksController,
+                        DocOverviewController docOverviewController, ViewSwitcher viewSwitcher, GetNameController getNameController) {
     this.helloWorldController = helloWorldController;
     this.menuController = menuController;
+    this.yourBooksController = yourBooksController;
     this.docOverviewController = docOverviewController;
+
     this.viewSwitcher = viewSwitcher;
     this.getNameController = getNameController;
   }
@@ -51,6 +55,9 @@ public class DemoController {
 
   private void switchScene(SwitchScene switchScene) {
     switch (switchScene.nameScene()) {
+      case "YourBooks" :
+        viewSwitcher.switchToView(yourBooksController);
+        break;
       case "DocOverview":
         viewSwitcher.switchToView(docOverviewController);
         break;
