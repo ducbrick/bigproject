@@ -32,8 +32,11 @@ public class DocumentDetailController implements ViewController {
         return root;
     }
 
+    public void setDocument(Document document) {
+        this.document = document;
+    }
+
     public void show() {
-        document = new Document("Miku character book", "very nice Miku character book");
         bookName.setText(document.getName());
         bookDescription.setText(document.getDescription());
         coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));

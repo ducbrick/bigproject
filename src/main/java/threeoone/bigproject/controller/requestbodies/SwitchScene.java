@@ -1,4 +1,6 @@
 package threeoone.bigproject.controller.requestbodies;
 
-public record SwitchScene(String nameScene) {
+import threeoone.bigproject.controller.SceneName;
+
+public record SwitchScene(SceneName nameScene) {
 }

@@ -12,6 +12,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.requestbodies.UserInfo;
 
@@ -35,7 +36,7 @@ public class GetNameController implements ViewController {
   }
 
   public void pressDocOverview(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene("DocOverview"));
+    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
   }
 
   @Override
