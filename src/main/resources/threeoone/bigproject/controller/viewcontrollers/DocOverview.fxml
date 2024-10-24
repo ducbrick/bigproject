@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
    <children>
       <TableView fx:id="table" layoutX="97.0" layoutY="104.0" prefHeight="243.0" prefWidth="407.0">
@@ -23,5 +22,6 @@
          </font>
       </Label>
       <Button layoutX="30.0" layoutY="347.0" mnemonicParsing="false" onAction="#pressBack" text="BackHome" />
+      <Button layoutX="478.0" layoutY="42.0" mnemonicParsing="false" text="Add New Book" />
    </children>
 </AnchorPane>

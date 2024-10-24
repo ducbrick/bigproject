@@ -2,6 +2,7 @@ package threeoone.bigproject.controller.viewcontrollers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
@@ -81,6 +82,13 @@ public class DocOverviewController implements ViewController {
   public void pressBack() {
     switchSceneRequestSender.send(new SwitchScene(SceneName.GET_NAME));
   }
+
+
+  @FXML
+  void pressNewBook(ActionEvent event) {
+
+  }
+
 
   /**
    * @return
