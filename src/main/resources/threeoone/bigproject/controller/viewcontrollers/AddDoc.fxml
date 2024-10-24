@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.AddDocController">
+   <children>
+      <Label layoutX="241.0" layoutY="52.0" text="Add New Book" />
+      <TextField fx:id="name" layoutX="423.0" layoutY="119.0" prefHeight="25.0" prefWidth="500.0" />
+      <TextField fx:id="isnb" layoutX="422.0" layoutY="315.0" prefHeight="25.0" prefWidth="500.0" />
+      <TextField fx:id="description" layoutX="422.0" layoutY="210.0" prefHeight="25.0" prefWidth="500.0" />
+      <ChoiceBox fx:id="categories" layoutX="423.0" layoutY="454.0" prefHeight="25.0" prefWidth="500.0" />
+      <DatePicker fx:id="date" layoutX="422.0" layoutY="585.0" prefHeight="25.0" prefWidth="507.0" />
+      <Label layoutX="321.0" layoutY="123.0" text="Name" />
+      <Label layoutX="321.0" layoutY="214.0" text="Description" />
+      <Label layoutX="321.0" layoutY="319.0" text="ISBN" />
+      <Label layoutX="323.0" layoutY="458.0" text="Categories" />
+      <Label layoutX="323.0" layoutY="589.0" text="Date" />
+      <Button layoutX="645.0" layoutY="654.0" mnemonicParsing="false" onAction="#pressSubmit" text="Submit" />
+   </children>
+</AnchorPane>

@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.GetNameController">
+<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.GetNameController">
 
    <TextField fx:id="nameField" layoutX="217.0" layoutY="222.0" promptText="enter ya name here" />
    <Button fx:id="enterButton" layoutX="266.0" layoutY="284.0" mnemonicParsing="false" onAction="#submit" text="OK" />

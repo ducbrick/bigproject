@@ -22,17 +22,19 @@ public class DemoController {
   private final DocOverviewController docOverviewController;
   private final GetNameController getNameController;
   private final DocumentDetailController documentDetailController;
+  private final AddDocController addDocController;
 
 
   public DemoController(HelloWorldController helloWorldController, MenuController menuController,
                         DocOverviewController docOverviewController, ViewSwitcher viewSwitcher,
-                        GetNameController getNameController, DocumentDetailController documentDetailController) {
+                        GetNameController getNameController, DocumentDetailController documentDetailController, AddDocController addDocController) {
     this.helloWorldController = helloWorldController;
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
     this.getNameController = getNameController;
     this.documentDetailController = documentDetailController;
+    this.addDocController = addDocController;
   }
 
   @Autowired
@@ -70,6 +72,9 @@ public class DemoController {
         break;
       case DOC_DETAIL:
         viewSwitcher.switchToView(documentDetailController);
+        break;
+      case ADD_DOC:
+        viewSwitcher.switchToView(addDocController);
         break;
     }
   }

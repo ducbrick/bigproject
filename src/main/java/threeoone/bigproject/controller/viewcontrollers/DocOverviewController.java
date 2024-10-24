@@ -16,8 +16,6 @@ import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 
-import javax.print.Doc;
-
 @Component
 @FxmlView("DocOverview.fxml")
 public class DocOverviewController implements ViewController {
@@ -25,7 +23,6 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<Document> documentRequestSender;
   @FXML
   private Parent root;
-
 
   @FXML
   private TableColumn<Document, String> description;
@@ -45,11 +42,22 @@ public class DocOverviewController implements ViewController {
           new Document("Head-third", "nicenice")
   );
 
-  public DocOverviewController(RequestSender<SwitchScene> switchSceneRequestSender, RequestSender<Document> documentRequestSender) {
+  /**
+   * Constructor for DocOverviewController.
+   *
+   * @param switchSceneRequestSender the RequestSender for switching scenes
+   * @param documentRequestSender    the RequestSender for documents
+   */
+  public DocOverviewController(RequestSender<SwitchScene> switchSceneRequestSender,
+                               RequestSender<Document> documentRequestSender) {
     this.switchSceneRequestSender = switchSceneRequestSender;
     this.documentRequestSender = documentRequestSender;
   }
 
+  /**
+   * Initializes the controller class. This method is automatically called
+   * after the FXML file has been loaded.
+   */
   public void initialize() {
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
     id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -70,28 +78,39 @@ public class DocOverviewController implements ViewController {
     });
   }
 
+  /**
+   * Method to be called when a document is clicked to go to its detail view.
+   *
+   * @param document the Document to be displayed in detail
+   */
   private void pressDocToGoToDetail(Document document) {
-    //switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
-
     new Thread(() -> {
       documentRequestSender.send(document);
       switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
     }).start();
   }
 
+  /**
+   * Method to handle the press of the back button.
+   */
   public void pressBack() {
     switchSceneRequestSender.send(new SwitchScene(SceneName.GET_NAME));
   }
 
-
+  /**
+   * Method to handle the press of the new book button.
+   *
+   * @param event the ActionEvent triggered by the button press
+   */
   @FXML
   void pressNewBook(ActionEvent event) {
-
+    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_DOC));
   }
 
-
   /**
-   * @return
+   * Gets the root node of the view managed by this controller.
+   *
+   * @return the root Parent node
    */
   @Override
   public Parent getParent() {
@@ -99,7 +118,7 @@ public class DocOverviewController implements ViewController {
   }
 
   /**
-   *
+   * Called when the view is shown.
    */
   @Override
   public void show() {
