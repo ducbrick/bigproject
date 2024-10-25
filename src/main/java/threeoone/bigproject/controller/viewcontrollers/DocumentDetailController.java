@@ -7,11 +7,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.SceneName;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+import javafx.event.ActionEvent;
 
 @Component
 @FxmlView("DocDetail.fxml")
 public class DocumentDetailController implements ViewController {
+    private final RequestSender<SwitchScene> sceneNameRequestSender;
     Document document;
     @FXML
     private Parent root;
@@ -28,12 +33,21 @@ public class DocumentDetailController implements ViewController {
     @FXML
     private Label bookDescription;
 
-    public Parent getParent() {
+  public DocumentDetailController(RequestSender<SwitchScene> sceneNameRequestSender) {
+    this.sceneNameRequestSender = sceneNameRequestSender;
+  }
+
+  public Parent getParent() {
         return root;
     }
 
     public void setDocument(Document document) {
         this.document = document;
+    }
+
+    @FXML
+    void pressBackDocOverview(ActionEvent event) {
+        sceneNameRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
     }
 
     public void show() {

@@ -84,10 +84,8 @@ public class DocOverviewController implements ViewController {
    * @param document the Document to be displayed in detail
    */
   private void pressDocToGoToDetail(Document document) {
-    new Thread(() -> {
       documentRequestSender.send(document);
       switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
-    }).start();
   }
 
   /**
