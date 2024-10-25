@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.User;
 import threeoone.bigproject.repositories.DocumentRepo;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,10 +40,11 @@ class DocumentRetrievalServiceTest {
   @Test
   @DisplayName("getAllDocument returns DocumentRepo.findAll()")
   public void getAllDocumentReturnsDocumentRepoFindAll() {
+    User user = new User("name", "password", "My Name");
     List <Document> documents = new ArrayList <> ();
-    documents.add(new Document("name a", "desc a"));
-    documents.add(new Document("name b", "desc b"));
-    documents.add(new Document("name c", "desc c"));
+    documents.add(new Document("name a", "desc a", user));
+    documents.add(new Document("name b", "desc b", user));
+    documents.add(new Document("name c", "desc c", user));
 
     when(documentRepo.findAll()).thenReturn(documents);
 

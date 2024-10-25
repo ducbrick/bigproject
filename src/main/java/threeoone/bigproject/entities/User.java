@@ -1,11 +1,14 @@
 package threeoone.bigproject.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 /**
  * ORM Entity representing a user of the application.
@@ -22,7 +25,7 @@ import jakarta.persistence.Table;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "user_id")
+  @Column(name = "id")
   private int id;
 
   @Column(name = "login_name")
@@ -33,6 +36,9 @@ public class User {
 
   @Column(name = "display_name")
   private String displayName;
+
+  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+  private List <Document> publishedDocuments;
 
   public User(String loginName, String password, String displayName) {
     this.loginName = loginName;
@@ -73,5 +79,14 @@ public class User {
 
   public void setDisplayName(String displayName) {
     this.displayName = displayName;
+  }
+
+  public List<Document> getPublishedDocuments() {
+    return publishedDocuments;
+  }
+
+  public void setPublishedDocuments(
+      List<Document> publishedDocuments) {
+    this.publishedDocuments = publishedDocuments;
   }
 }

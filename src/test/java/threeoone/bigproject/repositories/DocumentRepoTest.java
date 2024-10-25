@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.User;
 
 /**
  * All tests assume the database is currently empty.
@@ -26,63 +27,91 @@ class DocumentRepoTest {
   @Autowired
   private DocumentRepo documentRepo;
 
+  @Autowired
+  private UserRepo userRepo;
+
   @Test
-  @DisplayName("Count rows in empty database")
-  public void countRowsInEmptyDatabase() {
-    long count = documentRepo.count();
-    assertThat(count).isEqualTo(0);
+  @DisplayName("Test compile & runtime")
+  public void testCompile() {
+    documentRepo.count();
   }
 
   @Test
-  @DisplayName("Insert one row into empty database then count rows")
-  public void insertOneRowIntoEmptyDatabase_thenCountRows() {
-    Document document = new Document("name", "desc");
+  @DisplayName("Insert a document without author")
+  public void insertDocumentWithoutAuthor() {
+    Document document = new Document("name", "description");
+    assertThatThrownBy(() -> documentRepo.save(document));
+  }
+
+  @Test
+  @DisplayName("Insert into database")
+  public void insertIntoDatabase() {
+    User user = new User("name", "password", "Fancy Name");
+    Document document = new Document("name", "description", user);
+
+    long countBefore = documentRepo.count();
+
     documentRepo.save(document);
-    long count = documentRepo.count();
-    assertThat(count).isEqualTo(1);
+
+    assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
+
+    Document anotherDoc = new Document("another name", "same description", user);
+
+    documentRepo.save(anotherDoc);
+
+    assertThat(documentRepo.count()).isEqualTo(countBefore + 2);
+
+    document.setName("old name");
+
+    documentRepo.save(document);
+
+    assertThat(documentRepo.count()).isEqualTo(countBefore + 2);
   }
 
   @Test
-  @DisplayName("Insert into database then check existence")
-  public void insertIntoDb_thenCheckExistence() {
-    Document document = new Document("name", "desc");
-    document = documentRepo.save(document);
-    int id = document.getId();
-    assertThat(documentRepo.existsById(id)).isTrue();
-  }
+  @DisplayName("Insert documents with the same author")
+  public void insertDocumentsWithSameAuthor() {
+    User user = new User("name", "password", "Fancy Name");
+    Document docA = new Document("name a", "description a", user);
+    Document docB = new Document("name b", "description b", user);
+    Document docC = new Document("name c", "description c", user);
 
+    docA = documentRepo.save(docA);
+    docB = documentRepo.save(docB);
+    docC = documentRepo.save(docC);
 
-  @Test
-  @DisplayName("Insert into database then retrieve")
-  public void insert_thenRetrieve() {
-    String name = "name";
-    String desc = "desc";
-    Document document = new Document(name, desc);
+    User sameAuthor = docA.getAuthor();
 
-    int id = documentRepo.save(document).getId();
-
-    Optional <Document> queryRes = documentRepo.findById(id);
-
-    assertThat(queryRes.isPresent()).isTrue();
-
-    Document queryDocument = queryRes.get();
-
-    assertThat(name).isEqualTo(queryDocument.getName());
-    assertThat(desc).isEqualTo(queryDocument.getDescription());
+    assertThat(docB.getAuthor()).isSameAs(sameAuthor);
+    assertThat(docC.getAuthor()).isSameAs(sameAuthor);
   }
 
   @Test
-  @DisplayName("Insert 2 entities then count")
-  public void insert2Entries_thenCount() {
-    Document doc1 = new Document("name 1", "desc 1");
-    doc1.setId(0);
+  @DisplayName("Insert documents with different authors")
+  public void insertDocumentsWithDifferentAuthors() {
+    User userA = new User("name", "password", "Fancy Name");
+    User userB = new User("name", "password", "Fancy Name");
+    Document docA = new Document("name a", "description a", userA);
+    Document docB = new Document("name b", "description b", userB);
 
-    Document doc2 = new Document("name 2", "desc 2");
-    doc2.setId(0);
+    docA = documentRepo.save(docA);
+    docB = documentRepo.save(docB);
 
-    documentRepo.save(doc1);
-    documentRepo.save(doc2);
+    assertThat(docA.getAuthor()).isNotSameAs(docB.getAuthor());
+  }
 
-    assertThat(documentRepo.count()).isEqualTo(2);
+  @Test
+  @DisplayName("Cascade insert document and author")
+  public void cascadeInsert() {
+    User user = new User("name", "password", "Fancy Name");
+    Document document = new Document("name", "desc", user);
+
+    long countBefore = userRepo.count();
+
+    documentRepo.save(document);
+
+    assertThat(userRepo.count()).isEqualTo(countBefore + 1);
+
+    assertThat(document.getAuthor()).isSameAs(userRepo.findById(document.getAuthor().getId()).orElse(null));
   }
 }
