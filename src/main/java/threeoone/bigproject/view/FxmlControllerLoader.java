@@ -21,8 +21,6 @@ public class FxmlControllerLoader {
    * @param fxWeaver autowired {@link FxWeaver} bean to load FXML files
    */
   public FxmlControllerLoader(FxWeaver fxWeaver) {
-    fxWeaver.load(HelloWorldController.class);
-    fxWeaver.load(GetNameController.class);
     fxWeaver.load(MenuController.class);
     fxWeaver.load(DocumentDetailController.class);
     fxWeaver.load(DocOverviewController.class);

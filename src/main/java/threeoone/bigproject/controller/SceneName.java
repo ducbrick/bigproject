@@ -2,6 +2,6 @@ package threeoone.bigproject.controller;
 
 public enum SceneName {
   DOC_OVERVIEW,
-  GET_NAME,
+  MENU,
   DOC_DETAIL
 }

@@ -25,12 +25,23 @@ public class SpringConfig {
     return new RequestSender<UserInfo>();
   }
 
+  /**
+   * Register a {@link RequestSender} of type {@code switchSceneRequest} into {@code Spring} context.
+   *
+   * @return the {@link RequestSender} to be registered
+   */
   @Bean
-  public RequestSender <String> menuRequestSender() { return new RequestSender<String>(); }
+  public RequestSender<SwitchScene> switchSceneRequestSender() {
+    return new RequestSender<SwitchScene>();
+  }
 
+  /**
+   * Register a {@link RequestSender} of type {@code documentRequest} into {@code Spring} context.
+   *
+   * @return the {@link RequestSender} to be registered
+   */
   @Bean
-  public RequestSender <SwitchScene> switchSceneRequestSender() { return new RequestSender<SwitchScene>();}
-
-  @Bean
-  public RequestSender <Document> documentRequestSender() { return new RequestSender<>(); }
+  public RequestSender<Document> documentRequestSender() {
+    return new RequestSender<>();
+  }
 }
