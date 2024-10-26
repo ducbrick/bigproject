@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
-import threeoone.bigproject.controller.requestbodies.UserInfo;
 import threeoone.bigproject.entities.Document;
 
 /**
@@ -14,17 +13,6 @@ import threeoone.bigproject.entities.Document;
  */
 @Configuration
 public class SpringConfig {
-
-  /**
-   * Register a {@link RequestSender} of type {@code helloWorldRequest} into {@code Spring} context.
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<UserInfo> helloWorldRequestSender() {
-    return new RequestSender<UserInfo>();
-  }
-
   /**
    * Register a {@link RequestSender} of type {@code switchSceneRequest} into {@code Spring} context.
    *
