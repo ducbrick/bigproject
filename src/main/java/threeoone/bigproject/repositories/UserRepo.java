@@ -11,6 +11,6 @@ import threeoone.bigproject.entities.User;
  * @author DUCBRICK
  */
 public interface UserRepo extends ListCrudRepository <User, Integer> {
-  @Query("SELECT u FROM User u JOIN FETCH u.publishedDocuments WHERE u.id = :id")
+  @Query("SELECT u FROM User u LEFT JOIN FETCH u.publishedDocuments document WHERE u.id = (:id)")
   public User findUserAndPublishedDocuments(@Param("id") int id);
 }

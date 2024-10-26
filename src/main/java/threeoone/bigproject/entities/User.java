@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +48,15 @@ public class User {
   }
 
   public User() {
+  }
+
+  public void addPublishedDocument(Document document) {
+    if (publishedDocuments == null) {
+      publishedDocuments = new ArrayList <> ();
+    }
+
+    publishedDocuments.add(document);
+    document.setAuthor(this);
   }
 
   public int getId() {
