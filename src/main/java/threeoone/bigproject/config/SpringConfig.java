@@ -18,6 +18,7 @@ public class SpringConfig {
    * Send a request to switch to a different scene.
    * The request is sent with the name of the scene to switch to.
    * Request body is {@link SwitchScene} which hold name of scene{@link threeoone.bigproject.controller.SceneName}
+   *
    * @return the {@link RequestSender} to be registered
    **/
   @Bean
@@ -31,6 +32,7 @@ public class SpringConfig {
    * For example, {@link threeoone.bigproject.controller.viewcontrollers.DocumentDetailController}
    * need to know what Document user click on in
    * {@link threeoone.bigproject.controller.viewcontrollers.DocOverviewController} to show them.
+   *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
