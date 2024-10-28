@@ -132,6 +132,12 @@ public class Document {
    * Sets the {@code author} of the {@link Document},
    * which is the {@link User} who published this {@link Document}.
    * This setter is required by JPA.
+   * <p>
+   * JPA requires synchronization of both {@link User} and {@link Document},
+   * meaning a {@link Document} must exist in its author's {@code publishedDocuments} list.
+   * This method will only set the relationship on the {@link Document} side,
+   * but not on the {@link User} side.
+   * To set the relationship on both side, use {@link User#addPublishedDocument}.
    *
    * @param author the new {@code author} of the {@link Document}
    */
