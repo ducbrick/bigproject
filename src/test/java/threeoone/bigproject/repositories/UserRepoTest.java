@@ -110,19 +110,21 @@ class UserRepoTest {
   }
 
   @Test
-  @DisplayName("test")
-  public void test() {
-    User user = userRepo.findUserAndPublishedDocuments(67);
+  @DisplayName("Insert user and retrieve document")
+  public void insertUserRetrieveDocument() {
+    User user = new User("name", "password", "Fancy Name");
+    user.addPublishedDocument(new Document("name", "desc"));
+
+    user = userRepo.save(user);
 
     List <Document> documents = user.getPublishedDocuments();
 
     assertThat(documents).isNotNull();
 
-    for (Document document : documents) {
-      System.out.println(document.getId());
-      System.out.println(document.getName());
-      System.out.println(document.getDescription());
-      System.out.println();
-    }
+    assertThat(documents.size()).isEqualTo(1);
+
+    Document document = documents.getFirst();
+
+    assertThat(document).isSameAs(documentRepo.findById(document.getId()).orElse(null));
   }
 }
