@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS AppUser;
 
 CREATE TABLE AppUser (
 	id SMALLSERIAL PRIMARY KEY,
-	login_name VARCHAR(32) NOT NULL CHECK(LENGTH(TRIM(login_name)) > 0),
+	login_name VARCHAR(32) NOT NULL UNIQUE CHECK(LENGTH(TRIM(login_name)) > 0),
 	password VARCHAR(32) NOT NULL CHECK(LENGTH(TRIM(password)) > 0),
 	display_name VARCHAR(64) NOT NULL CHECK(LENGTH(TRIM(display_name)) > 0)
 );
