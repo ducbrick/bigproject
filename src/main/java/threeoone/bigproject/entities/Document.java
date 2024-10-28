@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 
 /**
  * ORM Entity representing a {@link Document} in the library database.
- * A {@link Document} has a primary key {@code id}, a {@code name} and a {@code description}.
+ * A {@link Document} has an identifier {@code id}, a {@code name} and a {@code description}.
  * A {@link Document} has an {@code author},
  * representing the {@link User} who published this {@link Document}.
  *
