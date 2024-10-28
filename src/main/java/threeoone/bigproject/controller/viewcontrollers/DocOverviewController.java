@@ -64,10 +64,17 @@ public class DocOverviewController implements ViewController {
   private TableColumn<Document, String> name;
 
   /**
+   * Table column for author name
+   */
+  @FXML
+  private TableColumn<Document, String> author;
+
+  /**
    * Table view for displaying documents
    */
   @FXML
   private TableView<Document> table;
+
 
   /**
    * Constructs a new {@code DocOverviewController} with the given request senders.
@@ -100,12 +107,13 @@ public class DocOverviewController implements ViewController {
 
   /**
    * Sets the items in the document table with the given list.
-   *
+   * String arguments like: description, id, author, name in `PropertyValueFactory` is attribute of {@link Document}
    * @param list An observable list of documents to be displayed in the table
    */
   public void setTable(ObservableList<Document> list) {
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
     id.setCellValueFactory(new PropertyValueFactory<>("id"));
+    author.setCellValueFactory(new PropertyValueFactory<>("author"));
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     table.setItems(list);
   }
