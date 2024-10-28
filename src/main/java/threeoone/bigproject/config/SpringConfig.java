@@ -3,6 +3,7 @@ package threeoone.bigproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.Login;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 
@@ -37,6 +38,16 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<Document> documentRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Register a {@link RequestSender} of type {@code loginRequest} into {@code Spring} context.
+   * Send a LoginRequest from 'LoginPage' to service.
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<Login> loginRequestSender() {
     return new RequestSender<>();
   }
 }
