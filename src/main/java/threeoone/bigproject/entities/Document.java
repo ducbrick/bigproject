@@ -41,12 +41,6 @@ public class Document {
     this.description = description;
   }
 
-  public Document(String name, String description, User author) {
-    this.name = name;
-    this.description = description;
-    this.author = author;
-  }
-
   public Document() {
   }
 

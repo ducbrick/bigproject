@@ -48,7 +48,8 @@ class DocumentRepoTest {
   @DisplayName("Insert into database")
   public void insertIntoDatabase() {
     User user = new User("name", "password", "Fancy Name");
-    Document document = new Document("name", "description", user);
+    Document document = new Document("name", "description");
+    user.addPublishedDocument(document);
 
     long countBefore = documentRepo.count();
 
@@ -56,7 +57,8 @@ class DocumentRepoTest {
 
     assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
 
-    Document anotherDoc = new Document("another name", "same description", user);
+    Document anotherDoc = new Document("another name", "same description");
+    user.addPublishedDocument(anotherDoc);
 
     documentRepo.save(anotherDoc);
 
@@ -73,9 +75,13 @@ class DocumentRepoTest {
   @DisplayName("Insert documents with the same author")
   public void insertDocumentsWithSameAuthor() {
     User user = new User("name", "password", "Fancy Name");
-    Document docA = new Document("name a", "description a", user);
-    Document docB = new Document("name b", "description b", user);
-    Document docC = new Document("name c", "description c", user);
+    Document docA = new Document("name a", "description a");
+    Document docB = new Document("name b", "description b");
+    Document docC = new Document("name c", "description c");
+
+    user.addPublishedDocument(docA);
+    user.addPublishedDocument(docB);
+    user.addPublishedDocument(docC);
 
     docA = documentRepo.save(docA);
     docB = documentRepo.save(docB);
@@ -90,10 +96,14 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with different authors")
   public void insertDocumentsWithDifferentAuthors() {
-    User userA = new User("name", "password", "Fancy Name");
-    User userB = new User("name", "password", "Fancy Name");
-    Document docA = new Document("name a", "description a", userA);
-    Document docB = new Document("name b", "description b", userB);
+    User userA = new User("name a", "password", "Fancy Name");
+    User userB = new User("name b", "password", "Fancy Name");
+
+    Document docA = new Document("name a", "description a");
+    Document docB = new Document("name b", "description b");
+
+    userA.addPublishedDocument(docA);
+    userB.addPublishedDocument(docB);
 
     docA = documentRepo.save(docA);
     docB = documentRepo.save(docB);
@@ -105,7 +115,8 @@ class DocumentRepoTest {
   @DisplayName("Cascade insert document and author")
   public void cascadeInsert() {
     User user = new User("name", "password", "Fancy Name");
-    Document document = new Document("name", "desc", user);
+    Document document = new Document("name", "desc");
+    user.addPublishedDocument(document);
 
     long countBefore = userRepo.count();
 

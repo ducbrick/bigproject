@@ -42,9 +42,18 @@ class DocumentRetrievalServiceTest {
   public void getAllDocumentReturnsDocumentRepoFindAll() {
     User user = new User("name", "password", "My Name");
     List <Document> documents = new ArrayList <> ();
-    documents.add(new Document("name a", "desc a", user));
-    documents.add(new Document("name b", "desc b", user));
-    documents.add(new Document("name c", "desc c", user));
+
+    Document docA = new Document("name a", "desc a");
+    Document docB = new Document("name b", "desc b");
+    Document docC = new Document("name c", "desc c");
+
+    user.addPublishedDocument(docA);
+    user.addPublishedDocument(docB);
+    user.addPublishedDocument(docC);
+
+    documents.add(docA);
+    documents.add(docB);
+    documents.add(docC);
 
     when(documentRepo.findAll()).thenReturn(documents);
 
