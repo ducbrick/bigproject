@@ -1,13 +1,9 @@
 package threeoone.bigproject.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,29 +73,29 @@ class UserRepoTest {
   }
 
   @Test
-  @DisplayName("Insert documents and retrieve author")
+  @DisplayName("Insert documents and retrieve uploaders")
   public void insertDocuments_retrieveAuthor() {
     User user = new User("name", "password", "Fancy Name");
     Document docA = new Document("name a", "description a");
     Document docB = new Document("name b", "description b");
     Document docC = new Document("name c", "description c");
 
-    user.addPublishedDocument(docA);
-    user.addPublishedDocument(docB);
-    user.addPublishedDocument(docC);
+    user.addUploadedDocument(docA);
+    user.addUploadedDocument(docB);
+    user.addUploadedDocument(docC);
 
     docA = documentRepo.save(docA);
     docB = documentRepo.save(docB);
     docC = documentRepo.save(docC);
 
-    user = docA.getAuthor();
+    user = docA.getUploader();
 
-    assertThat(user).isSameAs(docA.getAuthor());
-    assertThat(user).isSameAs(docB.getAuthor());
-    assertThat(user).isSameAs(docC.getAuthor());
+    assertThat(user).isSameAs(docA.getUploader());
+    assertThat(user).isSameAs(docB.getUploader());
+    assertThat(user).isSameAs(docC.getUploader());
 
-    user = userRepo.findUserAndPublishedDocuments(user.getId());
-    List <Document> documents = user.getPublishedDocuments();
+    user = userRepo.findUserAndUploadedDocuments(user.getId());
+    List <Document> documents = user.getUploadedDocuments();
 
     assertThat(documents).isNotNull();
     assertThat(documents.size()).isEqualTo(3);
@@ -113,11 +109,11 @@ class UserRepoTest {
   @DisplayName("Insert user and retrieve document")
   public void insertUserRetrieveDocument() {
     User user = new User("name", "password", "Fancy Name");
-    user.addPublishedDocument(new Document("name", "desc"));
+    user.addUploadedDocument(new Document("name", "desc"));
 
     user = userRepo.save(user);
 
-    List <Document> documents = user.getPublishedDocuments();
+    List <Document> documents = user.getUploadedDocuments();
 
     assertThat(documents).isNotNull();
 

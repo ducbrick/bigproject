@@ -1,7 +1,6 @@
 package threeoone.bigproject.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -10,13 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
@@ -47,9 +44,9 @@ class DocumentRetrievalServiceTest {
     Document docB = new Document("name b", "desc b");
     Document docC = new Document("name c", "desc c");
 
-    user.addPublishedDocument(docA);
-    user.addPublishedDocument(docB);
-    user.addPublishedDocument(docC);
+    user.addUploadedDocument(docA);
+    user.addUploadedDocument(docB);
+    user.addUploadedDocument(docC);
 
     documents.add(docA);
     documents.add(docB);

@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
 /**
  * ORM Entity representing a {@link Document} in the library database.
  * A {@link Document} has an identifier {@code id}, a {@code name} and a {@code description}.
- * A {@link Document} has an {@code author},
- * representing the {@link User} who published this {@link Document}.
+ * A {@link Document} has an {@code uploader},
+ * representing the {@link User} who uploaded this {@link Document}.
  *
  * @see threeoone.bigproject.repositories.DocumentRepo
  * @see User
@@ -36,8 +36,8 @@ public class Document {
   private String description;
 
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "author_id")
-  private User author;
+  @JoinColumn(name = "uploader_id")
+  private User uploader;
 
   /**
    * Constructs a new {@link Document} with the given {@code name} and {@code description}.
@@ -118,30 +118,30 @@ public class Document {
   }
 
   /**
-   * Returns the {@code author} of the {@link Document},
-   * which is the {@link User} who published this {@link Document}.
+   * Returns the {@code uploader} of the {@link Document},
+   * which is the {@link User} who uploaded this {@link Document}.
    * This getter is required by JPA.
    *
-   * @return the {@code author} of the {@link Document}
+   * @return the {@code uploader} of the {@link Document}
    */
-  public User getAuthor() {
-    return author;
+  public User getUploader() {
+    return uploader;
   }
 
   /**
-   * Sets the {@code author} of the {@link Document},
-   * which is the {@link User} who published this {@link Document}.
+   * Sets the {@code uploader} of the {@link Document},
+   * which is the {@link User} who uploaded this {@link Document}.
    * This setter is required by JPA.
    * <p>
    * JPA requires synchronization of both {@link User} and {@link Document},
-   * meaning a {@link Document} must exist in its author's {@code publishedDocuments} list.
+   * meaning a {@link Document} must exist in its uploader's {@code uploadedDocuments} list.
    * This method will only set the relationship on the {@link Document} side,
    * but not on the {@link User} side.
-   * To set the relationship on both side, use {@link User#addPublishedDocument}.
+   * To set the relationship on both side, use {@link User#addUploadedDocument(Document)}.
    *
-   * @param author the new {@code author} of the {@link Document}
+   * @param uploader the new {@code uploader} of the {@link Document}
    */
-  public void setAuthor(User author) {
-    this.author = author;
+  public void setUploader(User uploader) {
+    this.uploader = uploader;
   }
 }

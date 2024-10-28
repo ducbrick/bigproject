@@ -17,7 +17,7 @@ import java.util.List;
  * A {@link User} has an identifier {@code id}.
  * A {@link User} has a unique {@code loginName} and a {@code password} used for signing in.
  * A {@link User} has a {@code displayName} that is visible to other Users.
- * A {@link User} can publish a number of {@link Document}, represented by {@code publishedDocuments}.
+ * A {@link User} can upload a number of {@link Document}, represented by {@code uploadedDocuments}.
  *
  * @see threeoone.bigproject.repositories.UserRepo
  * @see Document
@@ -41,8 +41,8 @@ public class User {
   @Column(name = "display_name")
   private String displayName;
 
-  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-  private List <Document> publishedDocuments;
+  @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL)
+  private List <Document> uploadedDocuments;
 
   /**
    * Constructs a new {@link User} from the given {@code loginName}, {@code password} and {@code displayName}.
@@ -65,19 +65,20 @@ public class User {
   }
 
   /**
-   * Adds a {@link Document} to the list of the User's published documents.
+   * Adds a {@link Document} to the list of the User's uploaded documents.
    * JPA requires synchronization of both {@link User} and {@link Document},
-   * meaning a {@link Document} must exist in its author's {@code publishedDocuments} list.
+   * meaning a {@link Document} must exist in its author's {@code uploadedDocuments} list.
+   * This method will set the relationship on both the {@link User} side and {@link Document} side.
    *
-   * @param document a Document published by this User
+   * @param document a Document uploaded by this User
    */
-  public void addPublishedDocument(Document document) {
-    if (publishedDocuments == null) {
-      publishedDocuments = new ArrayList <> ();
+  public void addUploadedDocument(Document document) {
+    if (uploadedDocuments == null) {
+      uploadedDocuments = new ArrayList <> ();
     }
 
-    publishedDocuments.add(document);
-    document.setAuthor(this);
+    uploadedDocuments.add(document);
+    document.setUploader(this);
   }
 
   /**
@@ -161,23 +162,23 @@ public class User {
   }
 
   /**
-   * Returns the {@code publishedDocuments} list of the {@link User}.
+   * Returns the {@code uploadedDocuments} list of the {@link User}.
    * This getter is required by JPA.
    *
-   * @return the {@code publishedDocuments} list of the {@link User}
+   * @return the {@code uploadedDocuments} list of the {@link User}
    */
-  public List<Document> getPublishedDocuments() {
-    return publishedDocuments;
+  public List<Document> getUploadedDocuments() {
+    return uploadedDocuments;
   }
 
   /**
-   * Sets the {@code publishedDocuments} list of the {@link User}.
+   * Sets the {@code uploadedDocuments} list of the {@link User}.
    * This setter is required by JPA.
    *
-   * @param publishedDocuments the new {@code publishedDocuments} list of the {@link User}
+   * @param uploadedDocuments the new {@code uploadedDocuments} list of the {@link User}
    */
-  public void setPublishedDocuments(
-      List<Document> publishedDocuments) {
-    this.publishedDocuments = publishedDocuments;
+  public void setUploadedDocuments(
+      List<Document> uploadedDocuments) {
+    this.uploadedDocuments = uploadedDocuments;
   }
 }

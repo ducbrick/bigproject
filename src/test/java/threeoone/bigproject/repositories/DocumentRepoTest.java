@@ -2,18 +2,13 @@ package threeoone.bigproject.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
-import org.bouncycastle.pqc.crypto.newhope.NHSecretKeyProcessor.PartyUBuilder;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 
@@ -38,7 +33,7 @@ class DocumentRepoTest {
   }
 
   @Test
-  @DisplayName("Insert a document without author")
+  @DisplayName("Insert a document without uploader")
   public void insertDocumentWithoutAuthor() {
     Document document = new Document("name", "description");
     assertThatThrownBy(() -> documentRepo.save(document));
@@ -49,7 +44,7 @@ class DocumentRepoTest {
   public void insertIntoDatabase() {
     User user = new User("name", "password", "Fancy Name");
     Document document = new Document("name", "description");
-    user.addPublishedDocument(document);
+    user.addUploadedDocument(document);
 
     long countBefore = documentRepo.count();
 
@@ -58,7 +53,7 @@ class DocumentRepoTest {
     assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
 
     Document anotherDoc = new Document("another name", "same description");
-    user.addPublishedDocument(anotherDoc);
+    user.addUploadedDocument(anotherDoc);
 
     documentRepo.save(anotherDoc);
 
@@ -72,29 +67,29 @@ class DocumentRepoTest {
   }
 
   @Test
-  @DisplayName("Insert documents with the same author")
+  @DisplayName("Insert documents with the same uploader")
   public void insertDocumentsWithSameAuthor() {
     User user = new User("name", "password", "Fancy Name");
     Document docA = new Document("name a", "description a");
     Document docB = new Document("name b", "description b");
     Document docC = new Document("name c", "description c");
 
-    user.addPublishedDocument(docA);
-    user.addPublishedDocument(docB);
-    user.addPublishedDocument(docC);
+    user.addUploadedDocument(docA);
+    user.addUploadedDocument(docB);
+    user.addUploadedDocument(docC);
 
     docA = documentRepo.save(docA);
     docB = documentRepo.save(docB);
     docC = documentRepo.save(docC);
 
-    User sameAuthor = docA.getAuthor();
+    User sameAuthor = docA.getUploader();
 
-    assertThat(docB.getAuthor()).isSameAs(sameAuthor);
-    assertThat(docC.getAuthor()).isSameAs(sameAuthor);
+    assertThat(docB.getUploader()).isSameAs(sameAuthor);
+    assertThat(docC.getUploader()).isSameAs(sameAuthor);
   }
 
   @Test
-  @DisplayName("Insert documents with different authors")
+  @DisplayName("Insert documents with different uploaders")
   public void insertDocumentsWithDifferentAuthors() {
     User userA = new User("name a", "password", "Fancy Name");
     User userB = new User("name b", "password", "Fancy Name");
@@ -102,21 +97,21 @@ class DocumentRepoTest {
     Document docA = new Document("name a", "description a");
     Document docB = new Document("name b", "description b");
 
-    userA.addPublishedDocument(docA);
-    userB.addPublishedDocument(docB);
+    userA.addUploadedDocument(docA);
+    userB.addUploadedDocument(docB);
 
     docA = documentRepo.save(docA);
     docB = documentRepo.save(docB);
 
-    assertThat(docA.getAuthor()).isNotSameAs(docB.getAuthor());
+    assertThat(docA.getUploader()).isNotSameAs(docB.getUploader());
   }
 
   @Test
-  @DisplayName("Cascade insert document and author")
+  @DisplayName("Cascade insert document and uploaders")
   public void cascadeInsert() {
     User user = new User("name", "password", "Fancy Name");
     Document document = new Document("name", "desc");
-    user.addPublishedDocument(document);
+    user.addUploadedDocument(document);
 
     long countBefore = userRepo.count();
 
@@ -124,6 +119,6 @@ class DocumentRepoTest {
 
     assertThat(userRepo.count()).isEqualTo(countBefore + 1);
 
-    assertThat(document.getAuthor()).isSameAs(userRepo.findById(document.getAuthor().getId()).orElse(null));
+    assertThat(document.getUploader()).isSameAs(userRepo.findById(document.getUploader().getId()).orElse(null));
   }
 }
