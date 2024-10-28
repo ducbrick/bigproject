@@ -1,7 +1,5 @@
 package threeoone.bigproject.controller.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -9,6 +7,8 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.view.ViewSwitcher;
+
+import static threeoone.bigproject.controller.SceneName.*;
 
 /**
  * Main controller responsible for managing scene switching and document detail handling.
@@ -24,6 +24,7 @@ public class Controller {
   private final ViewSwitcher viewSwitcher;
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
+  private final YourBooksController yourBooksController;
 
   /**
    * Constructs the main controller with dependencies.
@@ -36,11 +37,13 @@ public class Controller {
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
                     ViewSwitcher viewSwitcher,
+                    YourBooksController yourBooksController,
                     DocumentDetailController documentDetailController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
     this.documentDetailController = documentDetailController;
+    this.yourBooksController = yourBooksController;
   }
 
   /**
@@ -82,6 +85,9 @@ public class Controller {
         break;
       case DOC_DETAIL:
         viewSwitcher.switchToView(documentDetailController);
+        break;
+      case YOUR_BOOKS:
+        viewSwitcher.switchToView(yourBooksController);
         break;
     }
   }
