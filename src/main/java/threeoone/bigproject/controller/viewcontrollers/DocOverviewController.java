@@ -1,22 +1,23 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
-
-import javax.print.Doc;
+import threeoone.bigproject.entities.User;
 
 /**
  * Controller class for the Document Overview scene.
@@ -67,7 +68,7 @@ public class DocOverviewController implements ViewController {
    * Table column for author name
    */
   @FXML
-  private TableColumn<Document, String> author;
+  private TableColumn<Document, String> uploader;
 
   /**
    * Table view for displaying documents
@@ -107,14 +108,21 @@ public class DocOverviewController implements ViewController {
 
   /**
    * Sets the items in the document table with the given list.
-   * String arguments like: description, id, author, name in `PropertyValueFactory` is attribute of {@link Document}
+   * String arguments like: description, id,  name in `PropertyValueFactory` is attribute of {@link Document}
+   * Uploader is a user object. Using a callback to extract displayName from Uploader in Document.
    * @param list An observable list of documents to be displayed in the table
    */
   public void setTable(ObservableList<Document> list) {
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
     id.setCellValueFactory(new PropertyValueFactory<>("id"));
-    author.setCellValueFactory(new PropertyValueFactory<>("author"));
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
+    uploader.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Document, String>,
+            ObservableValue<String>>() {
+      @Override
+      public ObservableValue<String> call(TableColumn.CellDataFeatures<Document, String> documentStringCellDataFeatures) {
+        return new SimpleStringProperty(documentStringCellDataFeatures.getValue().getUploader().getDisplayName());
+      }
+    });
     table.setItems(list);
   }
 
