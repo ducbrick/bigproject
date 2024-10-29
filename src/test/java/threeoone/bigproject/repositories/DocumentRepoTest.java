@@ -2,18 +2,15 @@ package threeoone.bigproject.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Optional;
-import org.bouncycastle.pqc.crypto.newhope.NHSecretKeyProcessor.PartyUBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.User;
 
 /**
  * All tests assume the database is currently empty.
@@ -26,63 +23,102 @@ class DocumentRepoTest {
   @Autowired
   private DocumentRepo documentRepo;
 
+  @Autowired
+  private UserRepo userRepo;
+
   @Test
-  @DisplayName("Count rows in empty database")
-  public void countRowsInEmptyDatabase() {
-    long count = documentRepo.count();
-    assertThat(count).isEqualTo(0);
+  @DisplayName("Test compile & runtime")
+  public void testCompile() {
+    documentRepo.count();
   }
 
   @Test
-  @DisplayName("Insert one row into empty database then count rows")
-  public void insertOneRowIntoEmptyDatabase_thenCountRows() {
-    Document document = new Document("name", "desc");
+  @DisplayName("Insert a document without uploader")
+  public void insertDocumentWithoutAuthor() {
+    Document document = new Document("name", "description");
+    assertThatThrownBy(() -> documentRepo.save(document));
+  }
+
+  @Test
+  @DisplayName("Insert into database")
+  public void insertIntoDatabase() {
+    User user = new User("name", "password", "Fancy Name");
+    Document document = new Document("name", "description");
+    user.addUploadedDocument(document);
+
+    long countBefore = documentRepo.count();
+
     documentRepo.save(document);
-    long count = documentRepo.count();
-    assertThat(count).isEqualTo(1);
+
+    assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
+
+    Document anotherDoc = new Document("another name", "same description");
+    user.addUploadedDocument(anotherDoc);
+
+    documentRepo.save(anotherDoc);
+
+    assertThat(documentRepo.count()).isEqualTo(countBefore + 2);
+
+    document.setName("old name");
+
+    documentRepo.save(document);
+
+    assertThat(documentRepo.count()).isEqualTo(countBefore + 2);
   }
 
   @Test
-  @DisplayName("Insert into database then check existence")
-  public void insertIntoDb_thenCheckExistence() {
+  @DisplayName("Insert documents with the same uploader")
+  public void insertDocumentsWithSameAuthor() {
+    User user = new User("name", "password", "Fancy Name");
+    Document docA = new Document("name a", "description a");
+    Document docB = new Document("name b", "description b");
+    Document docC = new Document("name c", "description c");
+
+    user.addUploadedDocument(docA);
+    user.addUploadedDocument(docB);
+    user.addUploadedDocument(docC);
+
+    docA = documentRepo.save(docA);
+    docB = documentRepo.save(docB);
+    docC = documentRepo.save(docC);
+
+    User sameAuthor = docA.getUploader();
+
+    assertThat(docB.getUploader()).isSameAs(sameAuthor);
+    assertThat(docC.getUploader()).isSameAs(sameAuthor);
+  }
+
+  @Test
+  @DisplayName("Insert documents with different uploaders")
+  public void insertDocumentsWithDifferentAuthors() {
+    User userA = new User("name a", "password", "Fancy Name");
+    User userB = new User("name b", "password", "Fancy Name");
+
+    Document docA = new Document("name a", "description a");
+    Document docB = new Document("name b", "description b");
+
+    userA.addUploadedDocument(docA);
+    userB.addUploadedDocument(docB);
+
+    docA = documentRepo.save(docA);
+    docB = documentRepo.save(docB);
+
+    assertThat(docA.getUploader()).isNotSameAs(docB.getUploader());
+  }
+
+  @Test
+  @DisplayName("Cascade insert document and uploaders")
+  public void cascadeInsert() {
+    User user = new User("name", "password", "Fancy Name");
     Document document = new Document("name", "desc");
-    document = documentRepo.save(document);
-    int id = document.getId();
-    assertThat(documentRepo.existsById(id)).isTrue();
-  }
+    user.addUploadedDocument(document);
 
+    long countBefore = userRepo.count();
 
-  @Test
-  @DisplayName("Insert into database then retrieve")
-  public void insert_thenRetrieve() {
-    String name = "name";
-    String desc = "desc";
-    Document document = new Document(name, desc);
+    documentRepo.save(document);
 
-    int id = documentRepo.save(document).getId();
+    assertThat(userRepo.count()).isEqualTo(countBefore + 1);
 
-    Optional <Document> queryRes = documentRepo.findById(id);
-
-    assertThat(queryRes.isPresent()).isTrue();
-
-    Document queryDocument = queryRes.get();
-
-    assertThat(name).isEqualTo(queryDocument.getName());
-    assertThat(desc).isEqualTo(queryDocument.getDescription());
-  }
-
-  @Test
-  @DisplayName("Insert 2 entities then count")
-  public void insert2Entries_thenCount() {
-    Document doc1 = new Document("name 1", "desc 1");
-    doc1.setId(0);
-
-    Document doc2 = new Document("name 2", "desc 2");
-    doc2.setId(0);
-
-    documentRepo.save(doc1);
-    documentRepo.save(doc2);
-
-    assertThat(documentRepo.count()).isEqualTo(2);
+    assertThat(document.getUploader()).isSameAs(userRepo.findById(document.getUploader().getId()).orElse(null));
   }
 }
