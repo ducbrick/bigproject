@@ -1,5 +1,6 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -56,7 +57,7 @@ public class DocOverviewController implements ViewController {
    * Table column for document IDs
    */
   @FXML
-  private TableColumn<Document, Integer> id;
+  private TableColumn<Document, Number> number;
 
   /**
    * Table column for document names
@@ -108,20 +109,20 @@ public class DocOverviewController implements ViewController {
 
   /**
    * Sets the items in the document table with the given list.
-   * String arguments like: description, id,  name in `PropertyValueFactory` is attribute of {@link Document}
+   * String arguments like: description,  name in `PropertyValueFactory` is attribute of {@link Document}
+   * Number is number of row in table. Documents on table must be different, if not number will have duplicate.
    * Uploader is a user object. Using a callback to extract displayName from Uploader in Document.
+   *
    * @param list An observable list of documents to be displayed in the table
    */
   public void setTable(ObservableList<Document> list) {
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
-    id.setCellValueFactory(new PropertyValueFactory<>("id"));
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
-    uploader.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Document, String>,
-            ObservableValue<String>>() {
-      @Override
-      public ObservableValue<String> call(TableColumn.CellDataFeatures<Document, String> documentStringCellDataFeatures) {
-        return new SimpleStringProperty(documentStringCellDataFeatures.getValue().getUploader().getDisplayName());
-      }
+    number.setCellValueFactory(cellData -> {
+      return new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1);
+    });
+    uploader.setCellValueFactory(cellData -> {
+      return new SimpleStringProperty(cellData.getValue().getUploader().getDisplayName());
     });
     table.setItems(list);
   }
