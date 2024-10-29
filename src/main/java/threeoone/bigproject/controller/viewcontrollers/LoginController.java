@@ -12,12 +12,12 @@ import javafx.util.Duration;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.Login;
+import threeoone.bigproject.entities.User;
 
 @Component
 @FxmlView("Login.fxml")
 public class LoginController implements ViewController {
-  private final RequestSender<Login> loginRequestSender;
+  private final RequestSender<User> loginRequestSender;
   @FXML
   private Parent root;
 
@@ -63,7 +63,7 @@ public class LoginController implements ViewController {
    *
    * @param loginRequestSender the RequestSender to handle login requests
    */
-  public LoginController(RequestSender<Login> loginRequestSender) {
+  public LoginController(RequestSender<User> loginRequestSender) {
     this.loginRequestSender = loginRequestSender;
   }
 
@@ -81,9 +81,8 @@ public class LoginController implements ViewController {
       return;
     }
     if (validateInformation()) {
-      message.setText("Login successful!");
       failedAttempts = 0; // Reset counter
-      loginRequestSender.send(new Login(usernameField.getText(), passwordField.getText()));
+      loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
     } else {
       failedAttempts++;
       message.setText("Invalid credentials. Attempt " + failedAttempts);
@@ -108,6 +107,23 @@ public class LoginController implements ViewController {
    */
   public void setMessage(String message) {
     this.message.setText(message);
+  }
+
+  /**
+   *
+   * @return  number of times user fail when trying to login
+   */
+  public int getFailedAttempts() {
+    return failedAttempts;
+  }
+
+  /**
+   * Set gate for setting number of user fail when trying to login
+   * @param failedAttempts
+   *
+   */
+  public void setFailedAttempts(int failedAttempts) {
+    this.failedAttempts = failedAttempts;
   }
 
   /**
