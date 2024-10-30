@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.UserInfo;
-import threeoone.bigproject.controller.viewcontrollers.HelloWorldController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 
 /**
