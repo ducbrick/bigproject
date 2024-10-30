@@ -78,6 +78,12 @@ public class DocOverviewController implements ViewController {
   private TableView<Document> table;
 
 
+  private ObservableList<Document> list = FXCollections.observableArrayList(
+          new Document("Miku Nakano character book", "holy hell"),
+          new Document("Nino Nakano character book", "skibidi"),
+          new Document("Gang of Four design pattern", "too long must read")
+  );
+
   /**
    * Constructs a new {@code DocOverviewController} with the given request senders.
    *
@@ -95,6 +101,12 @@ public class DocOverviewController implements ViewController {
    * document table.
    */
   public void initialize() {
+    User user1 = new User();
+    user1.setDisplayName("user1");
+    for (Document d: list) {
+      d.setUploader(user1);
+    }
+
     table.setRowFactory(tableview -> {
       TableRow<Document> row = new TableRow<>();
       row.setOnMouseClicked(event -> {
@@ -105,6 +117,7 @@ public class DocOverviewController implements ViewController {
       });
       return row;
     });
+    setTable(list);
   }
 
   /**
@@ -143,7 +156,7 @@ public class DocOverviewController implements ViewController {
    * Switches the scene to the menu view.
    */
   public void pressBack() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MENU));
+    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
   }
 
   /**

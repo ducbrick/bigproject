@@ -24,7 +24,6 @@ public class Controller {
   private final ViewSwitcher viewSwitcher;
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
-  private final YourBooksController yourBooksController;
 
   /**
    * Constructs the main controller with dependencies.
@@ -37,13 +36,11 @@ public class Controller {
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
                     ViewSwitcher viewSwitcher,
-                    YourBooksController yourBooksController,
                     DocumentDetailController documentDetailController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
     this.documentDetailController = documentDetailController;
-    this.yourBooksController = yourBooksController;
   }
 
   /**
@@ -80,14 +77,11 @@ public class Controller {
       case DOC_OVERVIEW:
         viewSwitcher.switchToView(docOverviewController);
         break;
-      case MENU:
+      case MAIN_MENU:
         viewSwitcher.switchToView(menuController);
         break;
       case DOC_DETAIL:
         viewSwitcher.switchToView(documentDetailController);
-        break;
-      case YOUR_BOOKS:
-        viewSwitcher.switchToView(yourBooksController);
         break;
     }
   }
