@@ -50,7 +50,6 @@ public class YourBooksController implements ViewController {
     @FXML
     private TableColumn<Document, String> Desc;
 
-
     @FXML
     private ObservableList<Document> list = FXCollections.observableArrayList(
             new Document("Miku Nakano character book", "holy hell"),

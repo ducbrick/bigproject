@@ -28,7 +28,6 @@ public class DocumentDetailController implements ViewController {
     @FXML
     private ImageView cover;
 
-
     private Image coverImage;
 
     @FXML
@@ -48,10 +47,12 @@ public class DocumentDetailController implements ViewController {
     public void setDocument(Document document) {
         this.document = document;
     }
+
     public void show() {
-        bookName.setText(document.getName());
-        bookDescription.setText(document.getDescription());
+        bookName.setText("Name:" + document.getName());
+        bookDescription.setText("Description:" + document.getDescription());
         coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));
         cover.setImage(coverImage);
+        cover.setPreserveRatio(false);
     }
 }
