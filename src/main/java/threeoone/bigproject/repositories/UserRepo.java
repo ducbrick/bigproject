@@ -26,4 +26,7 @@ public interface UserRepo extends ListCrudRepository <User, Integer> {
    */
   @Query("SELECT u FROM User u LEFT JOIN FETCH u.uploadedDocuments WHERE u.id = (:id)")
   public User findUserAndUploadedDocuments(@Param("id") int id);
+
+  @Query("SELECT u FROM User u WHERE u.loginName = (:loginName)")
+  public User findByLoginName(@Param("loginName") String loginName);
 }

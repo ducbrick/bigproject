@@ -123,4 +123,19 @@ class UserRepoTest {
 
     assertThat(document).isSameAs(documentRepo.findById(document.getId()).orElse(null));
   }
+
+  @Test
+  @DisplayName("Find user by login name")
+  public void findByLoginName() {
+    User user = new User("ducbrick", "password", "Brick");
+    user = userRepo.save(user);
+    assertThat(user).isSameAs(userRepo.findByLoginName(user.getLoginName()));
+  }
+
+  @Test
+  @DisplayName("Find non-existent user by login name")
+  public void findNonExistentUserByLoginName() {
+    String random = "jshdflkasdjfsadf";
+    assertThat(userRepo.findByLoginName(random)).isNull();
+  }
 }
