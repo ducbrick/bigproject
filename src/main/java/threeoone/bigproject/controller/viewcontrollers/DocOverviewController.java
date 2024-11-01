@@ -143,7 +143,7 @@ public class DocOverviewController implements ViewController {
    * Switches the scene to the menu view.
    */
   public void pressBack() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MENU));
+    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
   }
 
   /**

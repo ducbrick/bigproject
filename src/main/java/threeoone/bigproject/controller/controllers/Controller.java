@@ -1,7 +1,5 @@
 package threeoone.bigproject.controller.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -9,6 +7,8 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.view.ViewSwitcher;
+
+import static threeoone.bigproject.controller.SceneName.*;
 
 /**
  * Main controller responsible for managing scene switching and document detail handling.
@@ -77,7 +77,7 @@ public class Controller {
       case DOC_OVERVIEW:
         viewSwitcher.switchToView(docOverviewController);
         break;
-      case MENU:
+      case MAIN_MENU:
         viewSwitcher.switchToView(menuController);
         break;
       case DOC_DETAIL:
