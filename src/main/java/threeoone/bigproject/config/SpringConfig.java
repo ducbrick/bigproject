@@ -28,9 +28,14 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+
   /**
    * Register a {@link RequestSender} of type {@code documentRequest} into {@code Spring} context.
    * Send Document entities {@link Document} from view to another view which need Document.
+   *
+   * For example, {@link threeoone.bigproject.controller.viewcontrollers.DocumentDetailController}
+   * need to know what Document user click on in
+   * {@link threeoone.bigproject.controller.viewcontrollers.DocOverviewController} to show them.
    *
    * @return the {@link RequestSender} to be registered
    */
