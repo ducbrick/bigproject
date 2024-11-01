@@ -26,4 +26,16 @@ public interface UserRepo extends ListCrudRepository <User, Integer> {
    */
   @Query("SELECT u FROM User u LEFT JOIN FETCH u.uploadedDocuments WHERE u.id = (:id)")
   public User findUserAndUploadedDocuments(@Param("id") int id);
+
+  /**
+   * Retrieves an unique {@link User} with a specific {@code loginName}.
+   * As each User's {@code loginName} is unique, this method is guaranteed to return at most one {@link User}.
+   * If no {@link User} with the specified {@code loginName} exists, returns {@code null}.
+   *
+   * @param loginName the loginName of the desired {@link User}
+   *
+   * @return the unique {@link User} with the specified {@code loginName} if it exists, otherwise null
+   */
+  @Query("SELECT u FROM User u WHERE u.loginName = (:loginName)")
+  public User findByLoginName(@Param("loginName") String loginName);
 }
