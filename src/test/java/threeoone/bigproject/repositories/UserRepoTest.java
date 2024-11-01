@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,5 +138,12 @@ class UserRepoTest {
   public void findNonExistentUserByLoginName() {
     String random = "jshdflkasdjfsadf";
     assertThat(userRepo.findByLoginName(random)).isNull();
+  }
+
+  @Test
+  @DisplayName("Find non-existent user and documents by id")
+  public void findNonExistentUserById_findUserAndUploadedDocuments() {
+    int randomId = new Random().nextInt(-100, 100);
+    assertThat(userRepo.findUserAndUploadedDocuments(randomId)).isNull();
   }
 }
