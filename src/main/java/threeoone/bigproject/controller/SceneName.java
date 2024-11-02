@@ -19,5 +19,10 @@ public enum SceneName {
      */
     DOC_DETAIL,
 
+    /**
+     * Represents the login page.
+     */
+    LOGIN,
+
     YOUR_BOOKS
 }

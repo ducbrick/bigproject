@@ -15,25 +15,19 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 @Component
 @FxmlView("Menu.fxml")
 public class MenuController implements ViewController {
-    private final RequestSender<SwitchScene> switchSceneRequestSender;
-    public MenuController(RequestSender<SwitchScene> switchSceneRequestSender) {
-        this.switchSceneRequestSender = switchSceneRequestSender;
-    }
+  private final RequestSender<SwitchScene> switchSceneRequestSender;
 
-    @FXML
-    private AnchorPane root;
+  /**
+   * Temporary page controller to show features.
+   * @param switchSceneRequestSender
+   */
+  public MenuController(RequestSender<SwitchScene> switchSceneRequestSender) {
+    this.switchSceneRequestSender = switchSceneRequestSender;
+  }
 
-    @FXML
-    private Button UserInfo;
+  @FXML
+  private AnchorPane root;
 
-    @FXML
-    private Button Borrow;
-
-    @FXML
-    private Button YourBooks;
-
-    @FXML
-    private Label testLabel;
   /**
    * @return the root {@link Parent} of this view
    */
@@ -42,23 +36,14 @@ public class MenuController implements ViewController {
     return root;
   }
 
-    @Override
-    public void show() {
-        testLabel.setText("Waiting for input...");
-    }
+  /**
+   * Notifies the controller that its view is being displayed.
+   */
+  @Override
+  public void show() {
 
-    public void displayUserInfo() {
-        testLabel.setText("how to fetch user info here?");
-    }
+  }
 
-    public void borrowBooks() {
-        testLabel.setText("sending you to borrow page. how to do this?");
-    }
-
-    public void yourBooks() {
-        testLabel.setText("sending you to yourBooks page.how to do this...");
-        switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
-    }
   /**
    * Handles the event when the "Doc Overview" button is pressed.
    *

@@ -3,9 +3,12 @@ package threeoone.bigproject.controller.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.User;
+import threeoone.bigproject.services.LoginService;
 import threeoone.bigproject.view.ViewSwitcher;
 
 import static threeoone.bigproject.controller.SceneName.*;
@@ -24,6 +27,8 @@ public class Controller {
   private final ViewSwitcher viewSwitcher;
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
+  private final LoginController loginController;
+  private LoginService loginService;
 
   /**
    * Constructs the main controller with dependencies.
@@ -36,11 +41,12 @@ public class Controller {
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
                     ViewSwitcher viewSwitcher,
-                    DocumentDetailController documentDetailController) {
+                    DocumentDetailController documentDetailController, LoginController loginController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
     this.documentDetailController = documentDetailController;
+    this.loginController = loginController;
   }
 
   /**
@@ -52,9 +58,27 @@ public class Controller {
   @Autowired
   private void registerRequestReceiver(
           RequestSender<SwitchScene> switchSceneRequestSender,
-          RequestSender<Document> documentRequestSender) {
+          RequestSender<Document> documentRequestSender,
+          RequestSender<User> loginRequestSender) {
     switchSceneRequestSender.registerReceiver(this::switchScene);
     documentRequestSender.registerReceiver(this::documentDetail);
+    loginRequestSender.registerReceiver(this::authenticateLogin);
+  }
+
+  /**
+   * <p>
+   * Authenticating user login. If authentication succeeds, it switches scene to Menu page.
+   * If authentication fails, it return login page with a descriptive message.
+   * </p>
+   *
+   * @param user User login
+   */
+  private void authenticateLogin(User user) {
+    if( loginService.login(user) ) {
+      switchScene(new SwitchScene(MAIN_MENU));
+      return;
+    }
+    loginController.setFailedAttempts(loginController.getFailedAttempts() + 1);
   }
 
   /**
@@ -83,6 +107,14 @@ public class Controller {
       case DOC_DETAIL:
         viewSwitcher.switchToView(documentDetailController);
         break;
+      case LOGIN:
+        viewSwitcher.switchToView(loginController);
+        break;
     }
+  }
+
+  @Autowired
+  public void setLoginService(LoginService loginService) {
+    this.loginService = loginService;
   }
 }

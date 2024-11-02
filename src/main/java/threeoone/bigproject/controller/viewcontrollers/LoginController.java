@@ -34,6 +34,7 @@ public class LoginController implements ViewController {
   private Text message;
 
   private int failedAttempts = 0;
+  private boolean isPauseOnMaxAttempts = false;
   private static final int MAX_ATTEMPTS = 3;
   private static final int LOCKOUT_DURATION = 5; //second
 
@@ -77,26 +78,33 @@ public class LoginController implements ViewController {
   @FXML
   void pressLogin(ActionEvent event) {
     if (failedAttempts >= MAX_ATTEMPTS) {
-      message.setText("Too many attempts. Please wait...");
-      return;
-    }
-    if (validateInformation()) {
-      failedAttempts = 0; // Reset counter
-      loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
-    } else {
-      failedAttempts++;
-      message.setText("Invalid credentials. Attempt " + failedAttempts);
-
-      if (failedAttempts >= MAX_ATTEMPTS) {
+      if (isPauseOnMaxAttempts) {
+        isPauseOnMaxAttempts = false;
         message.setText("Too many attempts. Please wait...");
 
         PauseTransition pause = new PauseTransition(Duration.seconds(LOCKOUT_DURATION));
         pause.setOnFinished(e -> {
           failedAttempts = 0;
           message.setText("");
+          isPauseOnMaxAttempts = false;
         });
         pause.play();
       }
+      return;
+    }
+
+    if (validateInformation()) {
+      int beforeFailedAttempts = failedAttempts;
+      loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
+      if (failedAttempts != beforeFailedAttempts) {
+        message.setText("Username or password doesn't match. Attempt " + failedAttempts);
+      }
+    } else {
+      failedAttempts++;
+      message.setText("Invalid credentials. Attempt " + failedAttempts);
+    }
+    if (failedAttempts >= MAX_ATTEMPTS) {
+      isPauseOnMaxAttempts = true;
     }
   }
 
@@ -110,8 +118,7 @@ public class LoginController implements ViewController {
   }
 
   /**
-   *
-   * @return  number of times user fail when trying to login
+   * @return number of times user fail when trying to login
    */
   public int getFailedAttempts() {
     return failedAttempts;
@@ -119,8 +126,8 @@ public class LoginController implements ViewController {
 
   /**
    * Set gate for setting number of user fail when trying to login
-   * @param failedAttempts
    *
+   * @param failedAttempts: number of failed attempts
    */
   public void setFailedAttempts(int failedAttempts) {
     this.failedAttempts = failedAttempts;
