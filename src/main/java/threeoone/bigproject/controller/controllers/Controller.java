@@ -113,6 +113,10 @@ public class Controller {
     }
   }
 
+  /**
+   * Set loginService for Controller which need to interact with
+   * @param loginService: loginService need to interact with
+   */
   @Autowired
   public void setLoginService(LoginService loginService) {
     this.loginService = loginService;
