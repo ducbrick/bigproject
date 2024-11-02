@@ -38,6 +38,9 @@ public class YourBooksController implements ViewController {
     private TableColumn<Document, String> Author;
 
     @FXML
+    private TableColumn<Document, String> Uploader;
+
+    @FXML
     private TableColumn<Document, String> BorrowDate;
 
     @FXML
