@@ -4,17 +4,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.YourBooksController">
+<AnchorPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.YourBooksController">
     <children>
-        <TableView fx:id="books" layoutX="14.0" layoutY="80.0" prefHeight="276.0" prefWidth="569.0">
+        <TableView fx:id="books" layoutX="108.0" layoutY="172.0" prefHeight="446.0" prefWidth="754.0">
             <columns>
-                <TableColumn fx:id="ID" prefWidth="75.0" text="ID" />
-                <TableColumn fx:id="Name" prefWidth="75.0" text="Name" />
-                <TableColumn fx:id="Desc" prefWidth="116.0" text="Description" />
-                <TableColumn fx:id="Author" prefWidth="79.20001220703125" text="Author" />
-                <TableColumn fx:id="BorrowDate" prefWidth="96.0" text="Borrow Date" />
-                <TableColumn fx:id="ReturnDate" prefWidth="88.7999267578125" text="Return Date" />
+                <TableColumn fx:id="ID" prefWidth="25.60003662109375" text="ID" />
+                <TableColumn fx:id="Name" prefWidth="74.39996337890625" text="Name" />
+                <TableColumn fx:id="Desc" prefWidth="139.20001220703125" text="Description" />
+                <TableColumn fx:id="Author" prefWidth="88.0" text="Author" />
+                <TableColumn fx:id="BorrowDate" prefWidth="92.0" text="Borrow Date" />
+                <TableColumn fx:id="ReturnDate" prefWidth="87.99993896484375" text="Return Date" />
+                <TableColumn fx:id="Uploader" prefWidth="75.0" text="Uploader" />
             </columns>
         </TableView>
     </children>
