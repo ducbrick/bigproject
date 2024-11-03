@@ -23,6 +23,6 @@
          </font>
       </Label>
       <Button layoutX="52.0" layoutY="663.0" mnemonicParsing="false" onAction="#pressBack" text="BackHome" />
-      <Button layoutX="1064.0" layoutY="43.0" mnemonicParsing="false" text="Add New Book" />
+      <Button layoutX="1064.0" layoutY="43.0" mnemonicParsing="false" onAction="#pressAddDoc" text="Add New Doc" />
    </children>
 </AnchorPane>
