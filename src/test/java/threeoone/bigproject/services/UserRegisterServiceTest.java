@@ -2,6 +2,8 @@ package threeoone.bigproject.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.assertj.core.api.Assertions;
@@ -66,5 +68,8 @@ class UserRegisterServiceTest {
     when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
 
     userRegisterService.register(user);
+
+    verify(userRepo, times(1)).save(user);
+    verify(loginService, times(1)).login(user);
   }
 }

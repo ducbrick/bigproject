@@ -7,16 +7,35 @@ import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
 import threeoone.bigproject.repositories.UserRepo;
 
+/**
+ * A service to register a new {@link User} into the Database.
+ * This class is a singleton bean in Spring context.
+ *
+ * @author DUCBRICK
+ */
 @Service
 public class UserRegisterService {
   private final UserRepo userRepo;
   private final LoginService loginService;
 
+  /**
+   * Autowired constructor to obtain necessary dependencies.
+   *
+   * @param userRepo a {@link User} repository
+   * @param loginService a {@link LoginService}
+   */
   public UserRegisterService(UserRepo userRepo, LoginService loginService) {
     this.userRepo = userRepo;
     this.loginService = loginService;
   }
 
+  /**
+   * Register a new {@link User} into the Database.
+   *
+   * @param user
+   * @throws UserAlreadyExistException
+   * @throws IllegalCredentialsException
+   */
   //TODO: Check User constraints
   public void register(User user) throws UserAlreadyExistException, IllegalCredentialsException {
     if (user == null) {
@@ -32,5 +51,6 @@ public class UserRegisterService {
     }
 
     userRepo.save(user);
+    loginService.login(user);
   }
 }
