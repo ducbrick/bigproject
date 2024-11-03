@@ -65,7 +65,7 @@ public class DocumentDetailController implements ViewController {
     }
 
     public void returnToLast() {
-        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
+        switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
     }
 
     /** set default text for labels. */

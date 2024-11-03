@@ -28,6 +28,7 @@ public class Controller {
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
   private final LoginController loginController;
+  private final YourBooksController yourBooksController;
 
   /**
    * Constructs the main controller with dependencies.
@@ -40,6 +41,7 @@ public class Controller {
    */
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
+                    YourBooksController yourBooksController,
                     ViewSwitcher viewSwitcher,
                     DocumentDetailController documentDetailController,
                     LoginController loginController) {
@@ -48,6 +50,7 @@ public class Controller {
     this.viewSwitcher = viewSwitcher;
     this.documentDetailController = documentDetailController;
     this.loginController = loginController;
+    this.yourBooksController = yourBooksController;
   }
 
   /**
@@ -92,6 +95,9 @@ public class Controller {
         break;
       case LOGIN:
         viewSwitcher.switchToView(loginController);
+        break;
+      case YOUR_BOOKS:
+        viewSwitcher.switchToView(yourBooksController);
         break;
     }
   }
