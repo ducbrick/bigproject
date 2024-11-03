@@ -14,6 +14,14 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.entities.User;
 
+/**
+ * Controller class for the Login scene.
+ * <p>
+ *   Provide method for switch between field Text by Keyboard
+ * </p>
+ *
+ * @author HUY1902
+ */
 @Component
 @FxmlView("Login.fxml")
 public class LoginController implements ViewController {
@@ -33,9 +41,6 @@ public class LoginController implements ViewController {
   @FXML
   private Text message;
 
-  private int failedAttempts = 0;
-  private static final int MAX_ATTEMPTS = 3;
-  private static final int LOCKOUT_DURATION = 5; //second
 
   /**
    * Initializes the controller class. This method is automatically called
@@ -49,16 +54,6 @@ public class LoginController implements ViewController {
   }
 
   /**
-   * Validates the information provided by the user.
-   *
-   * @return true if the username and password fields are not empty;
-   * false otherwise
-   */
-  private boolean validateInformation() {
-    return !(usernameField.getText().isEmpty() || passwordField.getText().isEmpty());
-  }
-
-  /**
    * Constructs a LoginController with the specified RequestSender.
    *
    * @param loginRequestSender the RequestSender to handle login requests
@@ -68,36 +63,14 @@ public class LoginController implements ViewController {
   }
 
   /**
-   * Handles the login button press action. Validates the user's credentials,
-   * sends the login request if valid, or displays appropriate messages if invalid.
-   * Implements a lockout mechanism after a number of failed attempts.
+   * Handles the login button press action. All logic for login page now is handled by
+   * {@link threeoone.bigproject.controller.controllers.UserLoginController}
    *
    * @param event the event triggered when the login button is pressed
    */
   @FXML
   void pressLogin(ActionEvent event) {
-    if (failedAttempts >= MAX_ATTEMPTS) {
-      message.setText("Too many attempts. Please wait...");
-      return;
-    }
-    if (validateInformation()) {
-      failedAttempts = 0; // Reset counter
-      loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
-    } else {
-      failedAttempts++;
-      message.setText("Invalid credentials. Attempt " + failedAttempts);
-
-      if (failedAttempts >= MAX_ATTEMPTS) {
-        message.setText("Too many attempts. Please wait...");
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(LOCKOUT_DURATION));
-        pause.setOnFinished(e -> {
-          failedAttempts = 0;
-          message.setText("");
-        });
-        pause.play();
-      }
-    }
+    loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
   }
 
   /**
@@ -107,23 +80,6 @@ public class LoginController implements ViewController {
    */
   public void setMessage(String message) {
     this.message.setText(message);
-  }
-
-  /**
-   *
-   * @return  number of times user fail when trying to login
-   */
-  public int getFailedAttempts() {
-    return failedAttempts;
-  }
-
-  /**
-   * Set gate for setting number of user fail when trying to login
-   * @param failedAttempts
-   *
-   */
-  public void setFailedAttempts(int failedAttempts) {
-    this.failedAttempts = failedAttempts;
   }
 
   /**
