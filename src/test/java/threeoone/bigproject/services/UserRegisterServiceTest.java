@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
+import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
 import threeoone.bigproject.repositories.UserRepo;
 
@@ -25,6 +26,8 @@ class UserRegisterServiceTest {
   private UserRepo userRepo;
   @Mock
   private LoginService loginService;
+  @Mock
+  private IllegalCharacterFilterService illegalCharacterFilterService;
 
   @InjectMocks
   private UserRegisterService userRegisterService;
@@ -57,6 +60,33 @@ class UserRegisterServiceTest {
 
     assertThatThrownBy(() -> userRegisterService.register(user))
         .isInstanceOf(UserAlreadyExistException.class);
+  }
+
+  @Test
+  @DisplayName("Register with illegal username")
+  public void illegalUsername() {
+    User user = new User("username", "password", "Name");
+
+    when(loginService.getLoggedInUserId()).thenReturn(null);
+    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
+    when(illegalCharacterFilterService.hasIllegalCharacter(user.getLoginName())).thenReturn(true);
+
+    assertThatThrownBy(() -> userRegisterService.register(user))
+        .isInstanceOf(IllegalCredentialsException.class);
+  }
+
+  @Test
+  @DisplayName("Register with illegal password")
+  public void illegalPassword() {
+    User user = new User("username", "password", "Name");
+
+    when(loginService.getLoggedInUserId()).thenReturn(null);
+    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
+    when(illegalCharacterFilterService.hasIllegalCharacter(user.getLoginName())).thenReturn(false);
+    when(illegalCharacterFilterService.hasIllegalCharacter(user.getPassword())).thenReturn(true);
+
+    assertThatThrownBy(() -> userRegisterService.register(user))
+        .isInstanceOf(IllegalCredentialsException.class);
   }
 
   @Test
