@@ -24,5 +24,10 @@ public enum SceneName {
      */
     LOGIN,
 
+    /**
+     * Represents the signup page.
+     */
+    SIGNUP,
+
     YOUR_BOOKS
 }
