@@ -28,7 +28,6 @@ public class Controller {
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
   private final LoginController loginController;
-  private LoginService loginService;
 
   /**
    * Constructs the main controller with dependencies.
@@ -37,11 +36,13 @@ public class Controller {
    * @param docOverviewController    the controller for the document overview view
    * @param viewSwitcher             the component responsible for switching views
    * @param documentDetailController the controller for the document detail view
+   * @param loginController          the controller for the login view
    */
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
                     ViewSwitcher viewSwitcher,
-                    DocumentDetailController documentDetailController, LoginController loginController) {
+                    DocumentDetailController documentDetailController,
+                    LoginController loginController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
@@ -58,27 +59,9 @@ public class Controller {
   @Autowired
   private void registerRequestReceiver(
           RequestSender<SwitchScene> switchSceneRequestSender,
-          RequestSender<Document> documentRequestSender,
-          RequestSender<User> loginRequestSender) {
+          RequestSender<Document> documentRequestSender) {
     switchSceneRequestSender.registerReceiver(this::switchScene);
     documentRequestSender.registerReceiver(this::documentDetail);
-    loginRequestSender.registerReceiver(this::authenticateLogin);
-  }
-
-  /**
-   * <p>
-   * Authenticating user login. If authentication succeeds, it switches scene to Menu page.
-   * If authentication fails, it return login page with a descriptive message.
-   * </p>
-   *
-   * @param user User login
-   */
-  private void authenticateLogin(User user) {
-    if( loginService.login(user) ) {
-      switchScene(new SwitchScene(MAIN_MENU));
-      return;
-    }
-    loginController.setFailedAttempts(loginController.getFailedAttempts() + 1);
   }
 
   /**
@@ -111,14 +94,5 @@ public class Controller {
         viewSwitcher.switchToView(loginController);
         break;
     }
-  }
-
-  /**
-   * Set loginService for Controller which need to interact with
-   * @param loginService: loginService need to interact with
-   */
-  @Autowired
-  public void setLoginService(LoginService loginService) {
-    this.loginService = loginService;
   }
 }

@@ -33,10 +33,6 @@ public class LoginController implements ViewController {
   @FXML
   private Text message;
 
-  private int failedAttempts = 0;
-  private boolean isPauseOnMaxAttempts = false;
-  private static final int MAX_ATTEMPTS = 3;
-  private static final int LOCKOUT_DURATION = 5; //second
 
   /**
    * Initializes the controller class. This method is automatically called
@@ -50,16 +46,6 @@ public class LoginController implements ViewController {
   }
 
   /**
-   * Validates the information provided by the user.
-   *
-   * @return true if the username and password fields are not empty;
-   * false otherwise
-   */
-  private boolean validateInformation() {
-    return !(usernameField.getText().isEmpty() || passwordField.getText().isEmpty());
-  }
-
-  /**
    * Constructs a LoginController with the specified RequestSender.
    *
    * @param loginRequestSender the RequestSender to handle login requests
@@ -69,43 +55,14 @@ public class LoginController implements ViewController {
   }
 
   /**
-   * Handles the login button press action. Validates the user's credentials,
-   * sends the login request if valid, or displays appropriate messages if invalid.
-   * Implements a lockout mechanism after a number of failed attempts.
+   * Handles the login button press action. All logic for login page now is handled by
+   * {@link threeoone.bigproject.controller.controllers.UserLoginController}
    *
    * @param event the event triggered when the login button is pressed
    */
   @FXML
   void pressLogin(ActionEvent event) {
-    if (failedAttempts >= MAX_ATTEMPTS) {
-      if (isPauseOnMaxAttempts) {
-        isPauseOnMaxAttempts = false;
-        message.setText("Too many attempts. Please wait...");
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(LOCKOUT_DURATION));
-        pause.setOnFinished(e -> {
-          failedAttempts = 0;
-          message.setText("");
-          isPauseOnMaxAttempts = false;
-        });
-        pause.play();
-      }
-      return;
-    }
-
-    if (validateInformation()) {
-      int beforeFailedAttempts = failedAttempts;
-      loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
-      if (failedAttempts != beforeFailedAttempts) {
-        message.setText("Username or password doesn't match. Attempt " + failedAttempts);
-      }
-    } else {
-      failedAttempts++;
-      message.setText("Invalid credentials. Attempt " + failedAttempts);
-    }
-    if (failedAttempts >= MAX_ATTEMPTS) {
-      isPauseOnMaxAttempts = true;
-    }
+    loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
   }
 
   /**
@@ -115,22 +72,6 @@ public class LoginController implements ViewController {
    */
   public void setMessage(String message) {
     this.message.setText(message);
-  }
-
-  /**
-   * @return number of times user fail when trying to login
-   */
-  public int getFailedAttempts() {
-    return failedAttempts;
-  }
-
-  /**
-   * Set gate for setting number of user fail when trying to login
-   *
-   * @param failedAttempts: number of failed attempts
-   */
-  public void setFailedAttempts(int failedAttempts) {
-    this.failedAttempts = failedAttempts;
   }
 
   /**
