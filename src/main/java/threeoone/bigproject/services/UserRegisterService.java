@@ -54,6 +54,18 @@ public class UserRegisterService {
     user.setLoginName(user.getLoginName().stripTrailing());
     user.setDisplayName(user.getDisplayName().stripTrailing());
 
+    if (user.getLoginName().isEmpty()) {
+      throw new IllegalCredentialsException("Username can't be empty");
+    }
+
+    if (user.getPassword().isEmpty()) {
+      throw new IllegalCredentialsException("Password can't be empty");
+    }
+
+    if (user.getDisplayName().isEmpty()) {
+      throw new IllegalCredentialsException("Display name can't be empty");
+    }
+
     if (userRepo.findByLoginName(user.getLoginName()) != null) {
       throw new UserAlreadyExistException("There is another registered user with that username");
     }
