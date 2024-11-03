@@ -1,11 +1,13 @@
 package threeoone.bigproject.services;
 
+import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
 import threeoone.bigproject.repositories.UserRepo;
 
+@Service
 public class UserRegisterService {
   private final UserRepo userRepo;
   private final LoginService loginService;
