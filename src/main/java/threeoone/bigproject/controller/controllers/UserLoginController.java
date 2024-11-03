@@ -13,6 +13,15 @@ import threeoone.bigproject.services.LoginService;
 
 import static threeoone.bigproject.controller.SceneName.MAIN_MENU;
 
+/**
+ * Handles the interaction logic for the Login view.
+ * <p>
+ * Provides methods for validating User information,
+ * authenticating User information through interacting with LoginService
+ * </p>
+ *
+ * @author HUY1902
+ */
 @Component
 public class UserLoginController {
   private final LoginController loginController;
@@ -21,7 +30,7 @@ public class UserLoginController {
 
   private int failedAttempts = 0;
   private boolean isPauseOnMaxAttempts = false;
-  private static final int MAX_ATTEMPTS = 10;
+  private static final int MAX_ATTEMPTS = 3;
   private static final int LOCKOUT_DURATION = 5; //second
 
   /**
@@ -34,8 +43,12 @@ public class UserLoginController {
     this.switchSceneRequestSender = switchSceneRequestSender;
   }
 
+  /**
+   * Register loginService for controller
+   * @param loginService : service handle login
+   */
   @Autowired
-  private void registerService(LoginService loginService) {
+  public void registerService(LoginService loginService) {
     this.loginService = loginService;
   }
 
@@ -46,7 +59,7 @@ public class UserLoginController {
    * @param loginRequestReceiver login request receiver
    */
   @Autowired
-  void registerLoginRequestReceiver(RequestSender<User> loginRequestReceiver) {
+  private void registerLoginRequestReceiver(RequestSender<User> loginRequestReceiver) {
     loginRequestReceiver.registerReceiver(this::authenticateLogin);
   }
 
@@ -56,7 +69,7 @@ public class UserLoginController {
    * @return true if the username and password fields are not empty;
    * false otherwise
    */
-  private boolean validateInformation(User user) {
+  public boolean validateInformation(User user) {
     return !(user.getLoginName().isEmpty() || user.getPassword().isEmpty());
   }
 
@@ -75,7 +88,7 @@ public class UserLoginController {
    * </p>
    * @param user User login
    */
-  private void authenticateLogin(User user) {
+  public void authenticateLogin(User user) {
     if (failedAttempts >= MAX_ATTEMPTS) {
       if (isPauseOnMaxAttempts) {
         isPauseOnMaxAttempts = false;
@@ -112,5 +125,14 @@ public class UserLoginController {
     if (failedAttempts >= MAX_ATTEMPTS) {
       isPauseOnMaxAttempts = true;
     }
+  }
+
+  /**
+   * Get number of failed attempts. Its main purpose is for testing
+   *
+   * @return number of failed attempt
+   */
+  public int getFailedAttempts() {
+    return failedAttempts;
   }
 }

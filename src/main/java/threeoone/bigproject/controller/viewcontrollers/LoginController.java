@@ -14,6 +14,14 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.entities.User;
 
+/**
+ * Controller class for the Login scene.
+ * <p>
+ *   Provide method for switch between field Text by Keyboard
+ * </p>
+ *
+ * @author HUY1902
+ */
 @Component
 @FxmlView("Login.fxml")
 public class LoginController implements ViewController {
