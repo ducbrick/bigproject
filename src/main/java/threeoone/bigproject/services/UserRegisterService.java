@@ -32,9 +32,10 @@ public class UserRegisterService {
   /**
    * Register a new {@link User} into the Database.
    *
-   * @param user
-   * @throws UserAlreadyExistException
-   * @throws IllegalCredentialsException
+   * @param user a User with necessary information to register.
+   *
+   * @throws UserAlreadyExistException when another User with the same loginName exists
+   * @throws IllegalCredentialsException when input User have illegal credentials, such as empty name etc
    */
   //TODO: Check User constraints
   public void register(User user) throws UserAlreadyExistException, IllegalCredentialsException {
