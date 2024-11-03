@@ -51,6 +51,39 @@ class UserRegisterServiceTest {
   }
 
   @Test
+  @DisplayName("Register a user with empty loginName")
+  public void emptyLoginName() {
+    User user = new User("  ", "password", "Name");
+
+    when(loginService.getLoggedInUserId()).thenReturn(null);
+
+    assertThatThrownBy(() -> userRegisterService.register(user))
+        .isInstanceOf(IllegalCredentialsException.class);
+  }
+
+  @Test
+  @DisplayName("Register a user with empty password")
+  public void emptyPassword() {
+    User user = new User("username", "", "Name");
+
+    when(loginService.getLoggedInUserId()).thenReturn(null);
+
+    assertThatThrownBy(() -> userRegisterService.register(user))
+        .isInstanceOf(IllegalCredentialsException.class);
+  }
+
+  @Test
+  @DisplayName("Register a user with empty displayName")
+  public void emptyDisplayName() {
+    User user = new User("username", "password", "  ");
+
+    when(loginService.getLoggedInUserId()).thenReturn(null);
+
+    assertThatThrownBy(() -> userRegisterService.register(user))
+        .isInstanceOf(IllegalCredentialsException.class);
+  }
+
+  @Test
   @DisplayName("Register with the same username as another user")
   public void registerWithSameUsername() {
     User user = new User("username", "password", "Name");
