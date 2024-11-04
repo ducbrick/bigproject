@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
@@ -142,8 +143,18 @@ public class DocOverviewController implements ViewController {
    * Handles the event when the back button is pressed.
    * Switches the scene to the menu view.
    */
-  public void pressBack() {
+  @FXML
+  private void pressBack() {
     switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+  }
+
+  /**
+   * Switching to Add New Doc page when press Add Doc button
+   * @param event event trigger add new doc button
+   */
+  @FXML
+  private void pressAddDoc(ActionEvent event) {
+    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_NEW_DOC));
   }
 
   /**

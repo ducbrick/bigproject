@@ -30,6 +30,7 @@ public class Controller {
   private final LoginController loginController;
   private final YourBooksController yourBooksController;
   private final RegisterController registerController;
+  private final AddNewDocController addNewDocController;
 
   /**
    * Constructs the main controller with dependencies.
@@ -39,13 +40,16 @@ public class Controller {
    * @param viewSwitcher             the component responsible for switching views
    * @param documentDetailController the controller for the document detail view
    * @param loginController          the controller for the login view
+   * @param addNewDocController      the controller for add new doc view
    */
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
                     YourBooksController yourBooksController,
                     ViewSwitcher viewSwitcher,
                     DocumentDetailController documentDetailController,
-                    LoginController loginController, RegisterController registerController) {
+                    LoginController loginController,
+                    RegisterController registerController,
+                    AddNewDocController addNewDocController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
@@ -53,6 +57,7 @@ public class Controller {
     this.loginController = loginController;
     this.yourBooksController = yourBooksController;
     this.registerController = registerController;
+    this.addNewDocController = addNewDocController;
   }
 
   /**
@@ -103,6 +108,10 @@ public class Controller {
         break;
       case SIGNUP:
         viewSwitcher.switchToView(registerController);
+        break;
+      case ADD_NEW_DOC:
+        viewSwitcher.switchToView(addNewDocController);
+        break;
     }
   }
 }
