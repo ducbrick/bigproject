@@ -33,6 +33,7 @@ public class DocumentPersistenceService {
    *
    * @throws IllegalArgumentException when document is {@code NULL}
    * @throws IllegalDocumentInfoException when document doesn't follow {@link Document} constraints
+   * @throws RuntimeException when fails to work with the Database
    */
   public void saveNew(Document document) throws IllegalDocumentInfoException {
     if (document == null) {
