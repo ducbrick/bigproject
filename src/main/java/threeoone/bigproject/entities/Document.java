@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 
 /**
  * ORM Entity representing a {@link Document} in the library database.
@@ -55,6 +56,20 @@ public class Document {
    * This empty constructor is required by JPA.
    */
   public Document() {
+  }
+
+  public void checkConstraints() throws IllegalDocumentInfoException {
+    if (name == null) {
+      throw new IllegalDocumentInfoException("Document name is NULL");
+    }
+    name = name.stripTrailing();
+    if (name.isEmpty()) {
+      throw new IllegalDocumentInfoException("Document name is empty");
+    }
+
+    if (uploader == null) {
+      throw new IllegalDocumentInfoException("Document have no uploader");
+    }
   }
 
   /**
