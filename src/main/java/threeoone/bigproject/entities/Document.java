@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 
 /**
  * ORM Entity representing a {@link Document} in the library database.
@@ -27,7 +28,7 @@ public class Document {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private int id;
+  private Integer id;
 
   @Column(name = "name")
   private String name;
@@ -58,12 +59,36 @@ public class Document {
   }
 
   /**
+   * Verify entity constraints.
+   * <p>
+   * Document's {@code name} must be a non-empty {@link String}.
+   * This method strips {@code name} of its trailing empty spaces.
+   * <p>
+   * Document's {@code uploader} must not be {@code NULL}.
+   *
+   * @throws IllegalDocumentInfoException when the Document's attributes don't adhere to the constraints
+   */
+  public void checkConstraints() throws IllegalDocumentInfoException {
+    if (name == null) {
+      throw new IllegalDocumentInfoException("Document name is NULL");
+    }
+    name = name.stripTrailing();
+    if (name.isEmpty()) {
+      throw new IllegalDocumentInfoException("Document name is empty");
+    }
+
+    if (uploader == null) {
+      throw new IllegalDocumentInfoException("Document have no uploader");
+    }
+  }
+
+  /**
    * Returns the {@code id} of the {@link Document}.
    * This getter is required by JPA.
    *
    * @return the {@code id} of the {@link Document}
    */
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
@@ -73,7 +98,7 @@ public class Document {
    *
    * @param id the new {@code id} of the {@link Document}
    */
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
