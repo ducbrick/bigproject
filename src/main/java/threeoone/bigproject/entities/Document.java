@@ -62,6 +62,7 @@ public class Document {
    * Verify entity constraints.
    * <p>
    * Document's {@code name} must be a non-empty {@link String}.
+   * This method strips {@code name} of its trailing empty spaces.
    * <p>
    * Document's {@code uploader} must not be {@code NULL}.
    *
