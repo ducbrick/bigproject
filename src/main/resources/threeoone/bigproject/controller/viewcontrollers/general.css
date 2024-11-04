@@ -1,0 +1,63 @@
+.menu-container {
+    -fx-max-width: 100px; /* Collapsed height */
+    -fx-transition: -fx-max-height 0.3s ease-out; /* Smooth transition */
+    overflow: hidden; /* Prevents content from spilling over */
+}
+
+.menu-container:hover {
+    -fx-max-width: 300px; /* Expanded height; adjust as needed */
+}
+.button {
+    -fx-border-color: #d0b84d; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+    -fx-text-fill: #ffdb5a;
+    -fx-background-color: #1e371e; /* Optional: Background fills */
+    -fx-opacity: 1;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+}
+.button:hover {
+    -fx-underline: true;
+}
+.menubar-button {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: transparent; /* No border initially */
+    -fx-text-fill: #ffdb5a; /* Text color */
+    -fx-font-family: "Trebuchet MS";
+    -fx-font-weight: bold;
+    -fx-font-size: 15px; /* Font size */
+    -fx-padding: 10 20; /* Padding */
+    -fx-border-width: 0 0 2px 0; /* Border width */
+    -fx-transition: all 0.4s ease-in-out; /* Smooth transition */
+    -fx-opacity: 0.7;
+}
+
+/* On hover, border appears */
+.menubar-button:hover {
+    -fx-border-color: #d0b84d; /* Border color */
+    -fx-border-width: 0 0 4px 0; /* Border width */
+    -fx-text-fill: #ffdb5a;
+    -fx-background-color: #1e371e; /* Optional: Background fills */
+    -fx-opacity: 1;
+    -fx-underline: false;
+}
+.heading-text {
+    -fx-fill: #ffdb5a; /* Text color */
+    -fx-font-size: 50px;
+}
+.body-text {
+    -fx-fill: #ffdb5a; /* Text color */
+    -fx-font-size: 20px;
+}
+.pane {
+    -fx-background-color: #1e371e;
+    -fx-border-width: 3px;
+    -fx-border-color: #d0b84d; /* Border color */
+
+}
+#active {
+    -fx-text-fill: #1e371e; /* Active text color */
+    -fx-border-color: #1e371e; /* Active border color */
+    -fx-border-width: 0 0 4px 0; /* Active border width */
+    -fx-background-color: #d0b84d; /* Active background color */
+}

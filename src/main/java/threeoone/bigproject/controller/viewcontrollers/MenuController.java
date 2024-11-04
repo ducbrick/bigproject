@@ -16,7 +16,6 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 @FxmlView("Menu.fxml")
 public class MenuController implements ViewController {
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-
   /**
    * Temporary page controller to show features.
    * @param switchSceneRequestSender
