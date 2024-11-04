@@ -29,6 +29,7 @@ public class Controller {
   private final DocumentDetailController documentDetailController;
   private final LoginController loginController;
   private final YourBooksController yourBooksController;
+  private final RegisterController registerController;
   private final AddNewDocController addNewDocController;
 
   /**
@@ -46,13 +47,16 @@ public class Controller {
                     YourBooksController yourBooksController,
                     ViewSwitcher viewSwitcher,
                     DocumentDetailController documentDetailController,
-                    LoginController loginController, AddNewDocController addNewDocController) {
+                    LoginController loginController,
+                    RegisterController registerController,
+                    AddNewDocController addNewDocController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
     this.documentDetailController = documentDetailController;
     this.loginController = loginController;
     this.yourBooksController = yourBooksController;
+    this.registerController = registerController;
     this.addNewDocController = addNewDocController;
   }
 
@@ -101,6 +105,9 @@ public class Controller {
         break;
       case YOUR_BOOKS:
         viewSwitcher.switchToView(yourBooksController);
+        break;
+      case SIGNUP:
+        viewSwitcher.switchToView(registerController);
         break;
       case ADD_NEW_DOC:
         viewSwitcher.switchToView(addNewDocController);
