@@ -87,7 +87,7 @@ public class Document {
    *
    * @return the {@code id} of the {@link Document}
    */
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
@@ -97,7 +97,7 @@ public class Document {
    *
    * @param id the new {@code id} of the {@link Document}
    */
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
