@@ -20,7 +20,7 @@ public class MenuController implements ViewController {
     private final RequestSender<SwitchScene> switchSceneRequestSender;
 
     @FXML
-    private AnchorPane root;
+    private Parent root;
 
     /**
      * "document overview" for borrowing?
@@ -42,7 +42,6 @@ public class MenuController implements ViewController {
 
     @Override
     public Parent getParent() {
-        root.setPrefSize(1200, 800);
         return root;
     }
 
@@ -59,10 +58,15 @@ public class MenuController implements ViewController {
 
     }
 
+    /**
+     * go to document overview
+     */
+    @FXML
     private void borrowBooks() {
+        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
 
     }
-
+    @FXML
     private void yourBooks() {
         switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
     }

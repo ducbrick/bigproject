@@ -3,53 +3,80 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
-            <HBox prefHeight="84.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="84.0" prefWidth="1200.0" styleClass="pane" BorderPane.alignment="CENTER">
                <children>
                   <Label prefHeight="102.0" prefWidth="221.0" text="Label">
                      <HBox.margin>
                         <Insets right="100.0" />
                      </HBox.margin>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="84.0" prefWidth="129.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="106.0" prefWidth="124.0" text="all books" />
-                  <Button mnemonicParsing="false" prefHeight="106.0" prefWidth="126.0" text="borrow" />
+                  <Button mnemonicParsing="false" prefHeight="84.0" prefWidth="129.0" styleClass="menubar-button" text="Add Book" />
+                  <Button fx:id="DocumentOverview" mnemonicParsing="false" onAction="#yourBooks" prefHeight="106.0" prefWidth="124.0" styleClass="menubar-button" text="Your books" />
+                  <Button fx:id="BorrowedBooks" mnemonicParsing="false" onAction="#borrowBooks" prefHeight="106.0" prefWidth="126.0" styleClass="menubar-button" text="Borrow" />
                </children>
             </HBox>
          </top>
-         <bottom>
-            <Button mnemonicParsing="false" prefHeight="116.0" prefWidth="918.0" text="Featured Book" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets bottom="50.0" />
-               </BorderPane.margin>
-            </Button>
-         </bottom>
          <right>
-            <VBox prefHeight="450.0" prefWidth="228.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="616.0" prefWidth="0.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="210.0" prefWidth="227.0" text="Random book" />
+                  <AnchorPane prefHeight="454.0" prefWidth="251.0">
+                     <children>
+                        <Button fx:id="Random" layoutY="275.0" mnemonicParsing="false" prefHeight="178.0" prefWidth="242.0" text="Random document (or book idk choose a name)" AnchorPane.rightAnchor="24.799999999999983" />
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
          </right>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="616.0" prefWidth="791.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutX="138.0" layoutY="14.0" prefHeight="337.0" prefWidth="416.0">
+                  <VBox layoutX="92.0" layoutY="32.0" prefHeight="67.0" prefWidth="277.0" styleClass="pane">
                      <children>
-                        <TextArea prefHeight="98.0" prefWidth="416.0" text="YO ANGELO&#10;" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="415.7367401123047" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="421.3367156982422" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="heading-text" text="This is Morioh radio" wrappingWidth="386.60008239746094" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="body-text" text="Nice weather today, huh" wrappingWidth="415.7367401123047">
+                           <font>
+                              <Font name="Verdana" size="17.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="25.0" />
+                           </VBox.margin></Text>
+                     </children>
+                  </VBox>
+                  <HBox layoutX="90.0" layoutY="248.0" prefHeight="136.0" prefWidth="452.0">
+                     <children>
+                        <Button fx:id="Featured" mnemonicParsing="false" prefHeight="131.0" prefWidth="241.0" text="Featured 1">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="134.0" prefWidth="231.0" text="Featured 2">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button layoutX="90.0" layoutY="402.0" mnemonicParsing="false" prefHeight="178.0" prefWidth="238.0" text="Latest Upload" />
+                  <VBox layoutX="593.0" layoutY="32.0" prefHeight="162.0" prefWidth="262.0">
+                     <children>
+                        <Label prefHeight="94.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books" />
+                        <Label prefHeight="98.0" prefWidth="262.0" styleClass="button" text="Closest return date: 6/9/6969 (overdue 69 books)">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
                      </children>
                   </VBox>
                </children>
