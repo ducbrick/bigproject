@@ -35,6 +35,9 @@ public class MenuController implements ViewController {
     private Button BorrowedBooks;
 
     @FXML
+    private Button AddDocument;
+
+    @FXML
     private Button Featured;
 
     @FXML
@@ -66,10 +69,17 @@ public class MenuController implements ViewController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
 
     }
+
     @FXML
     private void yourBooks() {
         switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
     }
+
+    @FXML
+    private void addDocument() {
+        switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_NEW_DOC));
+    }
+
 
     /**
      * generate a random book

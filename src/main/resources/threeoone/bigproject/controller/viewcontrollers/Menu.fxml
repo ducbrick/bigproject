@@ -24,7 +24,8 @@
                   </Label>
                   <Button mnemonicParsing="false" prefHeight="84.0" prefWidth="129.0" styleClass="menubar-button" text="Add Book" />
                   <Button fx:id="DocumentOverview" mnemonicParsing="false" onAction="#yourBooks" prefHeight="106.0" prefWidth="124.0" styleClass="menubar-button" text="Your books" />
-                  <Button fx:id="BorrowedBooks" mnemonicParsing="false" onAction="#borrowBooks" prefHeight="106.0" prefWidth="126.0" styleClass="menubar-button" text="Borrow" />
+                  <Button fx:id="BorrowedBooks" mnemonicParsing="false" onAction="#borrowBooks" prefHeight="78.0" prefWidth="125.0" styleClass="menubar-button" text="Borrow" />
+                  <Button fx:id="AddDocument" mnemonicParsing="false" onMouseClicked="#addDocument" prefHeight="78.0" prefWidth="120.0" styleClass="menubar-button" text="Add Document" />
                </children>
             </HBox>
          </top>
