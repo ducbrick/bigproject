@@ -27,7 +27,7 @@ public class DocumentPersistenceService {
   /**
    * Save a new {@link Document} to the Database.
    * This method verifies Document's constraints by calling {@link Document#checkConstraints()} before saving.
-   * This method will set the Document's {@code id} to {@code NULL} and JPA will assign a new {@code id} to it.
+   * This method sets the Document's {@code id} to {@code NULL} and JPA will assign a new {@code id} to it.
    *
    * @param document the {@link Document} to save.
    *
