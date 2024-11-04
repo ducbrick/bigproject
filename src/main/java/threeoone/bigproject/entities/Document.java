@@ -58,6 +58,15 @@ public class Document {
   public Document() {
   }
 
+  /**
+   * Verify entity constraints.
+   * <p>
+   * Document's {@code name} must be a non-empty {@link String}.
+   * <p>
+   * Document's {@code uploader} must not be {@code NULL}.
+   *
+   * @throws IllegalDocumentInfoException when the Document's attributes don't adhere to the constraints
+   */
   public void checkConstraints() throws IllegalDocumentInfoException {
     if (name == null) {
       throw new IllegalDocumentInfoException("Document name is NULL");
