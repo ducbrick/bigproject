@@ -126,6 +126,15 @@ class UserRepoTest {
   }
 
   @Test
+  @DisplayName("Retrieve user with no document with findUserAndUploadedDocuments")
+  public void retriveUserWithNoDocumentWith_findUserAndUploadedDocuments() {
+    User user = new User("name", "password", "Name");
+    user = userRepo.save(user);
+
+    assertThat(userRepo.findUserAndUploadedDocuments(user.getId())).isSameAs(user);
+  }
+
+  @Test
   @DisplayName("Find user by login name")
   public void findByLoginName() {
     User user = new User("ducbrick", "password", "Brick");
