@@ -53,4 +53,12 @@ public class SpringConfig {
   public RequestSender<User> loginRequestSender() {
     return new RequestSender<>();
   }
+
+  /**
+   * Register a {@link RequestSender} of type {@code registerRequest} into {@code Spring} context.
+   * Send a registerRequest which holds {@link User} from 'RegisterPage' to service.
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<User> registerRequestSender() {return new RequestSender<>();}
 }

@@ -1,0 +1,45 @@
+.root {
+    -fx-font-family: 'Arial';
+    -fx-background-color: #f0f0f0;
+}
+
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+}
+
+.label-title {
+    -fx-text-fill: #4a90e2;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d6d6d6;
+    -fx-padding: 5px;
+}
+
+.button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #357abd;
+}
+
+.hyperlink {
+    -fx-text-fill: #4a90e2;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+}
+
+#confirmMessage {
+    -fx-text-fill: red;
+}
