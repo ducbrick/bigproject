@@ -3,9 +3,6 @@ package threeoone.bigproject.controller.viewcontrollers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -84,7 +81,7 @@ public class MenuBarController {
             case YOUR_BOOKS -> YourBooks;
             case DOC_OVERVIEW -> DocOverview;
             case MAIN_MENU -> Menu;
-            default -> null;
+            default -> new Button();
         };
         button.setId("active");
     }
