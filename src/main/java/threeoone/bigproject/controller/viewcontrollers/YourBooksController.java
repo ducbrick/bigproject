@@ -31,12 +31,16 @@ public class YourBooksController implements ViewController {
      * {@code RequestSender} to send {@code Document} to {@code DocumentDetail}
      */
     private final RequestSender<Document> documentRequestSender;
-
     private final RequestSender<SwitchScene> switchSceneRequestSender;
+
+    private final MenuBarController menuBarController;
+
     public YourBooksController(RequestSender<Document> documentRequestSender,
-                               RequestSender<SwitchScene> switchSceneRequestSender) {
+                               RequestSender<SwitchScene> switchSceneRequestSender,
+                               MenuBarController menuBarController) {
         this.documentRequestSender = documentRequestSender;
         this.switchSceneRequestSender = switchSceneRequestSender;
+        this.menuBarController = menuBarController;
     }
 
     @FXML
@@ -70,10 +74,9 @@ public class YourBooksController implements ViewController {
     private TableColumn<Document, String> ReturnDate;
 
     /**
-     * Sets up a double-click listener for every row and
-     * Sets
+     * Sets up a double-click listener for every row
+     *
      */
-    @FXML
     public void initialize() {
         // Set up the columns with entity properties
         ID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -91,6 +94,8 @@ public class YourBooksController implements ViewController {
             });
             return row;
         });
+        menuBarController.highlight(SceneName.YOUR_BOOKS);
+
     }
 
 
@@ -110,7 +115,6 @@ public class YourBooksController implements ViewController {
 
     @Override
     public void show(){
-
     }
 
 }

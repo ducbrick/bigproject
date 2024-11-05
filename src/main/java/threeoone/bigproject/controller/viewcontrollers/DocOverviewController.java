@@ -1,9 +1,11 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +23,8 @@ import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+
+import java.util.*;
 
 /**
  * Controller class for the Document Overview scene.
@@ -112,8 +116,9 @@ public class DocOverviewController implements ViewController {
       return row;
     });
 
-    menuBarController.highlight();
+    menuBarController.highlight(SceneName.DOC_OVERVIEW);
   }
+
 
   /**
    * Sets the items in the document table with the given list.
@@ -133,6 +138,7 @@ public class DocOverviewController implements ViewController {
       return new SimpleStringProperty(cellData.getValue().getUploader().getDisplayName());
     });
     table.setItems(list);
+
   }
 
   /**
@@ -179,6 +185,5 @@ public class DocOverviewController implements ViewController {
    */
   @Override
   public void show() {
-
   }
 }

@@ -31,6 +31,8 @@ public class AddNewDocController implements ViewController {
   private final RequestSender<SwitchScene> switchSceneRequestSender;
   private final RequestSender<Document> addDocumentRequesterSender;
 
+  private MenuBarController menuBarController;
+
   @FXML
   private Parent root;
 
@@ -59,9 +61,11 @@ public class AddNewDocController implements ViewController {
    * @param addDocumentRequesterSender    the RequestSender to add document
    */
   public AddNewDocController(RequestSender<SwitchScene> switchSceneRequestSender,
-                             RequestSender<Document> addDocumentRequesterSender) {
+                             RequestSender<Document> addDocumentRequesterSender,
+                             MenuBarController menuBarController) {
     this.switchSceneRequestSender = switchSceneRequestSender;
     this.addDocumentRequesterSender = addDocumentRequesterSender;
+    this.menuBarController = menuBarController;
   }
 
   /**
@@ -85,6 +89,9 @@ public class AddNewDocController implements ViewController {
         }
       }
     });
+
+    menuBarController.highlight(SceneName.ADD_NEW_DOC);
+
   }
 
   /**

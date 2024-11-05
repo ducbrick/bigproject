@@ -20,7 +20,6 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 @Component
 @FxmlView("MenuBar.fxml")
 public class MenuBarController {
-
     /**
      * rq sender to switch between views
      */
@@ -41,6 +40,9 @@ public class MenuBarController {
     @FXML
     private Button YourBooks;
 
+    @FXML
+    private Button Menu;
+
     /**
      * method for AddBook
      */
@@ -59,13 +61,25 @@ public class MenuBarController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
     }
 
+    @FXML
+    private void toMenu() {
+        switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+    }
+
     /**
      * not working
      *
      */
-    public void highlight() {
+    public void highlight(SceneName sceneName) {
         System.out.println("Highlighting button: ");
-        DocOverview.setStyle("-fx-background-color: #ffff00");
+        Button button = switch (sceneName) {
+            case ADD_NEW_DOC -> AddBook;
+            case YOUR_BOOKS -> YourBooks;
+            case DOC_OVERVIEW -> DocOverview;
+            case MAIN_MENU -> Menu;
+            default -> null;
+        };
+        button.setId("active");
     }
 
 }

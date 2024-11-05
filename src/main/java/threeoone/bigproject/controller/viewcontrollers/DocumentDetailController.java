@@ -27,8 +27,8 @@ import threeoone.bigproject.entities.Document;
 @FxmlView("DocDetail.fxml")
 public class DocumentDetailController implements ViewController {
     private final RequestSender<SwitchScene> switchSceneRequestSender;
-
-    public DocumentDetailController(RequestSender<SwitchScene> switchSceneRequestSender) {
+        public DocumentDetailController(RequestSender<SwitchScene> switchSceneRequestSender,
+                                    MenuBarController menuBarController) {
         this.switchSceneRequestSender = switchSceneRequestSender;
     }
 
