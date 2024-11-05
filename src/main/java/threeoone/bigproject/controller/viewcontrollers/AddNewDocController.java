@@ -8,12 +8,17 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.stage.FileChooser;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+
+import java.io.File;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  * Controller class for the Add New Doc scene.
@@ -52,11 +57,17 @@ public class AddNewDocController implements ViewController {
   @FXML
   private Button submitButton;
 
+  @FXML
+  private Button chooseButton;
+
+  private File lastDirectory = null;
+  private File selectedFile = null;
+
   /**
    * Constructs a AddNewDocController with the specified RequestSender.
    *
-   * @param switchSceneRequestSender      the RequestSender to switch scene requests
-   * @param addDocumentRequesterSender    the RequestSender to add document
+   * @param switchSceneRequestSender   the RequestSender to switch scene requests
+   * @param addDocumentRequesterSender the RequestSender to add document
    */
   public AddNewDocController(RequestSender<SwitchScene> switchSceneRequestSender,
                              RequestSender<Document> addDocumentRequesterSender) {
@@ -67,6 +78,7 @@ public class AddNewDocController implements ViewController {
   /**
    * Initializes the controller class. This method is automatically called
    * after the fxml file has been loaded.
+   * Set default date for user (today)
    */
   public void initialize() {
     name.setOnAction(event -> description.requestFocus());
@@ -77,6 +89,7 @@ public class AddNewDocController implements ViewController {
         categories.show();
       }
     });
+    date.setValue(getDate());
     date.setOnAction(event -> date.requestFocus());
     date.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
@@ -85,6 +98,7 @@ public class AddNewDocController implements ViewController {
         }
       }
     });
+    chooseButton.setOnAction(event -> openFileChooser());
   }
 
   /**
@@ -92,6 +106,7 @@ public class AddNewDocController implements ViewController {
    *
    * @param event event trigger submit button
    */
+  // TODO: Submit send today date, path to service
   @FXML
   private void pressSubmit(ActionEvent event) {
     switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
@@ -114,5 +129,29 @@ public class AddNewDocController implements ViewController {
   @Override
   public void show() {
 
+  }
+
+  /**
+   * This function get today date follow time zone +7
+   *
+   * @return today date
+   */
+  private LocalDate getDate() {
+    return LocalDate.now(ZoneId.of("Asia/Bangkok"));
+  }
+
+  /**
+   * Open window file chooser (belong to OS) to choosing document file
+   */
+  private void openFileChooser() {
+    FileChooser fileChooser = new FileChooser();
+    if (lastDirectory != null) {
+      fileChooser.setInitialDirectory(lastDirectory);
+    }
+    selectedFile = fileChooser.showOpenDialog(root.getScene().getWindow());
+    if (selectedFile != null) {
+      lastDirectory = selectedFile.getParentFile();
+      chooseButton.setText("Selected File: " + selectedFile.getName());
+    }
   }
 }
