@@ -27,7 +27,6 @@
 
 .button:pressed {
     -fx-background-color: #2c6ba0;
-    -fx-transform: scale(0.95);
 }
 
 .text-field, .choice-box, .date-picker {

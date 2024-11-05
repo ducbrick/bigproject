@@ -3,10 +3,7 @@ package threeoone.bigproject.controller.viewcontrollers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -15,6 +12,8 @@ import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.util.Alerts;
+import threeoone.bigproject.util.FileOperation;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -36,7 +35,7 @@ public class AddNewDocController implements ViewController {
   private final RequestSender<SwitchScene> switchSceneRequestSender;
   private final RequestSender<Document> addDocumentRequestSender;
 
-  private MenuBarController menuBarController;
+  private final MenuBarController menuBarController;
 
   @FXML
   private Parent root;
@@ -116,8 +115,13 @@ public class AddNewDocController implements ViewController {
   // TODO: Submit send today date, path to service
   @FXML
   private void pressSubmit(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
+    if(selectedFile == null) {
+      Alerts.showAlertWarning("Error!", "Unselected file");
+      return;
+    }
+    FileOperation.copyFile(selectedFile.getPath(), "");
     addDocumentRequestSender.send(new Document(name.getText(), description.getText()));
+    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
   }
 
   /**

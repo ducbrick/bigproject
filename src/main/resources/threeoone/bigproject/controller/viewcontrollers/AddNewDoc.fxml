@@ -9,6 +9,7 @@
 
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" stylesheets="@AddNewDocStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.AddNewDocController">
     <children>
+        <fx:include source="MenuBar.fxml" />
         <Label layoutX="241.0" layoutY="52.0" styleClass="label fade-in" text="Add New Book" />
         <TextField fx:id="name" layoutX="423.0" layoutY="119.0" prefHeight="25.0" prefWidth="507.0" promptText="Name Doc" styleClass="text-field fade-in" />
         <TextField fx:id="description" layoutX="422.0" layoutY="189.0" prefHeight="25.0" prefWidth="507.0" promptText="Description" styleClass="text-field fade-in" />
