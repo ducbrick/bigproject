@@ -56,11 +56,11 @@ public class UserLoginController {
   /**
    * Register request receiver for login request
    *
-   * @param loginRequestReceiver login request receiver
+   * @param loginRequestSender login request receiver
    */
   @Autowired
-  private void registerLoginRequestReceiver(RequestSender<User> loginRequestReceiver) {
-    loginRequestReceiver.registerReceiver(this::authenticateLogin);
+  private void registerLoginRequestReceiver(RequestSender<User> loginRequestSender) {
+    loginRequestSender.registerReceiver(this::authenticateLogin);
   }
 
   /**
