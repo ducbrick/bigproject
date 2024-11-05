@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
@@ -42,6 +43,8 @@ public class DocOverviewController implements ViewController {
    * Request sender for handling document interactions
    */
   private final RequestSender<Document> documentRequestSender;
+
+  private final MenuBarController menuBarController;
   /**
    * Root node of the view
    */
@@ -86,9 +89,11 @@ public class DocOverviewController implements ViewController {
    * @param documentRequestSender    Request sender for handling document interactions
    */
   public DocOverviewController(RequestSender<SwitchScene> switchSceneRequestSender,
-                               RequestSender<Document> documentRequestSender) {
+                               RequestSender<Document> documentRequestSender,
+                               MenuBarController menuBarController) {
     this.switchSceneRequestSender = switchSceneRequestSender;
     this.documentRequestSender = documentRequestSender;
+    this.menuBarController = menuBarController;
   }
 
   /**
@@ -106,6 +111,8 @@ public class DocOverviewController implements ViewController {
       });
       return row;
     });
+
+    menuBarController.highlight();
   }
 
   /**

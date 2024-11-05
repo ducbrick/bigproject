@@ -7,14 +7,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuBarController">
    <children>
-      <VBox fx:id="menubar" prefHeight="700.0" prefWidth="82.0" styleClass="pane" stylesheets="@general.css">
+      <VBox fx:id="menubar" prefHeight="700.0" prefWidth="82.0" styleClass="pane">
          <children>
-            <Button fx:id="AddBook" mnemonicParsing="false" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="82.0" stylesheets="@general.css" text="Add Book">
+            <Button fx:id="AddBook" mnemonicParsing="false" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="82.0" text="Add Book">
                <VBox.margin>
                   <Insets top="150.0" />
                </VBox.margin>
             </Button>
-            <Button id="active" fx:id="DocOverview" mnemonicParsing="false" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="82.0" stylesheets="@general.css" text="Browse books" />
+            <Button id="active" fx:id="DocOverview" mnemonicParsing="false" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="82.0" text="Browse books" />
             <Button fx:id="YourBooks" mnemonicParsing="false" onMouseClicked="#toYourBooks" prefHeight="54.0" prefWidth="82.0" text="Your books" />
             <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="82.0" text="Button" />
          </children>

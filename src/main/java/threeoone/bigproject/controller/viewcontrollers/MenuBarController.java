@@ -46,31 +46,26 @@ public class MenuBarController {
      */
     @FXML
     private void toAddBook() {
-        highlight(AddBook);
         switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_NEW_DOC));
-
     }
 
     @FXML
     private void toYourBooks() {
         switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
-        highlight(YourBooks);
     }
 
     @FXML
     private void toDocOverview() {
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
-        highlight(DocOverview);
     }
 
     /**
      * not working
-     * @param active
+     *
      */
-    @FXML
-    private void highlight(Button active) {
-        System.out.println("Highlighting button: " + active.getText());
-        active.setId("active");
+    public void highlight() {
+        System.out.println("Highlighting button: ");
+        DocOverview.setStyle("-fx-background-color: #ffff00");
     }
 
 }
