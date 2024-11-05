@@ -1,7 +1,5 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
-import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.Document;
 
 /**
@@ -30,12 +27,12 @@ public class YourBooksController implements ViewController {
     /**
      * {@code RequestSender} to send {@code Document} to {@code DocumentDetail}
      */
-    private final RequestSender<Document> documentRequestSender;
+    private final RequestSender<Document> documentDetailRequestSender;
 
     private final RequestSender<SwitchScene> switchSceneRequestSender;
-    public YourBooksController(RequestSender<Document> documentRequestSender,
+    public YourBooksController(RequestSender<Document> documentDetailRequestSender,
                                RequestSender<SwitchScene> switchSceneRequestSender) {
-        this.documentRequestSender = documentRequestSender;
+        this.documentDetailRequestSender = documentDetailRequestSender;
         this.switchSceneRequestSender = switchSceneRequestSender;
     }
 
@@ -99,7 +96,7 @@ public class YourBooksController implements ViewController {
      * @param document the document selected
      */
     private void goToDocDetail(Document document) {
-        documentRequestSender.send(document);
+        documentDetailRequestSender.send(document);
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
     }
 
