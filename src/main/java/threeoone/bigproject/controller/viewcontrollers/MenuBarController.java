@@ -13,15 +13,21 @@ import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 
 /**
- * simple ahh menu bar
- * this controller controls a menubar which appears on the left of the page
- * just add <fx:include source="MenuBar.fxml" /> to the FXML file of the view and watch magic unfolds
+ * simple ahh menu bar.
+ * <p>
+ *    This controller controls a menubar which appears on the left of the page.
+ *  It has 4 buttons to: Menu, Add Document, Your Documents and Document Overview (called Borrow)
+ * </p>
+ * The menubar is defined in {@code Menubar.fxml}. To include the menubar in a view,
+ * use fx:include on the FXML of that view. This creates NEW objects for that view's FXML
+ * file. <br>
+ * this method use general.css style
  */
 @Component
 @FxmlView("MenuBar.fxml")
 public class MenuBarController {
     /**
-     * rq sender to switch between views
+     * request sender to switch between views
      */
     RequestSender<SwitchScene> switchSceneRequestSender;
     public MenuBarController(RequestSender<SwitchScene> switchSceneRequestSender) {
@@ -44,7 +50,7 @@ public class MenuBarController {
     private Button Menu;
 
     /**
-     * method for AddBook
+     * actual methods to change view
      */
     @FXML
     private void toAddBook() {
@@ -66,9 +72,10 @@ public class MenuBarController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
     }
 
-    /**
-     * not working
-     *
+    /** highlight one button according to the {@code SceneName}.<br>
+     * For this method to actually works,
+     * inject the MenuBarController into the view's controller and run the method there <br>
+     * I'm sorry it turned out like this.
      */
     public void highlight(SceneName sceneName) {
         System.out.println("Highlighting button: ");
