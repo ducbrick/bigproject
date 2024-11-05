@@ -4,6 +4,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
+import threeoone.bigproject.controller.SceneName;
+import threeoone.bigproject.controller.viewcontrollers.MenuBarController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 
 /**
@@ -25,7 +27,6 @@ import threeoone.bigproject.controller.viewcontrollers.ViewController;
 @Component
 public class ViewSwitcher {
   private Scene scene;
-
   /**
    * Configures the {@code ViewSwitcher} by passing an instance of {@link Stage} and {@link ViewController}
    *
@@ -37,7 +38,7 @@ public class ViewSwitcher {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
-    startController.show();
+    //startController.show();
   }
 
   /**
@@ -48,6 +49,6 @@ public class ViewSwitcher {
   public void switchToView(ViewController controller) {
     Parent root = controller.getParent();
     scene.setRoot(root);
-    controller.show();
+    //controller.show();
   }
 }
