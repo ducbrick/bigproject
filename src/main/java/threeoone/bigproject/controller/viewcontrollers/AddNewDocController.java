@@ -93,7 +93,7 @@ public class AddNewDocController implements ViewController {
         categories.show();
       }
     });
-    date.setValue(getDate());
+    date.setValue(getTodayDate());
     date.setOnAction(event -> date.requestFocus());
     date.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
@@ -143,7 +143,7 @@ public class AddNewDocController implements ViewController {
    *
    * @return today date
    */
-  private LocalDate getDate() {
+  private LocalDate getTodayDate() {
     return LocalDate.now(ZoneId.of("Asia/Bangkok"));
   }
 
