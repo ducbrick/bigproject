@@ -19,7 +19,7 @@ public class MenuController implements ViewController {
   private final MenuBarController menuBarController;
   /**
    * Temporary page controller to show features.
-   * @param switchSceneRequestSender
+   * @param switchSceneRequestSender request sender for switch scene
    */
   public MenuController(RequestSender<SwitchScene> switchSceneRequestSender,
                         MenuBarController menuBarController) {

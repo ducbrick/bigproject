@@ -29,13 +29,15 @@ public class YourBooksController implements ViewController {
      */
     private final RequestSender<Document> documentDetailRequestSender;
 
+    private final MenuBarController menuBarController;
     private final RequestSender<SwitchScene> switchSceneRequestSender;
+
     public YourBooksController(RequestSender<Document> documentDetailRequestSender,
                                RequestSender<SwitchScene> switchSceneRequestSender,
                                MenuBarController menuBarController) {
         this.documentDetailRequestSender = documentDetailRequestSender;
         this.menuBarController = menuBarController;
-        
+        this.switchSceneRequestSender = switchSceneRequestSender;
     }
 
     @FXML

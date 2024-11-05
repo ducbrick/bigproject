@@ -5,7 +5,7 @@
 
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
-      <Button layoutX="130.0" layoutY="110.0" mnemonicParsing="false" onAction="#pressDocOverview" text="DocOverview" />
+      <Button layoutX="126.0" layoutY="60.0" mnemonicParsing="false" onAction="#pressDocOverview" text="DocOverview" />
       <fx:include source="MenuBar.fxml" />
    </children>
 </AnchorPane>

@@ -61,7 +61,7 @@ public class AddNewDocController implements ViewController {
    * @param addDocumentRequestSender    the RequestSender to add document
    */
   public AddNewDocController(RequestSender<SwitchScene> switchSceneRequestSender,
-                             RequestSender<Document> addDocumentRequestSender
+                             RequestSender<Document> addDocumentRequestSender,
                              MenuBarController menuBarController) {
     this.switchSceneRequestSender = switchSceneRequestSender;
     this.addDocumentRequestSender = addDocumentRequestSender;
