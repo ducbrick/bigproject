@@ -10,11 +10,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+import javafx.scene.input.KeyCode;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +21,7 @@ import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+import threeoone.bigproject.util.Alerts;
 
 import java.util.*;
 
@@ -39,49 +38,32 @@ import java.util.*;
 @Component
 @FxmlView("DocOverview.fxml")
 public class DocOverviewController implements ViewController {
-  /**
-   * Request sender for switching scenes
-   */
+  private final RequestSender<User> getListAllDocumentRequestSender;
+  private final RequestSender<Document> updateDocActionRequestSender;
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-  /**
-   * Request sender for handling document interactions
-   */
-  private final RequestSender<Document> documentRequestSender;
+
+  private final RequestSender<Document> documentDetailRequestSender;
+
+  @FXML
+  private ContextMenu contextMenu;
 
   private final MenuBarController menuBarController;
-  /**
-   * Root node of the view
-   */
+
   @FXML
   private Parent root;
 
-  /**
-   * Table column for document descriptions
-   */
   @FXML
   private TableColumn<Document, String> description;
 
-  /**
-   * Table column for document IDs
-   */
   @FXML
   private TableColumn<Document, Number> number;
 
-  /**
-   * Table column for document names
-   */
   @FXML
   private TableColumn<Document, String> name;
 
-  /**
-   * Table column for author name
-   */
   @FXML
   private TableColumn<Document, String> uploader;
 
-  /**
-   * Table view for displaying documents
-   */
   @FXML
   private TableView<Document> table;
 
@@ -89,14 +71,20 @@ public class DocOverviewController implements ViewController {
   /**
    * Constructs a new {@code DocOverviewController} with the given request senders.
    *
-   * @param switchSceneRequestSender Request sender for switching scenes
-   * @param documentRequestSender    Request sender for handling document interactions
+   * @param switchSceneRequestSender    Request sender for switching scenes
+   * @param documentDetailRequestSender Request sender for handling document interactions
+   * @param getListAllDocumentRequestSender Request sender for set up table
+   * @param updateDocActionRequestSender Request sender for update context menu
    */
-  public DocOverviewController(RequestSender<SwitchScene> switchSceneRequestSender,
-                               RequestSender<Document> documentRequestSender,
+  public DocOverviewController(RequestSender<User> getListAllDocumentRequestSender,
+                               RequestSender<Document> updateDocActionRequestSender,
+                               RequestSender<SwitchScene> switchSceneRequestSender,
+                               RequestSender<Document> documentDetailRequestSender,
                                MenuBarController menuBarController) {
+    this.getListAllDocumentRequestSender = getListAllDocumentRequestSender;
+    this.updateDocActionRequestSender = updateDocActionRequestSender;
     this.switchSceneRequestSender = switchSceneRequestSender;
-    this.documentRequestSender = documentRequestSender;
+    this.documentDetailRequestSender = documentDetailRequestSender;
     this.menuBarController = menuBarController;
   }
 
@@ -107,16 +95,87 @@ public class DocOverviewController implements ViewController {
   public void initialize() {
     table.setRowFactory(tableview -> {
       TableRow<Document> row = new TableRow<>();
+      //handle click on item
       row.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2 && (!row.isEmpty())) {
           Document document = row.getItem();
           pressDocToGoToDetail(document);
         }
       });
+      //handle show context menu
+      row.setOnContextMenuRequested(event -> {
+        if (!row.isEmpty()) {
+          updateDocActionRequestSender.send(row.getItem());
+          contextMenu.show(row, event.getScreenX(), event.getScreenY());
+        }
+      });
+      //handle key press to show menu at true location
+      row.setOnKeyPressed(event -> {
+        if (event.getCode() == KeyCode.CONTEXT_MENU && !row.isEmpty()) {
+          contextMenu.show(row, row.getScene().getWindow().getX() + row.getLayoutX() + row.getTranslateX(),
+                  row.getScene().getWindow().getY() + row.getLayoutY() + row.getTranslateY());
+        }
+      });
       return row;
     });
-
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
+    getListAllDocumentRequestSender.send(new User());
+  }
+
+  /**
+   * update context menu follow which action is available for document now
+   *
+   * @param isBorrowAvailable can be borrowed
+   * @param isRemoveAvailable can be removed
+   */
+  public void updateMenuContext(boolean isBorrowAvailable, boolean isRemoveAvailable) {
+    contextMenu.getItems().clear();
+    if (isBorrowAvailable) {
+      contextMenu.getItems().add(borrow());
+    }
+    if (isRemoveAvailable) {
+      contextMenu.getItems().add(remove());
+    }
+  }
+
+  /**
+   * Create borrow item for context menu
+   *
+   * @return borrow item in context menu
+   */
+  private MenuItem borrow() {
+    MenuItem item = new MenuItem("Borrow");
+    item.setOnAction(event -> {
+      Alert alert = Alerts.alertConfirmation("Borrow Confirmation",
+              "Are you sure you want to borrow this item?");
+      alert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.OK) {
+          // Handle the borrow action
+        }
+      });
+    });
+    return item;
+  }
+
+
+  /**
+   * Creates a menu item for removing an item.
+   * Displays a confirmation dialog when the menu item is selected.
+   *
+   * @return the menu item for removing an item
+   */
+  private MenuItem remove() {
+    MenuItem item = new MenuItem("Remove");
+    item.setOnAction(event -> {
+      Alert alert = Alerts.alertConfirmation("Remove Confirmation",
+              "Are you sure you want to remove this item?");
+      alert.showAndWait().ifPresent(response -> {
+        if (response == ButtonType.OK) {
+          // Handle the remove action
+        }
+      });
+    });
+    return item;
   }
 
 
@@ -131,12 +190,10 @@ public class DocOverviewController implements ViewController {
   public void setTable(ObservableList<Document> list) {
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
-    number.setCellValueFactory(cellData -> {
-      return new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1);
-    });
-    uploader.setCellValueFactory(cellData -> {
-      return new SimpleStringProperty(cellData.getValue().getUploader().getDisplayName());
-    });
+    number.setCellValueFactory(cellData
+            -> new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1));
+    uploader.setCellValueFactory(cellData
+            -> new SimpleStringProperty(cellData.getValue().getUploader().getDisplayName()));
     table.setItems(list);
 
   }
@@ -148,7 +205,7 @@ public class DocOverviewController implements ViewController {
    * @param document The document that was double-clicked
    */
   private void pressDocToGoToDetail(Document document) {
-    documentRequestSender.send(document);
+    documentDetailRequestSender.send(document);
     switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
   }
 
@@ -163,6 +220,7 @@ public class DocOverviewController implements ViewController {
 
   /**
    * Switching to Add New Doc page when press Add Doc button
+   *
    * @param event event trigger add new doc button
    */
   @FXML

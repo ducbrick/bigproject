@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.User;
 
 /**
@@ -32,7 +31,6 @@ public class SpringConfig {
   /**
    * Register a {@link RequestSender} of type {@code documentRequest} into {@code Spring} context.
    * Send Document entities {@link Document} from view to another view which need Document.
-   *
    * For example, {@link threeoone.bigproject.controller.viewcontrollers.DocumentDetailController}
    * need to know what Document user click on in
    * {@link threeoone.bigproject.controller.viewcontrollers.DocOverviewController} to show them.
@@ -40,13 +38,14 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  public RequestSender<Document> documentRequestSender() {
+  public RequestSender<Document> documentDetailRequestSender() {
     return new RequestSender<>();
   }
 
   /**
    * Register a {@link RequestSender} of type {@code loginRequest} into {@code Spring} context.
    * Send a LoginRequest which holds {@link User} from 'LoginPage' to service.
+   *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
@@ -57,8 +56,39 @@ public class SpringConfig {
   /**
    * Register a {@link RequestSender} of type {@code registerRequest} into {@code Spring} context.
    * Send a registerRequest which holds {@link User} from 'RegisterPage' to service.
+   *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  public RequestSender<User> registerRequestSender() {return new RequestSender<>();}
+  public RequestSender<User> registerRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a request to update available action on a specific document
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<Document> updateDocActionRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a request to get all Document in database
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<User> getListAllDocumentRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a addDocument Request which holds {@link Document} from 'AddNewDocument' page
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<Document> addDocumentRequestSender() {
+    return new RequestSender<>();
+  }
 }

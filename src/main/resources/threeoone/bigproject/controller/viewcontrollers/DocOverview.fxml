@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
-   <children>
-       <fx:include source="MenuBar.fxml" />
-      <TableView fx:id="table" layoutX="88.0" layoutY="90.0" prefHeight="540.0" prefWidth="1024.0">
-        <columns>
-          <TableColumn fx:id="number" prefWidth="75.0" text="Number" />
-          <TableColumn fx:id="name" prefWidth="135.0" text="Name" />
-            <TableColumn fx:id="uploader" prefWidth="150.0" text="Uploader" />
-            <TableColumn fx:id="description" prefWidth="663.0" text="Description" />
-        </columns>
-      </TableView>
-      <Label layoutX="488.0" layoutY="32.0" prefHeight="46.0" prefWidth="224.0" text="Document Overview">
-         <font>
-            <Font name="System Bold" size="23.0" />
-         </font>
-      </Label>
-      <Button layoutX="52.0" layoutY="663.0" mnemonicParsing="false" onAction="#pressBack" text="BackHome" />
-      <Button layoutX="1064.0" layoutY="43.0" mnemonicParsing="false" onAction="#pressAddDoc" text="Add New Doc" />
-   </children>
+<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" stylesheets="@DocOverviewStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
+    <children>
+        <TableView fx:id="table" layoutX="88.0" layoutY="90.0" prefHeight="540.0" prefWidth="1024.0" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="number" prefWidth="75.0" styleClass="table-column-header" text="Number" />
+                <TableColumn fx:id="name" prefWidth="135.0" styleClass="table-column-header" text="Name" />
+                <TableColumn fx:id="uploader" prefWidth="150.0" styleClass="table-column-header" text="Uploader" />
+                <TableColumn fx:id="description" prefWidth="663.0" styleClass="table-column-header" text="Description" />
+            </columns>
+            <contextMenu>
+                <ContextMenu fx:id="contextMenu">
+                </ContextMenu>
+            </contextMenu>
+        </TableView>
+        <Label layoutX="488.0" layoutY="32.0" prefHeight="46.0" prefWidth="224.0" styleClass="label" text="Document Overview">
+            <font>
+                <Font name="System Bold" size="23.0" />
+            </font>
+        </Label>
+        <Button layoutX="52.0" layoutY="663.0" mnemonicParsing="false" onAction="#pressBack" styleClass="button" text="BackHome" />
+        <Button layoutX="1064.0" layoutY="43.0" mnemonicParsing="false" onAction="#pressAddDoc" styleClass="button" text="Add New Doc" />
+    </children>
 </AnchorPane>

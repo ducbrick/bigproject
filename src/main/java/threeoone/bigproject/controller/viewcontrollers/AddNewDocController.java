@@ -29,7 +29,7 @@ import threeoone.bigproject.entities.Document;
 @FxmlView("AddNewDoc.fxml")
 public class AddNewDocController implements ViewController {
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-  private final RequestSender<Document> addDocumentRequesterSender;
+  private final RequestSender<Document> addDocumentRequestSender;
 
   private MenuBarController menuBarController;
 
@@ -58,13 +58,13 @@ public class AddNewDocController implements ViewController {
    * Constructs a AddNewDocController with the specified RequestSender.
    *
    * @param switchSceneRequestSender      the RequestSender to switch scene requests
-   * @param addDocumentRequesterSender    the RequestSender to add document
+   * @param addDocumentRequestSender    the RequestSender to add document
    */
   public AddNewDocController(RequestSender<SwitchScene> switchSceneRequestSender,
-                             RequestSender<Document> addDocumentRequesterSender,
+                             RequestSender<Document> addDocumentRequestSender
                              MenuBarController menuBarController) {
     this.switchSceneRequestSender = switchSceneRequestSender;
-    this.addDocumentRequesterSender = addDocumentRequesterSender;
+    this.addDocumentRequestSender = addDocumentRequestSender;
     this.menuBarController = menuBarController;
   }
 
@@ -102,7 +102,7 @@ public class AddNewDocController implements ViewController {
   @FXML
   private void pressSubmit(ActionEvent event) {
     switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
-    addDocumentRequesterSender.send(new Document(name.getText(), description.getText()));
+    addDocumentRequestSender.send(new Document(name.getText(), description.getText()));
   }
 
   /**

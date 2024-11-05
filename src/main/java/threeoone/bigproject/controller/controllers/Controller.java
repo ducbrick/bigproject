@@ -3,18 +3,12 @@ package threeoone.bigproject.controller.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
-import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.entities.User;
-import threeoone.bigproject.services.LoginService;
 import threeoone.bigproject.view.ViewSwitcher;
 
-import static threeoone.bigproject.controller.SceneName.*;
-
 /**
- * Main controller responsible for managing scene switching and document detail handling.
+ * Main controller responsible for managing scene switching.
  * This controller is a Spring Component and is injected with necessary dependencies.
  * It registers to receive specific types of requests and handles them accordingly.
  * This is Controller version to use instead of DemoController before
@@ -40,6 +34,7 @@ public class Controller {
    * @param viewSwitcher             the component responsible for switching views
    * @param documentDetailController the controller for the document detail view
    * @param loginController          the controller for the login view
+   * @param registerController       the controller for the register view
    * @param addNewDocController      the controller for add new doc view
    */
   public Controller(MenuController menuController,
@@ -64,24 +59,11 @@ public class Controller {
    * Registers request receivers for scene switching and document detail handling.
    *
    * @param switchSceneRequestSender the request sender for scene switching
-   * @param documentRequestSender    the request sender for document detail
    */
   @Autowired
   private void registerRequestReceiver(
-          RequestSender<SwitchScene> switchSceneRequestSender,
-          RequestSender<Document> documentRequestSender) {
+          RequestSender<SwitchScene> switchSceneRequestSender) {
     switchSceneRequestSender.registerReceiver(this::switchScene);
-    documentRequestSender.registerReceiver(this::documentDetail);
-  }
-
-  /**
-   * Handles the reception of a document detail request and forwards the document
-   * to the DocumentDetailController.
-   *
-   * @param document the document whose details are to be shown
-   */
-  private void documentDetail(Document document) {
-    documentDetailController.setDocument(document);
   }
 
   /**
