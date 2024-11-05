@@ -8,6 +8,7 @@
 
 <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" stylesheets="@docDetail.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
    <children>
+      <fx:include source="MenuBar.fxml" />
       <ImageView fx:id="cover" fitHeight="191.0" fitWidth="359.0" layoutX="50.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true" />
       <VBox layoutX="454.0" layoutY="203.0" prefHeight="200.0" prefWidth="265.0">
          <children>

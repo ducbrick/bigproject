@@ -16,18 +16,23 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 @FxmlView("Menu.fxml")
 public class MenuController implements ViewController {
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-
+  private final MenuBarController menuBarController;
   /**
    * Temporary page controller to show features.
    * @param switchSceneRequestSender
    */
-  public MenuController(RequestSender<SwitchScene> switchSceneRequestSender) {
+  public MenuController(RequestSender<SwitchScene> switchSceneRequestSender,
+                        MenuBarController menuBarController) {
     this.switchSceneRequestSender = switchSceneRequestSender;
+    this.menuBarController = menuBarController;
   }
 
   @FXML
   private AnchorPane root;
 
+  public void initialize() {
+    menuBarController.highlight(SceneName.MAIN_MENU);
+  }
   /**
    * @return the root {@link Parent} of this view
    */

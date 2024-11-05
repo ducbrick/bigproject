@@ -6,6 +6,7 @@
 
 <AnchorPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.YourBooksController">
     <children>
+        <fx:include source="MenuBar.fxml" />
         <TableView fx:id="books" layoutX="108.0" layoutY="172.0" prefHeight="446.0" prefWidth="754.0">
             <columns>
                 <TableColumn fx:id="ID" prefWidth="25.60003662109375" text="ID" />

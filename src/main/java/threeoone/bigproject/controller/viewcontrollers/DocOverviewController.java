@@ -1,7 +1,11 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
@@ -17,6 +22,8 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.util.Alerts;
+
+import java.util.*;
 
 /**
  * Controller class for the Document Overview scene.
@@ -34,10 +41,13 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<User> getListAllDocumentRequestSender;
   private final RequestSender<Document> updateDocActionRequestSender;
   private final RequestSender<SwitchScene> switchSceneRequestSender;
+
   private final RequestSender<Document> documentDetailRequestSender;
 
   @FXML
   private ContextMenu contextMenu;
+
+  private final MenuBarController menuBarController;
 
   @FXML
   private Parent root;
@@ -69,11 +79,13 @@ public class DocOverviewController implements ViewController {
   public DocOverviewController(RequestSender<User> getListAllDocumentRequestSender,
                                RequestSender<Document> updateDocActionRequestSender,
                                RequestSender<SwitchScene> switchSceneRequestSender,
-                               RequestSender<Document> documentDetailRequestSender) {
+                               RequestSender<Document> documentDetailRequestSender,
+                               MenuBarController menuBarController) {
     this.getListAllDocumentRequestSender = getListAllDocumentRequestSender;
     this.updateDocActionRequestSender = updateDocActionRequestSender;
     this.switchSceneRequestSender = switchSceneRequestSender;
     this.documentDetailRequestSender = documentDetailRequestSender;
+    this.menuBarController = menuBarController;
   }
 
   /**
@@ -106,7 +118,7 @@ public class DocOverviewController implements ViewController {
       });
       return row;
     });
-
+    menuBarController.highlight(SceneName.DOC_OVERVIEW);
     getListAllDocumentRequestSender.send(new User());
   }
 
@@ -145,6 +157,7 @@ public class DocOverviewController implements ViewController {
     return item;
   }
 
+
   /**
    * Creates a menu item for removing an item.
    * Displays a confirmation dialog when the menu item is selected.
@@ -182,6 +195,7 @@ public class DocOverviewController implements ViewController {
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getDisplayName()));
     table.setItems(list);
+
   }
 
   /**
@@ -229,6 +243,5 @@ public class DocOverviewController implements ViewController {
    */
   @Override
   public void show() {
-
   }
 }
