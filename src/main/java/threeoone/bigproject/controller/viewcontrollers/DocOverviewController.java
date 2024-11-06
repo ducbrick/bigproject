@@ -178,6 +178,11 @@ public class DocOverviewController implements ViewController {
     return item;
   }
 
+  @FXML
+  private void pressSearch() {
+    switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
+  }
+
 
   /**
    * Sets the items in the document table with the given list.

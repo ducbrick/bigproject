@@ -91,4 +91,35 @@ public class SpringConfig {
   RequestSender<Document> addDocumentRequestSender() {
     return new RequestSender<>();
   }
+
+
+  /**
+   * Send a query request by document name to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<String> queryDocByNameRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a query request by document author to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<String> queryDocByAuthorRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a query request by document category to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<String> queryDocByCategoryRequestSender() {
+    return new RequestSender<>();
+  }
 }
