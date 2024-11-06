@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.UserDetailsController">
+   <children>
+       <fx:include source="MenuBar.fxml" />
+
+       <GridPane layoutX="399.0" layoutY="226.0" prefHeight="305.0" prefWidth="542.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="189.5999755859375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.000048828125" minWidth="10.0" prefWidth="305.6000244140625" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="120.6" minHeight="0.0" prefHeight="61.400000000000006" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="134.3999755859375" minHeight="0.0" prefHeight="64.6" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="134.3999755859375" minHeight="0.0" prefHeight="66.20001220703125" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="131.7999938964844" minHeight="10.0" prefHeight="57.00000610351563" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="64.0" prefWidth="168.0" text="TÊN CẬU LÀ GÌ" />
+            <Text fx:id="Name" strokeType="OUTSIDE" strokeWidth="0.0" text="SKIBIDI" wrappingWidth="320.5367488861084" GridPane.columnIndex="1" />
+            <Label prefHeight="119.0" prefWidth="185.0" text="CẬU SỐNG Ở ĐÂU (TAO TRONG TƯỜNG NHÀ MÀY)" GridPane.rowIndex="1" />
+            <Label prefHeight="114.0" prefWidth="282.0" text="Cậu bao nhiêu tủi? (CẤM XEM SẾCH NẾU DƯỚI 10 TUỔI)" GridPane.rowIndex="2" />
+            <Text fx:id="Address" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="321.3367919921875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="125.0" prefWidth="254.0" text="XIN CÁI ID (HẾT JOKE RỒI)" GridPane.rowIndex="3" />
+            <Text fx:id="Age" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Text fx:id="ID" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <ImageView fitHeight="214.0" fitWidth="200.0" layoutX="146.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="246.0" layoutY="76.0" prefHeight="72.0" prefWidth="285.0" text="THÔNG TIN NGƯỜI DÙNG" />
+   </children>
+</AnchorPane>
