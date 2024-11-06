@@ -61,6 +61,9 @@ public class AddNewDocController implements ViewController {
   @FXML
   private Button chooseButton;
 
+  @FXML
+  private TextField author;
+
   private File lastDirectory = null;
   private File selectedFile = null;
 
@@ -84,9 +87,11 @@ public class AddNewDocController implements ViewController {
    * Set default date for user (today)
    */
   public void initialize() {
-    name.setOnAction(event -> description.requestFocus());
-    description.setOnAction(event -> isbn.requestFocus());
-    isbn.setOnAction(event -> categories.requestFocus());
+    name.setOnAction(event -> author.requestFocus());
+    author.setOnAction(event -> categories.requestFocus());
+    categories.setOnAction(event -> isbn.requestFocus());
+    isbn.setOnAction(event -> description.requestFocus());
+    description.setOnAction(event -> date.requestFocus());
     categories.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
         categories.show();
@@ -115,11 +120,17 @@ public class AddNewDocController implements ViewController {
   // TODO: Submit send today date, path to service
   @FXML
   private void pressSubmit(ActionEvent event) {
-    if(selectedFile == null) {
-      Alerts.showAlertWarning("Error!", "Unselected file");
+    if(name.getText().isEmpty() || author.getText().isEmpty()) {
+      Alerts.showAlertWarning("Warning!", "Fill all required fields!");
       return;
     }
-    FileOperation.copyFile(selectedFile.getPath(), "");
+    if(selectedFile == null) {
+      Alerts.showAlertWarning("Warning!", "Unselected file. Adding with no digital document.");
+    }
+    else {
+      FileOperation.copyFile(selectedFile.getPath(), "");
+      Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
+    }
     addDocumentRequestSender.send(new Document(name.getText(), description.getText()));
     switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
   }
