@@ -25,6 +25,7 @@ public class Controller {
   private final YourBooksController yourBooksController;
   private final RegisterController registerController;
   private final AddNewDocController addNewDocController;
+  private final SearchBarController searchBarController;
 
   /**
    * Constructs the main controller with dependencies.
@@ -36,6 +37,7 @@ public class Controller {
    * @param loginController          the controller for the login view
    * @param registerController       the controller for the register view
    * @param addNewDocController      the controller for add new doc view
+   * @param searchBarController      the controller for search page
    */
   public Controller(MenuController menuController,
                     DocOverviewController docOverviewController,
@@ -44,7 +46,8 @@ public class Controller {
                     DocumentDetailController documentDetailController,
                     LoginController loginController,
                     RegisterController registerController,
-                    AddNewDocController addNewDocController) {
+                    AddNewDocController addNewDocController,
+                    SearchBarController searchBarController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
@@ -53,6 +56,7 @@ public class Controller {
     this.yourBooksController = yourBooksController;
     this.registerController = registerController;
     this.addNewDocController = addNewDocController;
+    this.searchBarController = searchBarController;
   }
 
   /**
@@ -94,6 +98,8 @@ public class Controller {
       case ADD_NEW_DOC:
         viewSwitcher.switchToView(addNewDocController);
         break;
+      case SEARCH:
+        viewSwitcher.switchToView(searchBarController);
     }
   }
 }
