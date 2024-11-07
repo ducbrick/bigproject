@@ -44,7 +44,6 @@
 .table-row-cell:selected, .table-cell:selected {
     -fx-background-color: #4a90e2;
     -fx-text-fill: white;
-    -fx-transform: scale(1.02); /* Scale the row slightly when selected */
     -fx-transition: transform 0.2s ease-in-out; /* Smooth transition for scaling */
 }
 
@@ -66,7 +65,6 @@
 
 .button:pressed {
     -fx-background-color: #2c6ba0;
-    -fx-transform: scale(0.95);
 }
 
 .menu-item {
