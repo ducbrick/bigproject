@@ -91,4 +91,14 @@ public class SpringConfig {
   RequestSender<Document> addDocumentRequestSender() {
     return new RequestSender<>();
   }
+
+  /**
+   * Send ISBN to GoogleAPI service search by ISBN
+   *
+   * @return the {@link RequestSender}to be registered
+   */
+  @Bean
+  RequestSender<String> queryISBNGoogleRequestSender() {
+    return new RequestSender<>();
+  }
 }

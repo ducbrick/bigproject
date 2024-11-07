@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -37,11 +38,12 @@ public class AddNewDocController implements ViewController {
 
   private final MenuBarController menuBarController;
 
+  private final RequestSender<String> queryISBNGoogleRequestSender;
   @FXML
   private Parent root;
 
   @FXML
-  private ChoiceBox<String> categories;
+  private TextField categories;
 
   @FXML
   private DatePicker date;
@@ -70,15 +72,17 @@ public class AddNewDocController implements ViewController {
   /**
    * Constructs a AddNewDocController with the specified RequestSender.
    *
-   * @param switchSceneRequestSender      the RequestSender to switch scene requests
-   * @param addDocumentRequestSender    the RequestSender to add document
+   * @param switchSceneRequestSender the RequestSender to switch scene requests
+   * @param addDocumentRequestSender the RequestSender to add document
    */
   public AddNewDocController(RequestSender<SwitchScene> switchSceneRequestSender,
                              RequestSender<Document> addDocumentRequestSender,
-                             MenuBarController menuBarController) {
+                             MenuBarController menuBarController,
+                             RequestSender<String> queryISBNGoogleRequestSender) {
     this.switchSceneRequestSender = switchSceneRequestSender;
     this.addDocumentRequestSender = addDocumentRequestSender;
     this.menuBarController = menuBarController;
+    this.queryISBNGoogleRequestSender = queryISBNGoogleRequestSender;
   }
 
   /**
@@ -92,11 +96,7 @@ public class AddNewDocController implements ViewController {
     categories.setOnAction(event -> isbn.requestFocus());
     isbn.setOnAction(event -> description.requestFocus());
     description.setOnAction(event -> date.requestFocus());
-    categories.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.ENTER) {
-        categories.show();
-      }
-    });
+    categories.setText("Unknown");
     date.setValue(getTodayDate());
     date.setOnAction(event -> date.requestFocus());
     date.setOnKeyPressed(event -> {
@@ -117,22 +117,40 @@ public class AddNewDocController implements ViewController {
    *
    * @param event event trigger submit button
    */
-  // TODO: Submit send today date, path to service
+  // TODO: Submit send today date, path, categories, etc to service
   @FXML
   private void pressSubmit(ActionEvent event) {
-    if(name.getText().isEmpty() || author.getText().isEmpty()) {
+    if (name.getText().isEmpty() || author.getText().isEmpty()) {
       Alerts.showAlertWarning("Warning!", "Fill all required fields!");
       return;
     }
-    if(selectedFile == null) {
+    Document document = new Document(name.getText(), description.getText());
+    addDocumentRequestSender.send(document);
+    if (selectedFile == null) {
       Alerts.showAlertWarning("Warning!", "Unselected file. Adding with no digital document.");
-    }
-    else {
-      FileOperation.copyFile(selectedFile.getPath(), "", "123");
+    } else {
+      FileOperation.copyFile(selectedFile.getPath(), "", document.getId().toString());
       Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
     }
-    addDocumentRequestSender.send(new Document(name.getText(), description.getText()));
     switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
+  }
+
+  @FXML
+  private void fulfillISBN(KeyEvent event) {
+    if (event.getCode() == KeyCode.ENTER) {
+      queryISBNGoogleRequestSender.send(isbn.getText());
+      System.out.println(isbn.getText());
+    }
+  }
+
+  /**
+   * Auto fulfill information text field with give document's info
+   *
+   * @param document given document to fulfill
+   */
+  public void fulfillInfo(Document document) {
+    name.setText(document.getName());
+    description.setText(document.getDescription());
   }
 
   /**
