@@ -135,7 +135,7 @@ public class DocOverviewController implements ViewController {
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
-    getListAllDocumentRequestSender.send(new User());
+    //getListAllDocumentRequestSender.send(new User());
   }
 
   /**

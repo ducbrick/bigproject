@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,30 +15,12 @@
 
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
+
       <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <top>
-            <HBox prefHeight="84.0" prefWidth="1200.0" styleClass="pane" BorderPane.alignment="CENTER">
-               <children>
-                  <Label prefHeight="102.0" prefWidth="221.0" text="Label">
-                     <HBox.margin>
-                        <Insets right="100.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Button mnemonicParsing="false" prefHeight="84.0" prefWidth="129.0" styleClass="menubar-button" text="Add Book" />
-                  <Button fx:id="DocumentOverview" mnemonicParsing="false" onAction="#yourBooks" prefHeight="106.0" prefWidth="124.0" styleClass="menubar-button" text="Your books" />
-                  <Button fx:id="BorrowedBooks" mnemonicParsing="false" onAction="#borrowBooks" prefHeight="78.0" prefWidth="125.0" styleClass="menubar-button" text="Borrow" />
-                  <Button fx:id="AddDocument" mnemonicParsing="false" onMouseClicked="#addDocument" prefHeight="78.0" prefWidth="120.0" styleClass="menubar-button" text="Add Document" />
-               </children>
-            </HBox>
-         </top>
          <right>
             <VBox prefHeight="616.0" prefWidth="0.0" BorderPane.alignment="CENTER">
                <children>
-                  <AnchorPane prefHeight="454.0" prefWidth="251.0">
-                     <children>
-                        <Button fx:id="Random" layoutY="275.0" mnemonicParsing="false" prefHeight="178.0" prefWidth="242.0" text="Random document (or book idk choose a name)" AnchorPane.rightAnchor="24.799999999999983" />
-                     </children>
-                  </AnchorPane>
+                  <AnchorPane prefHeight="454.0" prefWidth="251.0" />
                </children>
             </VBox>
          </right>
@@ -55,7 +39,7 @@
                            </VBox.margin></Text>
                      </children>
                   </VBox>
-                  <HBox layoutX="90.0" layoutY="248.0" prefHeight="136.0" prefWidth="452.0">
+                  <HBox layoutX="86.0" layoutY="468.0" prefHeight="136.0" prefWidth="452.0">
                      <children>
                         <Button fx:id="Featured" mnemonicParsing="false" prefHeight="131.0" prefWidth="241.0" text="Featured 1">
                            <HBox.margin>
@@ -69,7 +53,6 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Button layoutX="90.0" layoutY="402.0" mnemonicParsing="false" prefHeight="178.0" prefWidth="238.0" text="Latest Upload" />
                   <VBox layoutX="593.0" layoutY="32.0" prefHeight="162.0" prefWidth="262.0">
                      <children>
                         <Label prefHeight="94.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books" />
@@ -80,9 +63,51 @@
                         </Label>
                      </children>
                   </VBox>
+                  <VBox layoutX="92.0" layoutY="215.0" prefHeight="220.0" prefWidth="446.0">
+                     <children>
+                        <Label prefHeight="38.0" prefWidth="454.0" text="User list" />
+                        <TableView prefHeight="185.0" prefWidth="446.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="User ID" />
+                            <TableColumn prefWidth="124.00001525878906" text="User Name" />
+                              <TableColumn prefWidth="96.00006103515625" text="Books Issued" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="593.0" layoutY="215.0" prefHeight="223.0" prefWidth="456.0">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="456.0" text="Lastest uploads" />
+                        <TableView prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="55.20001220703125" text="Book ID" />
+                            <TableColumn prefWidth="112.79998779296875" text="Title" />
+                              <TableColumn prefWidth="79.199951171875" text="Author" />
+                              <TableColumn prefWidth="81.60009765625" text="Available" />
+                              <TableColumn prefWidth="124.79998779296875" text="Date Uploaded" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+                  <VBox layoutX="593.0" layoutY="450.0" prefHeight="200.0" prefWidth="456.0">
+                     <children>
+                        <Label prefHeight="35.0" prefWidth="529.0" text="Issued books" />
+                        <TableView prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="User ID" />
+                            <TableColumn prefWidth="90.4000244140625" text="Book" />
+                              <TableColumn prefWidth="132.0" text="Issue Date" />
+                              <TableColumn prefWidth="157.60003662109375" text="Return Date" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </center>
+         <left>
+            <fx:include source="MenuBar.fxml" />
+         </left>
       </BorderPane>
    </children>
 </StackPane>

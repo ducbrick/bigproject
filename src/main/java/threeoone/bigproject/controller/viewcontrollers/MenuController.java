@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
+import threeoone.bigproject.entities.User;
 
 /**
  * @author purupurupkl
@@ -22,26 +25,20 @@ public class MenuController implements ViewController {
     @FXML
     private Parent root;
 
-    /**
-     * "document overview" for borrowing?
-     */
-    @FXML
-    private Button DocumentOverview;
-
-    /**
-     *"Your Books" page
-     */
-    @FXML
-    private Button BorrowedBooks;
-
-    @FXML
-    private Button AddDocument;
-
     @FXML
     private Button Featured;
 
     @FXML
-    private Button Random;
+    private TableView<User> UserList;
+
+    @FXML
+    private TableColumn<User, String> UserID;
+
+    @FXML
+    private TableColumn<User, String> UserName;
+
+    @FXML
+    private TableColumn<User, Integer> BooksIssued;
 
     @Override
     public Parent getParent() {
@@ -56,30 +53,6 @@ public class MenuController implements ViewController {
     public void show() {
         Featured.setText("Featured book \n Nakano Miku character book \n Very nice little book about miku.");
     }
-
-    private void displayUserInfo() {
-
-    }
-
-    /**
-     * go to document overview
-     */
-    @FXML
-    private void borrowBooks() {
-        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
-
-    }
-
-    @FXML
-    private void yourBooks() {
-        switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
-    }
-
-    @FXML
-    private void addDocument() {
-        switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_NEW_DOC));
-    }
-
 
     /**
      * generate a random book
