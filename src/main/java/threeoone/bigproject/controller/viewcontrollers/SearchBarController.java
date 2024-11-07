@@ -1,6 +1,5 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,14 +9,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
-
-import javax.print.Doc;
 
 /**
  * Class for handling search bar view
@@ -75,12 +71,12 @@ public class SearchBarController implements ViewController {
     this.switchSceneRequestSender = switchSceneRequestSender;
   }
 
+  /**
+   * Initialization for JavaFX object handle by view
+   */
+  // TODO Show author when search author, category when search category
   @FXML
   private void initialize() {
-    ObservableList<Document> documents = FXCollections.observableArrayList(
-            new Document("1", "2"),
-            new Document("2", "3")
-    );
     result.setCellFactory(param -> new ListCell<Document>() {
       @Override
       protected void updateItem(Document item, boolean empty) {
@@ -88,7 +84,11 @@ public class SearchBarController implements ViewController {
         if (empty || item == null) {
           setText(null);
         } else {
-          setText(item.getName());
+          switch (searchType) {
+            //case AUTHOR ->  setText("Author: " + item.getAuthor());
+            case NAME -> setText("Name: " + item.getName());
+            //case CATEGORY -> setText("Category: " + item.getCategory());
+          }
         }
       }
     });
@@ -100,9 +100,11 @@ public class SearchBarController implements ViewController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
       }
     });
-    setResult(documents);
   }
 
+  /**
+   * Reset state of all toggle button
+   */
   @FXML
   private void resetSelect() {
     category.setSelected(false);
@@ -111,6 +113,11 @@ public class SearchBarController implements ViewController {
     searchType = null;
   }
 
+  /**
+   * Handle author button
+   *
+   * @param event event trigger author button
+   */
   @FXML
   private void pressAuthor(ActionEvent event) {
     resetSelect();
@@ -118,6 +125,11 @@ public class SearchBarController implements ViewController {
     searchType = SearchType.AUTHOR;
   }
 
+  /**
+   * Handle category button
+   *
+   * @param event event trigger category button
+   */
   @FXML
   private void pressCategory(ActionEvent event) {
     resetSelect();
@@ -126,6 +138,11 @@ public class SearchBarController implements ViewController {
     searchType = SearchType.CATEGORY;
   }
 
+  /**
+   * Handle name button
+   *
+   * @param event event trigger name button
+   */
   @FXML
   private void pressName(ActionEvent event) {
     resetSelect();
@@ -134,24 +151,26 @@ public class SearchBarController implements ViewController {
     searchType = SearchType.NAME;
   }
 
+  /**
+   * Handle search button. Search name by default
+   *
+   * @param event event trigger search button
+   */
   @FXML
   private void pressSearch(ActionEvent event) {
     if (searchType == null) {
-      System.out.println("No search type selected");
+      queryDocByNameRequestSender.send(searchText.getText());
       return;
     }
     switch (searchType) {
       case AUTHOR:
         queryDocByAuthorRequestSender.send(searchText.getText());
-        System.out.println("Author: " + searchText.getText());
         break;
       case CATEGORY:
         queryDocByCategoryRequestSender.send(searchText.getText());
-        System.out.println("Category: " + searchText.getText());
         break;
       case NAME:
         queryDocByNameRequestSender.send(searchText.getText());
-        System.out.println("Name: " + searchText.getText());
         break;
     }
   }
@@ -163,6 +182,10 @@ public class SearchBarController implements ViewController {
    */
   public void setResult(ObservableList<Document> result) {
     this.result.setItems(result);
+  }
+
+  public void addResult(ObservableList<Document> result) {
+    this.result.getItems().addAll(result);
   }
 
   /**
