@@ -75,7 +75,9 @@ public class DocOverviewController implements ViewController {
    * @param documentDetailRequestSender Request sender for handling document interactions
    * @param getListAllDocumentRequestSender Request sender for set up table
    * @param updateDocActionRequestSender Request sender for update context menu
+   *
    */
+  //TODO: Need to have action to handle borrow book and remove book
   public DocOverviewController(RequestSender<User> getListAllDocumentRequestSender,
                                RequestSender<Document> updateDocActionRequestSender,
                                RequestSender<SwitchScene> switchSceneRequestSender,
@@ -176,6 +178,14 @@ public class DocOverviewController implements ViewController {
       });
     });
     return item;
+  }
+
+  /**
+   * Handle action for pressing search button
+   */
+  @FXML
+  private void pressSearch() {
+    switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
   }
 
 
