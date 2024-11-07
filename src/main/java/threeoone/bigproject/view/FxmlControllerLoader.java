@@ -29,5 +29,6 @@ public class FxmlControllerLoader {
       fxWeaver.load(YourBooksController.class);
       fxWeaver.load(AddNewDocController.class);
       fxWeaver.load(MenuBarController.class);
+      fxWeaver.load(SearchBarController.class);
   }
 }

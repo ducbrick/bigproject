@@ -38,7 +38,7 @@ public class ViewSwitcher {
     scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
-    //startController.show();
+    startController.show();
   }
 
   /**
@@ -49,6 +49,6 @@ public class ViewSwitcher {
   public void switchToView(ViewController controller) {
     Parent root = controller.getParent();
     scene.setRoot(root);
-    //controller.show();
+    controller.show();
   }
 }

@@ -29,10 +29,15 @@ public enum SceneName {
      */
     SIGNUP,
   
-    /*
+    /**
      * Represents the add new doc page
      */
     ADD_NEW_DOC,
+
+    /**
+     * Represent search page
+     */
+    SEARCH,
 
     YOUR_BOOKS
 }
