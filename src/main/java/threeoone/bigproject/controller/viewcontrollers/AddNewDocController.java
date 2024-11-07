@@ -128,7 +128,7 @@ public class AddNewDocController implements ViewController {
       Alerts.showAlertWarning("Warning!", "Unselected file. Adding with no digital document.");
     }
     else {
-      FileOperation.copyFile(selectedFile.getPath(), "");
+      FileOperation.copyFile(selectedFile.getPath(), "", "123");
       Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
     }
     addDocumentRequestSender.send(new Document(name.getText(), description.getText()));
