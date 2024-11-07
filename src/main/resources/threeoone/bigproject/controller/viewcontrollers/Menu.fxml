@@ -24,6 +24,9 @@
                </children>
             </VBox>
          </right>
+         <left>
+            <fx:include source="MenuBar.fxml" />
+         </left>
          <center>
             <AnchorPane prefHeight="616.0" prefWidth="791.0" BorderPane.alignment="CENTER">
                <children>
@@ -84,7 +87,7 @@
                             <TableColumn prefWidth="112.79998779296875" text="Title" />
                               <TableColumn prefWidth="79.199951171875" text="Author" />
                               <TableColumn prefWidth="81.60009765625" text="Available" />
-                              <TableColumn prefWidth="124.79998779296875" text="Date Uploaded" />
+                              <TableColumn prefWidth="124.79998779296875" text="Description" />
                           </columns>
                         </TableView>
                      </children>
@@ -102,12 +105,10 @@
                         </TableView>
                      </children>
                   </VBox>
+                  <Button fx:id="Random" layoutX="889.0" layoutY="32.0" mnemonicParsing="false" prefHeight="162.0" prefWidth="157.0" text="Random" />
                </children>
             </AnchorPane>
          </center>
-         <left>
-            <fx:include source="MenuBar.fxml" />
-         </left>
       </BorderPane>
    </children>
 </StackPane>

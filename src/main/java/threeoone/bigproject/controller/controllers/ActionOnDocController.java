@@ -8,6 +8,7 @@ import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.viewcontrollers.DocOverviewController;
 import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
+import threeoone.bigproject.controller.viewcontrollers.MenuController;
 import threeoone.bigproject.controller.viewcontrollers.EditDocumentController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
@@ -27,6 +28,7 @@ public class ActionOnDocController {
   private final DocumentDetailController documentDetailController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
+  private final MenuController menuController;
   private final EditDocumentController editDocumentController;
 
   /**
@@ -40,10 +42,12 @@ public class ActionOnDocController {
   public ActionOnDocController(DocumentDetailController documentDetailController,
                                DocumentRetrievalService documentRetrievalService,
                                DocOverviewController docOverviewController,
+                               MenuController menuController) {
                                EditDocumentController editDocumentController) {
     this.documentDetailController = documentDetailController;
     this.documentRetrievalService = documentRetrievalService;
     this.docOverviewController = docOverviewController;
+    this.menuController = menuController;
     this.editDocumentController = editDocumentController;
   }
 
@@ -58,6 +62,8 @@ public class ActionOnDocController {
           RequestSender<User> getListAllDocumentRequestSender,
           RequestSender<Document> updateDocActionRequestSender,
           RequestSender<ActionOnDoc> actionOnDocRequestSender) {
+          RequestSender<Document> updateDocActionRequestSender,
+          RequestSender<Integer> getDocumentByIdRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
@@ -109,5 +115,9 @@ public class ActionOnDocController {
 //      case DocActionType.BORROW -> System.out.println("borrow");
 //      case DocActionType.REMOVE -> System.out.println("remove");
     }
+  }
+
+  private void getDocumentById(Integer id) {
+    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
   }
 }

@@ -95,6 +95,9 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  @Bean
+  RequestSender<Integer> getDocumentByIdRequestSender() { return new RequestSender<>(); }
+
   /**
    * Send ISBN to GoogleAPI service search by ISBN
    *

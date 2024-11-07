@@ -42,4 +42,5 @@ public class DocumentRetrievalService {
     Optional <Document> queryResult = documentRepo.findById(id);
     return queryResult.orElse(null);
   }
+
 }
