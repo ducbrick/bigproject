@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,7 +57,7 @@ public class Document {
   private User uploader;
 
   @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-  private List <LendingDetail> lendingDetails;
+  private List <LendingDetail> lendingDetails = new ArrayList <> ();
 
   /**
    * Constructs a new {@link Document} with the given parameters.
