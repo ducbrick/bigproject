@@ -4,20 +4,20 @@ DROP TABLE IF EXISTS AppUser;
 
 CREATE TABLE AppUser (
 	id SERIAL PRIMARY KEY,
-	login_name VARCHAR(32) NOT NULL UNIQUE CHECK(LENGTH(TRIM(login_name)) > 0),
-	password VARCHAR(32) NOT NULL CHECK(LENGTH(TRIM(password)) > 0),
-	display_name VARCHAR(64) NOT NULL CHECK(LENGTH(TRIM(display_name)) > 0)
+	username VARCHAR(32) NOT NULL UNIQUE CHECK(LENGTH(TRIM(username)) > 0),
+	password VARCHAR(32) NOT NULL CHECK(LENGTH(TRIM(password)) > 0)
 );
 
 CREATE TABLE Document (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(100) NOT NULL CHECK(LENGTH(TRIM(name)) > 0),
+	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0),
 	description BPCHAR,
 	uploader_id INTEGER REFERENCES AppUser NOT NULL
 );
 
 CREATE TABLE DocumentLending (
 	id SERIAL PRIMARY KEY,
+	lend_time TIMESTAMP NOT NULL,
 	user_id INTEGER REFERENCES AppUser NOT NULL,
 	document_id INTEGER REFERENCES Document NOT NULL
 )
