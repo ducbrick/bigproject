@@ -70,7 +70,7 @@ public class UserLoginController {
    * false otherwise
    */
   public boolean validateInformation(User user) {
-    return !(user.getLoginName().isEmpty() || user.getPassword().isEmpty());
+    return !(user.getUsername().isEmpty() || user.getPassword().isEmpty());
   }
 
   /**

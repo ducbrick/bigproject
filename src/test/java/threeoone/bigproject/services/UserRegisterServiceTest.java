@@ -6,13 +6,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
@@ -42,7 +40,7 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Register a user while another user is currently logged in")
   public void registerWhileLoggedIn() {
-    User user = new User("username", "password", "Name");
+    User user = new User("username", "password");
 
     when(loginService.getLoggedInUserId()).thenReturn(1);
 
@@ -53,7 +51,7 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Register a user with empty loginName")
   public void emptyLoginName() {
-    User user = new User("  ", "password", "Name");
+    User user = new User("  ", "password");
 
     when(loginService.getLoggedInUserId()).thenReturn(null);
 
@@ -64,18 +62,7 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Register a user with empty password")
   public void emptyPassword() {
-    User user = new User("username", "", "Name");
-
-    when(loginService.getLoggedInUserId()).thenReturn(null);
-
-    assertThatThrownBy(() -> userRegisterService.register(user))
-        .isInstanceOf(IllegalCredentialsException.class);
-  }
-
-  @Test
-  @DisplayName("Register a user with empty displayName")
-  public void emptyDisplayName() {
-    User user = new User("username", "password", "  ");
+    User user = new User("username", "");
 
     when(loginService.getLoggedInUserId()).thenReturn(null);
 
@@ -86,10 +73,10 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Register with the same username as another user")
   public void registerWithSameUsername() {
-    User user = new User("username", "password", "Name");
+    User user = new User("username", "password");
 
     when(loginService.getLoggedInUserId()).thenReturn(null);
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(user);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(user);
 
     assertThatThrownBy(() -> userRegisterService.register(user))
         .isInstanceOf(UserAlreadyExistException.class);
@@ -98,11 +85,11 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Register with illegal username")
   public void illegalUsername() {
-    User user = new User("username", "password", "Name");
+    User user = new User("username", "password");
 
     when(loginService.getLoggedInUserId()).thenReturn(null);
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
-    when(illegalCharacterFilterService.hasIllegalCharacter(user.getLoginName())).thenReturn(true);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(null);
+    when(illegalCharacterFilterService.hasIllegalCharacter(user.getUsername())).thenReturn(true);
 
     assertThatThrownBy(() -> userRegisterService.register(user))
         .isInstanceOf(IllegalCredentialsException.class);
@@ -111,11 +98,11 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Register with illegal password")
   public void illegalPassword() {
-    User user = new User("username", "password", "Name");
+    User user = new User("username", "password");
 
     when(loginService.getLoggedInUserId()).thenReturn(null);
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
-    when(illegalCharacterFilterService.hasIllegalCharacter(user.getLoginName())).thenReturn(false);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(null);
+    when(illegalCharacterFilterService.hasIllegalCharacter(user.getUsername())).thenReturn(false);
     when(illegalCharacterFilterService.hasIllegalCharacter(user.getPassword())).thenReturn(true);
 
     assertThatThrownBy(() -> userRegisterService.register(user))
@@ -125,10 +112,10 @@ class UserRegisterServiceTest {
   @Test
   @DisplayName("Happy path")
   public void happyPath() throws Exception {
-    User user = new User("username", "password", "Name");
+    User user = new User("username", "password");
 
     when(loginService.getLoggedInUserId()).thenReturn(null);
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(null);
 
     userRegisterService.register(user);
 

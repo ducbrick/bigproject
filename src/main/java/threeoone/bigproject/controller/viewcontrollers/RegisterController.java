@@ -96,7 +96,7 @@ public class RegisterController implements ViewController {
   @FXML
   private void pressSignUp(ActionEvent event) {
     if(validateConfirmation()) {
-      registerRequestSender.send(new User(username.getText(), password.getText(), displayname.getText()));
+      registerRequestSender.send(new User(username.getText(), password.getText()));
     }
   }
 

@@ -203,9 +203,8 @@ public class DocOverviewController implements ViewController {
     number.setCellValueFactory(cellData
             -> new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1));
     uploader.setCellValueFactory(cellData
-            -> new SimpleStringProperty(cellData.getValue().getUploader().getDisplayName()));
+            -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     table.setItems(list);
-
   }
 
   /**

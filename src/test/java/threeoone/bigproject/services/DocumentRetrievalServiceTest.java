@@ -37,7 +37,7 @@ class DocumentRetrievalServiceTest {
   @Test
   @DisplayName("getAllDocument returns DocumentRepo.findAll()")
   public void getAllDocumentReturnsDocumentRepoFindAll() {
-    User user = new User("name", "password", "My Name");
+    User user = new User("name", "password");
     List <Document> documents = new ArrayList <> ();
 
     Document docA = new Document("name a", "desc a");

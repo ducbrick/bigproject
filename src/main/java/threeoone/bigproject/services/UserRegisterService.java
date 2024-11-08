@@ -52,10 +52,9 @@ public class UserRegisterService {
       throw new AlreadyLoggedInException("Users shouldn't register while currently logged in");
     }
 
-    user.setLoginName(user.getLoginName().stripTrailing());
-    user.setDisplayName(user.getDisplayName().stripTrailing());
+    user.setUsername(user.getUsername().stripTrailing());
 
-    if (user.getLoginName().isEmpty()) {
+    if (user.getUsername().isEmpty()) {
       throw new IllegalCredentialsException("Username can't be empty");
     }
 
@@ -63,15 +62,11 @@ public class UserRegisterService {
       throw new IllegalCredentialsException("Password can't be empty");
     }
 
-    if (user.getDisplayName().isEmpty()) {
-      throw new IllegalCredentialsException("Display name can't be empty");
-    }
-
-    if (userRepo.findByLoginName(user.getLoginName()) != null) {
+    if (userRepo.findByUsername(user.getUsername()) != null) {
       throw new UserAlreadyExistException("There is another registered user with that username");
     }
 
-    if (illegalCharacterFilterService.hasIllegalCharacter(user.getLoginName())) {
+    if (illegalCharacterFilterService.hasIllegalCharacter(user.getUsername())) {
       throw new IllegalCredentialsException("Username can only contain alphabet characters and/or digits.");
     }
 
@@ -80,5 +75,6 @@ public class UserRegisterService {
     }
 
     userRepo.save(user);
+    loginService.login(user);
   }
 }

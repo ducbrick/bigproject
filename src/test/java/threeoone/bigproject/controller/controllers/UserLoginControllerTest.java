@@ -43,25 +43,25 @@ class UserLoginControllerTest extends ApplicationTest {
   @Test
   @DisplayName("validateInformation return False")
   void validateInformationReturnFalse() {
-    User user = new User("", "", null);
+    User user = new User("", "");
     assertFalse(userLoginController.validateInformation(user));
-    user = new User("adsasd", "", null);
+    user = new User("adsasd", "");
     assertFalse(userLoginController.validateInformation(user));
-    user = new User("", "asdasdad", null);
+    user = new User("", "asdasdad");
     assertFalse(userLoginController.validateInformation(user));
   }
 
   @Test
   @DisplayName("validateInformation return True")
   void validateInformationReturnTrue() {
-    User user = new User("adsad", "jsadfklsd", null);
+    User user = new User("adsad", "jsadfklsd");
     assertTrue(userLoginController.validateInformation(user));
   }
 
   @Test
   @DisplayName("authenticationLoginWithOverMaxAttempt")
   void authenticationLoginWithOverMaxAttempt() {
-    User user = new User("", "", null);
+    User user = new User("", "");
     userLoginController.authenticateLogin(user);
     userLoginController.authenticateLogin(user);
     userLoginController.authenticateLogin(user);
@@ -83,7 +83,7 @@ class UserLoginControllerTest extends ApplicationTest {
   @Test
   @DisplayName("authenticationLoginWithInvalidUser")
   void authenticationLoginWithInvalidUser() {
-    User user = new User("", "", null);
+    User user = new User("", "");
     userLoginController.authenticateLogin(user);
     verify(loginController, times(1)).setMessage("Invalid credentials. Attempt 1");
   }
@@ -91,7 +91,7 @@ class UserLoginControllerTest extends ApplicationTest {
   @Test
   @DisplayName("loginAuthenticationSuccessfully")
   void loginAuthenticationSuccessfully() {
-    User user = new User("valid", "valid", null);
+    User user = new User("valid", "valid");
     userLoginController.registerService(loginService);
     when(loginService.login(user)).thenReturn(true);
     userLoginController.authenticateLogin(user);
@@ -101,7 +101,7 @@ class UserLoginControllerTest extends ApplicationTest {
   @Test
   @DisplayName("authenticateLoginWithExceptionFromService")
   void authenticateLoginWithExceptionFromService() {
-    User user = new User("valid", "valid", null);
+    User user = new User("valid", "valid");
     userLoginController.registerService(loginService);
     when(loginService.login(user)).thenThrow(new AlreadyLoggedInException("False"));
     userLoginController.authenticateLogin(user);
@@ -111,7 +111,7 @@ class UserLoginControllerTest extends ApplicationTest {
   @Test
   @DisplayName("loginAuthenticationFail")
   void loginAuthenticationFail() {
-    User user = new User("valid", "valid", null);
+    User user = new User("valid", "valid");
     userLoginController.registerService(loginService);
     when(loginService.login(user)).thenReturn(false);
     userLoginController.authenticateLogin(user);

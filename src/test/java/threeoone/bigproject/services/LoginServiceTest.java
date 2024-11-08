@@ -2,17 +2,13 @@ package threeoone.bigproject.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
@@ -35,9 +31,9 @@ class LoginServiceTest {
   @Test
   @DisplayName("Log in with non-existent credentials")
   public void loginNonExistentCredentials() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
 
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(null);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(null);
 
     assertThat(loginService.login(user)).isFalse();
   }
@@ -45,10 +41,10 @@ class LoginServiceTest {
   @Test
   @DisplayName("Log in with incorrect credentials")
   public void loginIncorrectCredentials() {
-    User user = new User("name", "password", "Fancy Name");
-    User registered = new User("name", "correctPassword", "Fancy Name");
+    User user = new User("name", "password");
+    User registered = new User("name", "correctPassword");
 
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(registered);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(registered);
 
     assertThat(loginService.login(user)).isFalse();
   }
@@ -56,23 +52,23 @@ class LoginServiceTest {
   @Test
   @DisplayName("Login with correct credentials")
   public void loginCorrectCredentials() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
 
     int id = 0;
 
-    User registered = new User("name", "password", "Fancy Name");
+    User registered = new User("name", "password");
     registered.setId(id);
 
-    when(userRepo.findByLoginName(user.getLoginName())).thenReturn(registered);
+    when(userRepo.findByUsername(user.getUsername())).thenReturn(registered);
 
     assertThat(loginService.login(user)).isTrue();
     assertThat(loginService.getLoggedInUserId()).isEqualTo(id);
-    assertThatThrownBy(() -> loginService.login(new User("abc", "def", "xyz")))
+    assertThatThrownBy(() -> loginService.login(new User("abc", "def")))
         .isInstanceOf(AlreadyLoggedInException.class);
 
     loginService.logout();
 
     assertThat(loginService.getLoggedInUserId()).isNull();
-    loginService.login(new User("abc", "def", "xyz"));
+    loginService.login(new User("abc", "def"));
   }
 }

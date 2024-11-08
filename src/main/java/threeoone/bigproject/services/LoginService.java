@@ -66,10 +66,10 @@ public class LoginService {
       throw new AlreadyLoggedInException("A user is currently logged-in. A user should be able to log in only if no other user is currently logged in");
     }
 
-    String loginName = user.getLoginName();
+    String username = user.getUsername();
     String password = user.getPassword();
 
-    User registedUser = userRepo.findByLoginName(loginName);
+    User registedUser = userRepo.findByUsername(username);
 
     if (registedUser == null) {
       return false;

@@ -42,7 +42,7 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert into database")
   public void insertIntoDatabase() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
     Document document = new Document("name", "description");
     user.addUploadedDocument(document);
 
@@ -69,7 +69,7 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with the same uploader")
   public void insertDocumentsWithSameAuthor() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
     Document docA = new Document("name a", "description a");
     Document docB = new Document("name b", "description b");
     Document docC = new Document("name c", "description c");
@@ -91,8 +91,8 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with different uploaders")
   public void insertDocumentsWithDifferentAuthors() {
-    User userA = new User("name a", "password", "Fancy Name");
-    User userB = new User("name b", "password", "Fancy Name");
+    User userA = new User("name a", "password");
+    User userB = new User("name b", "password");
 
     Document docA = new Document("name a", "description a");
     Document docB = new Document("name b", "description b");
@@ -109,7 +109,7 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Cascade insert document and uploaders")
   public void cascadeInsert() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
     Document document = new Document("name", "desc");
     user.addUploadedDocument(document);
 

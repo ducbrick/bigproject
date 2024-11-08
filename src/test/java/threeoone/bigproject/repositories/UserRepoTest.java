@@ -28,7 +28,7 @@ class UserRepoTest {
   public void countBeforeAndAfterSingleInsertion() {
     long countBefore = userRepo.count();
 
-    userRepo.save(new User("loginname", "password", "display name"));
+    userRepo.save(new User("loginname", "password"));
 
     long countAfter = userRepo.count();
 
@@ -41,10 +41,10 @@ class UserRepoTest {
     long countBefore = userRepo.count();
 
     List <User> users = new ArrayList <> ();
-    users.add(new User("username a", "password a", "display name a"));
-    users.add(new User("username b", "password b", "display name b"));
-    users.add(new User("username c", "password c", "display name c"));
-    users.add(new User("username d", "password d", "display name d"));
+    users.add(new User("username a", "password a"));
+    users.add(new User("username b", "password b"));
+    users.add(new User("username c", "password c"));
+    users.add(new User("username d", "password d"));
 
     for (User user : users) {
       userRepo.save(user);
@@ -61,10 +61,10 @@ class UserRepoTest {
     long countBefore = userRepo.count();
 
     List <User> users = new ArrayList <> ();
-    users.add(new User("username a", "password a", "display name a"));
-    users.add(new User("username b", "password b", "display name b"));
-    users.add(new User("username c", "password c", "display name c"));
-    users.add(new User("username d", "password d", "display name d"));
+    users.add(new User("username a", "password a"));
+    users.add(new User("username b", "password b"));
+    users.add(new User("username c", "password c"));
+    users.add(new User("username d", "password d"));
 
     userRepo.saveAll(users);
 
@@ -76,7 +76,7 @@ class UserRepoTest {
   @Test
   @DisplayName("Insert documents and retrieve uploaders")
   public void insertDocuments_retrieveAuthor() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
     Document docA = new Document("name a", "description a");
     Document docB = new Document("name b", "description b");
     Document docC = new Document("name c", "description c");
@@ -109,7 +109,7 @@ class UserRepoTest {
   @Test
   @DisplayName("Insert user and retrieve document")
   public void insertUserRetrieveDocument() {
-    User user = new User("name", "password", "Fancy Name");
+    User user = new User("name", "password");
     user.addUploadedDocument(new Document("name", "desc"));
 
     user = userRepo.save(user);
@@ -128,7 +128,7 @@ class UserRepoTest {
   @Test
   @DisplayName("Retrieve user with no document with findUserAndUploadedDocuments")
   public void retriveUserWithNoDocumentWith_findUserAndUploadedDocuments() {
-    User user = new User("name", "password", "Name");
+    User user = new User("name", "password");
     user = userRepo.save(user);
 
     assertThat(userRepo.findUserAndUploadedDocuments(user.getId())).isSameAs(user);
@@ -136,17 +136,17 @@ class UserRepoTest {
 
   @Test
   @DisplayName("Find user by login name")
-  public void findByLoginName() {
-    User user = new User("ducbrick", "password", "Brick");
+  public void findByUsername() {
+    User user = new User("ducbrick", "password");
     user = userRepo.save(user);
-    assertThat(user).isSameAs(userRepo.findByLoginName(user.getLoginName()));
+    assertThat(user).isSameAs(userRepo.findByUsername(user.getUsername()));
   }
 
   @Test
   @DisplayName("Find non-existent user by login name")
   public void findNonExistentUserByLoginName() {
     String random = "jshdflkasdjfsadf";
-    assertThat(userRepo.findByLoginName(random)).isNull();
+    assertThat(userRepo.findByUsername(random)).isNull();
   }
 
   @Test
