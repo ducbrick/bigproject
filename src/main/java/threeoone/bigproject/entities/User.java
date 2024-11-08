@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -28,18 +29,17 @@ import lombok.Setter;
  * @author DUCBRICK
  */
 @Entity
-@Table(name = "appuser")
+@Table(name = "Appuser")
 @NoArgsConstructor @Getter @Setter
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
   private Integer id;
 
-  @Column(name = "username")
+  @NonNull
   private String username;
 
-  @Column(name = "password")
+  @NonNull
   private String password;
 
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL)
@@ -51,7 +51,7 @@ public class User {
    * @param username the loginName of the new User
    * @param password the password of the new User
    */
-  public User(String username, String password) {
+  public User(@NonNull String username, @NonNull String password) {
     this.username = username;
     this.password = password;
   }
