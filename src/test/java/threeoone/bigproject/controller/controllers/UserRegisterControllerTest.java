@@ -41,7 +41,7 @@ class UserRegisterControllerTest {
   @Test
   @DisplayName("testRegister")
   void testRegister() throws UserAlreadyExistException, IllegalCredentialsException {
-    User user = new User("", "", "");
+    User user = new User("", "");
     userRegisterController.validateRegister(user);
     verify(userRegisterService, times(1)).register(user);
   }

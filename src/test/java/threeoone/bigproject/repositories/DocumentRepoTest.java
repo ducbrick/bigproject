@@ -12,11 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 
-/**
- * All tests assume the database is currently empty.
- *
- * @author DUCBRICK
- */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class DocumentRepoTest {
@@ -35,15 +30,15 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert a document without uploader")
   public void insertDocumentWithoutAuthor() {
-    Document document = new Document("name", "description");
+    Document document = new Document("name", "description", 1);
     assertThatThrownBy(() -> documentRepo.save(document));
   }
 
   @Test
   @DisplayName("Insert into database")
   public void insertIntoDatabase() {
-    User user = new User("name", "password", "Fancy Name");
-    Document document = new Document("name", "description");
+    User user = new User("name", "password");
+    Document document = new Document("name", "description", 1);
     user.addUploadedDocument(document);
 
     long countBefore = documentRepo.count();
@@ -52,7 +47,7 @@ class DocumentRepoTest {
 
     assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
 
-    Document anotherDoc = new Document("another name", "same description");
+    Document anotherDoc = new Document("another name", "same description", 1);
     user.addUploadedDocument(anotherDoc);
 
     documentRepo.save(anotherDoc);
@@ -69,10 +64,10 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with the same uploader")
   public void insertDocumentsWithSameAuthor() {
-    User user = new User("name", "password", "Fancy Name");
-    Document docA = new Document("name a", "description a");
-    Document docB = new Document("name b", "description b");
-    Document docC = new Document("name c", "description c");
+    User user = new User("name", "password");
+    Document docA = new Document("name a", "description a", 1);
+    Document docB = new Document("name b", "description b", 1);
+    Document docC = new Document("name c", "description c", 1);
 
     user.addUploadedDocument(docA);
     user.addUploadedDocument(docB);
@@ -91,11 +86,11 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with different uploaders")
   public void insertDocumentsWithDifferentAuthors() {
-    User userA = new User("name a", "password", "Fancy Name");
-    User userB = new User("name b", "password", "Fancy Name");
+    User userA = new User("name a", "password");
+    User userB = new User("name b", "password");
 
-    Document docA = new Document("name a", "description a");
-    Document docB = new Document("name b", "description b");
+    Document docA = new Document("name a", "description a", 1);
+    Document docB = new Document("name b", "description b", 1);
 
     userA.addUploadedDocument(docA);
     userB.addUploadedDocument(docB);
@@ -109,8 +104,8 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Cascade insert document and uploaders")
   public void cascadeInsert() {
-    User user = new User("name", "password", "Fancy Name");
-    Document document = new Document("name", "desc");
+    User user = new User("name", "password");
+    Document document = new Document("name", "desc", 1);
     user.addUploadedDocument(document);
 
     long countBefore = userRepo.count();

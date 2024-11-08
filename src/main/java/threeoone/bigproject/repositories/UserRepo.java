@@ -32,10 +32,10 @@ public interface UserRepo extends ListCrudRepository <User, Integer> {
    * As each User's {@code loginName} is unique, this method is guaranteed to return at most one {@link User}.
    * If no {@link User} with the specified {@code loginName} exists, returns {@code null}.
    *
-   * @param loginName the loginName of the desired {@link User}
+   * @param username the loginName of the desired {@link User}
    *
    * @return the unique {@link User} with the specified {@code loginName} if it exists, otherwise null
    */
-  @Query("SELECT u FROM User u WHERE u.loginName = (:loginName)")
-  public User findByLoginName(@Param("loginName") String loginName);
+  @Query("SELECT u FROM User u WHERE u.username = (:username)")
+  public User findByUsername(@Param("username") String username);
 }

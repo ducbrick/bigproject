@@ -80,7 +80,7 @@ public class LoginController implements ViewController {
    */
   @FXML
   private void pressLogin(ActionEvent event) {
-    loginRequestSender.send(new User(usernameField.getText(), passwordField.getText(), null));
+    loginRequestSender.send(new User(usernameField.getText(), passwordField.getText()));
   }
 
   /**
