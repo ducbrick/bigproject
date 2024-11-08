@@ -14,8 +14,7 @@ CREATE TABLE Document (
 	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0),
 	author VARCHAR(255),
 	description BPCHAR,
-	total_copies INTEGER NOT NULL,
-	lent_copies INTEGER NOT NULL,
+	copies INTEGER NOT NULL,
 	uploader_id INTEGER REFERENCES AppUser NOT NULL
 );
 
