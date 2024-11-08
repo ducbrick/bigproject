@@ -47,7 +47,7 @@ public class Document {
   private String description;
 
   @NonNull
-  private Integer copies;
+  private Integer copies = 0;
 
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "uploader_id")
@@ -67,6 +67,17 @@ public class Document {
     this.name = name;
     this.description = description;
     this.copies = copies;
+  }
+
+  /**
+   * Constructs a new {@link Document} with the given parameters.
+   *
+   * @param name name of the new {@link Document}
+   * @param description description of the new {@link Document}
+   */
+  public Document(@NonNull String name, String description) {
+    this.name = name;
+    this.description = description;
   }
 
   /**

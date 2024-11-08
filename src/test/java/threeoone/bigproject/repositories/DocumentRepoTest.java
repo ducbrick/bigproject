@@ -35,7 +35,7 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert a document without uploader")
   public void insertDocumentWithoutAuthor() {
-    Document document = new Document("name", "description");
+    Document document = new Document("name", "description", 1);
     assertThatThrownBy(() -> documentRepo.save(document));
   }
 
@@ -43,7 +43,7 @@ class DocumentRepoTest {
   @DisplayName("Insert into database")
   public void insertIntoDatabase() {
     User user = new User("name", "password");
-    Document document = new Document("name", "description");
+    Document document = new Document("name", "description", 1);
     user.addUploadedDocument(document);
 
     long countBefore = documentRepo.count();
@@ -52,7 +52,7 @@ class DocumentRepoTest {
 
     assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
 
-    Document anotherDoc = new Document("another name", "same description");
+    Document anotherDoc = new Document("another name", "same description", 1);
     user.addUploadedDocument(anotherDoc);
 
     documentRepo.save(anotherDoc);
@@ -70,9 +70,9 @@ class DocumentRepoTest {
   @DisplayName("Insert documents with the same uploader")
   public void insertDocumentsWithSameAuthor() {
     User user = new User("name", "password");
-    Document docA = new Document("name a", "description a");
-    Document docB = new Document("name b", "description b");
-    Document docC = new Document("name c", "description c");
+    Document docA = new Document("name a", "description a", 1);
+    Document docB = new Document("name b", "description b", 1);
+    Document docC = new Document("name c", "description c", 1);
 
     user.addUploadedDocument(docA);
     user.addUploadedDocument(docB);
@@ -94,8 +94,8 @@ class DocumentRepoTest {
     User userA = new User("name a", "password");
     User userB = new User("name b", "password");
 
-    Document docA = new Document("name a", "description a");
-    Document docB = new Document("name b", "description b");
+    Document docA = new Document("name a", "description a", 1);
+    Document docB = new Document("name b", "description b", 1);
 
     userA.addUploadedDocument(docA);
     userB.addUploadedDocument(docB);
@@ -110,7 +110,7 @@ class DocumentRepoTest {
   @DisplayName("Cascade insert document and uploaders")
   public void cascadeInsert() {
     User user = new User("name", "password");
-    Document document = new Document("name", "desc");
+    Document document = new Document("name", "desc", 1);
     user.addUploadedDocument(document);
 
     long countBefore = userRepo.count();

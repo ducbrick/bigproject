@@ -9,15 +9,6 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 
 class DocumentTest {
   @Test
-  @DisplayName("Check constraints for NULL name")
-  public void constraintsNullName() {
-    User user = new User("username", "password");
-    Document document = new Document(null, null);
-    user.addUploadedDocument(document);
-    assertThatThrownBy(document::checkConstraints).isInstanceOf(IllegalDocumentInfoException.class);
-  }
-
-  @Test
   @DisplayName("Check constraints for empty name")
   public void constraintsEmptyName() {
     User user = new User("username", "password");

@@ -40,9 +40,9 @@ class DocumentRetrievalServiceTest {
     User user = new User("name", "password");
     List <Document> documents = new ArrayList <> ();
 
-    Document docA = new Document("name a", "desc a");
-    Document docB = new Document("name b", "desc b");
-    Document docC = new Document("name c", "desc c");
+    Document docA = new Document("name a", "desc a", 1);
+    Document docB = new Document("name b", "desc b", 1);
+    Document docC = new Document("name c", "desc c", 1);
 
     user.addUploadedDocument(docA);
     user.addUploadedDocument(docB);
@@ -76,7 +76,7 @@ class DocumentRetrievalServiceTest {
   @DisplayName("getDocumentById returns DocumentRepo.findById() when exists")
   public void getDocumentById_returns_DocumentRepoFindById_whenExists() {
     int id = new Random().nextInt();
-    Document document = new Document("doc name", "doc desc");
+    Document document = new Document("doc name", "doc desc", 1);
     document.setId(id);
 
     when(documentRepo.findById(id)).thenReturn(Optional.of(document));
