@@ -12,11 +12,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 
-/**
- * All tests assume the database is currently empty.
- *
- * @author DUCBRICK
- */
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class DocumentRepoTest {
