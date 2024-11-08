@@ -28,6 +28,8 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  * JPA requires synchronization on both sides in order to persist.
  * {@link User#addUploadedDocument(Document)} sets the relationship on both sides.
  * Lombok-generated {@link #setUploader(User)} only sets the relationship on the {@link Document} side.
+ * <p>
+ * Likewise, {@link #lendingDetails} is a bidirectional one-to-many relationship between {@link Document} and {@link LendingDetail}.
  *
  * @see User
  *
@@ -99,5 +101,18 @@ public class Document {
     if (uploader == null) {
       throw new IllegalDocumentInfoException("Document have no uploader");
     }
+  }
+
+  /**
+   * Adds a {@link LendingDetail} to the list of the Document's lent copies.
+   * JPA requires synchronization on both sides in order to persist,
+   * meaning a {@link LendingDetail} must exist in its Document's {@link #lendingDetails} list.
+   * This method sets the relationship on both the {@link Document} side and {@link LendingDetail} side.
+   *
+   * @param lendingDetail detail about the lent copy
+   */
+  public void lendDocument(LendingDetail lendingDetail) {
+    lendingDetails.add(lendingDetail);
+    lendingDetail.setDocument(this);
   }
 }

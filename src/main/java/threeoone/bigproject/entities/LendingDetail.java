@@ -23,6 +23,8 @@ import lombok.Setter;
  * JPA requires synchronization on both sides in order to persist.
  * {@link Member#lendDocument(LendingDetail)}} sets the relationship on both sides.
  * Lombok-generated {@link #setMember(Member)} only sets the relationship on the {@link LendingDetail} side.
+ * <p>
+ * Likewise, {@link #document} is a bidirectional many-to-one relationship between {@link Document} and {@link LendingDetail}.
  *
  * @author DUCBRICK
  */
