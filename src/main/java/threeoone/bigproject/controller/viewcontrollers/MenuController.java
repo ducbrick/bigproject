@@ -15,6 +15,8 @@ import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.LendingDetail;
+import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
 /**
@@ -39,16 +41,16 @@ public class MenuController implements ViewController {
     private Button Random;
 
     @FXML
-    private TableView<User> UserList;
+    private TableView<Member> MemberList;
 
     @FXML
-    private TableColumn<User, String> UserID;
+    private TableColumn<Member, String> UserID;
 
     @FXML
-    private TableColumn<User, String> UserName;
+    private TableColumn<Member, String> UserName;
 
     @FXML
-    private TableColumn<User, Integer> BooksIssued;
+    private TableColumn<Member, Integer> BooksIssued;
 
     @FXML
     private TableView<Document> LastestDocuments;
@@ -68,6 +70,10 @@ public class MenuController implements ViewController {
     @FXML
     private TableColumn<Document, String> Description;
 
+    @FXML
+    private TableView<LendingDetail> LendingList;
+
+    @FXML
 
     private Document randomDocument;
 
@@ -89,7 +95,7 @@ public class MenuController implements ViewController {
 
     public void initialize() {
         UserID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        UserName.setCellValueFactory(new PropertyValueFactory<>("display_name"));
+        UserName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         BookID.setCellValueFactory(new PropertyValueFactory<>("id"));
         Title.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -99,9 +105,9 @@ public class MenuController implements ViewController {
     }
 
 
-    public void setUserList(ObservableList<User> userList) {
+    public void setUserList(ObservableList<Member> memberList) {
         Thread thread = new Thread(() -> {
-            UserList.setItems(userList);
+            MemberList.setItems(memberList);
         });
         thread.start();
         //BooksIssued.setCellValueFactory(new PropertyValueFactory<>("booksIssued"));
