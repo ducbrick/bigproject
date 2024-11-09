@@ -2,13 +2,15 @@ package threeoone.bigproject.controller.viewcontrollers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
+import threeoone.bigproject.entities.LendingDetail;
 
 @Component
-@FxmlView("UserDetails.fxml")
-public class UserDetailsController implements ViewController{
+@FxmlView("MemberDetails.fxml")
+public class MemberDetailsController implements ViewController{
 
     @FXML
     private Parent root;
@@ -24,6 +26,10 @@ public class UserDetailsController implements ViewController{
 
     @FXML
     private Text ID;
+
+    @FXML
+    private TableView<LendingDetail> Borrowing;
+
 
     @Override
     public Parent getParent() {
