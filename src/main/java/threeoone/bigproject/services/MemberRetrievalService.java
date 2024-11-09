@@ -30,7 +30,9 @@ public class MemberRetrievalService {
   }
 
   /**
-   * Retrieves all {@link Member} from the Database.
+   * Retrieves all {@link Member} from the Database as a List.
+   *
+   * @apiNote the returned List will not be {@code NULL}.
    *
    * @return a {@link List} containing every {@link Member} in the Database
    */
