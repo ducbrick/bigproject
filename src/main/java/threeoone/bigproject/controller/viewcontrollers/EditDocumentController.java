@@ -53,7 +53,6 @@ public class EditDocumentController implements ViewController {
   @FXML
   private Button submitButton;
 
-  @NonNull
   private Document document;
 
   /**
