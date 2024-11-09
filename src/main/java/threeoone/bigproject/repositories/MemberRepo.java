@@ -16,7 +16,7 @@ public interface MemberRepo extends ListCrudRepository <Member, Integer> {
    * Retrieves a List of Members whose name contain the given substring.
    *
    * @apiNote the list returned will not be {@code NULL}.
-   * @apiNote this method is not case-sentitive.
+   * @apiNote this method is not case-sensitive.
    *
    * @param substr the substring to retrieve Members
    *
