@@ -3,6 +3,7 @@ package threeoone.bigproject.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Objects;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,15 @@ class MemberRepoTest {
   @Test
   @DisplayName("Test build & run")
   public void test() {
+    Member m1 = new Member("name");
+    m1 = memberRepo.save(m1);
 
+    Member m2 = new Member("another name");
+    m2.setId(m1.getId());
+
+    memberRepo.save(m2);
+
+    assertThat(Objects.equals(m1.getName(), m2.getName())).isTrue();
   }
 
   @Test

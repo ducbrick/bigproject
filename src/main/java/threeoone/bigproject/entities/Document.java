@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 
@@ -38,7 +39,7 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  */
 @Entity
 @Table(name = "Document")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class Document {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

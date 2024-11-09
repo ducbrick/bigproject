@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -30,7 +31,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "LendingDetail")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class LendingDetail {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,13 +48,4 @@ public class LendingDetail {
   @JoinColumn(name = "document_id")
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private Document document;
-
-  /**
-   * Constructs detail about a new lending of a {@link Document}
-   *
-   * @param lendTime the timestamp the {@link Document} is lent
-   */
-  public LendingDetail(@NonNull LocalDateTime lendTime) {
-    this.lendTime = lendTime;
-  }
 }

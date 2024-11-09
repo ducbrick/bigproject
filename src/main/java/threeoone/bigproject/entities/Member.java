@@ -12,6 +12,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -29,7 +30,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "Member")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class Member {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,15 +41,6 @@ public class Member {
 
   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
   private List <LendingDetail> lendingDetails = new ArrayList <> ();
-
-  /**
-   * Constructs a new Member with the given parameters.
-   *
-   * @param name the name of the new Member
-   */
-  public Member(@NonNull String name) {
-    this.name = name;
-  }
 
   /**
    * Adds a {@link LendingDetail} to the list of the Member's lent Documents.
