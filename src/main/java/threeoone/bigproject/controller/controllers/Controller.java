@@ -103,8 +103,10 @@ public class Controller {
         break;
       case SEARCH:
         viewSwitcher.switchToView(searchBarController);
+        break;
       case EDIT_DOC:
         viewSwitcher.switchToView(editDocumentController);
+        break;
     }
   }
 }

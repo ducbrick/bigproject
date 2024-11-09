@@ -44,5 +44,13 @@ public enum SceneName {
      */
     EDIT_DOC,
 
+    /**
+     * Represent member list page
+     */
+    MEM_LIST,
+
+    /**
+     * Represent your book page
+     */
     YOUR_BOOKS
 }

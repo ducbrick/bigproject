@@ -4,8 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
+import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
 import javax.swing.*;
@@ -151,4 +153,20 @@ public class SpringConfig {
    */
   @Bean
   RequestSender<ActionOnDoc> actionOnDocRequestSender() { return new RequestSender<>(); }
+
+  /**
+   * Send a request to service to get all member
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<Member> getAllMembersRequestSender() {return new RequestSender<>(); }
+
+  /**
+   * Send a request to make an action on member
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<ActionOnMem> actionOnMemRequestSender() { return new RequestSender<>(); }
 }
