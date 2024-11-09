@@ -9,7 +9,7 @@ import threeoone.bigproject.repositories.MemberRepo;
  * A service to modify, which is to add, update, or delete {@link Member} entities from the Database.
  * This class is a singleton bean in Spring context.
  *
- * @author DUCBRICK 
+ * @author DUCBRICK
  */
 @Service
 public class MemberEditingService {
@@ -37,7 +37,7 @@ public class MemberEditingService {
    */
   void update(Member member) {
     if (member != null && member.getId() != null && !memberRepo.existsById(member.getId())) {
-      throw new NoSuchElementException("Attempting to update a non-existing Member");
+      throw new NoSuchElementException("Attempting to update a non-existent Member");
     }
     memberRepo.save(member);
   }
