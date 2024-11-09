@@ -29,10 +29,14 @@ public class SearchBarController implements ViewController {
   private final RequestSender<Document> documentDetailRequestSender;
   private final RequestSender<SwitchScene> switchSceneRequestSender;
 
+  /**
+   * Represent for search type
+   */
   private enum SearchType {
     AUTHOR,
     NAME,
-    CATEGORY
+    CATEGORY,
+    MEMBER
   }
 
   private SearchType searchType = null;
@@ -44,6 +48,10 @@ public class SearchBarController implements ViewController {
 
   @FXML
   private ToggleButton name;
+
+  @FXML
+  private ToggleButton member;
+
   @FXML
   private Parent root;
   @FXML
@@ -58,6 +66,8 @@ public class SearchBarController implements ViewController {
    * @param queryDocByNameRequestSender     requestSender for query
    * @param queryDocByAuthorRequestSender   requestSender for query
    * @param queryDocByCategoryRequestSender requestSender for query
+   * @param switchSceneRequestSender        requestSender for switch Scene
+   * @param documentDetailRequestSender     requestSender for document detail
    */
   public SearchBarController(RequestSender<String> queryDocByNameRequestSender,
                              RequestSender<String> queryDocByAuthorRequestSender,
@@ -103,13 +113,15 @@ public class SearchBarController implements ViewController {
   }
 
   /**
-   * Reset state of all toggle button
+   * Reset state of all toggle button {@link #category}, {@link #name}, {@link #author},
+   * {@link #member}
    */
   @FXML
   private void resetSelect() {
     category.setSelected(false);
     name.setSelected(false);
     author.setSelected(false);
+    member.setSelected(false);
     searchType = null;
   }
 

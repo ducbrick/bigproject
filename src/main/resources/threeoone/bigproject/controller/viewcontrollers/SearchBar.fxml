@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#resetSelect" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.SearchBarController">
    <children>
       <VBox layoutX="174.0" layoutY="54.0" prefHeight="616.0" prefWidth="955.0">
@@ -35,6 +34,7 @@
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -44,6 +44,7 @@
                         <ToggleButton fx:id="name" mnemonicParsing="false" onAction="#pressName" text="Name" GridPane.columnIndex="1" />
                         <ToggleButton fx:id="author" mnemonicParsing="false" onAction="#pressAuthor" text="Author" GridPane.columnIndex="2" />
                         <ToggleButton fx:id="category" mnemonicParsing="false" onAction="#pressCategory" text="Category" GridPane.columnIndex="3" />
+                        <ToggleButton fx:id="member" mnemonicParsing="false" text="Member" GridPane.columnIndex="4" />
                      </children>
                   </GridPane>
                </children>

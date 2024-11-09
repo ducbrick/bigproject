@@ -128,6 +128,12 @@ public class DocOverviewController implements ViewController {
       });
       return row;
     });
+    description.setCellValueFactory(new PropertyValueFactory<>("description"));
+    name.setCellValueFactory(new PropertyValueFactory<>("name"));
+    number.setCellValueFactory(cellData
+            -> new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1));
+    uploader.setCellValueFactory(cellData
+            -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
     getListAllDocumentRequestSender.send(new User());
   }
@@ -156,7 +162,7 @@ public class DocOverviewController implements ViewController {
    */
   private MenuItem borrow() {
     return MenuItemFactory.createMenuItem("Borrow",
-            "Borrow Confirmation", "Are you sure you want to borrow this item?",
+            "Borrow Confirmation", "Are you sure you want to borrow this document?",
             unused -> actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.BORROW, chosenDoc)));
   }
 
@@ -170,7 +176,7 @@ public class DocOverviewController implements ViewController {
   private MenuItem remove() {
     return MenuItemFactory.createMenuItem("Remove",
             "Remove Confirmation",
-            "Are you sure you want to remove this item?",
+            "Are you sure you want to remove this document?",
             unused -> actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.REMOVE, chosenDoc)));
   }
 
@@ -183,7 +189,7 @@ public class DocOverviewController implements ViewController {
   private MenuItem edit() {
     return MenuItemFactory.createMenuItem("Edit",
             "Edit Confirmation",
-            "Are you sure you want to edit this item?",
+            "Are you sure you want to edit this document?",
             unused -> {
               actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.EDIT, chosenDoc));
               switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_DOC));
@@ -201,19 +207,10 @@ public class DocOverviewController implements ViewController {
 
   /**
    * Sets the items in the document table with the given list.
-   * String arguments like: description,  name in `PropertyValueFactory` is attribute of {@link Document}
-   * Number is number of row in table. Documents on table must be different, if not number will have duplicate.
-   * Uploader is a user object. Using a callback to extract displayName from Uploader in Document.
    *
    * @param list An observable list of documents to be displayed in the table
    */
   public void setTable(ObservableList<Document> list) {
-    description.setCellValueFactory(new PropertyValueFactory<>("description"));
-    name.setCellValueFactory(new PropertyValueFactory<>("name"));
-    number.setCellValueFactory(cellData
-            -> new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1));
-    uploader.setCellValueFactory(cellData
-            -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     table.setItems(list);
   }
 
