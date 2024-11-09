@@ -13,6 +13,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
@@ -34,7 +35,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "Appuser")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,17 +49,6 @@ public class User {
 
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL)
   private List <Document> uploadedDocuments = new ArrayList <> ();
-
-  /**
-   * Constructs a new {@link User} from the given {@code username} and {@code password}.
-   *
-   * @param username the loginName of the new User
-   * @param password the password of the new User
-   */
-  public User(@NonNull String username, @NonNull String password) {
-    this.username = username;
-    this.password = password;
-  }
 
   /**
    * Adds a {@link Document} to the list of the User's uploaded documents.
