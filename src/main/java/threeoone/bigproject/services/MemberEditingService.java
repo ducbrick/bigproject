@@ -37,11 +37,11 @@ public class MemberEditingService {
    * @throws NoSuchElementException when the given Member's {@code id} doesn't exist in the Database.
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints errors)
    */
-  void update(@NonNull Member member) {
+  public Member update(@NonNull Member member) {
     if (member.getId() != null && !memberRepo.existsById(member.getId())) {
       throw new NoSuchElementException("Attempting to update a non-existent Member");
     }
-    memberRepo.save(member);
+    return memberRepo.save(member);
   }
 
   /**
@@ -50,7 +50,7 @@ public class MemberEditingService {
    *
    * @param id the {@code id} of the {@link Member} to delete
    */
-  void delete(int id) {
+  public void delete(int id) {
     memberRepo.deleteById(id);
   }
 }

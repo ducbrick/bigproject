@@ -1,5 +1,6 @@
 package threeoone.bigproject.controller.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -12,10 +13,12 @@ import threeoone.bigproject.view.ViewSwitcher;
  * This controller is a Spring Component and is injected with necessary dependencies.
  * It registers to receive specific types of requests and handles them accordingly.
  * This is Controller version to use instead of DemoController before
+ * It is constructed with many view controller
  *
  * @author HUY1902
  */
 @Component
+@RequiredArgsConstructor
 public class Controller {
   private final MenuController menuController;
   private final ViewSwitcher viewSwitcher;
@@ -27,40 +30,8 @@ public class Controller {
   private final AddNewDocController addNewDocController;
   private final SearchBarController searchBarController;
   private final EditDocumentController editDocumentController;
-
-  /**
-   * Constructs the main controller with dependencies.
-   *
-   * @param menuController           the controller for the menu view
-   * @param docOverviewController    the controller for the document overview view
-   * @param viewSwitcher             the component responsible for switching views
-   * @param documentDetailController the controller for the document detail view
-   * @param loginController          the controller for the login view
-   * @param registerController       the controller for the register view
-   * @param addNewDocController      the controller for add new doc view
-   * @param searchBarController      the controller for search page
-   */
-  public Controller(MenuController menuController,
-                    DocOverviewController docOverviewController,
-                    YourBooksController yourBooksController,
-                    ViewSwitcher viewSwitcher,
-                    DocumentDetailController documentDetailController,
-                    LoginController loginController,
-                    RegisterController registerController,
-                    AddNewDocController addNewDocController,
-                    SearchBarController searchBarController,
-                    EditDocumentController editDocumentController) {
-    this.menuController = menuController;
-    this.docOverviewController = docOverviewController;
-    this.viewSwitcher = viewSwitcher;
-    this.documentDetailController = documentDetailController;
-    this.loginController = loginController;
-    this.yourBooksController = yourBooksController;
-    this.registerController = registerController;
-    this.addNewDocController = addNewDocController;
-    this.searchBarController = searchBarController;
-    this.editDocumentController = editDocumentController;
-  }
+  private final MemberListController memberListController;
+  private final AddNewMemController addNewMemController;
 
   /**
    * Registers request receivers for scene switching and document detail handling.
@@ -106,6 +77,12 @@ public class Controller {
         break;
       case EDIT_DOC:
         viewSwitcher.switchToView(editDocumentController);
+        break;
+      case MEM_LIST:
+        viewSwitcher.switchToView(memberListController);
+        break;
+      case ADD_MEM:
+        viewSwitcher.switchToView(addNewMemController);
         break;
     }
   }

@@ -87,8 +87,6 @@ public class MemberListController implements ViewController {
     });
     id.setCellValueFactory(new PropertyValueFactory<>("id"));
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-    getAllMembersRequestSender.send(null);
   }
 
   /**
@@ -126,10 +124,9 @@ public class MemberListController implements ViewController {
    *
    * @param event event trigger button
    */
-  // TODO: Go to add new member
   @FXML
   private void pressAdd(ActionEvent event) {
-
+    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_MEM));
   }
 
   /**
@@ -178,6 +175,6 @@ public class MemberListController implements ViewController {
    */
   @Override
   public void show() {
-
+    getAllMembersRequestSender.send(null);
   }
 }
