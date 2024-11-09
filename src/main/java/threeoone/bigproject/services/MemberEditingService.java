@@ -1,6 +1,7 @@
 package threeoone.bigproject.services;
 
 import java.util.NoSuchElementException;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.repositories.MemberRepo;
@@ -36,8 +37,8 @@ public class MemberEditingService {
    * @throws NoSuchElementException when the given Member's {@code id} doesn't exist in the Database.
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints errors)
    */
-  void update(Member member) {
-    if (member != null && member.getId() != null && !memberRepo.existsById(member.getId())) {
+  void update(@NonNull Member member) {
+    if (member.getId() != null && !memberRepo.existsById(member.getId())) {
       throw new NoSuchElementException("Attempting to update a non-existent Member");
     }
     memberRepo.save(member);
