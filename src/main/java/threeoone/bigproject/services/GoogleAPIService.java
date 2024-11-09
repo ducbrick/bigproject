@@ -2,6 +2,8 @@ package threeoone.bigproject.services;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -16,18 +18,14 @@ import threeoone.bigproject.util.Alerts;
  *
  * @author HUY1902
  */
+@Setter
+@Getter
 @Service
 public class GoogleAPIService {
 
-  /**
-   * URL for the Google Books API.
-   */
   @Value("${google.api.url}")
   private String googleBooksURL;
 
-  /**
-   * Timeout for the Google Books API requests.
-   */
   @Value("${google.api.timeout}")
   private int googleBooksTimeout;
 
@@ -93,39 +91,4 @@ public class GoogleAPIService {
     return new Gson().fromJson(response.getBody(), JsonObject.class);
   }
 
-  /**
-   * Gets the Google Books API URL.
-   *
-   * @return the Google Books API URL.
-   */
-  public String getGoogleBooksURL() {
-    return googleBooksURL;
-  }
-
-  /**
-   * Gets the Google Books API timeout.
-   *
-   * @return the Google Books API timeout.
-   */
-  public int getGoogleBooksTimeout() {
-    return googleBooksTimeout;
-  }
-
-  /**
-   * Sets the Google Books API URL.
-   *
-   * @param googleBooksURL the new Google Books API URL.
-   */
-  public void setGoogleBooksURL(String googleBooksURL) {
-    this.googleBooksURL = googleBooksURL;
-  }
-
-  /**
-   * Sets the Google Books API timeout.
-   *
-   * @param googleBooksTimeout the new Google Books API timeout.
-   */
-  public void setGoogleBooksTimeout(int googleBooksTimeout) {
-    this.googleBooksTimeout = googleBooksTimeout;
-  }
 }

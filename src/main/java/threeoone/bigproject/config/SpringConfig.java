@@ -3,9 +3,12 @@ package threeoone.bigproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+
+import javax.swing.*;
 
 /**
  * {@code Spring} configuration class.
@@ -131,4 +134,21 @@ public class SpringConfig {
   RequestSender<String> queryDocByCategoryRequestSender() {
     return new RequestSender<>();
   }
+
+  /**
+   * Send a new change on given document request to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<Document> commitChangeDocRequestSender() { return new RequestSender<>(); }
+
+
+  /**
+   * Send an action request on given document
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<ActionOnDoc> actionOnDocRequestSender() { return new RequestSender<>(); }
 }

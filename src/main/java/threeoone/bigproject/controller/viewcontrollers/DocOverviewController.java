@@ -16,14 +16,18 @@ import javafx.scene.input.KeyCode;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
+import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.util.Alerts;
+import threeoone.bigproject.util.MenuItemFactory;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Controller class for the Document Overview scene.
@@ -41,7 +45,7 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<User> getListAllDocumentRequestSender;
   private final RequestSender<Document> updateDocActionRequestSender;
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-
+  private final RequestSender<ActionOnDoc> actionOnDocRequestSender;
   private final RequestSender<Document> documentDetailRequestSender;
 
   @FXML
@@ -67,25 +71,28 @@ public class DocOverviewController implements ViewController {
   @FXML
   private TableView<Document> table;
 
+  private Document chosenDoc;
 
   /**
    * Constructs a new {@code DocOverviewController} with the given request senders.
    *
-   * @param switchSceneRequestSender    Request sender for switching scenes
-   * @param documentDetailRequestSender Request sender for handling document interactions
+   * @param switchSceneRequestSender        Request sender for switching scenes
+   * @param documentDetailRequestSender     Request sender for handling document interactions
    * @param getListAllDocumentRequestSender Request sender for set up table
-   * @param updateDocActionRequestSender Request sender for update context menu
-   *
+   * @param updateDocActionRequestSender    Request sender for update context menu
+   * @param actionOnDocRequestSender        Request sender for action on document
    */
-  //TODO: Need to have action to handle borrow book and remove book
+  //TODO: Need to have action to handle borrow book and remove book. Make enumeration to handle it.
   public DocOverviewController(RequestSender<User> getListAllDocumentRequestSender,
                                RequestSender<Document> updateDocActionRequestSender,
                                RequestSender<SwitchScene> switchSceneRequestSender,
+                               RequestSender<ActionOnDoc> actionOnDocRequestSender,
                                RequestSender<Document> documentDetailRequestSender,
                                MenuBarController menuBarController) {
     this.getListAllDocumentRequestSender = getListAllDocumentRequestSender;
     this.updateDocActionRequestSender = updateDocActionRequestSender;
     this.switchSceneRequestSender = switchSceneRequestSender;
+    this.actionOnDocRequestSender = actionOnDocRequestSender;
     this.documentDetailRequestSender = documentDetailRequestSender;
     this.menuBarController = menuBarController;
   }
@@ -107,7 +114,8 @@ public class DocOverviewController implements ViewController {
       //handle show context menu
       row.setOnContextMenuRequested(event -> {
         if (!row.isEmpty()) {
-          updateDocActionRequestSender.send(row.getItem());
+          chosenDoc = row.getItem();
+          updateDocActionRequestSender.send(chosenDoc);
           contextMenu.show(row, event.getScreenX(), event.getScreenY());
         }
       });
@@ -132,6 +140,7 @@ public class DocOverviewController implements ViewController {
    */
   public void updateMenuContext(boolean isBorrowAvailable, boolean isRemoveAvailable) {
     contextMenu.getItems().clear();
+    contextMenu.getItems().add(edit());
     if (isBorrowAvailable) {
       contextMenu.getItems().add(borrow());
     }
@@ -146,17 +155,9 @@ public class DocOverviewController implements ViewController {
    * @return borrow item in context menu
    */
   private MenuItem borrow() {
-    MenuItem item = new MenuItem("Borrow");
-    item.setOnAction(event -> {
-      Alert alert = Alerts.alertConfirmation("Borrow Confirmation",
-              "Are you sure you want to borrow this item?");
-      alert.showAndWait().ifPresent(response -> {
-        if (response == ButtonType.OK) {
-          // Handle the borrow action
-        }
-      });
-    });
-    return item;
+    return MenuItemFactory.createMenuItem("Borrow",
+            "Borrow Confirmation", "Are you sure you want to borrow this item?",
+            unused -> actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.BORROW, chosenDoc)));
   }
 
 
@@ -167,17 +168,26 @@ public class DocOverviewController implements ViewController {
    * @return the menu item for removing an item
    */
   private MenuItem remove() {
-    MenuItem item = new MenuItem("Remove");
-    item.setOnAction(event -> {
-      Alert alert = Alerts.alertConfirmation("Remove Confirmation",
-              "Are you sure you want to remove this item?");
-      alert.showAndWait().ifPresent(response -> {
-        if (response == ButtonType.OK) {
-          // Handle the remove action
-        }
-      });
-    });
-    return item;
+    return MenuItemFactory.createMenuItem("Remove",
+            "Remove Confirmation",
+            "Are you sure you want to remove this item?",
+            unused -> actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.REMOVE, chosenDoc)));
+  }
+
+  /**
+   * Creates a menu item for removing an item.
+   * Displays a confirmation dialog when the menu item is selected.
+   *
+   * @return the menu item for removing an item
+   */
+  private MenuItem edit() {
+    return MenuItemFactory.createMenuItem("Edit",
+            "Edit Confirmation",
+            "Are you sure you want to edit this item?",
+            unused -> {
+              actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.EDIT, chosenDoc));
+              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_DOC));
+            });
   }
 
   /**

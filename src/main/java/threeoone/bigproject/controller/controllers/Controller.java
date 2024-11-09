@@ -26,6 +26,7 @@ public class Controller {
   private final RegisterController registerController;
   private final AddNewDocController addNewDocController;
   private final SearchBarController searchBarController;
+  private final EditDocumentController editDocumentController;
 
   /**
    * Constructs the main controller with dependencies.
@@ -47,7 +48,8 @@ public class Controller {
                     LoginController loginController,
                     RegisterController registerController,
                     AddNewDocController addNewDocController,
-                    SearchBarController searchBarController) {
+                    SearchBarController searchBarController,
+                    EditDocumentController editDocumentController) {
     this.menuController = menuController;
     this.docOverviewController = docOverviewController;
     this.viewSwitcher = viewSwitcher;
@@ -57,6 +59,7 @@ public class Controller {
     this.registerController = registerController;
     this.addNewDocController = addNewDocController;
     this.searchBarController = searchBarController;
+    this.editDocumentController = editDocumentController;
   }
 
   /**
@@ -100,6 +103,8 @@ public class Controller {
         break;
       case SEARCH:
         viewSwitcher.switchToView(searchBarController);
+      case EDIT_DOC:
+        viewSwitcher.switchToView(editDocumentController);
     }
   }
 }
