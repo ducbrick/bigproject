@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
 
       <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -69,11 +69,11 @@
                   <VBox layoutX="92.0" layoutY="215.0" prefHeight="220.0" prefWidth="446.0">
                      <children>
                         <Label prefHeight="38.0" prefWidth="454.0" text="User list" />
-                        <TableView prefHeight="185.0" prefWidth="446.0">
+                        <TableView fx:id="UserList" prefHeight="185.0" prefWidth="446.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="User ID" />
-                            <TableColumn prefWidth="124.00001525878906" text="User Name" />
-                              <TableColumn prefWidth="96.00006103515625" text="Books Issued" />
+                            <TableColumn fx:id="UserID" prefWidth="75.0" text="User ID" />
+                            <TableColumn fx:id="UserName" prefWidth="124.00001525878906" text="User Name" />
+                              <TableColumn fx:id="BooksIssued" prefWidth="96.00006103515625" text="Books Issued" />
                           </columns>
                         </TableView>
                      </children>
@@ -81,13 +81,13 @@
                   <VBox layoutX="593.0" layoutY="215.0" prefHeight="223.0" prefWidth="456.0">
                      <children>
                         <Label prefHeight="36.0" prefWidth="456.0" text="Lastest uploads" />
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="LastestDocuments" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn prefWidth="55.20001220703125" text="Book ID" />
-                            <TableColumn prefWidth="112.79998779296875" text="Title" />
-                              <TableColumn prefWidth="79.199951171875" text="Author" />
-                              <TableColumn prefWidth="81.60009765625" text="Available" />
-                              <TableColumn prefWidth="124.79998779296875" text="Description" />
+                            <TableColumn fx:id="BookID" prefWidth="55.20001220703125" text="Book ID" />
+                            <TableColumn fx:id="Title" prefWidth="112.79998779296875" text="Title" />
+                              <TableColumn fx:id="Author" prefWidth="79.199951171875" text="Author" />
+                              <TableColumn fx:id="CopiesAvailable" prefWidth="81.60009765625" text="Available" />
+                              <TableColumn fx:id="Description" prefWidth="124.79998779296875" text="Description" />
                           </columns>
                         </TableView>
                      </children>

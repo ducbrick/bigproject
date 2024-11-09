@@ -27,6 +27,8 @@ public class MenuController implements ViewController {
     private final RequestSender<Integer> getDocumentByIdRequestSender;
     private final RequestSender<Document> documentDetailRequestSender;
 
+    private final MenuBarController menuBarController;
+
     @FXML
     private Parent root;
 
@@ -69,7 +71,6 @@ public class MenuController implements ViewController {
 
     private Document randomDocument;
 
-
     @Override
     public Parent getParent() {
         return root;
@@ -77,25 +78,36 @@ public class MenuController implements ViewController {
 
     public MenuController(RequestSender<SwitchScene> switchSceneRequestSender,
                           RequestSender<Integer> getDocumentByIdRequestSender,
-                          RequestSender<Document> documentDetailRequestSender) {
+                          RequestSender<Document> documentDetailRequestSender,
+                          MenuBarController menuBarController) {
         this.switchSceneRequestSender = switchSceneRequestSender;
         this.getDocumentByIdRequestSender = getDocumentByIdRequestSender;
         this.documentDetailRequestSender = documentDetailRequestSender;
+        this.menuBarController = menuBarController;
     }
 
-    public void setUserList(ObservableList<User> userList) {
+
+    public void initialize() {
         UserID.setCellValueFactory(new PropertyValueFactory<>("id"));
         UserName.setCellValueFactory(new PropertyValueFactory<>("display_name"));
+
+        BookID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        Title.setCellValueFactory(new PropertyValueFactory<>("name"));
+        Description.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        menuBarController.highlight(SceneName.MAIN_MENU);
+    }
+
+
+    public void setUserList(ObservableList<User> userList) {
+
         //BooksIssued.setCellValueFactory(new PropertyValueFactory<>("booksIssued"));
         UserList.setItems(userList);
     }
 
     public void setLastestDocuments(ObservableList<Document> lastestDocuments) {
-        BookID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        Title.setCellValueFactory(new PropertyValueFactory<>("name"));
-        Description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        LastestDocuments.setItems(lastestDocuments);
 
+        LastestDocuments.setItems(lastestDocuments);
     }
 
 
