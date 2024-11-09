@@ -100,9 +100,12 @@ public class MenuController implements ViewController {
 
 
     public void setUserList(ObservableList<User> userList) {
-
+        Thread thread = new Thread(() -> {
+            UserList.setItems(userList);
+        });
+        thread.start();
         //BooksIssued.setCellValueFactory(new PropertyValueFactory<>("booksIssued"));
-        UserList.setItems(userList);
+
     }
 
     public void setLastestDocuments(ObservableList<Document> lastestDocuments) {
