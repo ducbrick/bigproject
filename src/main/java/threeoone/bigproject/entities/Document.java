@@ -54,10 +54,10 @@ public class Document {
   private Integer copies = 0;
 
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "uploader_id")
+  @JoinColumn(name = "uploader_id", nullable = false)
   private User uploader;
 
-  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
   private List <LendingDetail> lendingDetails = new ArrayList <> ();
 
   /**
@@ -82,27 +82,6 @@ public class Document {
   public Document(@NonNull String name, String description) {
     this.name = name;
     this.description = description;
-  }
-
-  /**
-   * Verify entity constraints.
-   * <p>
-   * Document's {@link #name} must be a non-empty {@link String}.
-   * This method strips {@link #name} of its trailing empty spaces.
-   * <p>
-   * Document's {@link #uploader} must not be {@code NULL}.
-   *
-   * @throws IllegalDocumentInfoException when the Document's attributes don't adhere to the constraints
-   */
-  public void checkConstraints() throws IllegalDocumentInfoException {
-    name = name.stripTrailing();
-    if (name.isEmpty()) {
-      throw new IllegalDocumentInfoException("Document name is empty");
-    }
-
-    if (uploader == null) {
-      throw new IllegalDocumentInfoException("Document have no uploader");
-    }
   }
 
   /**

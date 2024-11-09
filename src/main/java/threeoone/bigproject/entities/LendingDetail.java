@@ -41,11 +41,11 @@ public class LendingDetail {
   @NonNull
   private LocalDateTime lendTime;
 
-  @JoinColumn(name = "member_id")
+  @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private Member member;
 
-  @JoinColumn(name = "document_id")
+  @JoinColumn(name = "document_id", nullable = false)
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   private Document document;
 }

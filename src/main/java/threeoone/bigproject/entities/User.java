@@ -47,7 +47,7 @@ public class User {
   @NonNull
   private String password;
 
-  @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL, orphanRemoval = true)
   private List <Document> uploadedDocuments = new ArrayList <> ();
 
   /**

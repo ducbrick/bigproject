@@ -39,7 +39,7 @@ public class Member {
   @NonNull
   private String name;
 
-  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
   private List <LendingDetail> lendingDetails = new ArrayList <> ();
 
   /**
