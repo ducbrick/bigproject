@@ -3,9 +3,12 @@ package threeoone.bigproject.controller.controllers;
 import javafx.collections.FXCollections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.viewcontrollers.DocOverviewController;
 import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
+import threeoone.bigproject.controller.viewcontrollers.EditDocumentController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.DocumentRetrievalService;
@@ -24,6 +27,7 @@ public class ActionOnDocController {
   private final DocumentDetailController documentDetailController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
+  private final EditDocumentController editDocumentController;
 
   /**
    * Constructor for document logic handler
@@ -34,10 +38,13 @@ public class ActionOnDocController {
    * @param docOverviewController    document overview controller
    */
   public ActionOnDocController(DocumentDetailController documentDetailController,
-                               DocumentRetrievalService documentRetrievalService, DocOverviewController docOverviewController) {
+                               DocumentRetrievalService documentRetrievalService,
+                               DocOverviewController docOverviewController,
+                               EditDocumentController editDocumentController) {
     this.documentDetailController = documentDetailController;
     this.documentRetrievalService = documentRetrievalService;
     this.docOverviewController = docOverviewController;
+    this.editDocumentController = editDocumentController;
   }
 
   /**
@@ -49,10 +56,12 @@ public class ActionOnDocController {
   private void registerRequestReceiver(
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
-          RequestSender<Document> updateDocActionRequestSender) {
+          RequestSender<Document> updateDocActionRequestSender,
+          RequestSender<ActionOnDoc> actionOnDocRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
+    actionOnDocRequestSender.registerReceiver(this::makeActionOnDoc);
   }
 
   /**
@@ -81,9 +90,24 @@ public class ActionOnDocController {
    *
    * @param document document which need get status
    */
+  // TODO: call to service
   private void updateAvailableActionOnDocument(Document document) {
     boolean isBorrowAvailable = false; //get from service
     boolean isRemoveAvailable = true; //get from service
     docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
+  }
+
+  /**
+   * Call service and switch scene if needed for make an action on doc
+   *
+   * @param actionOnDoc action request
+   */
+  //TODO Handle action by calling to service
+  private void makeActionOnDoc(ActionOnDoc actionOnDoc) {
+    switch (actionOnDoc.type()) {
+      case DocActionType.EDIT -> {editDocumentController.setDocument(actionOnDoc.document());}
+//      case DocActionType.BORROW -> System.out.println("borrow");
+//      case DocActionType.REMOVE -> System.out.println("remove");
+    }
   }
 }

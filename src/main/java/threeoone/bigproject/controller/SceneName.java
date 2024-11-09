@@ -39,5 +39,10 @@ public enum SceneName {
      */
     SEARCH,
 
+    /**
+     * Represent edit document page
+     */
+    EDIT_DOC,
+
     YOUR_BOOKS
 }
