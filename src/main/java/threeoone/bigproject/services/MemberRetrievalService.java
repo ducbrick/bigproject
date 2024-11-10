@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.repositories.MemberRepo;
@@ -63,5 +64,26 @@ public class MemberRetrievalService {
    */
   public List <Member> findWhoseNamesContain(@NonNull String string) {
     return memberRepo.findWithNameContaining(string);
+  }
+
+  /**
+   * Retrieves a {@link Member} with a specific {@code id} and its {@code lendingDetails}.
+   * This method only executes a single SQL query.
+   * This method retrieves the desired {@link Member} and details all of its lending {@link Document},
+   * as opposed to {@link #findById}, which only retrieves the desired {@link Member} but not its {@code lendingDetails}.
+   * If no {@link Member} with the specified {@code id} exists, this method returns {@code NULL}.
+   *
+   * @apiNote The return Member's {@code lendingDetails} list will not be {@code NULL}.
+   *
+   * @param id the id of the desired {@link Member}
+   *
+   * @return the {@link Member} with the input id, along with its {@code lendingDetails},
+   *         or {@code NULL} if it doesn't exist
+   *
+   * @see Member
+   * @see LendingDetail
+   */
+  public Member findWithLendingDetails(int id) {
+    return memberRepo.findWithLendingDetails(id);
   }
 }
