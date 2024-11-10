@@ -44,10 +44,10 @@ public class MenuController implements ViewController {
     private TableView<Member> MemberList;
 
     @FXML
-    private TableColumn<Member, String> UserID;
+    private TableColumn<Member, String> MemberID;
 
     @FXML
-    private TableColumn<Member, String> UserName;
+    private TableColumn<Member, String> MemberName;
 
     @FXML
     private TableColumn<Member, Integer> BooksIssued;
@@ -94,8 +94,8 @@ public class MenuController implements ViewController {
 
 
     public void initialize() {
-        UserID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        UserName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        MemberID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        MemberName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         BookID.setCellValueFactory(new PropertyValueFactory<>("id"));
         Title.setCellValueFactory(new PropertyValueFactory<>("name"));
