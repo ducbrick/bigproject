@@ -1,6 +1,7 @@
 package threeoone.bigproject.controller.controllers;
 
 import javafx.collections.FXCollections;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.DocActionType;
@@ -42,7 +43,7 @@ public class ActionOnDocController {
   public ActionOnDocController(DocumentDetailController documentDetailController,
                                DocumentRetrievalService documentRetrievalService,
                                DocOverviewController docOverviewController,
-                               MenuController menuController) {
+                               MenuController menuController,
                                EditDocumentController editDocumentController) {
     this.documentDetailController = documentDetailController;
     this.documentRetrievalService = documentRetrievalService;
@@ -61,8 +62,7 @@ public class ActionOnDocController {
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
           RequestSender<Document> updateDocActionRequestSender,
-          RequestSender<ActionOnDoc> actionOnDocRequestSender) {
-          RequestSender<Document> updateDocActionRequestSender,
+          RequestSender<ActionOnDoc> actionOnDocRequestSender,
           RequestSender<Integer> getDocumentByIdRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
