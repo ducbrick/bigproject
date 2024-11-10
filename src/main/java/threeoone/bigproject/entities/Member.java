@@ -29,7 +29,7 @@ import lombok.Setter;
  * @author DUCBRICK
  */
 @Entity
-@Table(name = "Member")
+@Table(name = "member")
 @NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class Member {
   @Id
