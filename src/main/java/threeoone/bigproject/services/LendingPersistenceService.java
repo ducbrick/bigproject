@@ -10,27 +10,44 @@ import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
+import threeoone.bigproject.repositories.DocumentRepo;
 import threeoone.bigproject.repositories.LendingDetailRepo;
+import threeoone.bigproject.repositories.MemberRepo;
 
 @Service
 @RequiredArgsConstructor
 public class LendingPersistenceService {
   private final LendingDetailRepo lendingDetailRepo;
+  private final MemberRepo memberRepo;
+  private final DocumentRepo documentRepo;
 
   /**
-   * Saves a new {@link LendingDetail} from the given {@link Member} and {@link Document}.
+   * Saves a new {@link LendingDetail} from the given {@code memberId} and {@code documentId}.
    * This method constructs a new {@link LendingDetail} Entity instance
-   * from the given {@link Member}, {@link Document} and the {@link LocalDateTime} at the moment,
-   * sets up bidirectional relationships, and delegates to {@link #update}.
+   * from the given {@code memberId}, {@code documentId}, the {@link LocalDateTime} at the moment,
+   * , sets up bidirectional relationships and saves it to the Database.
    *
-   * @param member the {@link Member} that wants to lend
-   * @param document the {@link Document} that will be lent
+   * @param memberId the {@code id} of the lending {@link Member}
+   * @param documentId the {@code id} of the lent {@link Document}
    *
+   * @throws IllegalArgumentException when no {@link Document} or {@link Member} with the given {@code id} exists
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violation)
    *
    * @return the constructed {@link LendingDetail}.
    */
-  public LendingDetail lend(@NonNull Member member, @NonNull Document document) {
+  public LendingDetail lend(int memberId, int documentId) {
+    Member member = memberRepo.findById(memberId).orElse(null);
+
+    if (member == null) {
+      throw new IllegalArgumentException("No Member with that id exists");
+    }
+
+    Document document = documentRepo.findById(documentId).orElse(null);
+
+    if (document == null) {
+      throw new IllegalArgumentException("No Document with that id exists");
+    }
+
     LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
     member.lendDocument(lendingDetail);
     document.lendDocument(lendingDetail);
@@ -58,7 +75,7 @@ public class LendingPersistenceService {
    *
    * @return the saved {@link LendingDetail} Entity instance, which may be different from the given instance
    */
-  public LendingDetail update(@NonNull LendingDetail lendingDetail) {
+  private LendingDetail update(@NonNull LendingDetail lendingDetail) {
     return  lendingDetailRepo.save(lendingDetail);
   }
 
