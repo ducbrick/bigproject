@@ -30,7 +30,7 @@ import lombok.Setter;
  * @author DUCBRICK
  */
 @Entity
-@Table(name = "LendingDetail")
+@Table(name = "lending_detail")
 @NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class LendingDetail {
   @Id

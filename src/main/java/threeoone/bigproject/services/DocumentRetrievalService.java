@@ -2,6 +2,7 @@ package threeoone.bigproject.services;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.repositories.DocumentRepo;
@@ -15,17 +16,9 @@ import threeoone.bigproject.repositories.DocumentRepo;
  * @author DUCBRICK
  */
 @Service
+@RequiredArgsConstructor
 public class DocumentRetrievalService {
   private final DocumentRepo documentRepo;
-
-  /**
-   * Autowired constructor to obtain a Document repository to work with the Database.
-   *
-   * @param documentRepo a Document repository
-   */
-  public DocumentRetrievalService(DocumentRepo documentRepo) {
-    this.documentRepo = documentRepo;
-  }
 
   /**
    * Retrieves all {@link Document} in the Database.

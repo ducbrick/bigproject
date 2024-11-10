@@ -29,9 +29,8 @@ class MemberEditingServiceTest {
   @Test
   @DisplayName("Update a NULL Member")
   public void updateNull() {
-    when(memberRepo.save(null)).thenThrow(IllegalArgumentException.class);
     assertThatThrownBy(() -> memberEditingService.update(null))
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(NullPointerException.class);
   }
 
   @Test

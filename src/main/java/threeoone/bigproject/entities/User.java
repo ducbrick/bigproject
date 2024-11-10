@@ -34,7 +34,7 @@ import lombok.Setter;
  * @author DUCBRICK
  */
 @Entity
-@Table(name = "Appuser")
+@Table(name = "app_user")
 @NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class User {
   @Id

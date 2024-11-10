@@ -2,6 +2,7 @@ package threeoone.bigproject.services;
 
 import java.util.NoSuchElementException;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
@@ -15,17 +16,9 @@ import threeoone.bigproject.repositories.DocumentRepo;
  * @author DUCBRICK
  */
 @Service
+@RequiredArgsConstructor
 public class DocumentPersistenceService {
   private final DocumentRepo documentRepo;
-
-  /**
-   * Autowired constructor to obtain the necessary dependencies
-   *
-   * @param documentRepo a {@link Document} repository
-   */
-  public DocumentPersistenceService(DocumentRepo documentRepo) {
-    this.documentRepo = documentRepo;
-  }
 
   @Deprecated
   public void saveNew(Document document) throws IllegalDocumentInfoException {
@@ -43,14 +36,19 @@ public class DocumentPersistenceService {
    * this method saves a new {@link Document} to the Database.
    * Otherwise, this method updates the pre-existing {@link Document} whose {@code id} is the same as the given Document's.
    *
+   * @apiNote This method returns the saved {@link Document} Entity instance,
+   * which may be different from the given instance and may have different data.
+   *
    * @param document the {@link Document} to update
    *
    * @throws IllegalDocumentInfoException when the {@code uploader} of the given {@link Document} is {@code NULL}
    * @throws NoSuchElementException when the given Document's {@code id} doesn't exist in the Database.
    * @throws IllegalArgumentException when the given {@link Document} is {@code NULL}
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints errors)
+   *
+   * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
-  public void update(@NonNull Document document) throws IllegalDocumentInfoException {
+  public Document update(@NonNull Document document) throws IllegalDocumentInfoException {
     if (document.getUploader() == null) {
       throw new IllegalDocumentInfoException("Attempting to update a Document without an uploader");
     }
@@ -59,7 +57,7 @@ public class DocumentPersistenceService {
       throw new NoSuchElementException("Attempting to update a non-existent Document");
     }
 
-    documentRepo.save(document);
+    return documentRepo.save(document);
   }
 
   /**
@@ -68,7 +66,7 @@ public class DocumentPersistenceService {
    *
    * @param id the {@code id} of the {@link Document} to delete
    */
-  void delete(int id) {
+  public void delete(int id) {
     documentRepo.deleteById(id);
   }
 }
