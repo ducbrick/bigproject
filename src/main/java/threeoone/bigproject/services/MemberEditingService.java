@@ -2,6 +2,7 @@ package threeoone.bigproject.services;
 
 import java.util.NoSuchElementException;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.repositories.MemberRepo;
@@ -13,17 +14,9 @@ import threeoone.bigproject.repositories.MemberRepo;
  * @author DUCBRICK
  */
 @Service
+@RequiredArgsConstructor
 public class MemberEditingService {
   private final MemberRepo memberRepo;
-
-  /**
-   * Autowired constructors that obtain the necessary dependencies.
-   *
-   * @param memberRepo a repository for {@link Member}
-   */
-  public MemberEditingService(MemberRepo memberRepo) {
-    this.memberRepo = memberRepo;
-  }
 
   /**
    * Saves a new {@link Member} or update an existing {@link Member}.

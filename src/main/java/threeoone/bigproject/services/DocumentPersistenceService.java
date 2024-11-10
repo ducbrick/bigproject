@@ -2,6 +2,7 @@ package threeoone.bigproject.services;
 
 import java.util.NoSuchElementException;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
@@ -15,17 +16,9 @@ import threeoone.bigproject.repositories.DocumentRepo;
  * @author DUCBRICK
  */
 @Service
+@RequiredArgsConstructor
 public class DocumentPersistenceService {
   private final DocumentRepo documentRepo;
-
-  /**
-   * Autowired constructor to obtain the necessary dependencies
-   *
-   * @param documentRepo a {@link Document} repository
-   */
-  public DocumentPersistenceService(DocumentRepo documentRepo) {
-    this.documentRepo = documentRepo;
-  }
 
   @Deprecated
   public void saveNew(Document document) throws IllegalDocumentInfoException {
