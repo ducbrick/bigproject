@@ -35,7 +35,6 @@ import java.util.*;
 public class MemberDetailsController implements ViewController{
     private Member member;
 
-    /** send choosen document to docDetail */
     private final RequestSender<Document> documentDetailRequestSender;
     private final RequestSender<SwitchScene> switchSceneRequestSender;
 
@@ -45,6 +44,9 @@ public class MemberDetailsController implements ViewController{
     @FXML
     private Label Name;
 
+    /**
+     * the table and its columns
+     */
     @FXML
     private TableView<LendingDetail> BorrowingBooks;
 
@@ -57,13 +59,15 @@ public class MemberDetailsController implements ViewController{
     @FXML
     private TableColumn<LendingDetail, String> Title;
 
+
     public void initialize() {
         initTable();
     }
 
     /**
      * initializes the columns' property
-     * and initializes rows so they send user to the detail page of the selected document
+     * and handles user's interaction with the table (double-clicking on a row sends user to DocumentDetail of the
+     * document on that row)
      */
     private void initTable() {
         BorrowingBooks.setRowFactory(tableview -> {
@@ -102,6 +106,10 @@ public class MemberDetailsController implements ViewController{
         return root;
     }
 
+    /**
+     * TODO: retrieve lending details of member
+     * display member's name and set table's data to member's lending details
+     */
     @Override
     public void show() {
         member = new Member("RAHHHHHH");
