@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.Document;
@@ -18,17 +19,9 @@ import threeoone.bigproject.repositories.MemberRepo;
  * @author DUCBRICK
  */
 @Service
+@RequiredArgsConstructor
 public class MemberRetrievalService {
   private final MemberRepo memberRepo;
-
-  /**
-   * Autowired constructor to obtain a Document repository to work with the Database.
-   *
-   * @param memberRepo a Member repository
-   */
-  public MemberRetrievalService(MemberRepo memberRepo) {
-    this.memberRepo = memberRepo;
-  }
 
   /**
    * Retrieves all {@link Member} from the Database as a List.

@@ -38,7 +38,7 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  * @author DUCBRICK
  */
 @Entity
-@Table(name = "Document")
+@Table(name = "document")
 @NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
 public class Document {
   @Id
