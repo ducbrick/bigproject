@@ -1,31 +1,31 @@
-DROP TABLE IF EXISTS LendingDetail;
-DROP TABLE IF EXISTs Member;
-DROP TABLE IF EXISTS Document;
-DROP TABLE IF EXISTS AppUser;
+DROP TABLE IF EXISTS lending_detail;
+DROP TABLE IF EXISTs member;
+DROP TABLE IF EXISTS document;
+DROP TABLE IF EXISTS app_user;
 
-CREATE TABLE AppUser (
+CREATE TABLE app_user (
 	id SERIAL PRIMARY KEY,
 	username VARCHAR(32) NOT NULL UNIQUE CHECK(LENGTH(TRIM(username)) > 0),
 	password VARCHAR(32) NOT NULL CHECK(LENGTH(TRIM(password)) > 0)
 );
 
-CREATE TABLE Document (
+CREATE TABLE document (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0),
 	author VARCHAR(255),
 	description BPCHAR,
 	copies INTEGER NOT NULL,
-	uploader_id INTEGER REFERENCES AppUser NOT NULL
+	uploader_id INTEGER REFERENCES app_user NOT NULL
 );
 
-CREATE TABLE Member (
+CREATE TABLE member (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0)
 );
 
-CREATE TABLE LendingDetail (
+CREATE TABLE lending_detail (
 	id SERIAL PRIMARY KEY,
 	lend_time TIMESTAMP NOT NULL,
-	member_id INTEGER REFERENCES Member NOT NULL,
-	document_id INTEGER REFERENCES Document NOT NULL
+	member_id INTEGER REFERENCES member NOT NULL,
+	document_id INTEGER REFERENCES document NOT NULL
 );
