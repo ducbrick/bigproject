@@ -4,9 +4,13 @@ import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.requestbodies.ActionOnMem;
+import threeoone.bigproject.controller.viewcontrollers.AddNewMemController;
 import threeoone.bigproject.controller.viewcontrollers.MemberListController;
 import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.services.MemberEditingService;
 import threeoone.bigproject.services.MemberRetrievalService;
 
 /**
@@ -21,15 +25,18 @@ import threeoone.bigproject.services.MemberRetrievalService;
 public class ActionOnMemController {
   private final MemberListController memberListController;
   private final MemberRetrievalService memberRetrievalService;
-
+  private final MemberEditingService memberEditingService;
+  private final AddNewMemController addNewMemController;
 
    /**
     * Registers request receivers for document handling.
     * @param getAllMembersRequestSender the request sender for getting all member
    */
   @Autowired
-  private void registerRequestReceiver (RequestSender<Member> getAllMembersRequestSender) {
+  private void registerRequestReceiver (RequestSender<Member> getAllMembersRequestSender,
+                                        RequestSender<ActionOnMem> actionOnMemRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
+    actionOnMemRequestSender.registerReceiver(this::actionOnMem);
   }
 
   /**
@@ -41,5 +48,16 @@ public class ActionOnMemController {
     memberListController.setTable(FXCollections.observableArrayList(
             memberRetrievalService.getAll()
     ));
+  }
+
+  /**
+   * Call service and switch scene if needed for make an action on member
+   *
+   * @param actionOnMem action request
+   */
+  private void actionOnMem(ActionOnMem actionOnMem) {
+    switch (actionOnMem.type()) {
+      case MemActionType.ADD -> addNewMemController.setMember(memberEditingService.update(actionOnMem.member()));
+    }
   }
 }

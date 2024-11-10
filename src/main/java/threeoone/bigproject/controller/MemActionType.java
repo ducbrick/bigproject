@@ -13,5 +13,10 @@ public enum MemActionType {
   /**
    * Represent for remove member
    */
-  REMOVE
+  REMOVE,
+
+  /**
+   * Represent for add new member
+   */
+  ADD
 }
