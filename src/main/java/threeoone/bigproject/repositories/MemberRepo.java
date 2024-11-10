@@ -24,4 +24,7 @@ public interface MemberRepo extends ListCrudRepository <Member, Integer> {
    */
   @Query("SELECT m from Member m WHERE LOWER(m.name) LIKE LOWER(CONCAT('%', :substr, '%'))")
   List <Member> findWithNameContaining(@Param("substr") String substr);
+
+  @Query("SELECT m FROM Member m LEFT JOIN FETCH m.lendingDetails WHERE m.id = (:id)")
+  Member findWithLendingDetails(@Param("id") int id);
 }
