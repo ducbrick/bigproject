@@ -25,12 +25,12 @@ class MemberRepoTest {
     Member m1 = new Member("name");
     m1 = memberRepo.save(m1);
 
-    Member m2 = new Member("another name");
-    m2.setId(m1.getId());
+    Member m2 = memberRepo.findById(m1.getId()).get();
+    m2.setName("another name");
 
-    memberRepo.save(m2);
+    m2 = memberRepo.save(m2);
 
-    assertThat(Objects.equals(m1.getName(), m2.getName())).isTrue();
+    assertThat(m1.getName()).isEqualTo("another name");
   }
 
   @Test

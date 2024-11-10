@@ -5,9 +5,12 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -35,6 +38,12 @@ public class AddNewMemController implements ViewController {
   private final ViewSwitcher viewSwitcher;
 
   @FXML
+  private Button getID;
+
+  @FXML
+  private Button submit;
+
+  @FXML
   private Parent root;
 
   @FXML
@@ -54,7 +63,6 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void initialize() {
-    // Initialization code here, if necessary
   }
 
   /**
@@ -65,6 +73,13 @@ public class AddNewMemController implements ViewController {
   @FXML
   private void pressReturn(ActionEvent event) {
     switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+  }
+
+  @FXML
+  private void fulfill(KeyEvent event) {
+    if(event.getCode() == KeyCode.ENTER) {
+      getID.fire();
+    }
   }
 
   /**
@@ -89,7 +104,10 @@ public class AddNewMemController implements ViewController {
         updateProgress(20, 100);
         actionOnMemRequestSender.send(new ActionOnMem(MemActionType.ADD, member));
         updateProgress(100, 100);
-        Platform.runLater(() -> id.setText(member.getId().toString()));
+        Platform.runLater(() -> {
+          id.setText(member.getId().toString());
+          submit.requestFocus();
+        });
         return null;
       }
     };
@@ -124,7 +142,7 @@ public class AddNewMemController implements ViewController {
   @Override
   public void show() {
     progress.setVisible(false);
-    name.setText("");
     id.setText("");
+    name.setText("");
   }
 }

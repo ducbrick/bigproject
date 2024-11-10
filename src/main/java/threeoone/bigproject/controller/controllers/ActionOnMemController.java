@@ -8,6 +8,7 @@ import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.viewcontrollers.AddNewMemController;
+import threeoone.bigproject.controller.viewcontrollers.EditMemController;
 import threeoone.bigproject.controller.viewcontrollers.MemberListController;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.services.MemberEditingService;
@@ -27,6 +28,7 @@ public class ActionOnMemController {
   private final MemberRetrievalService memberRetrievalService;
   private final MemberEditingService memberEditingService;
   private final AddNewMemController addNewMemController;
+  private final EditMemController editMemController;
 
    /**
     * Registers request receivers for document handling.
@@ -58,6 +60,8 @@ public class ActionOnMemController {
   private void actionOnMem(ActionOnMem actionOnMem) {
     switch (actionOnMem.type()) {
       case MemActionType.ADD -> addNewMemController.setMember(memberEditingService.update(actionOnMem.member()));
+      case MemActionType.EDIT -> editMemController.setChosenMember(actionOnMem.member());
+      case MemActionType.COMMIT_EDIT -> memberEditingService.update(actionOnMem.member());
     }
   }
 }

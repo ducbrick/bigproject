@@ -30,6 +30,8 @@ public class Controller {
   private final AddNewDocController addNewDocController;
   private final SearchBarController searchBarController;
   private final EditDocumentController editDocumentController;
+  private final EditMemController editMemController;
+
   private final MemberListController memberListController;
   private final AddNewMemController addNewMemController;
 
@@ -83,6 +85,9 @@ public class Controller {
         break;
       case ADD_MEM:
         viewSwitcher.switchToView(addNewMemController);
+        break;
+      case EDIT_MEM:
+        viewSwitcher.switchToView(editMemController);
         break;
     }
   }
