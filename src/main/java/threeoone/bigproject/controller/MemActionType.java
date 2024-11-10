@@ -11,6 +11,11 @@ public enum MemActionType {
   EDIT,
 
   /**
+   * Represent for commit edit member info
+   */
+  COMMIT_EDIT,
+
+  /**
    * Represent for remove member
    */
   REMOVE,

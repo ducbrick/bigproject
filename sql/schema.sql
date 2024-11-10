@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS lending_detail;
+
 DROP TABLE IF EXISTs member;
 DROP TABLE IF EXISTS document;
 DROP TABLE IF EXISTS app_user;

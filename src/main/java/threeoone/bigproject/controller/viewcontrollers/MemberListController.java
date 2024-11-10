@@ -108,14 +108,13 @@ public class MemberListController implements ViewController {
    *
    * @return the menu item for removing an item
    */
-  // TODO: Go to edit user information page
   private MenuItem edit() {
     return MenuItemFactory.createMenuItem("Edit",
             "Edit Confirmation",
             "Are you sure you want to edit this member?",
             unused -> {
               actionOnMemRequestSender.send(new ActionOnMem(MemActionType.EDIT, chosenMember));
-//              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_DOC));
+              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_MEM));
             });
   }
 

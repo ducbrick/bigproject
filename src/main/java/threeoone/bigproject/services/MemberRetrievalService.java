@@ -1,5 +1,6 @@
 package threeoone.bigproject.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.NonNull;
@@ -30,7 +31,11 @@ public class MemberRetrievalService {
    * @return a {@link List} containing every {@link Member} in the Database
    */
   public List <Member> getAll() {
-    return memberRepo.findAll();
+    List <Member> res = memberRepo.findAll();
+    for (Member member : res) {
+      member.setLendingDetails(new ArrayList<>());
+    }
+    return res;
   }
 
   /**

@@ -50,6 +50,11 @@ public enum SceneName {
     MEM_LIST,
 
     /**
+     * Represent edit member information page
+     */
+    EDIT_MEM,
+
+    /**
      * Represent add new member page
      */
     ADD_MEM,
