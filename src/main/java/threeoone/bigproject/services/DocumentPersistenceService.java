@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
@@ -48,7 +49,8 @@ public class DocumentPersistenceService {
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
-  public Document update(@NonNull Document document) throws IllegalDocumentInfoException {
+  @Transactional
+  public Document update(@NonNull Document document) {
     if (document.getUploader() == null) {
       throw new IllegalDocumentInfoException("Attempting to update a Document without an uploader");
     }
@@ -66,6 +68,7 @@ public class DocumentPersistenceService {
    *
    * @param id the {@code id} of the {@link Document} to delete
    */
+  @Transactional
   public void delete(int id) {
     documentRepo.deleteById(id);
   }
