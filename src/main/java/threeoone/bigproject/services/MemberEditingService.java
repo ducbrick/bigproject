@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.repositories.MemberRepo;
 
@@ -35,6 +36,7 @@ public class MemberEditingService {
    *
    * @return the saved {@link Member} Entity instance, which may be different from the given instance
    */
+  @Transactional
   public Member update(@NonNull Member member) {
     if (member.getId() != null && !memberRepo.existsById(member.getId())) {
       throw new NoSuchElementException("Attempting to update a non-existent Member");
@@ -49,6 +51,7 @@ public class MemberEditingService {
    *
    * @param id the {@code id} of the {@link Member} to delete
    */
+  @Transactional
   public void delete(int id) {
     memberRepo.deleteById(id);
   }
