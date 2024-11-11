@@ -46,17 +46,17 @@ public class LendingPersistenceService {
       throw new IllegalArgumentException("No Member with that id exists");
     }
 
-    Document document = documentRepo.findById(documentId).orElse(null);
+    Document document = documentRepo.findWithLendingDetails(documentId);
 
     if (document == null) {
       throw new IllegalArgumentException("No Document with that id exists");
     }
 
-    if (document.getCopies() == 0) {
+    int remainingCopies = document.getCopies() - document.getLendingDetails().size();
+
+    if (remainingCopies == 0) {
       throw new NoSuchElementException("The requested Document has no remaining physical copies");
     }
-
-    document.setCopies(document.getCopies() - 1);
 
     LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
     member.lendDocument(lendingDetail);
@@ -73,20 +73,22 @@ public class LendingPersistenceService {
    * <br>
    * If the {@link LendingDetail} has an {@code id},
    * this method updates a pre-existing {@link LendingDetail} whose {@code id} is the same as the given LendingDetail's.
-   * <p>
-   * In the case the given {@link LendingDetail} has an {@code id}, but doesn't match to any existing LendingDetail's,
-   * this method's behavior may be unexpected, please refrain from doing this.
    *
    * @apiNote This method returns the saved {@link LendingDetail} Entity instance,
    * which may be different from the given instance and may have different data.
    *
    * @param lendingDetail the {@link LendingDetail} to save
    *
+   * @throws NoSuchElementException when the given LendingDetail's {@code id} doesn't exist in the Database
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violation)
    *
    * @return the saved {@link LendingDetail} Entity instance, which may be different from the given instance
    */
+  @Transactional
   private LendingDetail update(@NonNull LendingDetail lendingDetail) {
+    if (lendingDetail.getId() != null && !lendingDetailRepo.existsById(lendingDetail.getId())) {
+      throw new NoSuchElementException("Attempting to update a non-existent LendingDetail");
+    }
     return  lendingDetailRepo.save(lendingDetail);
   }
 
@@ -106,9 +108,6 @@ public class LendingPersistenceService {
     if (lendingDetail == null) {
       throw new NoSuchElementException("The requested LendingDetail does not exist");
     }
-
-    Document document = lendingDetail.getDocument();
-    document.setCopies(document.getCopies() + 1);
 
     lendingDetailRepo.delete(lendingDetail);
   }
