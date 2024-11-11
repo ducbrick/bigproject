@@ -42,8 +42,9 @@ public class DocumentPersistenceService {
    *
    * @param document the {@link Document} to update
    *
-   * @throws IllegalDocumentInfoException when the {@code uploader} of the given {@link Document} is {@code NULL}
-   * @throws NoSuchElementException when the given Document's {@code id} doesn't exist in the Database.
+   * @throws IllegalDocumentInfoException when the {@code uploader} of the given {@link Document} is {@code NULL},
+                                          or when the {@code copies} of the {@link Document} is less than the number of currently lent copies
+   * @throws NoSuchElementException when the given Document's {@code id} doesn't exist in the Database
    * @throws IllegalArgumentException when the given {@link Document} is {@code NULL}
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints errors)
    *
@@ -55,8 +56,20 @@ public class DocumentPersistenceService {
       throw new IllegalDocumentInfoException("Attempting to update a Document without an uploader");
     }
 
-    if (document.getId() != null && !documentRepo.existsById(document.getId())) {
+    if (document.getId() == null) {
+      return documentRepo.save(document);
+    }
+
+    Document oldInstance = documentRepo.findWithLendingDetails(document.getId());
+
+    if (oldInstance == null) {
       throw new NoSuchElementException("Attempting to update a non-existent Document");
+    }
+
+    int lentCopies = oldInstance.getLendingDetails().size();
+
+    if (document.getCopies() < lentCopies) {
+      throw new IllegalDocumentInfoException("Attempting to set the total number of physical copies to less than the number of currently lent copies");
     }
 
     return documentRepo.save(document);

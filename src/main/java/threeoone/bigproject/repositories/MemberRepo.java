@@ -31,7 +31,7 @@ public interface MemberRepo extends ListCrudRepository <Member, Integer> {
   /**
    * Retrieves a {@link Member} with a specific {@code id} and its {@code lendingDetails}.
    * This method only executes a single SQL query.
-   * This method retrieves the desired {@link Member} and details all of its lending {@link Document},
+   * This method retrieves the desired {@link Member} and details about all of its lending {@link Document},
    * as opposed to {@link #findById}, which only retrieves the desired {@link Member} but not its {@code lendingDetails}.
    * If no {@link Member} with the specified {@code id} exists, this method returns {@code NULL}.
    *

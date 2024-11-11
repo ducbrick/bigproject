@@ -3,6 +3,8 @@ package threeoone.bigproject.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.LendingDetail;
+import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
 @DataJpaTest
@@ -102,7 +106,7 @@ class DocumentRepoTest {
   }
 
   @Test
-  @DisplayName("Cascade insert document and uploaders")
+  @DisplayName("Cascade insert document and uploader")
   public void cascadeInsert() {
     User user = new User("name", "password");
     Document document = new Document("name", "desc", 1);
@@ -115,5 +119,54 @@ class DocumentRepoTest {
     assertThat(userRepo.count()).isEqualTo(countBefore + 1);
 
     assertThat(document.getUploader()).isSameAs(userRepo.findById(document.getUploader().getId()).orElse(null));
+  }
+
+  @Test
+  @DisplayName("Retrieve a Document with no lending copies")
+  public void documentWithNoLending() {
+    User user = new User("ahihi", "password");
+
+    Document document = new Document("name");
+    user.addUploadedDocument(document);
+
+    document = documentRepo.save(document);
+
+    document = documentRepo.findWithLendingDetails(document.getId());
+
+    assertThat(document.getLendingDetails()).isNotNull();
+    assertThat(document.getLendingDetails().size()).isEqualTo(0);
+  }
+
+  @Test
+  @DisplayName("Retrieve a Document and its lending copies")
+  public void documentWithLending() {
+    Member memA = new Member("name A");
+    Member memB = new Member("name B");
+
+    User user = new User("name", "password");
+
+    Document document = new Document("name");
+    user.addUploadedDocument(document);
+
+    LendingDetail detailA = new LendingDetail(LocalDateTime.now());
+    LendingDetail detailB = new LendingDetail(LocalDateTime.now());
+
+    memA.lendDocument(detailA);
+    memB.lendDocument(detailB);
+
+    document.lendDocument(detailA);
+    document.lendDocument(detailB);
+
+    document = documentRepo.save(document);
+
+    document = documentRepo.findWithLendingDetails(document.getId());
+
+    List<LendingDetail> lendingDetails = document.getLendingDetails();
+
+    assertThat(lendingDetails).isNotNull();
+    assertThat(lendingDetails.size()).isEqualTo(2);
+
+    assertThat(lendingDetails.contains(detailA)).isTrue();
+    assertThat(lendingDetails.contains(detailB)).isTrue();
   }
 }
