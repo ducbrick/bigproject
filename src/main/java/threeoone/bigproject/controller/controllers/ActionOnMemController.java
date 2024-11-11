@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.ActionOnMem;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.AddNewMemController;
 import threeoone.bigproject.controller.viewcontrollers.EditMemController;
 import threeoone.bigproject.controller.viewcontrollers.MemberListController;
+import threeoone.bigproject.controller.viewcontrollers.MenuController;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.services.MemberEditingService;
 import threeoone.bigproject.services.MemberRetrievalService;
@@ -29,29 +32,34 @@ public class ActionOnMemController {
   private final MemberEditingService memberEditingService;
   private final AddNewMemController addNewMemController;
   private final EditMemController editMemController;
-
+  private final MenuController menuController;
    /**
     * Registers request receivers for document handling.
     * @param getAllMembersRequestSender the request sender for getting all member
    */
   @Autowired
-  private void registerRequestReceiver (RequestSender<Member> getAllMembersRequestSender,
-                                        RequestSender<ActionOnMem> actionOnMemRequestSender) {
+  private void registerRequestReceiver (RequestSender<SwitchScene> getAllMembersRequestSender,
+                                        RequestSender<ActionOnMem> actionOnMemRequestSender,
+                                        RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
     actionOnMemRequestSender.registerReceiver(this::actionOnMem);
+    getTopFiveMembersRequestSender.registerReceiver(this::getTop5);
   }
 
   /**
    * return List of All Member in dataset
    *
-   * @param member None
+   * @param
    */
-  private void getListAllMembers (Member member) {
+  private void getListAllMembers (SwitchScene switchScene) {
     memberListController.setTable(FXCollections.observableArrayList(
             memberRetrievalService.getAll()
     ));
   }
 
+  private void getTop5(SwitchScene switchScene) {
+    menuController.setUserList(FXCollections.observableArrayList(memberRetrievalService.findTop5Records()));
+  }
   /**
    * Call service and switch scene if needed for make an action on member
    *

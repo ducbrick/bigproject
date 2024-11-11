@@ -43,4 +43,7 @@ public class DocumentRetrievalService {
     return queryResult.orElse(null);
   }
 
+  public List<Document> getLatestDocuments() {
+    return documentRepo.findTop5ByOrderByIdDesc();
+  }
 }

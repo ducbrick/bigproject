@@ -4,6 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.*;
+import threeoone.bigproject.controller.SceneName;
+import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
+import threeoone.bigproject.controller.requestbodies.ActionOnMem;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
@@ -168,6 +172,7 @@ public class SpringConfig {
   RequestSender<Member> getAllMembersRequestSender() {
     return new RequestSender<>();
   }
+  RequestSender<SwitchScene> getAllMembersRequestSender() {return new RequestSender<>(); }
 
   /**
    * Send a request to make an action on member
@@ -209,4 +214,11 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  RequestSender<ActionOnMem> actionOnMemRequestSender() { return new RequestSender<>(); }
+
+  @Bean
+  RequestSender<SwitchScene> getTopFiveMembersRequestSender() {return new RequestSender<>(); }
+
+  @Bean
+  RequestSender<SwitchScene> getLastestDocumentsRequestSender() {return new RequestSender<>(); }
 }

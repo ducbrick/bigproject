@@ -45,4 +45,7 @@ public interface MemberRepo extends ListCrudRepository <Member, Integer> {
    */
   @Query("SELECT m FROM Member m LEFT JOIN FETCH m.lendingDetails WHERE m.id = (:id)")
   Member findWithLendingDetails(@Param("id") int id);
+
+  @Query("SELECT m FROM Member m ORDER BY m.id LIMIT 5")
+  List<Member> findTop5ByOrderByIdDesc();
 }

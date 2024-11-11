@@ -8,12 +8,15 @@ import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 
+import java.util.List;
+
 /**
  * Simple Spring Data JPA repository for {@link Document} entity.
  *
  * @author DUCBRICK
  */
 public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
+    List<Document> findTop5ByOrderByIdDesc();
   /**
    * Retrieves a {@link Document} with a specific {@code id} and its {@code lendingDetails}.
    * This method only executes a single SQL query.

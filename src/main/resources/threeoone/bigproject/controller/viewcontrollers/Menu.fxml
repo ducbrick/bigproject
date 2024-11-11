@@ -69,10 +69,10 @@
                   <VBox layoutX="92.0" layoutY="215.0" prefHeight="220.0" prefWidth="446.0">
                      <children>
                         <Label prefHeight="38.0" prefWidth="454.0" text="User list" />
-                        <TableView fx:id="UserList" prefHeight="185.0" prefWidth="446.0">
+                        <TableView fx:id="MemberList" prefHeight="185.0" prefWidth="446.0">
                           <columns>
-                            <TableColumn fx:id="UserID" prefWidth="75.0" text="User ID" />
-                            <TableColumn fx:id="UserName" prefWidth="124.00001525878906" text="User Name" />
+                            <TableColumn fx:id="MemberID" prefWidth="75.0" text="Member ID" />
+                            <TableColumn fx:id="MemberName" prefWidth="124.00001525878906" text="Member Name" />
                               <TableColumn fx:id="BooksIssued" prefWidth="96.00006103515625" text="Books Issued" />
                           </columns>
                         </TableView>
@@ -95,7 +95,7 @@
                   <VBox layoutX="593.0" layoutY="450.0" prefHeight="200.0" prefWidth="456.0">
                      <children>
                         <Label prefHeight="35.0" prefWidth="529.0" text="Issued books" />
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="LendingList" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="User ID" />
                             <TableColumn prefWidth="90.4000244140625" text="Book" />

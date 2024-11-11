@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.DocOverviewController;
 import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
 import threeoone.bigproject.controller.viewcontrollers.MenuController;
@@ -50,6 +51,7 @@ public class ActionOnDocController {
     this.docOverviewController = docOverviewController;
     this.menuController = menuController;
     this.editDocumentController = editDocumentController;
+
   }
 
   /**
@@ -63,11 +65,13 @@ public class ActionOnDocController {
           RequestSender<User> getListAllDocumentRequestSender,
           RequestSender<Document> updateDocActionRequestSender,
           RequestSender<ActionOnDoc> actionOnDocRequestSender,
-          RequestSender<Integer> getDocumentByIdRequestSender) {
+          RequestSender<Integer> getDocumentByIdRequestSender,
+          RequestSender<SwitchScene> getLastestDocumentsRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
     actionOnDocRequestSender.registerReceiver(this::makeActionOnDoc);
+    getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
   }
 
   /**
@@ -119,5 +123,9 @@ public class ActionOnDocController {
 
   private void getDocumentById(Integer id) {
     menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+  }
+
+  private void getLastestDocByIdDesc(SwitchScene switchScene) {
+    menuController.setLastestDocuments(FXCollections.observableList(documentRetrievalService.getLatestDocuments()));
   }
 }

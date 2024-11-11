@@ -82,4 +82,6 @@ public class MemberRetrievalService {
   public Member findWithLendingDetails(int id) {
     return memberRepo.findWithLendingDetails(id);
   }
+
+  public List<Member> findTop5Records() { return memberRepo.findTop5ByOrderByIdDesc(); }
 }

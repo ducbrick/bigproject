@@ -9,6 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -28,7 +29,8 @@ public class MenuController implements ViewController {
     private final RequestSender<SwitchScene> switchSceneRequestSender;
     private final RequestSender<Integer> getDocumentByIdRequestSender;
     private final RequestSender<Document> documentDetailRequestSender;
-
+    private final RequestSender<SwitchScene> getTopFiveMembersRequestSender;
+    private final RequestSender<SwitchScene> getLastestDocumentsRequestSender;
     private final MenuBarController menuBarController;
 
     @FXML
@@ -85,11 +87,16 @@ public class MenuController implements ViewController {
     public MenuController(RequestSender<SwitchScene> switchSceneRequestSender,
                           RequestSender<Integer> getDocumentByIdRequestSender,
                           RequestSender<Document> documentDetailRequestSender,
+                          RequestSender<SwitchScene> getTopFiveMembersRequestSender,
+                          RequestSender<SwitchScene> getLastestDocumentsRequestSender,
                           MenuBarController menuBarController) {
         this.switchSceneRequestSender = switchSceneRequestSender;
         this.getDocumentByIdRequestSender = getDocumentByIdRequestSender;
         this.documentDetailRequestSender = documentDetailRequestSender;
+        this.getTopFiveMembersRequestSender = getTopFiveMembersRequestSender;
+        this.getLastestDocumentsRequestSender = getLastestDocumentsRequestSender;
         this.menuBarController = menuBarController;
+
     }
 
 
@@ -106,25 +113,22 @@ public class MenuController implements ViewController {
 
 
     public void setUserList(ObservableList<Member> memberList) {
-        Thread thread = new Thread(() -> {
-            MemberList.setItems(memberList);
-        });
-        thread.start();
+        MemberList.setItems(memberList);
         //BooksIssued.setCellValueFactory(new PropertyValueFactory<>("booksIssued"));
 
     }
 
     public void setLastestDocuments(ObservableList<Document> lastestDocuments) {
-
         LastestDocuments.setItems(lastestDocuments);
     }
 
+    /**
+     *
+     */
+    private void featuredBook() {
 
-
-    @Override
-    public void show() {
-        Featured.setText("Featured book \n Nakano Miku character book \n Very nice little book about miku.");
     }
+
 
     public void setRandomBook(Document document) {
         randomDocument = document;
@@ -139,10 +143,12 @@ public class MenuController implements ViewController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
     }
 
-    /**
-     *
-     */
-    private void featuredBook() {
-
+    @Override
+    public void show() {
+        Featured.setText("Featured book \n Nakano Miku character book \n Very nice little book about miku.");
+        getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+        getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
     }
+
+
 }
