@@ -99,6 +99,7 @@ public class LendingPersistenceService {
    *
    * @throws NoSuchElementException if no {@link LendingDetail} with the given {@code id} exists
    */
+  @Transactional
   public void delete(int id) {
     LendingDetail lendingDetail = lendingDetailRepo.findById(id).orElse(null);
 
