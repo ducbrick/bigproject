@@ -25,7 +25,7 @@ public class UserRegisterService {
 
   /**
    * Register a new {@link User} into the Database.
-   * Not login when register successfully
+   * Not login when register successfully.
    *
    * @param user a User with necessary information to register.
    *
