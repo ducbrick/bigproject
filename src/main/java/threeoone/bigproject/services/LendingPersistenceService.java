@@ -110,9 +110,6 @@ public class LendingPersistenceService {
     Document document = lendingDetail.getDocument();
     document.setCopies(document.getCopies() + 1);
 
-    lendingDetail.setMember(null);
-    lendingDetail.setDocument(null);
-
     lendingDetailRepo.delete(lendingDetail);
   }
 }
