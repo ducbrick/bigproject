@@ -10,10 +10,7 @@
 .button:hover {
     -fx-underline: true;
 }
-.heading-text {
-    -fx-fill: #ffdb5a; /* Text color */
-    -fx-font-size: 50px;
-}
+
 .body-text {
     -fx-fill: #ffdb5a; /* Text color */
     -fx-font-size: 20px;
@@ -26,4 +23,7 @@
 #active {
     -fx-border-width: 0 0 4px 0; /* Active border width */
     -fx-background-color: #4A628A; /* Active background color */
+}
+.background {
+    -fx-background-color: #E0F1F8;
 }

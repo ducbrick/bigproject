@@ -1,5 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -74,14 +76,18 @@ public class DocumentDetailController implements ViewController {
 
     /**
      * show the selected document
+     * TODO: show default "loading" when document info is not loaded
      */
     @Override
     public void show() {
-        bookName.setText("Name:" + document.getName());
-        bookDescription.setText("Description:" + document.getDescription());
-        uploader.setText("Uploader:" + document.getUploader());
-        Image coverImage;
-        coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));
-        cover.setImage(coverImage);
+
+        Platform.runLater(() -> {
+            bookName.setText("Name:" + document.getName());
+            bookDescription.setText("Description:" + document.getDescription());
+            uploader.setText("Uploader:" + document.getUploader());
+            Image coverImage;
+            coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));
+            cover.setImage(coverImage);
+        });
     }
 }
