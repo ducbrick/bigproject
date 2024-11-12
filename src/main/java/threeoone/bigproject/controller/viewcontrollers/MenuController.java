@@ -1,5 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -9,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -20,6 +23,10 @@ import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author purupurupkl
  */
@@ -27,7 +34,7 @@ import threeoone.bigproject.entities.User;
 @FxmlView("Menu.fxml")
 public class MenuController implements ViewController {
     private final RequestSender<SwitchScene> switchSceneRequestSender;
-    private final RequestSender<Integer> getDocumentByIdRequestSender;
+    private final RequestSender<Document> getRandomDocumentRequestSender;
     private final RequestSender<Document> documentDetailRequestSender;
     private final RequestSender<SwitchScene> getTopFiveMembersRequestSender;
     private final RequestSender<SwitchScene> getLastestDocumentsRequestSender;
@@ -38,6 +45,12 @@ public class MenuController implements ViewController {
 
     @FXML
     private Button Featured;
+
+    @FXML
+    private Label Greeting;
+
+    @FXML
+    private Label time;
 
     @FXML
     private Button Random;
@@ -85,13 +98,13 @@ public class MenuController implements ViewController {
     }
 
     public MenuController(RequestSender<SwitchScene> switchSceneRequestSender,
-                          RequestSender<Integer> getDocumentByIdRequestSender,
+                          RequestSender<Document> getRandomDocumentRequestSender,
                           RequestSender<Document> documentDetailRequestSender,
                           RequestSender<SwitchScene> getTopFiveMembersRequestSender,
                           RequestSender<SwitchScene> getLastestDocumentsRequestSender,
                           MenuBarController menuBarController) {
         this.switchSceneRequestSender = switchSceneRequestSender;
-        this.getDocumentByIdRequestSender = getDocumentByIdRequestSender;
+        this.getRandomDocumentRequestSender = getRandomDocumentRequestSender;
         this.documentDetailRequestSender = documentDetailRequestSender;
         this.getTopFiveMembersRequestSender = getTopFiveMembersRequestSender;
         this.getLastestDocumentsRequestSender = getLastestDocumentsRequestSender;
@@ -109,6 +122,13 @@ public class MenuController implements ViewController {
         Description.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         menuBarController.highlight(SceneName.MAIN_MENU);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            time.setText(LocalDateTime.now().format(formatter));
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
 
@@ -129,25 +149,38 @@ public class MenuController implements ViewController {
 
     }
 
-
     public void setRandomBook(Document document) {
         randomDocument = document;
+    }
+
+    private String getGreeting() {
+        LocalTime now = LocalTime.now();
+
+        if(now.isBefore(LocalTime.NOON)) {
+            return "Good morning!";
+        } else if (now.isBefore(LocalTime.of(18,0))) {
+            return "Good afternoon!";
+        } else if (now.isBefore(LocalTime.of(22,0))) {
+            return "Good evening!";
+        } else {
+            return "Good night!";
+        }
     }
     /**
      * generate a random book
      */
     @FXML
     public void randomBook() {
-        getDocumentByIdRequestSender.send(0);
+        getRandomDocumentRequestSender.send(null);
         documentDetailRequestSender.send(randomDocument);
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
     }
 
     @Override
     public void show() {
-        Featured.setText("Featured book \n Nakano Miku character book \n Very nice little book about miku.");
-        getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+        getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
         getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+        Greeting.setText(getGreeting());
     }
 
 

@@ -38,7 +38,7 @@ public class ActionOnMemController {
     * @param getAllMembersRequestSender the request sender for getting all member
    */
   @Autowired
-  private void registerRequestReceiver (RequestSender<SwitchScene> getAllMembersRequestSender,
+  private void registerRequestReceiver (RequestSender<Member> getAllMembersRequestSender,
                                         RequestSender<ActionOnMem> actionOnMemRequestSender,
                                         RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
@@ -51,7 +51,7 @@ public class ActionOnMemController {
    *
    * @param
    */
-  private void getListAllMembers (SwitchScene switchScene) {
+  private void getListAllMembers (Member member) {
     memberListController.setTable(FXCollections.observableArrayList(
             memberRetrievalService.getAll()
     ));
