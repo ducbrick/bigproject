@@ -1,36 +1,39 @@
 package threeoone.bigproject.controller.controllers;
 
+import javafx.collections.FXCollections;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.MemberQueryType;
+import threeoone.bigproject.controller.requestbodies.DocumentQuery;
+import threeoone.bigproject.controller.requestbodies.MemberQuery;
 import threeoone.bigproject.controller.viewcontrollers.AddNewDocController;
+import threeoone.bigproject.controller.viewcontrollers.DocQueryType;
+import threeoone.bigproject.controller.viewcontrollers.DocSearchBarController;
+import threeoone.bigproject.controller.viewcontrollers.MemberSearchBarController;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.services.DocumentRetrievalService;
 import threeoone.bigproject.services.GoogleAPIService;
+import threeoone.bigproject.services.MemberRetrievalService;
+
+import java.util.List;
 
 /**
- * Controller class for handling book queries
+ * Controller class for handling queries (contain {@link Document} and {@link  Member})
  *
  * @author HUY1902
  */
 @Component
+@RequiredArgsConstructor
 public class QueryController {
   private final AddNewDocController addNewDocController;
   private final GoogleAPIService googleAPIService;
-
-  /**
-   * Autowired constructor with necessary dependencies.
-   *
-   * @param addNewDocController           controller for adding new documents
-   * @param googleAPIService              service for searching books by ISBN
-   * @param queryISBNGoogleRequestSender  request sender for querying Google Books API by ISBN
-   */
-  @Autowired
-  public QueryController(AddNewDocController addNewDocController,
-                         GoogleAPIService googleAPIService,
-                         RequestSender<String> queryISBNGoogleRequestSender) {
-    this.addNewDocController = addNewDocController;
-    this.googleAPIService = googleAPIService;
-  }
+  private final MemberRetrievalService memberRetrievalService;
+  private final MemberSearchBarController memberSearchBarController;
+  private final DocumentRetrievalService documentRetrievalService;
+  private final DocSearchBarController docSearchBarController;
 
   /**
    * Registers the request sender for handling ISBN queries.
@@ -38,8 +41,12 @@ public class QueryController {
    * @param queryISBNGoogleRequestSender the request sender to be registered
    */
   @Autowired
-  public void registerRequestSender(RequestSender<String> queryISBNGoogleRequestSender) {
+  public void registerRequestSender(RequestSender<String> queryISBNGoogleRequestSender,
+                                    RequestSender<MemberQuery> memberQueryRequestSender,
+                                    RequestSender<DocumentQuery> documentQueryRequestSender) {
     queryISBNGoogleRequestSender.registerReceiver(this::getQueryAndFulFill);
+    memberQueryRequestSender.registerReceiver(this::respondMemberQuery);
+    documentQueryRequestSender.registerReceiver(this::respondDocQuery);
   }
 
   /**
@@ -51,6 +58,51 @@ public class QueryController {
     Document result = googleAPIService.findBookByISBN(isbn);
     if (result != null) {
       addNewDocController.fulfillInfo(result);
+    }
+  }
+
+  /**
+   * Responds to a user query by fetching member data from {@link #memberRetrievalService}
+   * based on the query type and setting the results in the {@link #memberSearchBarController}.
+   *
+   * @param memberQuery the {@link MemberQuery} containing the
+   *                   {@link MemberQueryType} and the member information {@link Member}
+   */
+  public void respondMemberQuery(MemberQuery memberQuery) {
+    switch (memberQuery.type()) {
+      case MemberQueryType.USER_NAME -> {
+        List<Member> result = memberRetrievalService.findWhoseNamesContain(memberQuery.member().getName());
+        if (result.isEmpty()) {
+          break;
+        }
+        memberSearchBarController.setResult(FXCollections.observableArrayList(result));
+      }
+      case MemberQueryType.USER_ID -> {
+        Member result = memberRetrievalService.findById(memberQuery.member().getId());
+        if (result == null) {
+          break;
+        }
+        memberSearchBarController.setResult(FXCollections.observableArrayList(result));
+      }
+    }
+  }
+
+  /**
+   * Responds to a user query by fetching document data from {@link #documentRetrievalService}
+   * based on the query type and setting the results in the {@link #docSearchBarController}.
+   *
+   * @param documentQuery the {@link DocumentQuery} containing the
+   *                   {@link DocQueryType} and the document information {@link Document}
+   */
+  public void respondDocQuery(DocumentQuery documentQuery) {
+    switch (documentQuery.type()) {
+      case DocQueryType.ID -> {
+        Document result = documentRetrievalService.getDocumentById(documentQuery.document().getId());
+        if (result == null) {
+          break;
+        }
+        docSearchBarController.setResult(FXCollections.observableArrayList(result));
+      }
     }
   }
 }

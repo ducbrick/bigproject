@@ -29,10 +29,11 @@ public class FxmlControllerLoader {
       fxWeaver.load(YourBooksController.class);
       fxWeaver.load(AddNewDocController.class);
       fxWeaver.load(MenuBarController.class);
-      fxWeaver.load(SearchBarController.class);
+      fxWeaver.load(SearchPageController.class);
       fxWeaver.load(EditDocumentController.class);
       fxWeaver.load(MemberListController.class);
       fxWeaver.load(EditMemController.class);
       fxWeaver.load(AddNewMemController.class);
+      fxWeaver.load(LendingDetailController.class);
   }
 }

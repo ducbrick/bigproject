@@ -10,17 +10,13 @@ import javafx.scene.input.KeyCode;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.util.MenuItemFactory;
-
-import javax.naming.Context;
 
 /**
  * Class for handle Member List page

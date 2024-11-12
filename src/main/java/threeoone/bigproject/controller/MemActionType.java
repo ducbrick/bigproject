@@ -4,7 +4,7 @@ package threeoone.bigproject.controller;
  * Represent for action on member
  *
  */
-public enum MemActionType {
+public enum MemActionType{
   /**
    * Represent for edit member info
    */

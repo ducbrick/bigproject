@@ -3,14 +3,10 @@ package threeoone.bigproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
-import threeoone.bigproject.controller.requestbodies.ActionOnMem;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
+import threeoone.bigproject.controller.requestbodies.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
-
-import javax.swing.*;
 
 /**
  * {@code Spring} configuration class.
@@ -71,6 +67,7 @@ public class SpringConfig {
 
   /**
    * Send a request to update available action on a specific document
+   *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
@@ -80,6 +77,7 @@ public class SpringConfig {
 
   /**
    * Send a request to get all Document in database
+   *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
@@ -143,7 +141,9 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<Document> commitChangeDocRequestSender() { return new RequestSender<>(); }
+  RequestSender<Document> commitChangeDocRequestSender() {
+    return new RequestSender<>();
+  }
 
 
   /**
@@ -152,7 +152,9 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<ActionOnDoc> actionOnDocRequestSender() { return new RequestSender<>(); }
+  RequestSender<ActionOnDoc> actionOnDocRequestSender() {
+    return new RequestSender<>();
+  }
 
   /**
    * Send a request to service to get all member
@@ -160,7 +162,9 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<Member> getAllMembersRequestSender() {return new RequestSender<>(); }
+  RequestSender<Member> getAllMembersRequestSender() {
+    return new RequestSender<>();
+  }
 
   /**
    * Send a request to make an action on member
@@ -168,5 +172,38 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<ActionOnMem> actionOnMemRequestSender() { return new RequestSender<>(); }
+  RequestSender<ActionOnMem> actionOnMemRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a request to make member query
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<MemberQuery> memberQueryRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a request to make document query
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<DocumentQuery> documentQueryRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a request to save new lending
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  RequestSender<LendingDetail> saveNewLending() {
+    return new RequestSender<>();
+  }
+
 }

@@ -21,8 +21,8 @@ import threeoone.bigproject.entities.Document;
  * @author HUY1902
  */
 @Component
-@FxmlView("SearchBar.fxml")
-public class SearchBarController implements ViewController {
+@FxmlView("SearchPage.fxml")
+public class SearchPageController implements ViewController {
   private final RequestSender<String> queryDocByNameRequestSender;
   private final RequestSender<String> queryDocByAuthorRequestSender;
   private final RequestSender<String> queryDocByCategoryRequestSender;
@@ -69,11 +69,11 @@ public class SearchBarController implements ViewController {
    * @param switchSceneRequestSender        requestSender for switch Scene
    * @param documentDetailRequestSender     requestSender for document detail
    */
-  public SearchBarController(RequestSender<String> queryDocByNameRequestSender,
-                             RequestSender<String> queryDocByAuthorRequestSender,
-                             RequestSender<String> queryDocByCategoryRequestSender,
-                             RequestSender<Document> documentDetailRequestSender,
-                             RequestSender<SwitchScene> switchSceneRequestSender) {
+  public SearchPageController(RequestSender<String> queryDocByNameRequestSender,
+                              RequestSender<String> queryDocByAuthorRequestSender,
+                              RequestSender<String> queryDocByCategoryRequestSender,
+                              RequestSender<Document> documentDetailRequestSender,
+                              RequestSender<SwitchScene> switchSceneRequestSender) {
     this.queryDocByNameRequestSender = queryDocByNameRequestSender;
     this.queryDocByAuthorRequestSender = queryDocByAuthorRequestSender;
     this.queryDocByCategoryRequestSender = queryDocByCategoryRequestSender;
