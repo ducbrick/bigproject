@@ -59,8 +59,8 @@ public class LendingPersistenceService {
     }
 
     LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
-    member.lendDocument(lendingDetail);
-    document.lendDocument(lendingDetail);
+    lendingDetail.setMember(member);
+    lendingDetail.setDocument(document);
 
     return lendingDetailRepo.save(lendingDetail);
   }
