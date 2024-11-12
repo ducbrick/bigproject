@@ -10,8 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
@@ -30,26 +28,14 @@
          <center>
             <AnchorPane prefHeight="616.0" prefWidth="791.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox layoutX="92.0" layoutY="32.0" prefHeight="67.0" prefWidth="277.0" styleClass="pane">
+                  <HBox layoutX="86.0" layoutY="510.0" prefHeight="184.0" prefWidth="452.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="heading-text" text="This is Morioh radio" wrappingWidth="386.60008239746094" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="body-text" text="Nice weather today, huh" wrappingWidth="415.7367401123047">
-                           <font>
-                              <Font name="Verdana" size="17.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets left="25.0" />
-                           </VBox.margin></Text>
-                     </children>
-                  </VBox>
-                  <HBox layoutX="86.0" layoutY="468.0" prefHeight="136.0" prefWidth="452.0">
-                     <children>
-                        <Button fx:id="Featured" mnemonicParsing="false" prefHeight="139.0" prefWidth="226.0" text="Featured 1">
+                        <Button fx:id="Featured" mnemonicParsing="false" prefHeight="183.0" prefWidth="218.0" text="Featured 1">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="134.0" prefWidth="231.0" text="Featured 2">
+                        <Button mnemonicParsing="false" prefHeight="186.0" prefWidth="228.0" text="Featured 2">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -58,15 +44,10 @@
                   </HBox>
                   <VBox layoutX="593.0" layoutY="32.0" prefHeight="162.0" prefWidth="262.0">
                      <children>
-                        <Label prefHeight="94.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books" />
-                        <Label prefHeight="98.0" prefWidth="262.0" styleClass="button" text="Closest return date: 6/9/6969 (overdue 69 books)">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Label>
+                        <Label prefHeight="98.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books" />
                      </children>
                   </VBox>
-                  <VBox layoutX="92.0" layoutY="215.0" prefHeight="220.0" prefWidth="446.0">
+                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="220.0" prefWidth="446.0">
                      <children>
                         <Label prefHeight="38.0" prefWidth="454.0" text="User list" />
                         <TableView fx:id="MemberList" prefHeight="185.0" prefWidth="446.0">
@@ -78,7 +59,7 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="215.0" prefHeight="223.0" prefWidth="456.0">
+                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="223.0" prefWidth="456.0">
                      <children>
                         <Label prefHeight="36.0" prefWidth="456.0" text="Lastest uploads" />
                         <TableView fx:id="LastestDocuments" prefHeight="200.0" prefWidth="200.0">
@@ -92,20 +73,21 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="450.0" prefHeight="200.0" prefWidth="456.0">
+                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="200.0" prefWidth="456.0">
                      <children>
                         <Label prefHeight="35.0" prefWidth="529.0" text="Issued books" />
                         <TableView fx:id="LendingList" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="User ID" />
-                            <TableColumn prefWidth="90.4000244140625" text="Book" />
-                              <TableColumn prefWidth="132.0" text="Issue Date" />
-                              <TableColumn prefWidth="157.60003662109375" text="Return Date" />
+                            <TableColumn prefWidth="228.0" text="Title" />
+                              <TableColumn prefWidth="137.60009765625" text="Issue Date" />
                           </columns>
                         </TableView>
                      </children>
                   </VBox>
                   <Button fx:id="Random" layoutX="889.0" layoutY="32.0" mnemonicParsing="false" prefHeight="162.0" prefWidth="157.0" text="Random" />
+                  <Label layoutX="86.0" layoutY="32.0" prefHeight="118.0" prefWidth="396.0" text="Label" />
+                  <Label layoutX="86.0" layoutY="150.0" prefHeight="54.0" prefWidth="384.0" text="Label" />
                </children>
             </AnchorPane>
          </center>
