@@ -5,7 +5,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 import threeoone.bigproject.repositories.MemberRepo;
 
 /**
@@ -21,27 +23,25 @@ public class MemberEditingService {
 
   /**
    * Saves a new {@link Member} or update an existing {@link Member}.
-   * If the input {@link Member} has no {@code id} (or in other words, its {@code id} is {@code NULL}),
-   * this method saves a new {@link Member} to the Database.
-   * Otherwise, this method updates the pre-existing {@link Member} whose {@code id} is the same as the given Member's.
+   * <p>
+   * If the input {@link Member} has no {@code id},
+   * or its {@code id} doesn't match any of the Member's in the Database,
+   * this method saves a new {@link Member}.
+   * <p>
+   * Otherwise, this method updates the pre-existing {@link Member}
+   * whose {@code id} is the same as the given Document's.
    *
    * @apiNote This method returns the saved {@link Member} Entity instance,
    * which may be different from the given instance and may have different data.
    *
    * @param member the {@link Member} to update
    *
-   * @throws IllegalArgumentException when the given {@link Member} is {@code NULL}
-   * @throws NoSuchElementException when the given Member's {@code id} doesn't exist in the Database.
-   * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints errors)
+   * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Member} Entity instance, which may be different from the given instance
    */
   @Transactional
   public Member update(@NonNull Member member) {
-    if (member.getId() != null && !memberRepo.existsById(member.getId())) {
-      throw new NoSuchElementException("Attempting to update a non-existent Member");
-    }
-
     return memberRepo.save(member);
   }
 
