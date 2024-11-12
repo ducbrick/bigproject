@@ -28,7 +28,7 @@ import threeoone.bigproject.util.MenuItemFactory;
 @RequiredArgsConstructor
 public class MemberListController implements ViewController {
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-  private final RequestSender<SwitchScene> getAllMembersRequestSender;
+  private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<ActionOnMem> actionOnMemRequestSender;
   @FXML
   private Parent root;
@@ -170,6 +170,6 @@ public class MemberListController implements ViewController {
    */
   @Override
   public void show() {
-    getAllMembersRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    getAllMembersRequestSender.send(null);
   }
 }

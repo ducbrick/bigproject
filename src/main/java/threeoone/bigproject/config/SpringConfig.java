@@ -172,7 +172,6 @@ public class SpringConfig {
   RequestSender<Member> getAllMembersRequestSender() {
     return new RequestSender<>();
   }
-  RequestSender<SwitchScene> getAllMembersRequestSender() {return new RequestSender<>(); }
 
   /**
    * Send a request to make an action on member
@@ -214,11 +213,13 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
-  RequestSender<ActionOnMem> actionOnMemRequestSender() { return new RequestSender<>(); }
 
   @Bean
   RequestSender<SwitchScene> getTopFiveMembersRequestSender() {return new RequestSender<>(); }
 
   @Bean
   RequestSender<SwitchScene> getLastestDocumentsRequestSender() {return new RequestSender<>(); }
+
+  @Bean
+  RequestSender<Document> getRandomDocumentRequestSender() {return new RequestSender<>(); }
 }

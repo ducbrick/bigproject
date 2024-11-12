@@ -66,12 +66,16 @@ public class ActionOnDocController {
           RequestSender<Document> updateDocActionRequestSender,
           RequestSender<ActionOnDoc> actionOnDocRequestSender,
           RequestSender<Integer> getDocumentByIdRequestSender,
-          RequestSender<SwitchScene> getLastestDocumentsRequestSender) {
+          RequestSender<SwitchScene> getLastestDocumentsRequestSender,
+          RequestSender<Document> getRandomDocumentRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
     actionOnDocRequestSender.registerReceiver(this::makeActionOnDoc);
+    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
     getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
+    getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
+
   }
 
   /**
@@ -121,8 +125,13 @@ public class ActionOnDocController {
     }
   }
 
+
   private void getDocumentById(Integer id) {
     menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+  }
+
+  private void randomDocument(Document d){
+    menuController.setRandomBook(documentRetrievalService.getRandomDocument());
   }
 
   private void getLastestDocByIdDesc(SwitchScene switchScene) {
