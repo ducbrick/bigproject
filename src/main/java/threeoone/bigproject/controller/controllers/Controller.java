@@ -28,7 +28,7 @@ public class Controller {
   private final YourBooksController yourBooksController;
   private final RegisterController registerController;
   private final AddNewDocController addNewDocController;
-  private final SearchBarController searchBarController;
+  private final SearchPageController searchPageController;
   private final EditDocumentController editDocumentController;
   private final EditMemController editMemController;
 
@@ -75,7 +75,7 @@ public class Controller {
         viewSwitcher.switchToView(addNewDocController);
         break;
       case SEARCH:
-        viewSwitcher.switchToView(searchBarController);
+        viewSwitcher.switchToView(searchPageController);
         break;
       case EDIT_DOC:
         viewSwitcher.switchToView(editDocumentController);

@@ -1,7 +1,6 @@
 package threeoone.bigproject.controller.requestbodies;
 
 
-import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.entities.Member;
 
