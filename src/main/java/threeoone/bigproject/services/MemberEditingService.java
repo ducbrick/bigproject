@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
+import threeoone.bigproject.exceptions.NotLoggedInException;
 import threeoone.bigproject.repositories.MemberRepo;
 
 /**
@@ -22,26 +24,47 @@ public class MemberEditingService {
   private final MemberRepo memberRepo;
 
   /**
-   * Saves a new {@link Member} or update an existing {@link Member}.
-   * <p>
-   * If the input {@link Member} has no {@code id},
-   * or its {@code id} doesn't match any of the Member's in the Database,
-   * this method saves a new {@link Member}.
-   * <p>
-   * Otherwise, this method updates the pre-existing {@link Member}
-   * whose {@code id} is the same as the given Document's.
+   * Saves a new {@link Member}.
+   *
+   * @apiNote This method returns the saved {@link Member} Entity instance,
+   * which may be different from the given instance and may have different data.
+   *
+   * @param member the {@link Member} to add
+   *
+   * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
+   *
+   * @return the saved {@link Document} Entity instance, which may be different from the given instance
+   */
+  @Transactional
+  public Member add(@NonNull Member member) {
+    member.setId(null);
+    return memberRepo.save(member);
+  }
+
+  /**
+   * Updates an existing {@link Member} whose {@code id} is the same as the given Member's.
+   * The given Member's {@code id} must match with an existing {@link Member} in the Database.
    *
    * @apiNote This method returns the saved {@link Member} Entity instance,
    * which may be different from the given instance and may have different data.
    *
    * @param member the {@link Member} to update
    *
+   * @throws IllegalArgumentException when the given Document's {@code id} doesn't match any's in the Database
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Member} Entity instance, which may be different from the given instance
    */
   @Transactional
   public Member update(@NonNull Member member) {
+    if (member.getId() == null) {
+      throw new IllegalArgumentException("Attempting to update a Member with no ID");
+    }
+
+    if (!memberRepo.existsById(member.getId())) {
+      throw new IllegalArgumentException("No Members with that ID exist");
+    }
+
     return memberRepo.save(member);
   }
 
