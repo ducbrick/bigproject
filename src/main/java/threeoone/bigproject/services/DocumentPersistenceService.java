@@ -1,5 +1,6 @@
 package threeoone.bigproject.services;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,11 @@ public class DocumentPersistenceService {
 
   /**
    * Saves a new {@link Document}.
+   * <p>
    * This method sets the Document's {@code uploader} to the current logged in {@link User}.
    * If no {@link User} is currently logged in, this method throws a {@link NotLoggedInException}.
+   * <p>
+   * This method sets the new Document's {@code uploadTime} to the {@link LocalDateTime} at the moment.
    *
    * @apiNote This method returns the saved {@link Document} Entity instance,
    * which may be different from the given instance and may have different data.
@@ -57,6 +61,7 @@ public class DocumentPersistenceService {
 
     uploader.addUploadedDocument(document);
     document.setId(null);
+    document.setUploadTime(LocalDateTime.now());
 
     return documentRepo.save(document);
   }
