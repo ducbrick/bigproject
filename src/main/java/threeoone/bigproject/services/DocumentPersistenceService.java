@@ -26,28 +26,44 @@ public class DocumentPersistenceService {
   private final UserRepo userRepo;
   private final LoginService loginService;
 
-  @Deprecated
-  public void saveNew(Document document) throws IllegalDocumentInfoException {
-    if (document == null) {
-      throw new IllegalArgumentException("Can not save a NULL Document");
+  /**
+   * Saves a new {@link Document}.
+   * This method sets the Document's {@code uploader} to the current logged in {@link User}.
+   * If no {@link User} is currently logged in, this method throws a {@link NotLoggedInException}.
+   *
+   * @apiNote This method returns the saved {@link Document} Entity instance,
+   * which may be different from the given instance and may have different data.
+   *
+   * @param document the {@link Document} to add
+   *
+   * @throws NotLoggedInException when no Users are currently logged in
+   * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
+   *
+   * @return the saved {@link Document} Entity instance, which may be different from the given instance
+   */
+  @Transactional
+  public Document add(@NonNull Document document) {
+    Integer uploaderId = loginService.getLoggedInUserId();
+
+    if (uploaderId == null) {
+      throw new NotLoggedInException("Attempting to upload a Document while not logged in");
     }
 
+    User uploader = userRepo.findUserAndUploadedDocuments(uploaderId);
+
+    if (uploader == null) {
+      throw new NotLoggedInException("No User with that ID exists");
+    }
+
+    uploader.addUploadedDocument(document);
     document.setId(null);
-    documentRepo.save(document);
+
+    return documentRepo.save(document);
   }
 
   /**
-   * Saves a new {@link Document} or update an existing {@link Document}.
-   * <p>
-   * If the input {@link Document} has no {@code id},
-   * or its {@code id} doesn't match any of the Document's in the Database,
-   * this method saves a new {@link Document}.
-   * <p>
-   * Otherwise, this method updates the pre-existing {@link Document}
-   * whose {@code id} is the same as the given Document's.
-   * <p>
-   * If the Document's {@code uploader} is {@code NULL}, this method sets it to the current logged in {@link User}.
-   * If no {@link User} is currently logged in, this method throws a {@link NotLoggedInException}.
+   * Updates an existing {@link Document} whose {@code id} is the same as the given Document's.
+   * The given Document's {@code id} must match with an existing {@link Document} in the Database.
    *
    * @apiNote This method returns the saved {@link Document} Entity instance,
    * which may be different from the given instance and may have different data.
@@ -55,34 +71,22 @@ public class DocumentPersistenceService {
    * @param document the {@link Document} to update
    *
    * @throws IllegalDocumentInfoException when the {@code copies} of the {@link Document} is less than the number of currently lent copies
-   * @throws NotLoggedInException when the Document's {@code uploader} is {@code NULL} and no Users are logged in
+   * @throws IllegalArgumentException when the given Document's {@code id} doesn't match any's in the Database
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
   @Transactional
   public Document update(@NonNull Document document) {
-    if (document.getUploader() == null) {
-      Integer uploaderId = loginService.getLoggedInUserId();
-
-      if (uploaderId == null) {
-        throw new NotLoggedInException("Attempting to upload a Document while not logged in");
-      }
-
-      User uploader = userRepo.findById(uploaderId).orElse(null);
-
-      if (uploader == null) {
-        throw new NotLoggedInException("No User with that ID exists");
-      }
-
-      document.setUploader(uploader);
-    }
-
-    if (document.getId() == null || !documentRepo.existsById(document.getId())) {
-      return documentRepo.save(document);
+    if (document.getId() == null) {
+      throw new IllegalArgumentException("Attempting to update a Document with no ID");
     }
 
     Document oldInstance = documentRepo.findWithLendingDetails(document.getId());
+
+    if (oldInstance == null) {
+      throw new IllegalArgumentException("No Documents with that ID exist");
+    }
 
     int lentCopies = oldInstance.getLendingDetails().size();
 

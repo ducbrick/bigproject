@@ -40,7 +40,7 @@ public class LendingPersistenceService {
    */
   @Transactional
   public LendingDetail lend(int memberId, int documentId) {
-    Member member = memberRepo.findById(memberId).orElse(null);
+    Member member = memberRepo.findWithLendingDetails(memberId);
 
     if (member == null) {
       throw new IllegalArgumentException("No Member with that id exists");
@@ -59,8 +59,8 @@ public class LendingPersistenceService {
     }
 
     LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
-    lendingDetail.setMember(member);
-    lendingDetail.setDocument(document);
+    member.lendDocument(lendingDetail);
+    document.lendDocument(lendingDetail);
 
     return lendingDetailRepo.save(lendingDetail);
   }

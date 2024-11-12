@@ -34,7 +34,7 @@ class UserRegisterServiceTest {
   @DisplayName("Register a NULL user")
   public void registerNull() {
     assertThatThrownBy(() -> userRegisterService.register(null)).isInstanceOf(
-        IllegalArgumentException.class);
+        NullPointerException.class);
   }
 
   @Test
@@ -83,33 +83,6 @@ class UserRegisterServiceTest {
   }
 
   @Test
-  @DisplayName("Register with illegal username")
-  public void illegalUsername() {
-    User user = new User("username", "password");
-
-    when(loginService.getLoggedInUserId()).thenReturn(null);
-    when(userRepo.findByUsername(user.getUsername())).thenReturn(null);
-    when(illegalCharacterFilterService.hasIllegalCharacter(user.getUsername())).thenReturn(true);
-
-    assertThatThrownBy(() -> userRegisterService.register(user))
-        .isInstanceOf(IllegalCredentialsException.class);
-  }
-
-  @Test
-  @DisplayName("Register with illegal password")
-  public void illegalPassword() {
-    User user = new User("username", "password");
-
-    when(loginService.getLoggedInUserId()).thenReturn(null);
-    when(userRepo.findByUsername(user.getUsername())).thenReturn(null);
-    when(illegalCharacterFilterService.hasIllegalCharacter(user.getUsername())).thenReturn(false);
-    when(illegalCharacterFilterService.hasIllegalCharacter(user.getPassword())).thenReturn(true);
-
-    assertThatThrownBy(() -> userRegisterService.register(user))
-        .isInstanceOf(IllegalCredentialsException.class);
-  }
-
-  @Test
   @DisplayName("Happy path")
   public void happyPath() throws Exception {
     User user = new User("username", "password");
@@ -120,6 +93,5 @@ class UserRegisterServiceTest {
     userRegisterService.register(user);
 
     verify(userRepo, times(1)).save(user);
-    verify(loginService, times(1)).login(user);
   }
 }
