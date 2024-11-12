@@ -49,13 +49,13 @@ public class DocumentPersistenceService {
       throw new NotLoggedInException("Attempting to upload a Document while not logged in");
     }
 
-    User uploader = userRepo.findById(uploaderId).orElse(null);
+    User uploader = userRepo.findUserAndUploadedDocuments(uploaderId);
 
     if (uploader == null) {
       throw new NotLoggedInException("No User with that ID exists");
     }
 
-    document.setUploader(uploader);
+    uploader.addUploadedDocument(document);
     document.setId(null);
 
     return documentRepo.save(document);
