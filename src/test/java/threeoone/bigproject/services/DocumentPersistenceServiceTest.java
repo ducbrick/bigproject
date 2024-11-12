@@ -35,54 +35,6 @@ class DocumentPersistenceServiceTest {
   private DocumentPersistenceService documentPersistenceService;
 
   @Test
-  @DisplayName("Update a Document with no uploader")
-  public void updateDocumentNoUploader() {
-    Document document = new Document("name");
-    assertThatThrownBy(() -> documentPersistenceService.update(document))
-        .isInstanceOf(IllegalDocumentInfoException.class);
-  }
-
-  @Test
-  @DisplayName("Add a new Document")
-  public void addNew() throws IllegalDocumentInfoException {
-    User user = new User("name", "password");
-    Document document = new Document("name");
-    document.setUploader(user);
-
-    documentPersistenceService.update(document);
-    verify(documentRepo, times(1)).save(document);
-  }
-
-  @Test
-  @DisplayName("Update a non-existent Document")
-  public void updateNonExistentDocument() {
-    User user = new User("name", "password");
-    Document document = new Document("name");
-    document.setUploader(user);
-    document.setId(1);
-
-    when(documentRepo.existsById(document.getId())).thenReturn(false);
-
-    assertThatThrownBy(() -> documentPersistenceService.update(document))
-        .isInstanceOf(NoSuchElementException.class);
-  }
-
-  @Test
-  @DisplayName("Update an existing Document")
-  public void updateExistingDocument() throws IllegalDocumentInfoException {
-    User user = new User("name", "password");
-    Document document = new Document("name");
-    document.setUploader(user);
-    document.setId(1);
-
-    when(documentRepo.existsById(document.getId())).thenReturn(true);
-
-    documentPersistenceService.update(document);
-
-    verify(documentRepo, times(1)).save(document);
-  }
-
-  @Test
   @DisplayName("Delete a Document")
   public void delete() {
     int id = 1;

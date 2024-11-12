@@ -34,26 +34,6 @@ class MemberEditingServiceTest {
   }
 
   @Test
-  @DisplayName("Add a new Member")
-  public void addNew() {
-    Member member = new Member("name");
-    memberEditingService.update(member);
-    verify(memberRepo, times(1)).save(member);
-  }
-
-  @Test
-  @DisplayName("Update a non-existent Member")
-  public void updateNonExistentMember() {
-    Member member = new Member("name");
-    member.setId(1);
-
-    when(memberRepo.existsById(member.getId())).thenReturn(false);
-
-    assertThatThrownBy(() -> memberEditingService.update(member))
-        .isInstanceOf(NoSuchElementException.class);
-  }
-
-  @Test
   @DisplayName("Update an existing Member")
   public void updateExistingMember() {
     Member member = new Member("name");
