@@ -59,12 +59,14 @@ public class LendingPersistenceService {
     }
 
     LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
-    member.lendDocument(lendingDetail);
-    document.lendDocument(lendingDetail);
+    lendingDetail.setMember(member);
+    lendingDetail.setDocument(document);
 
     return lendingDetailRepo.save(lendingDetail);
   }
 
+
+  /*
   /**
    * Saves a {@link LendingDetail}.
    * <p>
@@ -84,6 +86,7 @@ public class LendingPersistenceService {
    *
    * @return the saved {@link LendingDetail} Entity instance, which may be different from the given instance
    */
+  /*
   @Transactional
   private LendingDetail update(@NonNull LendingDetail lendingDetail) {
     if (lendingDetail.getId() != null && !lendingDetailRepo.existsById(lendingDetail.getId())) {
@@ -91,24 +94,17 @@ public class LendingPersistenceService {
     }
     return  lendingDetailRepo.save(lendingDetail);
   }
+  */
+
 
   /**
    * Deletes the {@link LendingDetail} with the given {@code id}.
-   * If no {@link LendingDetail} with the given {@code id} exists,
-   * this method throws {@link NoSuchElementException}.
+   * If the {@link LendingDetail} is not found in the persistence store it is silently ignored.
    *
    * @param id the {@code id} of the {@link LendingDetail} to delete
-   *
-   * @throws NoSuchElementException if no {@link LendingDetail} with the given {@code id} exists
    */
   @Transactional
   public void delete(int id) {
-    LendingDetail lendingDetail = lendingDetailRepo.findById(id).orElse(null);
-
-    if (lendingDetail == null) {
-      throw new NoSuchElementException("The requested LendingDetail does not exist");
-    }
-
-    lendingDetailRepo.delete(lendingDetail);
+    lendingDetailRepo.deleteById(id);
   }
 }
