@@ -55,7 +55,7 @@ public class DocumentPersistenceService {
    * @param document the {@link Document} to update
    *
    * @throws IllegalDocumentInfoException when the {@code copies} of the {@link Document} is less than the number of currently lent copies
-   * @throws NotLoggedInException when the Document's {@code uploader} is [@code NULL} and no Users are logged in
+   * @throws NotLoggedInException when the Document's {@code uploader} is {@code NULL} and no Users are logged in
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
