@@ -96,7 +96,7 @@
                      </children>
                   </VBox>
                   <Button fx:id="Random" layoutX="889.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="162.0" prefWidth="157.0" text="Random" />
-                  <Label fx:id="Greeting" layoutX="86.0" layoutY="32.0" prefHeight="118.0" prefWidth="396.0" styleClass="greeting-label" text="Greeting" textFill="#1b1b1b">
+                  <Label fx:id="Greeting" layoutX="86.0" layoutY="32.0" prefHeight="118.0" prefWidth="396.0" styleClass="greeting-label" text="Greetings!" textFill="#1b1b1b" wrapText="true">
                      <font>
                         <Font name="Arial Bold" size="40.0" />
                      </font></Label>

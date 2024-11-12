@@ -109,7 +109,6 @@ public class MenuController implements ViewController {
         this.getTopFiveMembersRequestSender = getTopFiveMembersRequestSender;
         this.getLastestDocumentsRequestSender = getLastestDocumentsRequestSender;
         this.menuBarController = menuBarController;
-
     }
 
 
@@ -163,7 +162,7 @@ public class MenuController implements ViewController {
         } else if (now.isBefore(LocalTime.of(22,0))) {
             return "Good evening!";
         } else {
-            return "Good night!";
+            return "Good night!\nGet some sleep :)";
         }
     }
     /**
