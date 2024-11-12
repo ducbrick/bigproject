@@ -42,6 +42,7 @@ public class User {
   private Integer id;
 
   @NonNull
+  @Column(unique = true)
   private String username;
 
   @NonNull
