@@ -33,9 +33,13 @@ public class DocumentPersistenceService {
 
   /**
    * Saves a new {@link Document} or update an existing {@link Document}.
-   * If the input {@link Document} has no {@code id} (or in other words, its {@code id} is {@code NULL}),
-   * this method saves a new {@link Document} to the Database.
-   * Otherwise, this method updates the pre-existing {@link Document} whose {@code id} is the same as the given Document's.
+   * <p>
+   * If the input {@link Document} has no {@code id},
+   * or its {@code id} doesn't match any of the Document's in the Database,
+   * this method saves a new {@link Document}.
+   * <p>
+   * Otherwise, this method updates the pre-existing {@link Document}
+   * whose {@code id} is the same as the given Document's.
    *
    * @apiNote This method returns the saved {@link Document} Entity instance,
    * which may be different from the given instance and may have different data.
@@ -44,9 +48,7 @@ public class DocumentPersistenceService {
    *
    * @throws IllegalDocumentInfoException when the {@code uploader} of the given {@link Document} is {@code NULL},
                                           or when the {@code copies} of the {@link Document} is less than the number of currently lent copies
-   * @throws NoSuchElementException when the given Document's {@code id} doesn't exist in the Database
-   * @throws IllegalArgumentException when the given {@link Document} is {@code NULL}
-   * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints errors)
+   * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
@@ -56,15 +58,11 @@ public class DocumentPersistenceService {
       throw new IllegalDocumentInfoException("Attempting to update a Document without an uploader");
     }
 
-    if (document.getId() == null) {
+    if (document.getId() == null || !documentRepo.existsById(document.getId())) {
       return documentRepo.save(document);
     }
 
     Document oldInstance = documentRepo.findWithLendingDetails(document.getId());
-
-    if (oldInstance == null) {
-      throw new NoSuchElementException("Attempting to update a non-existent Document");
-    }
 
     int lentCopies = oldInstance.getLendingDetails().size();
 
