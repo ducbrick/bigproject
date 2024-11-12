@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
+import threeoone.bigproject.exceptions.NotLoggedInException;
 import threeoone.bigproject.repositories.DocumentRepo;
+import threeoone.bigproject.repositories.UserRepo;
 
 /**
  * A service to modify, which is to add, update, or delete {@link Document} entities from the Database.
@@ -20,6 +23,8 @@ import threeoone.bigproject.repositories.DocumentRepo;
 @RequiredArgsConstructor
 public class DocumentPersistenceService {
   private final DocumentRepo documentRepo;
+  private final UserRepo userRepo;
+  private final LoginService loginService;
 
   @Deprecated
   public void saveNew(Document document) throws IllegalDocumentInfoException {
@@ -40,14 +45,17 @@ public class DocumentPersistenceService {
    * <p>
    * Otherwise, this method updates the pre-existing {@link Document}
    * whose {@code id} is the same as the given Document's.
+   * <p>
+   * If the Document's {@code uploader} is {@code NULL}, this method sets it to the current logged in {@link User}.
+   * If no {@link User} is currently logged in, this method throws a {@link NotLoggedInException}.
    *
    * @apiNote This method returns the saved {@link Document} Entity instance,
    * which may be different from the given instance and may have different data.
    *
    * @param document the {@link Document} to update
    *
-   * @throws IllegalDocumentInfoException when the {@code uploader} of the given {@link Document} is {@code NULL},
-                                          or when the {@code copies} of the {@link Document} is less than the number of currently lent copies
+   * @throws IllegalDocumentInfoException when the {@code copies} of the {@link Document} is less than the number of currently lent copies
+   * @throws NotLoggedInException when the Document's {@code uploader} is [@code NULL} and no Users are logged in
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
@@ -55,7 +63,19 @@ public class DocumentPersistenceService {
   @Transactional
   public Document update(@NonNull Document document) {
     if (document.getUploader() == null) {
-      throw new IllegalDocumentInfoException("Attempting to update a Document without an uploader");
+      Integer uploaderId = loginService.getLoggedInUserId();
+
+      if (uploaderId == null) {
+        throw new NotLoggedInException("Attempting to upload a Document while not logged in");
+      }
+
+      User uploader = userRepo.findUserAndUploadedDocuments(uploaderId);
+
+      if (uploader == null) {
+        throw new NotLoggedInException("No User with that ID exists");
+      }
+
+      uploader.addUploadedDocument(document);
     }
 
     if (document.getId() == null || !documentRepo.existsById(document.getId())) {
