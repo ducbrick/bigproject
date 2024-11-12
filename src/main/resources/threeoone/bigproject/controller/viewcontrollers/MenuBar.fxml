@@ -7,20 +7,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="80.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuBarController">
    <children>
-      <VBox fx:id="box" prefHeight="720.0" prefWidth="86.0" styleClass="pane" stylesheets="@general.css">
+      <VBox id="menubar" fx:id="box" prefHeight="720.0" prefWidth="86.0" styleClass="pane" stylesheets="@general.css">
          <children>
-            <Button fx:id="Menu" mnemonicParsing="false" onMouseClicked="#toMenu" prefHeight="54.0" prefWidth="82.0" text="Home">
+            <Button fx:id="Menu" mnemonicParsing="false" onMouseClicked="#toMenu" prefHeight="54.0" prefWidth="93.0" text="Home">
                <VBox.margin>
                   <Insets top="150.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="AddBook" mnemonicParsing="false" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="82.0" text="Add Book">
+            <Button fx:id="AddBook" mnemonicParsing="false" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="99.0" text="Add Book">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="DocOverview" mnemonicParsing="false" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="82.0" text="Browse books" />
-            <Button fx:id="YourBooks" mnemonicParsing="false" onMouseClicked="#toYourBooks" prefHeight="54.0" prefWidth="82.0" text="Your books" />
+            <Button fx:id="DocOverview" mnemonicParsing="false" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="96.0" text="Browse books" />
+            <Button fx:id="YourBooks" mnemonicParsing="false" onMouseClicked="#toYourBooks" prefHeight="54.0" prefWidth="87.0" text="Your books" />
             <Button fx:id="Search" mnemonicParsing="false" onMouseClicked="#toSearch" prefHeight="58.0" prefWidth="89.0" text="Search" />
          </children>
       </VBox>

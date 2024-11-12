@@ -124,7 +124,7 @@ public class MenuController implements ViewController {
         menuBarController.highlight(SceneName.MAIN_MENU);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
             time.setText(LocalDateTime.now().format(formatter));
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

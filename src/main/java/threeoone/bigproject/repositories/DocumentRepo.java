@@ -37,6 +37,10 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
   @Query("SELECT d FROM Document d LEFT JOIN FETCH d.lendingDetails WHERE d.id = (:id)")
   Document findWithLendingDetails(@Param("id") int id);
 
+  /**
+   * get a random document
+   * @return
+   */
   @Query("SELECT d FROM Document d WHERE d.copies > 0 ORDER BY RANDOM() LIMIT 1")
   Document findRandom();
 }

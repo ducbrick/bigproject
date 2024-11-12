@@ -19,10 +19,18 @@
     -fx-background-color: #7AB2D3;
     -fx-border-width: 3px;
     -fx-border-color: #2C5A77; /* Border color */
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
 }
 #active {
     -fx-border-width: 0 0 4px 0; /* Active border width */
     -fx-background-color: #4A628A; /* Active background color */
+}
+#menubar{
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-border-width:   0 3px 0 0;
+
 }
 .background {
     -fx-background-color: #E0F1F8;

@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
@@ -47,9 +48,12 @@
                         <Label prefHeight="98.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books" />
                      </children>
                   </VBox>
-                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="220.0" prefWidth="446.0">
+                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="222.0" prefWidth="446.0" styleClass="pane">
                      <children>
-                        <Label prefHeight="38.0" prefWidth="454.0" text="User list" />
+                        <Label prefHeight="38.0" prefWidth="454.0" text="User list">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
                         <TableView fx:id="MemberList" prefHeight="185.0" prefWidth="446.0">
                           <columns>
                             <TableColumn fx:id="MemberID" prefWidth="75.0" text="Member ID" />
@@ -59,9 +63,12 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="223.0" prefWidth="456.0">
+                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="223.0" prefWidth="456.0" styleClass="pane">
                      <children>
-                        <Label prefHeight="36.0" prefWidth="456.0" text="Lastest uploads" />
+                        <Label prefHeight="36.0" prefWidth="456.0" text="Lastest uploads">
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font></Label>
                         <TableView fx:id="LastestDocuments" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                             <TableColumn fx:id="BookID" prefWidth="55.20001220703125" text="Book ID" />
@@ -73,9 +80,12 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="200.0" prefWidth="456.0">
+                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="200.0" prefWidth="456.0" styleClass="pane">
                      <children>
-                        <Label prefHeight="35.0" prefWidth="529.0" text="Issued books" />
+                        <Label prefHeight="35.0" prefWidth="529.0" text="Issued books">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
                         <TableView fx:id="LendingList" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="User ID" />
@@ -86,8 +96,14 @@
                      </children>
                   </VBox>
                   <Button fx:id="Random" layoutX="889.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="162.0" prefWidth="157.0" text="Random" />
-                  <Label fx:id="Greeting" layoutX="86.0" layoutY="32.0" prefHeight="118.0" prefWidth="396.0" text="Label" />
-                  <Label fx:id="time" layoutX="86.0" layoutY="150.0" prefHeight="54.0" prefWidth="384.0" text="Label" />
+                  <Label fx:id="Greeting" layoutX="86.0" layoutY="32.0" prefHeight="118.0" prefWidth="396.0" styleClass="greeting-label" text="Greeting" textFill="#1b1b1b">
+                     <font>
+                        <Font name="Arial Bold" size="40.0" />
+                     </font></Label>
+                  <Label fx:id="time" layoutX="86.0" layoutY="150.0" prefHeight="54.0" prefWidth="384.0" text="Date">
+                     <font>
+                        <Font name="Arial" size="28.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
          </center>
