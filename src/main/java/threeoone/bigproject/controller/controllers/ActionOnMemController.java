@@ -4,10 +4,8 @@ import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.AddNewMemController;
 import threeoone.bigproject.controller.viewcontrollers.EditMemController;
@@ -39,17 +37,23 @@ public class ActionOnMemController {
    */
   @Autowired
   private void registerRequestReceiver (RequestSender<Member> getAllMembersRequestSender,
-                                        RequestSender<ActionOnMem> actionOnMemRequestSender,
+                                        RequestSender<Member> editMemberRequestSender,
+                                         RequestSender<Member> commitChangeMemberRequestSender,
+                                        RequestSender<Member> removeMemberRequestSender,
+                                        RequestSender<Member> addMemberRequestSender
                                         RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
-    actionOnMemRequestSender.registerReceiver(this::actionOnMem);
+    editMemberRequestSender.registerReceiver(this::editMember);
+    commitChangeMemberRequestSender.registerReceiver(this::commitChangeMember);
+    removeMemberRequestSender.registerReceiver(this::removeMember);
+    addMemberRequestSender.registerReceiver(this::addMember);
     getTopFiveMembersRequestSender.registerReceiver(this::getTop5);
   }
 
   /**
    * return List of All Member in dataset
    *
-   * @param
+   * @param member None
    */
   private void getListAllMembers (Member member) {
     memberListController.setTable(FXCollections.observableArrayList(
@@ -61,15 +65,39 @@ public class ActionOnMemController {
     menuController.setUserList(FXCollections.observableArrayList(memberRetrievalService.findTop5Records()));
   }
   /**
-   * Call service and switch scene if needed for make an action on member
+   * Edits the given member by setting it in the edit member controller.
    *
-   * @param actionOnMem action request
+   * @param member the member to be edited
    */
-  private void actionOnMem(ActionOnMem actionOnMem) {
-    switch (actionOnMem.type()) {
-      case MemActionType.ADD -> addNewMemController.setMember(memberEditingService.update(actionOnMem.member()));
-      case MemActionType.EDIT -> editMemController.setChosenMember(actionOnMem.member());
-      case MemActionType.COMMIT_EDIT -> memberEditingService.update(actionOnMem.member());
-    }
+  private void editMember(Member member) {
+    editMemController.setChosenMember(member);
   }
+
+  /**
+   * Adds a new member using the member editing service and sets it in the add new member controller.
+   *
+   * @param member the member to be added
+   */
+  private void addMember(Member member) {
+    addNewMemController.setMember(memberEditingService.add(member));
+  }
+
+  /**
+   * Commits changes to the given member by updating it using the member editing service.
+   *
+   * @param member the member whose changes are to be committed
+   */
+  private void commitChangeMember(Member member) {
+    memberEditingService.update(member);
+  }
+
+  /**
+   * Removes the given member by deleting it using the member editing service.
+   *
+   * @param member the member to be removed
+   */
+  private void removeMember(Member member) {
+    memberEditingService.delete(member.getId());
+  }
+
 }

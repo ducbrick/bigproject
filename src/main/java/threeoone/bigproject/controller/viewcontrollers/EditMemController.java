@@ -9,10 +9,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.util.Alerts;
@@ -29,7 +27,7 @@ import threeoone.bigproject.util.Alerts;
 public class EditMemController implements ViewController {
 
   private final RequestSender<SwitchScene> switchSceneRequestSender;
-  private final RequestSender<ActionOnMem> actionOnMemRequestSender;
+  private final RequestSender<Member>  commitChangeMemberRequestSender;
   private Member chosenMember;
 
   @FXML
@@ -74,7 +72,7 @@ public class EditMemController implements ViewController {
     } else {
       chosenMember.setName(name.getText());
     }
-    actionOnMemRequestSender.send(new ActionOnMem(MemActionType.COMMIT_EDIT, chosenMember));
+    commitChangeMemberRequestSender.send(chosenMember);
     switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
   }
 
