@@ -8,6 +8,8 @@ import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
+import javax.print.Doc;
+
 /**
  * {@code Spring} configuration class.
  *
@@ -147,16 +149,6 @@ public class SpringConfig {
 
 
   /**
-   * Send an action request on given document
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  RequestSender<ActionOnDoc> actionOnDocRequestSender() {
-    return new RequestSender<>();
-  }
-
-  /**
    * Send a request to service to get all member
    *
    * @return the {@link RequestSender} to be registered
@@ -206,4 +198,12 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  @Bean
+  RequestSender<Document> editDocumentRequestSender() {return new RequestSender<>();}
+
+  @Bean
+  RequestSender<Document> removeDocumentRequestSender() {return new RequestSender<>();}
+
+  @Bean
+  RequestSender<Document> borrowDocumentRequestSender() {return new RequestSender<>();}
 }
