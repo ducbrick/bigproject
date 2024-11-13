@@ -30,8 +30,6 @@ public class FxmlControllerLoader {
       fxWeaver.load(YourBooksController.class);
       fxWeaver.load(AddNewDocController.class);
       fxWeaver.load(MenuBarController.class);
-      fxWeaver.load(SearchBarController.class);
-
       fxWeaver.load(EditDocumentController.class);
       fxWeaver.load(MemberDetailsController.class);
       fxWeaver.load(SearchPageController.class);
