@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -22,7 +23,12 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 /**
  * ORM Entity representing a {@link Document} in the library database.
  * <p>
- * A {@link Document} has a {@link #name}, a {@link #description} and has a total of {@link #copies} physical copies.
+ * A {@link Document} has a {@link #name},
+ *                        a {@link #description},
+ *                        a total of {@link #copies} physical copies,
+ *                        an {@link #author},
+ *                        an {@link #isbn},
+ *                        and uploaded at {@link #uploadTime}.
  * A {@link Document} has an {@link #uploader},
  * representing the {@link User} who uploaded this {@link Document}.
  * <p>
@@ -52,6 +58,15 @@ public class Document {
 
   @NonNull
   private Integer copies = 0;
+
+  private String author;
+
+  private String isbn;
+
+  @Column(name = "upload_time")
+  private LocalDateTime uploadTime;
+
+  private String category;
 
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "uploader_id", nullable = false)
