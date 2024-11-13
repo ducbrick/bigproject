@@ -29,6 +29,10 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * @author purupurupkl
+ * main menu (so-called Dashboard). shows up after logging in
+ * shows current date - time, one table for newest uploaded documents, one for members info and one for latest book issues
+ * (which is not even working rn).
+ * also has a funny random button that sends you to a random document's detail page.
  */
 @Component
 @FxmlView("Menu.fxml")
@@ -67,30 +71,30 @@ public class MenuController implements ViewController {
     @FXML
     private Button Random;
 
+    /**
+     * Member list table. Show 5 member of smallest ID.
+     * TODO: make this actually do something pls
+     */
     @FXML
     private TableView<Member> MemberList;
-
     @FXML
     private TableColumn<Member, String> MemberID;
-
     @FXML
     private TableColumn<Member, String> MemberName;
 
+    /**
+     * Latest document table.
+     */
     @FXML
     private TableView<Document> LastestDocuments;
-
     @FXML
     private TableColumn<Document, String> BookID;
-
     @FXML
     private TableColumn<Document, String> Title;
-
     @FXML
     private TableColumn<Document, String> Author;
-
     @FXML
     private TableColumn<Document, String> CopiesAvailable;
-
     @FXML
     private TableColumn<Document, String> Description;
 
@@ -123,7 +127,9 @@ public class MenuController implements ViewController {
         this.menuBarController = menuBarController;
     }
 
-
+    /**
+     * initializes the table and sets up a Timeline for the clock
+     */
     public void initialize() {
         MemberID.setCellValueFactory(new PropertyValueFactory<>("id"));
         MemberName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -178,7 +184,7 @@ public class MenuController implements ViewController {
         }
     }
     /**
-     * generate a random book
+     * sends user to a random document's page.
      */
     @FXML
     public void randomBook() {
@@ -187,6 +193,9 @@ public class MenuController implements ViewController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
     }
 
+    /**
+     * sets greeting based on time and set data for tables.
+     */
     @Override
     public void show() {
         getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
