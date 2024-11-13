@@ -10,6 +10,7 @@ import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
 import threeoone.bigproject.controller.viewcontrollers.EditDocumentController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+import threeoone.bigproject.services.DocumentPersistenceService;
 import threeoone.bigproject.services.DocumentRetrievalService;
 
 /**
@@ -26,6 +27,7 @@ public class ActionOnDocController {
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
   private final EditDocumentController editDocumentController;
+  private final DocumentPersistenceService documentPersistenceService;
 
 
 
@@ -85,14 +87,43 @@ public class ActionOnDocController {
     docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
   }
 
+  /**
+   * Edits the given document by setting it in the edit document controller.
+   *
+   * @param document the document to be edited
+   */
   private void editDocument(Document document) {
     editDocumentController.setDocument(document);
   }
 
-  private void removeDocument(Document document) {}
+  /**
+   * Removes the given document by deleting it using the document persistence service.
+   *
+   * @param document the document to be removed
+   */
+  private void removeDocument(Document document) {
+    documentPersistenceService.delete(document.getId());
+  }
 
-  private void borrowDocument(Document document) {}
+  /**
+   * Borrows the given document.
+   *
+   * TODO: Implement the logic for borrowing a document.
+   *
+   * @param document the document to be borrowed
+   */
+  private void borrowDocument(Document document) {
+    // TODO: Implement borrowing logic
+  }
 
-  private void addDocument(Document document) {}
+  /**
+   * Adds a new document using the document persistence service.
+   *
+   * @param document the document to be added
+   */
+  private void addDocument(Document document) {
+    documentPersistenceService.add(document);
+  }
+
 
 }

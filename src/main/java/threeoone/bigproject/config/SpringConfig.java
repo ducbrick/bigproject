@@ -73,7 +73,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<Document> updateDocActionRequestSender() {
+  public RequestSender<Document> updateDocActionRequestSender() {
     return new RequestSender<>();
   }
 
@@ -83,7 +83,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<User> getListAllDocumentRequestSender() {
+  public RequestSender<User> getListAllDocumentRequestSender() {
     return new RequestSender<>();
   }
 
@@ -93,7 +93,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<Document> addDocumentRequestSender() {
+  public RequestSender<Document> addDocumentRequestSender() {
     return new RequestSender<>();
   }
 
@@ -103,7 +103,7 @@ public class SpringConfig {
    * @return the {@link RequestSender}to be registered
    */
   @Bean
-  RequestSender<String> queryISBNGoogleRequestSender() {
+  public RequestSender<String> queryISBNGoogleRequestSender() {
     return new RequestSender<>();
   }
 
@@ -113,7 +113,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<String> queryDocByNameRequestSender() {
+  public RequestSender<String> queryDocByNameRequestSender() {
     return new RequestSender<>();
   }
 
@@ -123,7 +123,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<String> queryDocByAuthorRequestSender() {
+  public RequestSender<String> queryDocByAuthorRequestSender() {
     return new RequestSender<>();
   }
 
@@ -133,7 +133,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<String> queryDocByCategoryRequestSender() {
+  public RequestSender<String> queryDocByCategoryRequestSender() {
     return new RequestSender<>();
   }
 
@@ -143,7 +143,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<Document> commitChangeDocRequestSender() {
+  public RequestSender<Document> commitChangeDocRequestSender() {
     return new RequestSender<>();
   }
 
@@ -154,19 +154,10 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<Member> getAllMembersRequestSender() {
+  public RequestSender<Member> getAllMembersRequestSender() {
     return new RequestSender<>();
   }
 
-  /**
-   * Send a request to make an action on member
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  RequestSender<ActionOnMem> actionOnMemRequestSender() {
-    return new RequestSender<>();
-  }
 
   /**
    * Send a request to make member query
@@ -174,7 +165,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<MemberQuery> memberQueryRequestSender() {
+  public RequestSender<MemberQuery> memberQueryRequestSender() {
     return new RequestSender<>();
   }
 
@@ -184,7 +175,7 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<DocumentQuery> documentQueryRequestSender() {
+  public RequestSender<DocumentQuery> documentQueryRequestSender() {
     return new RequestSender<>();
   }
 
@@ -194,16 +185,79 @@ public class SpringConfig {
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  RequestSender<LendingDetail> saveNewLending() {
+  public RequestSender<LendingDetail> saveNewLending() {
     return new RequestSender<>();
   }
 
+  /**
+   * Creates a bean for sending edit document requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Document}
+   */
   @Bean
-  RequestSender<Document> editDocumentRequestSender() {return new RequestSender<>();}
+  public RequestSender<Document> editDocumentRequestSender() {
+    return new RequestSender<>();
+  }
 
+  /**
+   * Creates a bean for sending remove document requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Document}
+   */
   @Bean
-  RequestSender<Document> removeDocumentRequestSender() {return new RequestSender<>();}
+  public RequestSender<Document> removeDocumentRequestSender() {
+    return new RequestSender<>();
+  }
 
+  /**
+   * Creates a bean for sending borrow document requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Document}
+   */
   @Bean
-  RequestSender<Document> borrowDocumentRequestSender() {return new RequestSender<>();}
+  public RequestSender<Document> borrowDocumentRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for sending edit member requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Member}
+   */
+  @Bean
+  public RequestSender<Member> editMemberRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for sending commit change member requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Member}
+   */
+  @Bean
+  public RequestSender<Member> commitChangeMemberRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for sending remove member requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Member}
+   */
+  @Bean
+  public RequestSender<Member> removeMemberRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for sending add member requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Member}
+   */
+  @Bean
+  public RequestSender<Member> addMemberRequestSender() {
+    return new RequestSender<>();
+  }
+
+
 }
