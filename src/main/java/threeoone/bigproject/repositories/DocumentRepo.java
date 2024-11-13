@@ -16,6 +16,10 @@ import java.util.List;
  * @author DUCBRICK
  */
 public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
+  /**
+   * keyword supported method. don't wanna change it.
+   * @return List of document
+   */
     List<Document> findTop5ByOrderByIdDesc();
   /**
    * Retrieves a {@link Document} with a specific {@code id} and its {@code lendingDetails}.
