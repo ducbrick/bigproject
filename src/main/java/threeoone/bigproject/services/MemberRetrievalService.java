@@ -32,11 +32,7 @@ public class MemberRetrievalService {
    * @return a {@link List} containing every {@link Member} in the Database
    */
   public List <Member> getAll() {
-    List <Member> res = memberRepo.findAll();
-    for (Member member : res) {
-      member.setLendingDetails(new ArrayList<>());
-    }
-    return res;
+    return memberRepo.findAll();
   }
 
   /**
