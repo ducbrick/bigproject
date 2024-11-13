@@ -1,4 +1,13 @@
-.button {
+.menu-container {
+    -fx-max-width: 100px; /* Collapsed height */
+    -fx-transition: -fx-max-height 0.3s ease-out; /* Smooth transition */
+    overflow: hidden; /* Prevents content from spilling over */
+}
+
+.menu-container:hover {
+    -fx-max-width: 300px; /* Expanded height; adjust as needed */
+}
+.normal-button {
     -fx-border-color: #2C5A77; /* Border color */
     -fx-border-width: 2px; /* Border width */
     -fx-text-fill: #2C3E50;
@@ -7,7 +16,7 @@
     -fx-wrap-text: true;
     -fx-text-alignment: center;
 }
-.button:hover {
+.normal-button:hover {
     -fx-underline: true;
 }
 
@@ -35,3 +44,10 @@
 .background {
     -fx-background-color: #E0F1F8;
 }
+
+.header-label {
+    -fx-font-size: 25px;
+    -fx-font-style: BOLD;
+
+}
+

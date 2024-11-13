@@ -4,12 +4,12 @@
     -fx-padding: 20;
 }
 
-.label {
-    -fx-font-size: 16px;
+.abel {
+    -fx-font-size: 20px;
     -fx-text-fill: #333;
 }
 
-.button {
+.blue-button {
     -fx-background-color: #4a90e2;
     -fx-text-fill: #fff;
     -fx-font-weight: bold;
@@ -30,10 +30,10 @@
 }
 
 .text-field, .choice-box, .date-picker {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #DFF2EB;
     -fx-border-color: #d6d6d6;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
     -fx-padding: 5px;
     -fx-font-size: 14px;
     -fx-transition: border-color 0.3s ease;

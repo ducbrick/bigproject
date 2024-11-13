@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.YourBooksController">
+<AnchorPane fx:id="root" prefHeight="700.0" prefWidth="1200.0" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.YourBooksController">
     <children>
         <fx:include source="MenuBar.fxml" />
         <TableView fx:id="books" layoutX="108.0" layoutY="172.0" prefHeight="446.0" prefWidth="754.0">
@@ -18,5 +19,6 @@
                 <TableColumn fx:id="Uploader" prefWidth="75.0" text="Uploader" />
             </columns>
         </TableView>
+      <Label layoutX="359.0" layoutY="71.0" prefHeight="61.0" prefWidth="214.0" styleClass="header-label" text="Borrowings" />
     </children>
 </AnchorPane>
