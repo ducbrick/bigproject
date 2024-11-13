@@ -43,14 +43,26 @@ public class MenuController implements ViewController {
     @FXML
     private Parent root;
 
+    /**
+     * TODO: WHAT IS MY PURPOSE?
+     */
     @FXML
     private Button Featured;
 
+    /**
+     * TODO: custom funni background
+     */
     @FXML
     private Label Greeting;
 
     @FXML
     private Label time;
+
+    /**
+     * TODO: WHERE. IS. MY. SERVICE.
+     */
+    @FXML
+    private Label NumOfLendings;
 
     @FXML
     private Button Random;
@@ -63,9 +75,6 @@ public class MenuController implements ViewController {
 
     @FXML
     private TableColumn<Member, String> MemberName;
-
-    @FXML
-    private TableColumn<Member, Integer> BooksIssued;
 
     @FXML
     private TableView<Document> LastestDocuments;
@@ -85,6 +94,9 @@ public class MenuController implements ViewController {
     @FXML
     private TableColumn<Document, String> Description;
 
+    /**
+     * TODO: WHERE IS MY SERVICE
+     */
     @FXML
     private TableView<LendingDetail> LendingList;
 

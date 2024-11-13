@@ -29,7 +29,7 @@
          <center>
             <AnchorPane prefHeight="720.0" prefWidth="1066.0" BorderPane.alignment="CENTER">
                <children>
-                  <HBox layoutX="86.0" layoutY="510.0" prefHeight="184.0" prefWidth="452.0">
+                  <HBox layoutX="86.0" layoutY="495.0" prefHeight="184.0" prefWidth="452.0">
                      <children>
                         <Button fx:id="Featured" mnemonicParsing="false" prefHeight="183.0" prefWidth="218.0" text="Featured 1">
                            <HBox.margin>
@@ -45,31 +45,34 @@
                   </HBox>
                   <VBox layoutX="593.0" layoutY="32.0" prefHeight="162.0" prefWidth="262.0">
                      <children>
-                        <Label prefHeight="98.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books" />
+                        <Label fx:id="NumOfLendings" prefHeight="92.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin></Label>
+                        <Button fx:id="Random" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="89.0" prefWidth="262.0" text="Random" />
                      </children>
                   </VBox>
-                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="222.0" prefWidth="446.0" styleClass="pane">
+                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="204.0" prefWidth="446.0" styleClass="pane">
                      <children>
                         <Label prefHeight="38.0" prefWidth="454.0" text="User list">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <TableView fx:id="MemberList" prefHeight="185.0" prefWidth="446.0">
+                        <TableView fx:id="MemberList" prefHeight="177.0" prefWidth="440.0">
                           <columns>
                             <TableColumn fx:id="MemberID" prefWidth="75.0" text="Member ID" />
                             <TableColumn fx:id="MemberName" prefWidth="124.00001525878906" text="Member Name" />
-                              <TableColumn fx:id="BooksIssued" prefWidth="96.00006103515625" text="Books Issued" />
                           </columns>
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="223.0" prefWidth="456.0" styleClass="pane">
+                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="206.0" prefWidth="463.0" styleClass="pane">
                      <children>
-                        <Label prefHeight="36.0" prefWidth="456.0" text="Lastest uploads">
+                        <Label prefHeight="36.0" prefWidth="456.0" text="Latest uploads">
                            <font>
                               <Font name="Arial" size="18.0" />
                            </font></Label>
-                        <TableView fx:id="LastestDocuments" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="LastestDocuments" prefHeight="178.0" prefWidth="457.0">
                           <columns>
                             <TableColumn fx:id="BookID" prefWidth="55.20001220703125" text="Book ID" />
                             <TableColumn fx:id="Title" prefWidth="112.79998779296875" text="Title" />
@@ -80,13 +83,13 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="200.0" prefWidth="456.0" styleClass="pane">
+                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="185.0" prefWidth="456.0" styleClass="pane">
                      <children>
-                        <Label prefHeight="35.0" prefWidth="529.0" text="Issued books">
+                        <Label prefHeight="35.0" prefWidth="529.0" text="Latest Issued books">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <TableView fx:id="LendingList" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="LendingList" prefHeight="176.0" prefWidth="450.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="User ID" />
                             <TableColumn prefWidth="228.0" text="Title" />
@@ -95,15 +98,20 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <Button fx:id="Random" layoutX="889.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="162.0" prefWidth="157.0" text="Random" />
-                  <Label fx:id="Greeting" layoutX="86.0" layoutY="32.0" prefHeight="118.0" prefWidth="396.0" styleClass="greeting-label" text="Greetings!" textFill="#1b1b1b" wrapText="true">
-                     <font>
-                        <Font name="Arial Bold" size="40.0" />
-                     </font></Label>
-                  <Label fx:id="time" layoutX="86.0" layoutY="150.0" prefHeight="54.0" prefWidth="384.0" text="Date">
-                     <font>
-                        <Font name="Arial" size="28.0" />
-                     </font></Label>
+                  <VBox layoutX="87.0" layoutY="22.0" prefHeight="200.0" prefWidth="442.0">
+                     <children>
+                        <Label fx:id="Greeting" prefHeight="150.0" prefWidth="452.0" styleClass="greeting-label" text="Greetings!" textFill="#1b1b1b" wrapText="true">
+                           <font>
+                              <Font name="Arial Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="time" prefHeight="87.0" prefWidth="454.0" text="Date">
+                           <font>
+                              <Font name="Arial" size="28.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </center>
