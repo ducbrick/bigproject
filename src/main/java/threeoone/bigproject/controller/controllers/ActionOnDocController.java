@@ -1,13 +1,16 @@
 package threeoone.bigproject.controller.controllers;
 
 import javafx.collections.FXCollections;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.DocOverviewController;
 import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
+import threeoone.bigproject.controller.viewcontrollers.MenuController;
 import threeoone.bigproject.controller.viewcontrollers.EditDocumentController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
@@ -27,6 +30,7 @@ public class ActionOnDocController {
   private final DocumentDetailController documentDetailController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
+  private final MenuController menuController;
   private final EditDocumentController editDocumentController;
 
   /**
@@ -40,11 +44,14 @@ public class ActionOnDocController {
   public ActionOnDocController(DocumentDetailController documentDetailController,
                                DocumentRetrievalService documentRetrievalService,
                                DocOverviewController docOverviewController,
+                               MenuController menuController,
                                EditDocumentController editDocumentController) {
     this.documentDetailController = documentDetailController;
     this.documentRetrievalService = documentRetrievalService;
     this.docOverviewController = docOverviewController;
+    this.menuController = menuController;
     this.editDocumentController = editDocumentController;
+
   }
 
   /**
@@ -57,11 +64,18 @@ public class ActionOnDocController {
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
           RequestSender<Document> updateDocActionRequestSender,
-          RequestSender<ActionOnDoc> actionOnDocRequestSender) {
+          RequestSender<ActionOnDoc> actionOnDocRequestSender,
+          RequestSender<Integer> getDocumentByIdRequestSender,
+          RequestSender<SwitchScene> getLastestDocumentsRequestSender,
+          RequestSender<Document> getRandomDocumentRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
     actionOnDocRequestSender.registerReceiver(this::makeActionOnDoc);
+    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
+    getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
+    getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
+
   }
 
   /**
@@ -109,5 +123,18 @@ public class ActionOnDocController {
 //      case DocActionType.BORROW -> System.out.println("borrow");
 //      case DocActionType.REMOVE -> System.out.println("remove");
     }
+  }
+
+
+  private void getDocumentById(Integer id) {
+    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+  }
+
+  private void randomDocument(Document d){
+    menuController.setRandomBook(documentRetrievalService.getRandomDocument());
+  }
+
+  private void getLastestDocByIdDesc(SwitchScene switchScene) {
+    menuController.setLastestDocuments(FXCollections.observableList(documentRetrievalService.getLatestDocuments()));
   }
 }

@@ -8,12 +8,19 @@ import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 
+import java.util.List;
+
 /**
  * Simple Spring Data JPA repository for {@link Document} entity.
  *
  * @author DUCBRICK
  */
 public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
+  /**
+   * keyword supported method. don't wanna change it.
+   * @return List of document
+   */
+    List<Document> findTop5ByOrderByIdDesc();
   /**
    * Retrieves a {@link Document} with a specific {@code id} and its {@code lendingDetails}.
    * This method only executes a single SQL query.
@@ -33,4 +40,11 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
    */
   @Query("SELECT d FROM Document d LEFT JOIN FETCH d.lendingDetails WHERE d.id = (:id)")
   Document findWithLendingDetails(@Param("id") int id);
+
+  /**
+   * get a random document
+   * @return
+   */
+  @Query("SELECT d FROM Document d WHERE d.copies > 0 ORDER BY RANDOM() LIMIT 1")
+  Document findRandom();
 }

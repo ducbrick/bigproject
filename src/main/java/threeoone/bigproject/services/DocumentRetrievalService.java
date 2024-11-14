@@ -42,4 +42,23 @@ public class DocumentRetrievalService {
     Optional <Document> queryResult = documentRepo.findById(id);
     return queryResult.orElse(null);
   }
+
+  /**
+   * gets a random document which has copies > 0 (borrow-able)
+   * if no document exists in database:
+   * @return a random Document
+   * TODO: handles when no document available
+   */
+  public Document getRandomDocument(){
+    return documentRepo.findRandom();
+  }
+
+  /**
+   * gets the last 5 document (sort by ID)
+   * if less than 5 document exist, it will return that number of documents
+   * @return a List of Document
+   */
+  public List<Document> getLatestDocuments() {
+    return documentRepo.findTop5ByOrderByIdDesc();
+  }
 }

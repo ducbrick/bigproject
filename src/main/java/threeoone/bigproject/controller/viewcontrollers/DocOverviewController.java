@@ -22,6 +22,7 @@ import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.util.Alerts;
 import threeoone.bigproject.util.MenuItemFactory;
@@ -135,7 +136,7 @@ public class DocOverviewController implements ViewController {
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
-    getListAllDocumentRequestSender.send(new User());
+    //getListAllDocumentRequestSender.send(new User());
   }
 
   /**

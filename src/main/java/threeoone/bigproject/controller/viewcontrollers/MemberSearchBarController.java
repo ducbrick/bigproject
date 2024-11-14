@@ -33,7 +33,7 @@ import java.util.List;
 @FxmlView("MemberSearchBar.fxml")
 @RequiredArgsConstructor
 @Getter
-public class MemberSearchBarController{
+public class MemberSearchBarController {
   private final QueryPublisher queryPublisher;
   private final RequestSender<MemberQuery> memberQueryRequestSender;
   private final List<ToggleButton> toggleButtons = new ArrayList<>();

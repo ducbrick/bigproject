@@ -49,6 +49,9 @@ public class MenuBarController {
     @FXML
     private Button Menu;
 
+    @FXML
+    private Button Search;
+
     /**
      * actual methods to change view
      */
@@ -72,11 +75,14 @@ public class MenuBarController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
     }
 
-
+    @FXML
+    private void toSearch() {
+        switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
+    }
     /** highlight one button according to the {@code SceneName}.<br>
      * For this method to actually works,
      * inject the MenuBarController into the view's controller and run the method there <br>
-     * I'm sorry it turned out like this.
+     * :(
      */
     public void highlight(SceneName sceneName) {
         Button button = switch (sceneName) {
@@ -84,6 +90,7 @@ public class MenuBarController {
             case YOUR_BOOKS -> YourBooks;
             case DOC_OVERVIEW -> DocOverview;
             case MAIN_MENU -> Menu;
+            case SEARCH -> Search;
             default -> new Button();
         };
         button.setId("active");

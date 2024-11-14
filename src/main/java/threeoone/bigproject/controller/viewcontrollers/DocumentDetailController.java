@@ -1,5 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -56,6 +58,10 @@ public class DocumentDetailController implements ViewController {
         return root;
     }
 
+    public void initialize() {
+
+    }
+
     /**
      * set the private {@code Document} ref to the Document sent by the {@code RequestSender}
      * @param document the Document sent
@@ -68,15 +74,20 @@ public class DocumentDetailController implements ViewController {
         switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
     }
 
-    /** set default text for labels. */
+    /**
+     * show the selected document
+     * TODO: show default "loading" when document info is not loaded
+     */
+    @Override
     public void show() {
-        bookName.setText("Name:" + document.getName());
-        bookDescription.setText("Description:" + document.getDescription());
-        uploader.setText("Uploader:" + document.getUploader());
-        Image coverImage;
-        coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));
-        cover.setImage(coverImage);
+
+        Platform.runLater(() -> {
+            bookName.setText("Name:" + document.getName());
+            bookDescription.setText("Description:" + document.getDescription());
+            uploader.setText("Uploader:" + document.getUploader());
+            Image coverImage;
+            coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));
+            cover.setImage(coverImage);
+        });
     }
-
-
 }

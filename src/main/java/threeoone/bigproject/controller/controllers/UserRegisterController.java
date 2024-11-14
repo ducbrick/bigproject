@@ -21,21 +21,21 @@ import threeoone.bigproject.services.UserRegisterService;
 public class UserRegisterController {
   private final UserRegisterService userRegisterService;
   private final RegisterController registerController;
-  private final RequestSender<SwitchScene> switchRequestSender;
+  private final RequestSender<SwitchScene> switchSceneRequestSender;
 
   /**
    * Constructor for logic resolver class for Register Page
    *
    * @param userRegisterService : interacting with register service
    * @param registerController : interacting with register view controller
-   * @param switchRequestSender : switch scene request sender
+   * @param switchSceneRequestSender : switch scene request sender
    */
   public UserRegisterController(UserRegisterService userRegisterService,
                                 RegisterController registerController,
-                                RequestSender<SwitchScene> switchRequestSender) {
+                                RequestSender<SwitchScene> switchSceneRequestSender) {
     this.userRegisterService = userRegisterService;
     this.registerController = registerController;
-    this.switchRequestSender = switchRequestSender;
+    this.switchSceneRequestSender = switchSceneRequestSender;
   }
 
   /**
@@ -61,7 +61,7 @@ public class UserRegisterController {
 
       registerController.showSuccessDialog();
 
-      switchRequestSender.send(new SwitchScene(SceneName.LOGIN));
+      switchSceneRequestSender.send(new SwitchScene(SceneName.LOGIN));
     } catch (UserAlreadyExistException | IllegalCredentialsException | AlreadyLoggedInException e) {
       registerController.setConfirmMessage(e.getMessage());
     }
