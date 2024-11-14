@@ -25,8 +25,6 @@ import threeoone.bigproject.services.DocumentRetrievalService;
 @Component
 @RequiredArgsConstructor
 public class ActionOnDocController {
-
-
   private final DocumentDetailController documentDetailController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
@@ -134,11 +132,6 @@ public class ActionOnDocController {
   }
 
 
-
-
-  private void getDocumentById(Integer id) {
-    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
-  }
 
   private void randomDocument(Document d){
     menuController.setRandomBook(documentRetrievalService.getRandomDocument());
