@@ -6,12 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.MemberQueryType;
-import threeoone.bigproject.controller.requestbodies.DocumentQuery;
 import threeoone.bigproject.controller.requestbodies.MemberQuery;
-import threeoone.bigproject.controller.viewcontrollers.AddNewDocController;
-import threeoone.bigproject.controller.viewcontrollers.DocQueryType;
-import threeoone.bigproject.controller.viewcontrollers.DocSearchBarController;
-import threeoone.bigproject.controller.viewcontrollers.MemberSearchBarController;
+import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.services.DocumentRetrievalService;
@@ -43,10 +39,16 @@ public class QueryController {
   @Autowired
   public void registerRequestSender(RequestSender<String> queryISBNGoogleRequestSender,
                                     RequestSender<MemberQuery> memberQueryRequestSender,
-                                    RequestSender<DocumentQuery> documentQueryRequestSender) {
+                                    RequestSender<String> queryDocByNameRequestSender,
+                                    RequestSender<String> queryDocByAuthorRequestSender,
+                                    RequestSender<String> queryDocByCategoryRequestSender,
+                                    RequestSender<Integer> queryDocByIdRequestSender) {
     queryISBNGoogleRequestSender.registerReceiver(this::getQueryAndFulFill);
     memberQueryRequestSender.registerReceiver(this::respondMemberQuery);
-    documentQueryRequestSender.registerReceiver(this::respondDocQuery);
+    queryDocByIdRequestSender.registerReceiver(this::queryDocByID);
+    queryDocByNameRequestSender.registerReceiver(this::queryDocByName);
+    queryDocByAuthorRequestSender.registerReceiver(this::queryDocByAuthor);
+    queryDocByCategoryRequestSender.registerReceiver(this::queryDocByCategory);
   }
 
   /**
@@ -87,22 +89,46 @@ public class QueryController {
     }
   }
 
+
   /**
-   * Responds to a user query by fetching document data from {@link #documentRetrievalService}
-   * based on the query type and setting the results in the {@link #docSearchBarController}.
+   * Queries a document by its ID and sets it in the menu controller.
    *
-   * @param documentQuery the {@link DocumentQuery} containing the
-   *                   {@link DocQueryType} and the document information {@link Document}
+   * @param id the ID of the document to be queried
    */
-  public void respondDocQuery(DocumentQuery documentQuery) {
-    switch (documentQuery.type()) {
-      case DocQueryType.ID -> {
-        Document result = documentRetrievalService.getDocumentById(documentQuery.document().getId());
-        if (result == null) {
-          break;
-        }
-        docSearchBarController.setResult(FXCollections.observableArrayList(result));
-      }
+  private void queryDocByID(Integer id) {
+    Document result = documentRetrievalService.getDocumentById(id);
+    if (result == null) {
+      return;
     }
+    docSearchBarController.setResult(FXCollections.observableArrayList(result));
   }
+
+  /**
+   * Queries a document by its name.
+   *
+   * @param name the name of the document to be queried
+   */
+  private void queryDocByName(String name) {
+    // TODO: Implement the logic to query document by name
+  }
+
+  /**
+   * Queries a document by its author.
+   *
+   * @param author the author of the document to be queried
+   */
+  private void queryDocByAuthor(String author) {
+    // TODO: Implement the logic to query document by author
+  }
+
+  /**
+   * Queries a document by its category.
+   *
+   * @param category the category of the document to be queried
+   */
+  private void queryDocByCategory(String category) {
+    // TODO: Implement the logic to query document by category
+  }
+
+
 }

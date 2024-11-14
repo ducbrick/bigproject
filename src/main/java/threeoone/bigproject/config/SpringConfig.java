@@ -15,6 +15,7 @@ import threeoone.bigproject.entities.User;
  */
 @Configuration
 public class SpringConfig {
+
   /**
    * Register a {@link RequestSender} of type {@code switchSceneRequest} into {@code Spring} context.
    * Send a request to switch to a different scene.
@@ -29,19 +30,9 @@ public class SpringConfig {
   }
 
 
-  /**
-   * Register a {@link RequestSender} of type {@code documentRequest} into {@code Spring} context.
-   * Send Document entities {@link Document} from view to another view which need Document.
-   * For example, {@link threeoone.bigproject.controller.viewcontrollers.DocumentDetailController}
-   * need to know what Document user click on in
-   * {@link threeoone.bigproject.controller.viewcontrollers.DocOverviewController} to show them.
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<Document> documentDetailRequestSender() {
-    return new RequestSender<>();
-  }
+  /*************************************************************************
+   *  All request sender for login and register
+   ***************************************************************************/
 
   /**
    * Register a {@link RequestSender} of type {@code loginRequest} into {@code Spring} context.
@@ -66,6 +57,21 @@ public class SpringConfig {
   }
 
   /**
+   * Send a request to save new lending
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<LendingDetail> saveNewLending() {
+    return new RequestSender<>();
+  }
+
+
+  /*************************************************************************
+   *  All request sender for document handler: edit, remove, borrow,... (not contain query)
+   ***************************************************************************/
+
+  /**
    * Send a request to update available action on a specific document
    *
    * @return the {@link RequestSender} to be registered
@@ -86,59 +92,6 @@ public class SpringConfig {
   }
 
   /**
-   * Send a addDocument Request which holds {@link Document} from 'AddNewDocument' page
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<Document> addDocumentRequestSender() {
-    return new RequestSender<>();
-  }
-
-  @Bean
-  RequestSender<Integer> getDocumentByIdRequestSender() { return new RequestSender<>(); }
-
-  /**
-   * Send ISBN to GoogleAPI service search by ISBN
-   *
-   * @return the {@link RequestSender}to be registered
-   */
-  @Bean
-  public RequestSender<String> queryISBNGoogleRequestSender() {
-    return new RequestSender<>();
-  }
-
-  /**
-   * Send a query request by document name to service
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<String> queryDocByNameRequestSender() {
-    return new RequestSender<>();
-  }
-
-  /**
-   * Send a query request by document author to service
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<String> queryDocByAuthorRequestSender() {
-    return new RequestSender<>();
-  }
-
-  /**
-   * Send a query request by document category to service
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<String> queryDocByCategoryRequestSender() {
-    return new RequestSender<>();
-  }
-
-  /**
    * Send a new change on given document request to service
    *
    * @return the {@link RequestSender} to be registered
@@ -148,45 +101,27 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
-
   /**
-   * Send a request to service to get all member
+   * Register a {@link RequestSender} of type {@code documentRequest} into {@code Spring} context.
+   * Send Document entities {@link Document} from view to another view which need Document.
+   * For example, {@link threeoone.bigproject.controller.viewcontrollers.DocumentDetailController}
+   * need to know what Document user click on in
+   * {@link threeoone.bigproject.controller.viewcontrollers.DocOverviewController} to show them.
    *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  public RequestSender<Member> getAllMembersRequestSender() {
-    return new RequestSender<>();
-  }
-
-
-  /**
-   * Send a request to make member query
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<MemberQuery> memberQueryRequestSender() {
+  public RequestSender<Document> documentDetailRequestSender() {
     return new RequestSender<>();
   }
 
   /**
-   * Send a request to make document query
+   * Send a addDocument Request which holds {@link Document} from 'AddNewDocument' page
    *
    * @return the {@link RequestSender} to be registered
    */
   @Bean
-  public RequestSender<DocumentQuery> documentQueryRequestSender() {
-    return new RequestSender<>();
-  }
-
-  /**
-   * Send a request to save new lending
-   *
-   * @return the {@link RequestSender} to be registered
-   */
-  @Bean
-  public RequestSender<LendingDetail> saveNewLending() {
+  public RequestSender<Document> addDocumentRequestSender() {
     return new RequestSender<>();
   }
 
@@ -217,6 +152,21 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<Document> borrowDocumentRequestSender() {
+    return new RequestSender<>();
+  }
+
+
+  /*************************************************************************
+   *  All request sender for member handler: edit, remove, add, ... (not contains query)
+   ***************************************************************************/
+
+  /**
+   * Send a request to service to get all member
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<Member> getAllMembersRequestSender() {
     return new RequestSender<>();
   }
 
@@ -259,14 +209,95 @@ public class SpringConfig {
   public RequestSender<Member> addMemberRequestSender() {
     return new RequestSender<>();
   }
-  
+
 
   @Bean
-  RequestSender<SwitchScene> getTopFiveMembersRequestSender() {return new RequestSender<>(); }
+  RequestSender<SwitchScene> getTopFiveMembersRequestSender() {
+    return new RequestSender<>();
+  }
 
   @Bean
-  RequestSender<SwitchScene> getLastestDocumentsRequestSender() {return new RequestSender<>(); }
+  RequestSender<SwitchScene> getLastestDocumentsRequestSender() {
+    return new RequestSender<>();
+  }
 
   @Bean
-  RequestSender<Document> getRandomDocumentRequestSender() {return new RequestSender<>(); }
+  RequestSender<Document> getRandomDocumentRequestSender() {
+    return new RequestSender<>();
+  }
+
+
+  /*************************************************************************
+   *  All request sender for document query: by isbn, by name, by id, by author, by category
+   ***************************************************************************/
+
+  /**
+   * Send ISBN to GoogleAPI service search by ISBN
+   *
+   * @return the {@link RequestSender}to be registered
+   */
+  @Bean
+  public RequestSender<String> queryISBNGoogleRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a query request by document name to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<String> queryDocByNameRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a query request by document author to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<String> queryDocByAuthorRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a query request by document category to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<String> queryDocByCategoryRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a query request by document id to service
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<Integer> queryDocByIdRequestSender() {
+    return new RequestSender<>();
+  }
+
+  @Bean
+  public RequestSender<Integer> getDocumentByIdRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /*************************************************************************
+   *  All request sender for member query: by id, by name
+   ***************************************************************************/
+
+  /**
+   * Send a request to make member query
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<MemberQuery> memberQueryRequestSender() {
+    return new RequestSender<>();
+  }
+
 }

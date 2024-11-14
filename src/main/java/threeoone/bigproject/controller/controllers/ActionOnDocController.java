@@ -60,6 +60,7 @@ public class ActionOnDocController {
     addDocumentRequestSender.registerReceiver(this::addDocument);
     getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
+    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
   }
 
   /**
@@ -141,5 +142,10 @@ public class ActionOnDocController {
 
   private void getLastestDocByIdDesc(SwitchScene switchScene) {
     menuController.setLastestDocuments(FXCollections.observableList(documentRetrievalService.getLatestDocuments()));
+  }
+
+
+  private void getDocumentById(Integer id) {
+    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
   }
 }

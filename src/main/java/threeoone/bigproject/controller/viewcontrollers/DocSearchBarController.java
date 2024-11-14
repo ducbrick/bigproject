@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.*;
 import threeoone.bigproject.controller.observers.DataType;
 import threeoone.bigproject.controller.observers.QueryPublisher;
-import threeoone.bigproject.controller.requestbodies.DocumentQuery;
 import threeoone.bigproject.entities.Document;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ import java.util.List;
 @Getter
 public class DocSearchBarController {
   private final QueryPublisher queryPublisher;
-  private final RequestSender<DocumentQuery> documentQueryRequestSender;
+  private final RequestSender<Integer> queryDocByIdRequestSender;
   private final List<ToggleButton> toggleButtons = new ArrayList<>();
   private final PauseTransition hideTimer = new PauseTransition();
 
@@ -112,9 +111,7 @@ public class DocSearchBarController {
       if (toggleButton.isSelected()) {
         switch (toggleButton.getText()) {
           case "ID" -> {
-            Document document = new Document();
-            document.setId(Integer.valueOf(search.getText()));
-            documentQueryRequestSender.send(new DocumentQuery(DocQueryType.ID, document));
+            queryDocByIdRequestSender.send(Integer.valueOf(search.getText()));
           }
         }
       }
