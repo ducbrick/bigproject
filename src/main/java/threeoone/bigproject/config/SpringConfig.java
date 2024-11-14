@@ -291,12 +291,22 @@ public class SpringConfig {
    ***************************************************************************/
 
   /**
-   * Send a request to make member query
+   * Creates and returns a bean for RequestSender that handles queries for member information by name.
    *
-   * @return the {@link RequestSender} to be registered
+   * @return a new instance of RequestSender for queries by member name.
    */
   @Bean
-  public RequestSender<MemberQuery> memberQueryRequestSender() {
+  public RequestSender<String> queryMemByNameRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates and returns a bean for RequestSender that handles queries for member information by ID.
+   *
+   * @return a new instance of RequestSender for queries by member ID.
+   */
+  @Bean
+  public RequestSender<Integer> queryMemByIdRequestSender() {
     return new RequestSender<>();
   }
 

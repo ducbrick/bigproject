@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.*;
 import threeoone.bigproject.controller.observers.DataType;
 import threeoone.bigproject.controller.observers.QueryPublisher;
-import threeoone.bigproject.controller.requestbodies.MemberQuery;
 import threeoone.bigproject.entities.Member;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,8 @@ import java.util.List;
 @Getter
 public class MemberSearchBarController {
   private final QueryPublisher queryPublisher;
-  private final RequestSender<MemberQuery> memberQueryRequestSender;
+  private final RequestSender<String> queryMemByNameRequestSender;
+  private final RequestSender<Integer> queryMemByIdRequestSender;
   private final List<ToggleButton> toggleButtons = new ArrayList<>();
   private final PauseTransition hideTimer = new PauseTransition();
 
@@ -110,12 +110,10 @@ public class MemberSearchBarController {
       if (toggleButton.isSelected()) {
         switch (toggleButton.getText()) {
           case "UserID" -> {
-            Member member = new Member();
-            member.setId(Integer.valueOf(search.getText()));
-            memberQueryRequestSender.send(new MemberQuery(MemberQueryType.USER_ID, member));
+            queryMemByIdRequestSender.send(Integer.valueOf(search.getText()));
           }
           case "UserName" -> {
-            memberQueryRequestSender.send(new MemberQuery(MemberQueryType.USER_NAME, new Member(search.getText())));
+            queryMemByNameRequestSender.send(search.getText());
           }
         }
       }
