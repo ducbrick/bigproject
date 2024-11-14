@@ -26,8 +26,6 @@ import threeoone.bigproject.view.ViewSwitcher;
 public class UserRegisterController {
   private final UserRegisterService userRegisterService;
   private final RegisterController registerController;
-  private final ViewSwitcher viewSwitcher;
-  private final LoginController loginController;
   private final RequestSender<ViewController> switchToLogin;
   /**
    * Register receiver for registerRequestSender

@@ -25,7 +25,10 @@ import threeoone.bigproject.util.MenuItemFactory;
 @FxmlView("MemberList.fxml")
 @RequiredArgsConstructor
 public class MemberListController implements ViewController {
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToEditMem;
+  private final RequestSender<ViewController> switchToAddMem;
+  private final RequestSender<ViewController> switchToMainMenu;
+  private final RequestSender<ViewController> switchToSearch;
   private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<Member> editMemberRequestSender;
   private final RequestSender<Member> removeMemberRequestSender;
@@ -109,7 +112,7 @@ public class MemberListController implements ViewController {
             "Are you sure you want to edit this member?",
             unused -> {
               editMemberRequestSender.send(chosenMember);
-              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_MEM));
+              switchToEditMem.send(this);
             });
   }
 
@@ -120,7 +123,7 @@ public class MemberListController implements ViewController {
    */
   @FXML
   private void pressAdd(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_MEM));
+    switchToAddMem.send(this);
   }
 
   /**
@@ -130,7 +133,7 @@ public class MemberListController implements ViewController {
    */
   @FXML
   private void pressReturn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+    switchToMainMenu.send(null);
   }
 
   /**
@@ -140,7 +143,7 @@ public class MemberListController implements ViewController {
    */
   @FXML
   private void pressSearch(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
+    switchToSearch.send(null);
   }
 
 

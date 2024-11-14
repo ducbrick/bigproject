@@ -9,12 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
-import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.LoginController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
@@ -30,9 +25,6 @@ class UserLoginSwitchViewControllerTest extends ApplicationTest {
 
   @InjectMocks
   private UserLoginController userLoginController;
-
-  @Mock
-  private RequestSender<SwitchScene> switchSceneRequestSender;
 
   @Mock
   LoginService loginService;

@@ -2,16 +2,17 @@ package threeoone.bigproject.controller.controllers;
 
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.LoginController;
+import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.services.LoginService;
-
-import static threeoone.bigproject.controller.SceneName.MAIN_MENU;
 
 /**
  * Handles the interaction logic for the Login view.
@@ -23,25 +24,23 @@ import static threeoone.bigproject.controller.SceneName.MAIN_MENU;
  * @author HUY1902
  */
 @Component
+@RequiredArgsConstructor
 public class UserLoginController {
   private final LoginController loginController;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
   private LoginService loginService;
+  private final  RequestSender<ViewController> switchToMainMenu;
 
+  /**
+   * -- GETTER --
+   *  Get number of failed attempts. Its main purpose is for testing
+   *
+   * @return number of failed attempt
+   */
+  @Getter
   private int failedAttempts = 0;
   private boolean isPauseOnMaxAttempts = false;
   private static final int MAX_ATTEMPTS = 3;
   private static final int LOCKOUT_DURATION = 5; //second
-
-  /**
-   * Constructor the logic resolving controller for LoginPage
-   * @param loginController           the controller for login page
-   * @param switchSceneRequestSender  the switch scene request sender
-   */
-  public UserLoginController(LoginController loginController, RequestSender<SwitchScene> switchSceneRequestSender) {
-    this.loginController = loginController;
-    this.switchSceneRequestSender = switchSceneRequestSender;
-  }
 
   /**
    * Register loginService for controller
@@ -106,7 +105,7 @@ public class UserLoginController {
     if (validateInformation(user)) {
       try {
         if (loginService.login(user)) {
-          switchSceneRequestSender.send(new SwitchScene(MAIN_MENU));
+          switchToMainMenu.send(null);
           return;
         }
         else
@@ -127,12 +126,4 @@ public class UserLoginController {
     }
   }
 
-  /**
-   * Get number of failed attempts. Its main purpose is for testing
-   *
-   * @return number of failed attempt
-   */
-  public int getFailedAttempts() {
-    return failedAttempts;
-  }
 }

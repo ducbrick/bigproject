@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -31,9 +32,10 @@ import threeoone.bigproject.entities.User;
  */
 @Component
 @FxmlView("Login.fxml")
+@RequiredArgsConstructor
 public class LoginController implements ViewController {
   private final RequestSender<User> loginRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToSignup;
   @FXML
   private Parent root;
 
@@ -61,16 +63,6 @@ public class LoginController implements ViewController {
     passwordField.setOnAction(event -> loginButton.fire());
   }
 
-  /**
-   * Constructs a LoginController with the specified RequestSender.
-   *
-   * @param loginRequestSender the RequestSender to handle login requests
-   * @param switchSceneRequestSender the RequestSender to handle switch scene requests
-   */
-  public LoginController(RequestSender<User> loginRequestSender, RequestSender<SwitchScene> switchSceneRequestSender) {
-    this.loginRequestSender = loginRequestSender;
-    this.switchSceneRequestSender = switchSceneRequestSender;
-  }
 
   /**
    * Handles the login button press action. All logic for login page now is handled by
@@ -98,7 +90,7 @@ public class LoginController implements ViewController {
    */
   @FXML
   private void pressSignUp(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.SIGNUP));
+    switchToSignup.send(null);
   }
 
   /**
