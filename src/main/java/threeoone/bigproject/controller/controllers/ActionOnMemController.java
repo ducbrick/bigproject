@@ -40,7 +40,7 @@ public class ActionOnMemController {
                                         RequestSender<Member> editMemberRequestSender,
                                          RequestSender<Member> commitChangeMemberRequestSender,
                                         RequestSender<Member> removeMemberRequestSender,
-                                        RequestSender<Member> addMemberRequestSender
+                                        RequestSender<Member> addMemberRequestSender,
                                         RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
     editMemberRequestSender.registerReceiver(this::editMember);
