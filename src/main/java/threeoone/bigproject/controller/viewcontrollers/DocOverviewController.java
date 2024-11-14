@@ -36,7 +36,12 @@ import threeoone.bigproject.util.MenuItemFactory;
 public class DocOverviewController implements ViewController {
   private final RequestSender<User> getListAllDocumentRequestSender;
   private final RequestSender<Document> updateDocActionRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToSearch;
+  private final RequestSender<ViewController> switchToEditDoc;
+  private final RequestSender<ViewController> switchToDocDetail;
+  private final RequestSender<ViewController> switchToMainMenu;
+  private final RequestSender<ViewController> switchToAddNewDoc;
+
   private final RequestSender<Document> documentDetailRequestSender;
   private final RequestSender<Document> editDocumentRequestSender;
   private final RequestSender<Document> removeDocumentRequestSender;
@@ -163,7 +168,7 @@ public class DocOverviewController implements ViewController {
             "Are you sure you want to edit this document?",
             unused -> {
               editDocumentRequestSender.send(chosenDoc);
-              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_DOC));
+              switchToEditDoc.send(null);
             });
   }
 
@@ -172,7 +177,7 @@ public class DocOverviewController implements ViewController {
    */
   @FXML
   private void pressSearch() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
+    switchToSearch.send(this);
   }
 
 
@@ -193,7 +198,7 @@ public class DocOverviewController implements ViewController {
    */
   private void pressDocToGoToDetail(Document document) {
     documentDetailRequestSender.send(document);
-    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+    switchToDocDetail.send(this);
   }
 
   /**
@@ -202,7 +207,7 @@ public class DocOverviewController implements ViewController {
    */
   @FXML
   private void pressBack() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+    switchToMainMenu.send(this);
   }
 
   /**
@@ -212,7 +217,7 @@ public class DocOverviewController implements ViewController {
    */
   @FXML
   private void pressAddDoc(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_NEW_DOC));
+    switchToAddNewDoc.send(this);
   }
 
   /**

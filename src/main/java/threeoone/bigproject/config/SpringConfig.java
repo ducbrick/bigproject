@@ -4,9 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.*;
+import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
+
+import javax.swing.text.View;
 
 /**
  * {@code Spring} configuration class.
@@ -15,20 +18,6 @@ import threeoone.bigproject.entities.User;
  */
 @Configuration
 public class SpringConfig {
-
-  /**
-   * Register a {@link RequestSender} of type {@code switchSceneRequest} into {@code Spring} context.
-   * Send a request to switch to a different scene.
-   * The request is sent with the name of the scene to switch to.
-   * Request body is {@link SwitchScene} which hold name of scene{@link threeoone.bigproject.controller.SceneName}
-   *
-   * @return the {@link RequestSender} to be registered
-   **/
-  @Bean
-  public RequestSender<SwitchScene> switchSceneRequestSender() {
-    return new RequestSender<>();
-  }
-
 
   /*************************************************************************
    *  All request sender for login and register
@@ -307,6 +296,130 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<Integer> queryMemByIdRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /*************************************************************************
+   *  All request sender for switch scene
+   ***************************************************************************/
+
+  /**
+   * Creates a bean for RequestSender that switches to the document overview scene.
+   *
+   * @return an instance of RequestSender for switching to the document overview scene.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToDocOverview() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the main menu scene.
+   *
+   * @return an instance of RequestSender for switching to the main menu scene.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToMainMenu() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the document detail scene.
+   *
+   * @return an instance of RequestSender for switching to the document detail scene.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToDocDetail() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the login page.
+   *
+   * @return an instance of RequestSender for switching to the login page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToLogin() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the signup page.
+   *
+   * @return an instance of RequestSender for switching to the signup page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToSignup() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the add new document page.
+   *
+   * @return an instance of RequestSender for switching to the add new document page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToAddNewDoc() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the search page.
+   *
+   * @return an instance of RequestSender for switching to the search page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToSearch() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the edit document page.
+   *
+   * @return an instance of RequestSender for switching to the edit document page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToEditDoc() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the member list page.
+   *
+   * @return an instance of RequestSender for switching to the member list page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToMemList() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the edit member information page.
+   *
+   * @return an instance of RequestSender for switching to the edit member information page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToEditMem() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to the add new member page.
+   *
+   * @return an instance of RequestSender for switching to the add new member page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToAddMem() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Creates a bean for RequestSender that switches to your book page.
+   *
+   * @return an instance of RequestSender for switching to your book page.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToYourBooks() {
     return new RequestSender<>();
   }
 

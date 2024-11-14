@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserRegisterControllerTest {
+class UserRegisterSwitchViewControllerTest {
   @Mock
   private RegisterController registerController;
   @Mock

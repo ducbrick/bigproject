@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -31,9 +32,10 @@ import java.time.ZoneId;
  * @author HUY1902
  */
 @Component
+@RequiredArgsConstructor
 @FxmlView("AddNewDoc.fxml")
 public class AddNewDocController implements ViewController {
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<Document> addDocumentRequestSender;
 
   private final MenuBarController menuBarController;
@@ -68,22 +70,6 @@ public class AddNewDocController implements ViewController {
 
   private File lastDirectory = null;
   private File selectedFile = null;
-
-  /**
-   * Constructs a AddNewDocController with the specified RequestSender.
-   *
-   * @param switchSceneRequestSender the RequestSender to switch scene requests
-   * @param addDocumentRequestSender the RequestSender to add document
-   */
-  public AddNewDocController(RequestSender<SwitchScene> switchSceneRequestSender,
-                             RequestSender<Document> addDocumentRequestSender,
-                             MenuBarController menuBarController,
-                             RequestSender<String> queryISBNGoogleRequestSender) {
-    this.switchSceneRequestSender = switchSceneRequestSender;
-    this.addDocumentRequestSender = addDocumentRequestSender;
-    this.menuBarController = menuBarController;
-    this.queryISBNGoogleRequestSender = queryISBNGoogleRequestSender;
-  }
 
   /**
    * Initializes the controller class. This method is automatically called
@@ -132,7 +118,7 @@ public class AddNewDocController implements ViewController {
       FileOperation.copyFile(selectedFile.getPath(), "", document.getId().toString());
       Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
     }
-    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
+    switchToDocOverview.send(null);
   }
 
   @FXML

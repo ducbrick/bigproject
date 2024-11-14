@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -26,9 +27,10 @@ import threeoone.bigproject.entities.Document;
  */
 @Component
 @FxmlView("EditDocument.fxml")
+@RequiredArgsConstructor
 public class EditDocumentController implements ViewController {
   private final RequestSender<Document> commitChangeDocRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final  RequestSender<ViewController> switchToDocOverview;
   @FXML
   private Parent root;
 
@@ -54,17 +56,6 @@ public class EditDocumentController implements ViewController {
   private Button submitButton;
 
   private Document document;
-
-  /**
-   * Autowired constructor for Edit Document page with necessary dependencies
-   *
-   * @param commitChangeDocRequestSender send new changes to service
-   */
-  public EditDocumentController(RequestSender<Document> commitChangeDocRequestSender,
-                                RequestSender<SwitchScene> switchSceneRequestSender) {
-    this.commitChangeDocRequestSender = commitChangeDocRequestSender;
-    this.switchSceneRequestSender = switchSceneRequestSender;
-  }
 
   /**
    * Set default information about the document for text field
@@ -111,7 +102,7 @@ public class EditDocumentController implements ViewController {
    */
   @FXML
   private void pressReturn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
+    switchToDocOverview.send(null);
   }
 
   /**
@@ -129,11 +120,12 @@ public class EditDocumentController implements ViewController {
    *
    * @param event event trigger button
    */
+  // TODO: maybe can eliminate commitChange by this way
   @FXML
   private void pressSubmit(ActionEvent event) {
     commitNewInfo();
     commitChangeDocRequestSender.send(document);
-    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_OVERVIEW));
+    switchToDocOverview.send(this);
   }
 
   public void setDocument(@NonNull Document document) {

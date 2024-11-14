@@ -32,7 +32,7 @@ import threeoone.bigproject.view.ViewSwitcher;
 public class AddNewMemController implements ViewController {
 
   private final RequestSender<Member> addMemberRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToMemList;
   private final ViewSwitcher viewSwitcher;
 
   @FXML
@@ -70,7 +70,7 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void pressReturn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    switchToMemList.send(null);
   }
 
   @FXML
@@ -121,7 +121,7 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void pressSubmit() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    switchToMemList.send(null);
   }
 
   /**

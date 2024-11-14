@@ -19,7 +19,7 @@ import threeoone.bigproject.view.ViewSwitcher;
  */
 @Component
 @RequiredArgsConstructor
-public class Controller {
+public class SwitchViewController {
   private final MenuController menuController;
   private final ViewSwitcher viewSwitcher;
   private final DocOverviewController docOverviewController;

@@ -26,7 +26,7 @@ import threeoone.bigproject.util.Alerts;
 @Setter
 public class EditMemController implements ViewController {
 
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final  RequestSender<ViewController> switchToMemList;
   private final RequestSender<Member>  commitChangeMemberRequestSender;
   private Member chosenMember;
 
@@ -55,7 +55,7 @@ public class EditMemController implements ViewController {
    */
   @FXML
   private void pressReturn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    switchToMemList.send(null);
   }
 
   /**
@@ -73,7 +73,7 @@ public class EditMemController implements ViewController {
       chosenMember.setName(name.getText());
     }
     commitChangeMemberRequestSender.send(chosenMember);
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    switchToMemList.send(this);
   }
 
   /**
@@ -93,7 +93,7 @@ public class EditMemController implements ViewController {
   @Override
   public void show() {
     if (chosenMember == null) {
-      switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+      switchToMemList.send(null);
       return;
     }
     id.setText(String.valueOf(chosenMember.getId()));
