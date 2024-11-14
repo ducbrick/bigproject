@@ -1,0 +1,9 @@
+.login-pane {
+    -fx-background-color: #FFFAED;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+.login-text {
+    -fx-font-style: "Lucida Grande",sans-serif;
+    -fx-background-color: #ffffff;
+}
