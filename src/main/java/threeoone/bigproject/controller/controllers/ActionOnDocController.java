@@ -58,6 +58,8 @@ public class ActionOnDocController {
     removeDocumentRequestSender.registerReceiver(this::removeDocument);
     borrowDocumentRequestSender.registerReceiver(this::borrowDocument);
     addDocumentRequestSender.registerReceiver(this::addDocument);
+    getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
+    getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
   }
 
   /**
