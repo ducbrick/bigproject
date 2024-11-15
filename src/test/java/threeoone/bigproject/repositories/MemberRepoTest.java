@@ -27,7 +27,11 @@ class MemberRepoTest {
   @Test
   @DisplayName("Test build & run")
   public void test() {
-    Member m1 = new Member("name");
+    Member m1 = new Member();
+    m1.setName("name");
+    m1.setPhoneNumber("1234567890");
+    m1.setAddress("an address");
+    m1.setEmail("abc@xyz.com");
     m1 = memberRepo.save(m1);
 
     Member m2 = memberRepo.findById(m1.getId()).get();
@@ -41,10 +45,29 @@ class MemberRepoTest {
   @Test
   @DisplayName("Find no members whose names contain a specific string")
   void noMemberWhoseNameContainString() {
-    Member m1 = new Member("Bob");
-    Member m2 = new Member("John");
-    Member m3 = new Member("Ducbrick");
-    Member m4 = new Member("Succ");
+    Member m1 = new Member();
+    m1.setName("Bob");
+    m1.setPhoneNumber("1234567890");
+    m1.setAddress("an address");
+    m1.setEmail("abc@xyz.com");
+
+    Member m2 = new Member();
+    m2.setName("John");
+    m2.setPhoneNumber("1234567890");
+    m2.setAddress("an address");
+    m2.setEmail("abc@xyz.com");
+
+    Member m3 = new Member();
+    m3.setName("Ducbrick");
+    m3.setPhoneNumber("1234567890");
+    m3.setAddress("an address");
+    m3.setEmail("abc@xyz.com");
+
+    Member m4 = new Member();
+    m4.setName("Succ");
+    m4.setPhoneNumber("1234567890");
+    m4.setAddress("an address");
+    m4.setEmail("abc@xyz.com");
 
     m1 = memberRepo.save(m1);
     m2 = memberRepo.save(m2);
@@ -57,10 +80,29 @@ class MemberRepoTest {
   @Test
   @DisplayName("Find members whose names contain a specific string")
   void membersWhoseNamesContainString() {
-    Member m1 = new Member("sjdffdBobjsfsdjkh");
-    Member m2 = new Member("fdgqwcbObqfdc");
-    Member m3 = new Member("FCVfdgcFGCRZuccFCrdf");
-    Member m4 = new Member("KJMIjlkmIOjkmsUCCIJKLM");
+    Member m1 = new Member();
+    m1.setName("sjdffdBobjsfsdjkh");
+    m1.setPhoneNumber("1234567890");
+    m1.setAddress("an address");
+    m1.setEmail("abc@xyz.com");
+
+    Member m2 = new Member();
+    m2.setName("fdgqwcbObqfdc");
+    m2.setPhoneNumber("1234567890");
+    m2.setAddress("an address");
+    m2.setEmail("abc@xyz.com");
+
+    Member m3 = new Member();
+    m3.setName("FCVfdgcFGCRZuccFCrdf");
+    m3.setPhoneNumber("1234567890");
+    m3.setAddress("an address");
+    m3.setEmail("abc@xyz.com");
+
+    Member m4 = new Member();
+    m4.setName("KJMIjlkmIOjkmsUCCIJKLM");
+    m4.setPhoneNumber("1234567890");
+    m4.setAddress("an address");
+    m4.setEmail("abc@xyz.com");
 
     m1 = memberRepo.save(m1);
     m2 = memberRepo.save(m2);
@@ -83,7 +125,11 @@ class MemberRepoTest {
   @Test
   @DisplayName("Retrieve a Member with no lending Documents")
   public void memberWithNoLending() {
-    Member member = new Member("name");
+    Member member = new Member();
+    member.setName("name");
+    member.setPhoneNumber("1234567890");
+    member.setAddress("an address");
+    member.setEmail("abc@xyz.com");
     member = memberRepo.save(member);
 
     member = memberRepo.findWithLendingDetails(member.getId());
@@ -95,7 +141,11 @@ class MemberRepoTest {
   @Test
   @DisplayName("Retrieve a Member and its lending Documents")
   public void memberWithLending() {
-    Member member = new Member("name");
+    Member member = new Member();
+    member.setName("name");
+    member.setPhoneNumber("1234567890");
+    member.setAddress("an address");
+    member.setEmail("abc@xyz.com");
 
     User user = new User("name", "password");
 
