@@ -34,7 +34,7 @@ import threeoone.bigproject.util.Alerts;
 public class LendingDetailController implements ViewController, Subscriber {
   private final QueryPublisher queryPublisher;
   private final RequestSender<LendingDetail> saveNewLending;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToMainMenu;
   @FXML
   private Parent root;
 
@@ -132,7 +132,7 @@ public class LendingDetailController implements ViewController, Subscriber {
   private void pressReturn(ActionEvent event) {
     queryPublisher.unsubscribe(DataType.MEMBER, this);
     queryPublisher.unsubscribe(DataType.DOCUMENT, this);
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+    switchToMainMenu.send(null);
   }
 
   /**
@@ -146,7 +146,7 @@ public class LendingDetailController implements ViewController, Subscriber {
   private void pressSubmit(ActionEvent event) {
     if (member != null && document != null) {
       saveNewLending.send(new LendingDetail(member, document));
-      switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+      switchToMainMenu.send(this);
       return;
     }
     Alerts.showAlertWarning("Error!!!", "Choose both member and document");

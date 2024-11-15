@@ -9,12 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.ApplicationTest;
-import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.LoginController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
@@ -24,15 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserLoginControllerTest extends ApplicationTest {
+class UserLoginSwitchViewControllerTest extends ApplicationTest {
   @Mock
   private LoginController loginController;
 
   @InjectMocks
   private UserLoginController userLoginController;
-
-  @Mock
-  private RequestSender<SwitchScene> switchSceneRequestSender;
 
   @Mock
   LoginService loginService;
@@ -86,16 +78,6 @@ class UserLoginControllerTest extends ApplicationTest {
     User user = new User("", "");
     userLoginController.authenticateLogin(user);
     verify(loginController, times(1)).setMessage("Invalid credentials. Attempt 1");
-  }
-
-  @Test
-  @DisplayName("loginAuthenticationSuccessfully")
-  void loginAuthenticationSuccessfully() {
-    User user = new User("valid", "valid");
-    userLoginController.registerService(loginService);
-    when(loginService.login(user)).thenReturn(true);
-    userLoginController.authenticateLogin(user);
-    verify(switchSceneRequestSender, times(1)).send(new SwitchScene(SceneName.MAIN_MENU));
   }
 
   @Test

@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -23,95 +24,88 @@ import threeoone.bigproject.entities.Document;
  */
 @Component
 @FxmlView("YourBooks.fxml")
+@RequiredArgsConstructor
 public class YourBooksController implements ViewController {
-    /**
-     * {@code RequestSender} to send {@code Document} to {@code DocumentDetail}
-     */
-    private final RequestSender<Document> documentDetailRequestSender;
+  /**
+   * {@code RequestSender} to send {@code Document} to {@code DocumentDetail}
+   */
+  private final RequestSender<Document> documentDetailRequestSender;
 
-    private final MenuBarController menuBarController;
-    private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final MenuBarController menuBarController;
+  private final RequestSender<ViewController> switchToDocDetail;
 
-    public YourBooksController(RequestSender<Document> documentDetailRequestSender,
-                               RequestSender<SwitchScene> switchSceneRequestSender,
-                               MenuBarController menuBarController) {
-        this.documentDetailRequestSender = documentDetailRequestSender;
-        this.menuBarController = menuBarController;
-        this.switchSceneRequestSender = switchSceneRequestSender;
-    }
+  @FXML
+  private Parent root;
 
-    @FXML
-    private Parent root;
+  /**
+   * A TableView to display documents
+   */
+  @FXML
+  private TableView<Document> books;
 
-    /**
-     * A TableView to display documents
-     */
-    @FXML
-    private TableView<Document> books;
+  @FXML
+  private TableColumn<Document, String> ID;
 
-    @FXML
-    private TableColumn<Document, String> ID;
+  @FXML
+  private TableColumn<Document, String> Name;
 
-    @FXML
-    private TableColumn<Document, String> Name;
+  @FXML
+  private TableColumn<Document, String> Desc;
 
-    @FXML
-    private TableColumn<Document, String> Desc;
+  @FXML
+  private TableColumn<Document, String> Author;
 
-    @FXML
-    private TableColumn<Document, String> Author;
+  @FXML
+  private TableColumn<Document, String> Uploader;
 
-    @FXML
-    private TableColumn<Document, String> Uploader;
+  @FXML
+  private TableColumn<Document, String> BorrowDate;
 
-    @FXML
-    private TableColumn<Document, String> BorrowDate;
+  @FXML
+  private TableColumn<Document, String> ReturnDate;
 
-    @FXML
-    private TableColumn<Document, String> ReturnDate;
+  /**
+   * Sets up a double-click listener for every row
+   */
+  public void initialize() {
+    // Set up the columns with entity properties
+    ID.setCellValueFactory(new PropertyValueFactory<>("id"));
+    Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+    Desc.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-    /**
-     * Sets up a double-click listener for every row
-     *
-     */
-    public void initialize() {
-        // Set up the columns with entity properties
-        ID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        Desc.setCellValueFactory(new PropertyValueFactory<>("description"));
+    books.setRowFactory(tableview -> {
+      TableRow<Document> row = new TableRow<>();
 
-        books.setRowFactory(tableview -> {
-            TableRow<Document> row = new TableRow<>();
+      row.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2 && !row.isEmpty()) {
+          Document document = row.getItem();
+          goToDocDetail(document);
+        }
+      });
+      return row;
+    });
+    menuBarController.highlight(SceneName.YOUR_BOOKS);
 
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
-                    Document document = row.getItem();
-                    goToDocDetail(document);
-                }
-            });
-            return row;
-        });
-        menuBarController.highlight(SceneName.YOUR_BOOKS);
-
-    }
+  }
 
 
-    /**
-     * Sends a document request when a document is selected (currently by double-clicking on its row)
-     * @param document the document selected
-     */
-    private void goToDocDetail(Document document) {
-        documentDetailRequestSender.send(document);
-        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
-    }
+  /**
+   * Sends a document request when a document is selected (currently by double-clicking on its row)
+   *
+   * @param document the document selected
+   */
+  private void goToDocDetail(Document document) {
+    documentDetailRequestSender.send(document);
+    switchToDocDetail.send(null);
+  }
 
-    @Override
-    public Parent getParent() {
-        return root;
-    }
+  @Override
+  public Parent getParent() {
+    return root;
+  }
 
-    @Override
-    public void show(){
-    }
+  @Override
+  public void show() {
+  }
 
 }

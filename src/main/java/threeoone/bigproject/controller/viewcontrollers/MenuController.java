@@ -36,8 +36,9 @@ import java.time.format.DateTimeFormatter;
  */
 @Component
 @FxmlView("Menu.fxml")
+@RequiredArgsConstructor
 public class MenuController implements ViewController {
-    private final RequestSender<SwitchScene> switchSceneRequestSender;
+    private final RequestSender<ViewController> switchToDocDetail;
     private final RequestSender<Document> getRandomDocumentRequestSender;
     private final RequestSender<Document> documentDetailRequestSender;
     private final RequestSender<SwitchScene> getTopFiveMembersRequestSender;
@@ -113,20 +114,6 @@ public class MenuController implements ViewController {
         return root;
     }
 
-    public MenuController(RequestSender<SwitchScene> switchSceneRequestSender,
-                          RequestSender<Document> getRandomDocumentRequestSender,
-                          RequestSender<Document> documentDetailRequestSender,
-                          RequestSender<SwitchScene> getTopFiveMembersRequestSender,
-                          RequestSender<SwitchScene> getLastestDocumentsRequestSender,
-                          MenuBarController menuBarController) {
-        this.switchSceneRequestSender = switchSceneRequestSender;
-        this.getRandomDocumentRequestSender = getRandomDocumentRequestSender;
-        this.documentDetailRequestSender = documentDetailRequestSender;
-        this.getTopFiveMembersRequestSender = getTopFiveMembersRequestSender;
-        this.getLastestDocumentsRequestSender = getLastestDocumentsRequestSender;
-        this.menuBarController = menuBarController;
-    }
-
     /**
      * initializes the table and sets up a Timeline for the clock
      */
@@ -190,7 +177,7 @@ public class MenuController implements ViewController {
     public void randomBook() {
         getRandomDocumentRequestSender.send(null);
         documentDetailRequestSender.send(randomDocument);
-        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+        switchToDocDetail.send(this);
     }
 
     /**

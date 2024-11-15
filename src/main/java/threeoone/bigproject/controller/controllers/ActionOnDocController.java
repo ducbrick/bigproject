@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.DocOverviewController;
 import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
@@ -14,6 +12,7 @@ import threeoone.bigproject.controller.viewcontrollers.MenuController;
 import threeoone.bigproject.controller.viewcontrollers.EditDocumentController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+import threeoone.bigproject.services.DocumentPersistenceService;
 import threeoone.bigproject.services.DocumentRetrievalService;
 
 /**
@@ -24,35 +23,16 @@ import threeoone.bigproject.services.DocumentRetrievalService;
  * @author HUY1902
  */
 @Component
+@RequiredArgsConstructor
 public class ActionOnDocController {
-
-
   private final DocumentDetailController documentDetailController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
   private final MenuController menuController;
   private final EditDocumentController editDocumentController;
+  private final DocumentPersistenceService documentPersistenceService;
 
-  /**
-   * Constructor for document logic handler
-   * Construct with needed service and view controller
-   *
-   * @param documentDetailController document detail page controller
-   * @param documentRetrievalService document retrieval service
-   * @param docOverviewController    document overview controller
-   */
-  public ActionOnDocController(DocumentDetailController documentDetailController,
-                               DocumentRetrievalService documentRetrievalService,
-                               DocOverviewController docOverviewController,
-                               MenuController menuController,
-                               EditDocumentController editDocumentController) {
-    this.documentDetailController = documentDetailController;
-    this.documentRetrievalService = documentRetrievalService;
-    this.docOverviewController = docOverviewController;
-    this.menuController = menuController;
-    this.editDocumentController = editDocumentController;
 
-  }
 
   /**
    * Registers request receivers for document handling.
@@ -64,18 +44,23 @@ public class ActionOnDocController {
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
           RequestSender<Document> updateDocActionRequestSender,
-          RequestSender<ActionOnDoc> actionOnDocRequestSender,
           RequestSender<Integer> getDocumentByIdRequestSender,
           RequestSender<SwitchScene> getLastestDocumentsRequestSender,
-          RequestSender<Document> getRandomDocumentRequestSender) {
+          RequestSender<Document> getRandomDocumentRequestSender,
+          RequestSender<Document> editDocumentRequestSender,
+          RequestSender<Document> removeDocumentRequestSender,
+          RequestSender<Document> borrowDocumentRequestSender,
+          RequestSender<Document> addDocumentRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
-    actionOnDocRequestSender.registerReceiver(this::makeActionOnDoc);
-    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
+    editDocumentRequestSender.registerReceiver(this::editDocument);
+    removeDocumentRequestSender.registerReceiver(this::removeDocument);
+    borrowDocumentRequestSender.registerReceiver(this::borrowDocument);
+    addDocumentRequestSender.registerReceiver(this::addDocument);
     getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
-
+    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
   }
 
   /**
@@ -112,23 +97,44 @@ public class ActionOnDocController {
   }
 
   /**
-   * Call service and switch scene if needed for make an action on doc
+   * Edits the given document by setting it in the edit document controller.
    *
-   * @param actionOnDoc action request
+   * @param document the document to be edited
    */
-  //TODO Handle action by calling to service
-  private void makeActionOnDoc(ActionOnDoc actionOnDoc) {
-    switch (actionOnDoc.type()) {
-      case DocActionType.EDIT -> {editDocumentController.setDocument(actionOnDoc.document());}
-//      case DocActionType.BORROW -> System.out.println("borrow");
-//      case DocActionType.REMOVE -> System.out.println("remove");
-    }
+  private void editDocument(Document document) {
+    editDocumentController.setDocument(document);
+  }
+
+  /**
+   * Removes the given document by deleting it using the document persistence service.
+   *
+   * @param document the document to be removed
+   */
+  private void removeDocument(Document document) {
+    documentPersistenceService.delete(document.getId());
+  }
+
+  /**
+   * Borrows the given document.
+   *
+   * TODO: Implement the logic for borrowing a document.
+   *
+   * @param document the document to be borrowed
+   */
+  private void borrowDocument(Document document) {
+    // TODO: Implement borrowing logic
+  }
+
+  /**
+   * Adds a new document using the document persistence service.
+   *
+   * @param document the document to be added
+   */
+  private void addDocument(Document document) {
+    documentPersistenceService.add(document);
   }
 
 
-  private void getDocumentById(Integer id) {
-    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
-  }
 
   private void randomDocument(Document d){
     menuController.setRandomBook(documentRetrievalService.getRandomDocument());
@@ -136,5 +142,10 @@ public class ActionOnDocController {
 
   private void getLastestDocByIdDesc(SwitchScene switchScene) {
     menuController.setLastestDocuments(FXCollections.observableList(documentRetrievalService.getLatestDocuments()));
+  }
+
+
+  private void getDocumentById(Integer id) {
+    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
   }
 }

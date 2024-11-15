@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -24,6 +25,7 @@ import java.io.File;
  */
 @Component
 @FxmlView("Register.fxml")
+@RequiredArgsConstructor
 public class RegisterController implements ViewController {
   @FXML
   private TextField displayname;
@@ -46,23 +48,8 @@ public class RegisterController implements ViewController {
   @FXML
   private TextField username;
 
-  private RequestSender<SwitchScene> switchSceneRequestSender;
-  private RequestSender<User> registerRequestSender;
-
-  /**
-   * Constructor for Register Controller
-   * <p>
-   * This controller handle Register view, take signup information of user and
-   * send it to service through RequestSender, switch to Login if needed.
-   * </p>
-   *
-   * @param switchSceneRequestSender Request sender for switch scene request
-   * @param registerRequestSender    Request sender for register information
-   */
-  public RegisterController(RequestSender<SwitchScene> switchSceneRequestSender, RequestSender<User> registerRequestSender) {
-    this.switchSceneRequestSender = switchSceneRequestSender;
-    this.registerRequestSender = registerRequestSender;
-  }
+  private final RequestSender<ViewController> switchToLogin;
+  private final RequestSender<User> registerRequestSender;
 
   /**
    * Initializes the controller class. This method is automatically called
@@ -84,7 +71,7 @@ public class RegisterController implements ViewController {
    */
   @FXML
   private void pressSignIn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.LOGIN));
+    switchToLogin.send(null);
   }
 
 

@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -27,12 +28,9 @@ import threeoone.bigproject.entities.Document;
  */
 @Component
 @FxmlView("DocDetail.fxml")
+@RequiredArgsConstructor
 public class DocumentDetailController implements ViewController {
-    private final RequestSender<SwitchScene> switchSceneRequestSender;
-        public DocumentDetailController(RequestSender<SwitchScene> switchSceneRequestSender,
-                                    MenuBarController menuBarController) {
-        this.switchSceneRequestSender = switchSceneRequestSender;
-    }
+    private final RequestSender<ViewController> switchToYourBooks;
 
     private Document document;
 
@@ -71,7 +69,7 @@ public class DocumentDetailController implements ViewController {
     }
 
     public void returnToLast() {
-        switchSceneRequestSender.send(new SwitchScene(SceneName.YOUR_BOOKS));
+        switchToYourBooks.send(null);
     }
 
     /**

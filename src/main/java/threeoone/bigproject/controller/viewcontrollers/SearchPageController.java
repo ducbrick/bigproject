@@ -8,6 +8,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -22,12 +23,13 @@ import threeoone.bigproject.entities.Document;
  */
 @Component
 @FxmlView("SearchPage.fxml")
+@RequiredArgsConstructor
 public class SearchPageController implements ViewController {
   private final RequestSender<String> queryDocByNameRequestSender;
   private final RequestSender<String> queryDocByAuthorRequestSender;
   private final RequestSender<String> queryDocByCategoryRequestSender;
   private final RequestSender<Document> documentDetailRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToDocDetail;
 
   /**
    * Represent for search type
@@ -61,27 +63,6 @@ public class SearchPageController implements ViewController {
   private ListView<Document> result;
 
   /**
-   * Constructor for class with dependencies which is requestSender for query
-   *
-   * @param queryDocByNameRequestSender     requestSender for query
-   * @param queryDocByAuthorRequestSender   requestSender for query
-   * @param queryDocByCategoryRequestSender requestSender for query
-   * @param switchSceneRequestSender        requestSender for switch Scene
-   * @param documentDetailRequestSender     requestSender for document detail
-   */
-  public SearchPageController(RequestSender<String> queryDocByNameRequestSender,
-                              RequestSender<String> queryDocByAuthorRequestSender,
-                              RequestSender<String> queryDocByCategoryRequestSender,
-                              RequestSender<Document> documentDetailRequestSender,
-                              RequestSender<SwitchScene> switchSceneRequestSender) {
-    this.queryDocByNameRequestSender = queryDocByNameRequestSender;
-    this.queryDocByAuthorRequestSender = queryDocByAuthorRequestSender;
-    this.queryDocByCategoryRequestSender = queryDocByCategoryRequestSender;
-    this.documentDetailRequestSender = documentDetailRequestSender;
-    this.switchSceneRequestSender = switchSceneRequestSender;
-  }
-
-  /**
    * Initialization for JavaFX object handle by view
    */
   // TODO Show author when search author, category when search category
@@ -104,10 +85,10 @@ public class SearchPageController implements ViewController {
     });
     result.setOnMouseClicked(event -> {
       Document selectedDocument = result.getSelectionModel().getSelectedItem();
-      if(selectedDocument != null && event.getClickCount() == 2) {
+      if (selectedDocument != null && event.getClickCount() == 2) {
         System.out.println(selectedDocument.getName());
         documentDetailRequestSender.send(selectedDocument);
-        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+        switchToDocDetail.send(this);
       }
     });
   }
