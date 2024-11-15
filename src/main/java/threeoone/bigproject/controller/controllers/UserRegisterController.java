@@ -1,16 +1,20 @@
 package threeoone.bigproject.controller.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
+import threeoone.bigproject.controller.viewcontrollers.LoginController;
 import threeoone.bigproject.controller.viewcontrollers.RegisterController;
+import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
 import threeoone.bigproject.services.UserRegisterService;
+import threeoone.bigproject.view.ViewSwitcher;
 
 /**
  * This class handles all logic for register
@@ -18,26 +22,11 @@ import threeoone.bigproject.services.UserRegisterService;
  * @author HUY1902
  */
 @Component
+@RequiredArgsConstructor
 public class UserRegisterController {
   private final UserRegisterService userRegisterService;
   private final RegisterController registerController;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
-
-  /**
-   * Constructor for logic resolver class for Register Page
-   *
-   * @param userRegisterService : interacting with register service
-   * @param registerController : interacting with register view controller
-   * @param switchSceneRequestSender : switch scene request sender
-   */
-  public UserRegisterController(UserRegisterService userRegisterService,
-                                RegisterController registerController,
-                                RequestSender<SwitchScene> switchSceneRequestSender) {
-    this.userRegisterService = userRegisterService;
-    this.registerController = registerController;
-    this.switchSceneRequestSender = switchSceneRequestSender;
-  }
-
+  private final RequestSender<ViewController> switchToLogin;
   /**
    * Register receiver for registerRequestSender
    *
@@ -61,7 +50,7 @@ public class UserRegisterController {
 
       registerController.showSuccessDialog();
 
-      switchSceneRequestSender.send(new SwitchScene(SceneName.LOGIN));
+      switchToLogin.send(null);
     } catch (UserAlreadyExistException | IllegalCredentialsException | AlreadyLoggedInException e) {
       registerController.setConfirmMessage(e.getMessage());
     }

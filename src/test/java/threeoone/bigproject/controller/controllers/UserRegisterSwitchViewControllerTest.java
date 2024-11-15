@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.RegisterController;
+import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
@@ -19,14 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserRegisterControllerTest {
+class UserRegisterSwitchViewControllerTest {
   @Mock
   private RegisterController registerController;
   @Mock
   private UserRegisterService userRegisterService;
   @Mock
-  private RequestSender<SwitchScene> switchRequestSender;
-
+  private RequestSender<ViewController> switchToLogin;
   @InjectMocks
   private UserRegisterController userRegisterController;
 
@@ -55,7 +55,6 @@ class UserRegisterControllerTest {
     verify(registerController).resetAlert();
     verify(userRegisterService).register(user);
     verify(registerController).showSuccessDialog();
-    verify(switchRequestSender).send(any(SwitchScene.class));
   }
 
   @Test
@@ -67,6 +66,5 @@ class UserRegisterControllerTest {
     verify(userRegisterService).register(user);
     verify(registerController).setConfirmMessage("User already exists");
     verify(registerController, never()).showSuccessDialog();
-    verify(switchRequestSender, never()).send(any(SwitchScene.class));
   }
 }

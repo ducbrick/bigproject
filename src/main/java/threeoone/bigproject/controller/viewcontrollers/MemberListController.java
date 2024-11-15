@@ -10,10 +10,8 @@ import javafx.scene.input.KeyCode;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.util.MenuItemFactory;
@@ -27,9 +25,13 @@ import threeoone.bigproject.util.MenuItemFactory;
 @FxmlView("MemberList.fxml")
 @RequiredArgsConstructor
 public class MemberListController implements ViewController {
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<ViewController> switchToEditMem;
+  private final RequestSender<ViewController> switchToAddMem;
+  private final RequestSender<ViewController> switchToMainMenu;
+  private final RequestSender<ViewController> switchToSearch;
   private final RequestSender<Member> getAllMembersRequestSender;
-  private final RequestSender<ActionOnMem> actionOnMemRequestSender;
+  private final RequestSender<Member> editMemberRequestSender;
+  private final RequestSender<Member> removeMemberRequestSender;
   @FXML
   private Parent root;
 
@@ -95,7 +97,7 @@ public class MemberListController implements ViewController {
     return MenuItemFactory.createMenuItem("Remove",
             "Remove Confirmation",
             "Are you sure you want to remove this member?",
-            unused -> actionOnMemRequestSender.send(new ActionOnMem(MemActionType.REMOVE, chosenMember)));
+            unused -> removeMemberRequestSender.send(chosenMember));
   }
 
   /**
@@ -109,8 +111,8 @@ public class MemberListController implements ViewController {
             "Edit Confirmation",
             "Are you sure you want to edit this member?",
             unused -> {
-              actionOnMemRequestSender.send(new ActionOnMem(MemActionType.EDIT, chosenMember));
-              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_MEM));
+              editMemberRequestSender.send(chosenMember);
+              switchToEditMem.send(this);
             });
   }
 
@@ -121,7 +123,7 @@ public class MemberListController implements ViewController {
    */
   @FXML
   private void pressAdd(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_MEM));
+    switchToAddMem.send(this);
   }
 
   /**
@@ -131,7 +133,7 @@ public class MemberListController implements ViewController {
    */
   @FXML
   private void pressReturn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+    switchToMainMenu.send(null);
   }
 
   /**
@@ -141,7 +143,7 @@ public class MemberListController implements ViewController {
    */
   @FXML
   private void pressSearch(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
+    switchToSearch.send(null);
   }
 
 

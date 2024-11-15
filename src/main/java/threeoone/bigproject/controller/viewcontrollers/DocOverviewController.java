@@ -1,11 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,22 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.DocActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.ActionOnDoc;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
-import threeoone.bigproject.util.Alerts;
 import threeoone.bigproject.util.MenuItemFactory;
-
-import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Controller class for the Document Overview scene.
@@ -42,12 +32,20 @@ import java.util.function.Consumer;
  */
 @Component
 @FxmlView("DocOverview.fxml")
+@RequiredArgsConstructor
 public class DocOverviewController implements ViewController {
   private final RequestSender<User> getListAllDocumentRequestSender;
   private final RequestSender<Document> updateDocActionRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
-  private final RequestSender<ActionOnDoc> actionOnDocRequestSender;
+  private final RequestSender<ViewController> switchToSearch;
+  private final RequestSender<ViewController> switchToEditDoc;
+  private final RequestSender<ViewController> switchToDocDetail;
+  private final RequestSender<ViewController> switchToMainMenu;
+  private final RequestSender<ViewController> switchToAddNewDoc;
+
   private final RequestSender<Document> documentDetailRequestSender;
+  private final RequestSender<Document> editDocumentRequestSender;
+  private final RequestSender<Document> removeDocumentRequestSender;
+  private final RequestSender<Document> borrowDocumentRequestSender;
 
   @FXML
   private ContextMenu contextMenu;
@@ -74,29 +72,6 @@ public class DocOverviewController implements ViewController {
 
   private Document chosenDoc;
 
-  /**
-   * Constructs a new {@code DocOverviewController} with the given request senders.
-   *
-   * @param switchSceneRequestSender        Request sender for switching scenes
-   * @param documentDetailRequestSender     Request sender for handling document interactions
-   * @param getListAllDocumentRequestSender Request sender for set up table
-   * @param updateDocActionRequestSender    Request sender for update context menu
-   * @param actionOnDocRequestSender        Request sender for action on document
-   */
-  //TODO: Need to have action to handle borrow book and remove book. Make enumeration to handle it.
-  public DocOverviewController(RequestSender<User> getListAllDocumentRequestSender,
-                               RequestSender<Document> updateDocActionRequestSender,
-                               RequestSender<SwitchScene> switchSceneRequestSender,
-                               RequestSender<ActionOnDoc> actionOnDocRequestSender,
-                               RequestSender<Document> documentDetailRequestSender,
-                               MenuBarController menuBarController) {
-    this.getListAllDocumentRequestSender = getListAllDocumentRequestSender;
-    this.updateDocActionRequestSender = updateDocActionRequestSender;
-    this.switchSceneRequestSender = switchSceneRequestSender;
-    this.actionOnDocRequestSender = actionOnDocRequestSender;
-    this.documentDetailRequestSender = documentDetailRequestSender;
-    this.menuBarController = menuBarController;
-  }
 
   /**
    * Initializes the controller. Sets up the row double-click listener for the
@@ -164,7 +139,7 @@ public class DocOverviewController implements ViewController {
   private MenuItem borrow() {
     return MenuItemFactory.createMenuItem("Borrow",
             "Borrow Confirmation", "Are you sure you want to borrow this document?",
-            unused -> actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.BORROW, chosenDoc)));
+            unused -> borrowDocumentRequestSender.send(chosenDoc));
   }
 
 
@@ -178,7 +153,7 @@ public class DocOverviewController implements ViewController {
     return MenuItemFactory.createMenuItem("Remove",
             "Remove Confirmation",
             "Are you sure you want to remove this document?",
-            unused -> actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.REMOVE, chosenDoc)));
+            unused -> removeDocumentRequestSender.send(chosenDoc));
   }
 
   /**
@@ -192,8 +167,8 @@ public class DocOverviewController implements ViewController {
             "Edit Confirmation",
             "Are you sure you want to edit this document?",
             unused -> {
-              actionOnDocRequestSender.send(new ActionOnDoc(DocActionType.EDIT, chosenDoc));
-              switchSceneRequestSender.send(new SwitchScene(SceneName.EDIT_DOC));
+              editDocumentRequestSender.send(chosenDoc);
+              switchToEditDoc.send(null);
             });
   }
 
@@ -202,7 +177,7 @@ public class DocOverviewController implements ViewController {
    */
   @FXML
   private void pressSearch() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.SEARCH));
+    switchToSearch.send(this);
   }
 
 
@@ -223,7 +198,7 @@ public class DocOverviewController implements ViewController {
    */
   private void pressDocToGoToDetail(Document document) {
     documentDetailRequestSender.send(document);
-    switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+    switchToDocDetail.send(this);
   }
 
   /**
@@ -232,7 +207,7 @@ public class DocOverviewController implements ViewController {
    */
   @FXML
   private void pressBack() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+    switchToMainMenu.send(this);
   }
 
   /**
@@ -242,7 +217,7 @@ public class DocOverviewController implements ViewController {
    */
   @FXML
   private void pressAddDoc(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.ADD_NEW_DOC));
+    switchToAddNewDoc.send(this);
   }
 
   /**

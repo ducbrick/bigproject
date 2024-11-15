@@ -15,10 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.MemActionType;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.ActionOnMem;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.util.Alerts;
@@ -33,8 +31,8 @@ import threeoone.bigproject.view.ViewSwitcher;
 @FxmlView("AddNewMem.fxml")
 public class AddNewMemController implements ViewController {
 
-  private final RequestSender<ActionOnMem> actionOnMemRequestSender;
-  private final RequestSender<SwitchScene> switchSceneRequestSender;
+  private final RequestSender<Member> addMemberRequestSender;
+  private final RequestSender<ViewController> switchToMemList;
   private final ViewSwitcher viewSwitcher;
 
   @FXML
@@ -72,7 +70,7 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void pressReturn(ActionEvent event) {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    switchToMemList.send(null);
   }
 
   @FXML
@@ -102,7 +100,7 @@ public class AddNewMemController implements ViewController {
       @Override
       protected Void call() throws Exception {
         updateProgress(20, 100);
-        actionOnMemRequestSender.send(new ActionOnMem(MemActionType.ADD, member));
+        addMemberRequestSender.send(member);
         updateProgress(100, 100);
         Platform.runLater(() -> {
           id.setText(member.getId().toString());
@@ -123,7 +121,7 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void pressSubmit() {
-    switchSceneRequestSender.send(new SwitchScene(SceneName.MEM_LIST));
+    switchToMemList.send(null);
   }
 
   /**

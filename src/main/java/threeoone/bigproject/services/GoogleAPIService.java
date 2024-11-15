@@ -35,6 +35,7 @@ public class GoogleAPIService {
    * @param isbn the ISBN of the book to search for.
    * @return a {@link Document} representing the book details; otherwise, null if not found
    */
+  // TODO: save imagePath
   public Document findBookByISBN(String isbn) {
     JsonObject response = getJson(googleBooksURL + "isbn:" + isbn);
     if(response == null) {
@@ -45,7 +46,14 @@ public class GoogleAPIService {
       return null;
     }
     JsonObject info = response.get("items").getAsJsonArray().get(0).getAsJsonObject().get("volumeInfo").getAsJsonObject();
-    return new Document(info.get("title").getAsString(), info.get("description").getAsString());
+    Document document = new Document(info.get("title").getAsString(), info.get("description").getAsString());
+    document.setAuthor(info.get("authors").getAsString());
+    document.setIsbn(isbn);
+    if(info.get("categories") != null){
+      document.setCategory(info.get("categories").getAsString());
+    }
+    else document.setCategory("Unknown");
+    return document;
   }
 
   /**
