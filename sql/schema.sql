@@ -23,7 +23,9 @@ CREATE TABLE document (
 
 CREATE TABLE member (
 	id SERIAL PRIMARY KEY,
-	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0)
+	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0),
+	phone_number VARCHAR(11) NOT NULL CHECK(LENGTH(TRIM(phone_number)) > 0),
+	address VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE lending_detail (
