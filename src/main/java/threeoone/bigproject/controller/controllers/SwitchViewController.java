@@ -33,6 +33,7 @@ public class SwitchViewController {
   private final EditMemController editMemController;
   private final MemberListController memberListController;
   private final AddNewMemController addNewMemController;
+  private final LendingDetailController lendingDetailController;
 
   /**
    * Registers request receivers for switching to different scenes.
@@ -49,6 +50,7 @@ public class SwitchViewController {
    * @param switchToEditMem     RequestSender for switching to edit member scene.
    * @param switchToAddMem      RequestSender for switching to add new member scene.
    * @param switchToYourBooks   RequestSender for switching to your books scene.
+   * @param switchToLendingDetail RequestSender for switching to lending detail scene.
    */
   @Autowired
   private void registerRequestReceiver(
@@ -63,7 +65,8 @@ public class SwitchViewController {
           RequestSender<ViewController> switchToMemList,
           RequestSender<ViewController> switchToEditMem,
           RequestSender<ViewController> switchToAddMem,
-          RequestSender<ViewController> switchToYourBooks
+          RequestSender<ViewController> switchToYourBooks,
+          RequestSender<ViewController> switchToLendingDetail
   ) {
     switchToDocOverview.registerReceiver(this::switchToDocOverview);
     switchToMainMenu.registerReceiver(this::switchToMainMenu);
@@ -77,6 +80,7 @@ public class SwitchViewController {
     switchToEditMem.registerReceiver(this::switchToEditMem);
     switchToAddMem.registerReceiver(this::switchToAddMem);
     switchToYourBooks.registerReceiver(this::switchToYourBooks);
+    switchToLendingDetail.registerReceiver(this::switchToLendingDetail);
   }
 
   /**
@@ -185,5 +189,14 @@ public class SwitchViewController {
    */
   private void switchToEditMem(ViewController from) {
     viewSwitcher.switchToView(editMemController);
+  }
+
+  /**
+   * Switches to the lending detail view.
+   *
+   * @param from the current view controller.
+   */
+  private void switchToLendingDetail(ViewController from) {
+    viewSwitcher.switchToView(lendingDetailController);
   }
 }

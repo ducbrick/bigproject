@@ -4,11 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
@@ -42,16 +45,16 @@ public class AddNewDocController implements ViewController {
 
   private final RequestSender<String> queryISBNGoogleRequestSender;
   @FXML
-  private Parent root;
+  private TextField author;
 
   @FXML
   private TextField categories;
 
   @FXML
-  private DatePicker date;
+  private Button chooseButton;
 
   @FXML
-  private TextField description;
+  private TextArea description;
 
   @FXML
   private TextField isbn;
@@ -60,13 +63,22 @@ public class AddNewDocController implements ViewController {
   private TextField name;
 
   @FXML
+  private TextField numOfCopies;
+
+  @FXML
+  private Button returnButton;
+
+  @FXML
+  private SplitPane root;
+
+  @FXML
   private Button submitButton;
 
   @FXML
-  private Button chooseButton;
+  private ImageView docCover;
 
-  @FXML
-  private TextField author;
+  @Value("${document.photo-path.default}")
+  private String coverPhotoPath;
 
   private File lastDirectory = null;
   private File selectedFile = null;
@@ -81,17 +93,19 @@ public class AddNewDocController implements ViewController {
     author.setOnAction(event -> categories.requestFocus());
     categories.setOnAction(event -> isbn.requestFocus());
     isbn.setOnAction(event -> description.requestFocus());
-    description.setOnAction(event -> date.requestFocus());
-    categories.setText("Unknown");
-    date.setValue(getTodayDate());
-    date.setOnAction(event -> date.requestFocus());
-    date.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.ENTER) {
-        if (date.getValue() != null) {
-          submitButton.fire();
-        }
+    description.setOnKeyPressed(event -> {
+      if(event.getCode() == KeyCode.ENTER) {
+        numOfCopies.requestFocus();
       }
     });
+    categories.setText("Unknown");
+    numOfCopies.setOnKeyPressed(event -> {
+      if (event.getCode() == KeyCode.ENTER) {
+        submitButton.fire();
+      }
+    });
+
+    returnButton.setOnAction(event -> switchToDocOverview.send(null));
 
     menuBarController.highlight(SceneName.ADD_NEW_DOC);
 
@@ -103,17 +117,20 @@ public class AddNewDocController implements ViewController {
    *
    * @param event event trigger submit button
    */
-  // TODO: Submit send today date, path, categories, etc to service
+  // TODO: Submit send path to service
   @FXML
   private void pressSubmit(ActionEvent event) {
-    if (name.getText().isEmpty() || author.getText().isEmpty()) {
+    if (name.getText().isEmpty() || author.getText().isEmpty() || numOfCopies.getText().isEmpty()) {
       Alerts.showAlertWarning("Warning!", "Fill all required fields!");
       return;
     }
-    Document document = new Document(name.getText(), description.getText());
+    Document document = new Document(name.getText(), description.getText(), Integer.valueOf(numOfCopies.getText()));
+    document.setAuthor(author.getText());
+    document.setCategory(categories.getText());
+    document.setIsbn(isbn.getText());
     addDocumentRequestSender.send(document);
     if (selectedFile == null) {
-      Alerts.showAlertWarning("Warning!", "Unselected file. Adding with no digital document.");
+      Alerts.showAlertWarning("Warning!", "Unselected digital version for document!");
     } else {
       FileOperation.copyFile(selectedFile.getPath(), "", document.getId().toString());
       Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
@@ -137,6 +154,8 @@ public class AddNewDocController implements ViewController {
   public void fulfillInfo(Document document) {
     name.setText(document.getName());
     description.setText(document.getDescription());
+    author.setText(document.getAuthor());
+    categories.setText(document.getCategory());
   }
 
   /**
@@ -154,16 +173,7 @@ public class AddNewDocController implements ViewController {
    */
   @Override
   public void show() {
-
-  }
-
-  /**
-   * This function get today date follow time zone +7
-   *
-   * @return today date
-   */
-  private LocalDate getTodayDate() {
-    return LocalDate.now(ZoneId.of("Asia/Bangkok"));
+    docCover.setImage(new Image(coverPhotoPath));
   }
 
   /**

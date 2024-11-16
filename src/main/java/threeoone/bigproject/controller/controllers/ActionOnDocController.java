@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
-import threeoone.bigproject.controller.viewcontrollers.DocOverviewController;
-import threeoone.bigproject.controller.viewcontrollers.DocumentDetailController;
-import threeoone.bigproject.controller.viewcontrollers.MenuController;
-import threeoone.bigproject.controller.viewcontrollers.EditDocumentController;
+import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.DocumentPersistenceService;
 import threeoone.bigproject.services.DocumentRetrievalService;
+import threeoone.bigproject.util.Alerts;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Interacting with view controller and service
@@ -28,10 +29,10 @@ public class ActionOnDocController {
   private final DocumentDetailController documentDetailController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocOverviewController docOverviewController;
+  private final LendingDetailController lendingDetailController;
   private final MenuController menuController;
   private final EditDocumentController editDocumentController;
   private final DocumentPersistenceService documentPersistenceService;
-
 
 
   /**
@@ -50,7 +51,8 @@ public class ActionOnDocController {
           RequestSender<Document> editDocumentRequestSender,
           RequestSender<Document> removeDocumentRequestSender,
           RequestSender<Document> borrowDocumentRequestSender,
-          RequestSender<Document> addDocumentRequestSender) {
+          RequestSender<Document> addDocumentRequestSender,
+          RequestSender<Document> commitChangeDocRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
     updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
@@ -61,6 +63,7 @@ public class ActionOnDocController {
     getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
     getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
+    commitChangeDocRequestSender.registerReceiver(this::commitChangeDoc);
   }
 
   /**
@@ -75,12 +78,18 @@ public class ActionOnDocController {
 
   /**
    * return List of All Document in dataset
+   *
    * @param user None
    */
   private void getListAllDocument(User user) {
-    docOverviewController.setTable(FXCollections.observableArrayList(
-            documentRetrievalService.getAllDocuments()
-    ));
+    try {
+      List<Document> documentList = documentRetrievalService.getAllDocuments();
+      docOverviewController.setTable(FXCollections.observableArrayList(
+              documentList
+      ));
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
 
   /**
@@ -91,7 +100,7 @@ public class ActionOnDocController {
    */
   // TODO: call to service
   private void updateAvailableActionOnDocument(Document document) {
-    boolean isBorrowAvailable = false; //get from service
+    boolean isBorrowAvailable = true; //get from service
     boolean isRemoveAvailable = true; //get from service
     docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
   }
@@ -117,12 +126,10 @@ public class ActionOnDocController {
   /**
    * Borrows the given document.
    *
-   * TODO: Implement the logic for borrowing a document.
-   *
    * @param document the document to be borrowed
    */
   private void borrowDocument(Document document) {
-    // TODO: Implement borrowing logic
+    lendingDetailController.setDocument(document);
   }
 
   /**
@@ -131,12 +138,15 @@ public class ActionOnDocController {
    * @param document the document to be added
    */
   private void addDocument(Document document) {
-    documentPersistenceService.add(document);
+    try {
+      documentPersistenceService.add(document);
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!!!", e.getMessage());
+    }
   }
 
 
-
-  private void randomDocument(Document d){
+  private void randomDocument(Document d) {
     menuController.setRandomBook(documentRetrievalService.getRandomDocument());
   }
 
@@ -148,4 +158,19 @@ public class ActionOnDocController {
   private void getDocumentById(Integer id) {
     menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
   }
+
+  /**
+   * Commits changes to the specified document by updating it in the persistence service.
+   * If an exception occurs during the update, a warning alert is shown with the error message.
+   *
+   * @param document the document to be updated.
+   */
+  private void commitChangeDoc(Document document) {
+    try {
+      documentPersistenceService.update(document);
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!!!", e.getMessage());
+    }
+  }
+
 }

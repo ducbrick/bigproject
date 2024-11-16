@@ -41,6 +41,7 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<ViewController> switchToDocDetail;
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToAddNewDoc;
+  private final RequestSender<ViewController> switchToLendingDetail;
 
   private final RequestSender<Document> documentDetailRequestSender;
   private final RequestSender<Document> editDocumentRequestSender;
@@ -111,7 +112,6 @@ public class DocOverviewController implements ViewController {
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
-    //getListAllDocumentRequestSender.send(new User());
   }
 
   /**
@@ -139,7 +139,10 @@ public class DocOverviewController implements ViewController {
   private MenuItem borrow() {
     return MenuItemFactory.createMenuItem("Borrow",
             "Borrow Confirmation", "Are you sure you want to borrow this document?",
-            unused -> borrowDocumentRequestSender.send(chosenDoc));
+            unused -> {
+              borrowDocumentRequestSender.send(chosenDoc);
+              switchToLendingDetail.send(null);
+            });
   }
 
 
@@ -153,7 +156,10 @@ public class DocOverviewController implements ViewController {
     return MenuItemFactory.createMenuItem("Remove",
             "Remove Confirmation",
             "Are you sure you want to remove this document?",
-            unused -> removeDocumentRequestSender.send(chosenDoc));
+            unused -> {
+              removeDocumentRequestSender.send(chosenDoc);
+              getListAllDocumentRequestSender.send(null);
+            });
   }
 
   /**
@@ -235,5 +241,6 @@ public class DocOverviewController implements ViewController {
    */
   @Override
   public void show() {
+    getListAllDocumentRequestSender.send(null);
   }
 }
