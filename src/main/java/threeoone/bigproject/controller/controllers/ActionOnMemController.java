@@ -7,10 +7,7 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
-import threeoone.bigproject.controller.viewcontrollers.AddNewMemController;
-import threeoone.bigproject.controller.viewcontrollers.EditMemController;
-import threeoone.bigproject.controller.viewcontrollers.MemberListController;
-import threeoone.bigproject.controller.viewcontrollers.MenuController;
+import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.services.MemberEditingService;
 import threeoone.bigproject.services.MemberRetrievalService;
@@ -35,6 +32,7 @@ public class ActionOnMemController {
   private final AddNewMemController addNewMemController;
   private final EditMemController editMemController;
   private final MenuController menuController;
+  private final MemberDetailsController memberDetailsController;
 
   /**
    * Registers request receivers for document handling.
@@ -47,13 +45,15 @@ public class ActionOnMemController {
                                        RequestSender<Member> commitChangeMemberRequestSender,
                                        RequestSender<Member> removeMemberRequestSender,
                                        RequestSender<Member> addMemberRequestSender,
-                                       RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
+                                       RequestSender<SwitchScene> getTopFiveMembersRequestSender,
+                                       RequestSender<Member> memberDetailsRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
     editMemberRequestSender.registerReceiver(this::editMember);
     commitChangeMemberRequestSender.registerReceiver(this::commitChangeMember);
     removeMemberRequestSender.registerReceiver(this::removeMember);
     addMemberRequestSender.registerReceiver(this::addMember);
     getTopFiveMembersRequestSender.registerReceiver(this::getTop5);
+    memberDetailsRequestSender.registerReceiver(this::memberDetail);
   }
 
   /**
@@ -126,4 +126,6 @@ public class ActionOnMemController {
       Alerts.showAlertWarning("Error!", e.getMessage());
     }
   }
+
+  private void memberDetail(Member member) { memberDetailsController.setMember(member); }
 }

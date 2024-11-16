@@ -58,7 +58,7 @@ public class EditDocumentController implements ViewController {
 
   private Document document;
 
-  @Value("${document.photo-path.default}")
+  //@Value("${document.photo-path.default}")
   private String coverPhotoPath;
 
   /**
@@ -95,8 +95,8 @@ public class EditDocumentController implements ViewController {
         submitButton.fire();
       }
     });
-    Image temp = new Image(coverPhotoPath);
-    image.setImage(temp);
+    //Image temp = new Image(coverPhotoPath);
+    //image.setImage(temp);
   }
 
   /**

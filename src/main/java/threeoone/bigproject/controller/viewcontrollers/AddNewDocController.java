@@ -77,7 +77,7 @@ public class AddNewDocController implements ViewController {
   @FXML
   private ImageView docCover;
 
-  @Value("${document.photo-path.default}")
+  //@Value("${document.photo-path.default}")
   private String coverPhotoPath;
 
   private File lastDirectory = null;

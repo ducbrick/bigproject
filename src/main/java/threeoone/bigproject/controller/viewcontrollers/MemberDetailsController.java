@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -23,20 +24,22 @@ import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * this view present information about a specific member, which include their name and the books they are currently
- * borrowing.
+ * this view present information about a specific member, which include their name, address, phone number
+ * email and the books they are currently borrowing.
+ * TODO: lending details retrieval service
  */
 @Component
 @FxmlView("MemberDetails.fxml")
-@RequiredArgsConstructor
+@RequiredArgsConstructor @Setter
 public class MemberDetailsController implements ViewController{
     private Member member;
 
     private final RequestSender<Document> documentDetailRequestSender;
-    private final RequestSender<SwitchScene> switchSceneRequestSender;
+    private final RequestSender<ViewController> switchToDocDetail;
 
     @FXML
     private Parent root;
@@ -51,7 +54,7 @@ public class MemberDetailsController implements ViewController{
     private TableView<LendingDetail> BorrowingBooks;
 
     @FXML
-    private TableColumn<LendingDetail, LocalDateTime> BorrowTime;
+    private TableColumn<LendingDetail, String> BorrowTime;
 
     @FXML
     private TableColumn<LendingDetail, Integer> DocumentID;
@@ -63,6 +66,7 @@ public class MemberDetailsController implements ViewController{
     public void initialize() {
         initTable();
     }
+
 
     /**
      * initializes the columns' property
@@ -81,7 +85,11 @@ public class MemberDetailsController implements ViewController{
             return row;
         });
 
-        BorrowTime.setCellValueFactory(new PropertyValueFactory<>("lend_time"));
+        BorrowTime.setCellValueFactory(cellData ->{
+            LocalDateTime date = cellData.getValue().getLendTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy");
+            return new SimpleStringProperty(date.format(formatter));
+        });
         DocumentID.setCellValueFactory(cellData -> {
             Document doc = cellData.getValue().getDocument();
             return new SimpleIntegerProperty(doc.getId()).asObject();
@@ -98,7 +106,7 @@ public class MemberDetailsController implements ViewController{
      */
     private void gotoDocDetail(Document document) {
         documentDetailRequestSender.send(document);
-        switchSceneRequestSender.send(new SwitchScene(SceneName.DOC_DETAIL));
+        switchToDocDetail.send(this);
     }
 
     @Override
@@ -112,7 +120,7 @@ public class MemberDetailsController implements ViewController{
      */
     @Override
     public void show() {
-        member = new Member("RAHHHHHH");
+        /**member = new Member("RAHHHHHH");
         LendingDetail lendingDetail1 = new LendingDetail(LocalDateTime.now());
         Document doc1 = new Document("test1", "desc1");
         doc1.setId(0);
@@ -121,6 +129,7 @@ public class MemberDetailsController implements ViewController{
         List<LendingDetail> lendingDetails = new ArrayList<>();
         lendingDetails.add(lendingDetail1);
         member.setLendingDetails(lendingDetails);
+         */
         ObservableList<LendingDetail> lendingDetailObservableList = FXCollections.observableList(member.getLendingDetails());
         BorrowingBooks.setItems(lendingDetailObservableList);
         Name.setText("Name: " + member.getName());
