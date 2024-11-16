@@ -1,6 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -48,6 +49,9 @@ public class EditMemController implements ViewController {
   @FXML
   private Parent root;
 
+  @FXML
+  private Button resetButton;
+
   /**
    * Initializes the controller class. This method is automatically called
    * after the FXML file has been loaded.
@@ -79,8 +83,10 @@ public class EditMemController implements ViewController {
    */
   @FXML
   private void pressSubmit(ActionEvent event) {
-    if (name.getText().isEmpty()) {
-      Alerts.showAlertWarning("No change!", "Name text field is empty. Member name will be remained");
+    if (name.getText().isEmpty() || phoneNumber.getText().isEmpty()
+    || address.getText().isEmpty() || email.getText().isEmpty()) {
+      Alerts.showAlertWarning("No change!", "Every text field is required to change the member information.");
+      return;
     } else {
       chosenMember.setName(name.getText());
       chosenMember.setPhoneNumber(phoneNumber.getText());
@@ -101,6 +107,16 @@ public class EditMemController implements ViewController {
     return root;
   }
 
+  @FXML
+  private void fulFillInfo() {
+    id.setText(String.valueOf(chosenMember.getId()));
+    name.setText(chosenMember.getName());
+    phoneNumber.setText(chosenMember.getPhoneNumber());
+    address.setText(chosenMember.getAddress());
+    email.setText(chosenMember.getEmail());
+  }
+
+
   /**
    * Notify the {@link ViewController} that its {@code View} is displayed.
    * Sets the ID and name fields based on the chosen member.
@@ -111,10 +127,6 @@ public class EditMemController implements ViewController {
       switchToMemList.send(null);
       return;
     }
-    id.setText(String.valueOf(chosenMember.getId()));
-    name.setText(chosenMember.getName());
-    phoneNumber.setText(chosenMember.getPhoneNumber());
-    address.setText(chosenMember.getAddress());
-    email.setText(chosenMember.getEmail());
+    fulFillInfo();
   }
 }
