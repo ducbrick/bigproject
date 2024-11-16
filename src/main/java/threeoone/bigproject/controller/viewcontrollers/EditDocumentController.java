@@ -14,6 +14,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
@@ -30,7 +31,7 @@ import threeoone.bigproject.entities.Document;
 @RequiredArgsConstructor
 public class EditDocumentController implements ViewController {
   private final RequestSender<Document> commitChangeDocRequestSender;
-  private final  RequestSender<ViewController> switchToDocOverview;
+  private final RequestSender<ViewController> switchToDocOverview;
   @FXML
   private Parent root;
 
@@ -57,24 +58,30 @@ public class EditDocumentController implements ViewController {
 
   private Document document;
 
+  @Value("${document.photo-path.default}")
+  private String coverPhotoPath;
+
   /**
    * Set default information about the document for text field
    */
   private void setInfoDefault() {
-    isbn.setText(document.getName());
+    isbn.setText(document.getIsbn());
     name.setText(document.getName());
     description.setText(document.getDescription());
+    author.setText(document.getAuthor());
+    category.setText(document.getCategory());
   }
 
   /**
    * Set new info from text field to {@link #document}
    */
-  // TODO: Set image for imageView
   private void commitNewInfo() {
     document.setName(name.getText());
     document.setDescription(description.getText());
-
+    document.setAuthor(author.getText());
+    document.setCategory(category.getText());
   }
+
   /**
    * Initialized method for FXML page
    */
@@ -84,15 +91,12 @@ public class EditDocumentController implements ViewController {
     author.setOnAction(event -> category.requestFocus());
     category.setOnAction(event -> description.requestFocus());
     description.setOnKeyPressed(event -> {
-      if(event.getCode() == KeyCode.ENTER) {
+      if (event.getCode() == KeyCode.ENTER) {
         submitButton.fire();
       }
     });
-    Thread newThread = new Thread(() -> {
-      Image temp = new Image("threeoone/bigproject/controller/viewcontrollers/No_image_available.png");
-      image.setImage(temp);
-    });
-    newThread.start();
+    Image temp = new Image(coverPhotoPath);
+    image.setImage(temp);
   }
 
   /**
@@ -120,7 +124,6 @@ public class EditDocumentController implements ViewController {
    *
    * @param event event trigger button
    */
-  // TODO: maybe can eliminate commitChange by this way
   @FXML
   private void pressSubmit(ActionEvent event) {
     commitNewInfo();

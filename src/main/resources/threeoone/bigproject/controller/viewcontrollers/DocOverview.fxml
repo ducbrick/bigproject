@@ -3,29 +3,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" stylesheets="@DocOverviewStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
-    <children>
-      <GridPane layoutX="157.0" layoutY="72.0" prefHeight="577.0" prefWidth="1022.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="84.0" />
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="852.0" minWidth="10.0" prefWidth="797.0" />
-            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="280.0" minWidth="0.0" prefWidth="127.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="528.0" minHeight="10.0" prefHeight="528.0" valignment="BOTTOM" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="12.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-              <TableView fx:id="table" prefHeight="540.0" prefWidth="1024.0" styleClass="table-view" GridPane.columnIndex="1">
+
+<SplitPane fx:id="root" dividerPositions="0.15776293823038398" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
+   <items>
+      <VBox prefHeight="200.0" prefWidth="100.0" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+              <TableView fx:id="table" prefHeight="720.0" prefWidth="324.0" styleClass="table-view" BorderPane.alignment="CENTER">
                   <columns>
                       <TableColumn fx:id="number" prefWidth="75.0" styleClass="table-column-header" text="Number" />
                       <TableColumn fx:id="name" prefWidth="135.0" styleClass="table-column-header" text="Name" />
@@ -37,19 +31,33 @@
                 </ContextMenu>
                   </contextMenu>
               </TableView>
-              <Button mnemonicParsing="false" onAction="#pressBack" prefHeight="66.0" prefWidth="146.0" styleClass="button" text="BackHome" GridPane.rowIndex="1" />
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" GridPane.columnIndex="2">
+         </center>
+         <bottom>
+            <GridPane prefHeight="92.0" prefWidth="1021.0" BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
-                    <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="110.0" prefWidth="116.0" styleClass="button" text="Add New Doc" />
-                  <Button mnemonicParsing="false" onAction="#pressSearch" prefWidth="117.0" text="Search" />
+                    <Button mnemonicParsing="false" onAction="#pressBack" prefHeight="26.0" prefWidth="128.0" styleClass="button" text="Return" />
+                    <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="26.0" prefWidth="150.0" styleClass="button" text="Add New Document" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </bottom>
+         <top>
+            <VBox alignment="CENTER" prefHeight="89.0" prefWidth="1021.0" BorderPane.alignment="CENTER">
+               <children>
+                    <Label prefHeight="46.0" prefWidth="224.0" styleClass="label" text="Document Overview">
+                        <font>
+                            <Font name="System Bold" size="23.0" />
+                        </font>
+                    </Label>
                </children>
             </VBox>
-         </children>
-      </GridPane>
-        <Label layoutX="556.0" layoutY="14.0" prefHeight="46.0" prefWidth="224.0" styleClass="label" text="Document Overview">
-            <font>
-                <Font name="System Bold" size="23.0" />
-            </font>
-        </Label>
-    </children>
-</AnchorPane>
+         </top>
+      </BorderPane>
+   </items>
+</SplitPane>

@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -63,6 +64,7 @@ public class LendingDetailController implements ViewController, Subscriber {
   private Label docDescription;
 
   private Member member;
+
   private Document document;
 
   /**
@@ -86,6 +88,8 @@ public class LendingDetailController implements ViewController, Subscriber {
     docID.setText(document.getId().toString());
     docName.setText(document.getName());
     docDescription.setText(document.getDescription());
+    docAuthor.setText(document.getAuthor());
+    docCategory.setText(document.getCategory());
   }
 
   /**

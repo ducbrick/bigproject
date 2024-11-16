@@ -33,25 +33,33 @@ public class AddNewMemController implements ViewController {
 
   private final RequestSender<Member> addMemberRequestSender;
   private final RequestSender<ViewController> switchToMemList;
-  private final ViewSwitcher viewSwitcher;
+
+  @FXML
+  private TextField address;
+
+  @FXML
+  private TextField email;
 
   @FXML
   private Button getID;
 
   @FXML
-  private Button submit;
-
-  @FXML
-  private Parent root;
+  private Label id;
 
   @FXML
   private TextField name;
 
   @FXML
+  private TextField phoneNumber;
+
+  @FXML
   private ProgressIndicator progress;
 
   @FXML
-  private Label id;
+  private Parent root;
+
+  @FXML
+  private Button submit;
 
   private Member member;
 
@@ -61,6 +69,10 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void initialize() {
+    name.setOnAction(event -> phoneNumber.requestFocus());
+    phoneNumber.setOnAction(event -> address.requestFocus());
+    address.setOnAction(event -> email.requestFocus());
+    email.setOnAction(this::pressGetID);
   }
 
   /**
@@ -75,7 +87,7 @@ public class AddNewMemController implements ViewController {
 
   @FXML
   private void fulfill(KeyEvent event) {
-    if(event.getCode() == KeyCode.ENTER) {
+    if (event.getCode() == KeyCode.ENTER) {
       getID.fire();
     }
   }
@@ -88,7 +100,8 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void pressGetID(ActionEvent event) {
-    if (name.getText().isEmpty() || name.getText() == null) {
+    if (name.getText().isEmpty() || phoneNumber.getText().isEmpty()
+            || address.getText().isEmpty() || email.getText().isEmpty()) {
       Alerts.showAlertWarning("Not fulfill!", "You must fill required fields!");
       return;
     }
@@ -96,6 +109,9 @@ public class AddNewMemController implements ViewController {
     progress.setVisible(true);
     progress.setProgress(0);
     member = new Member(name.getText());
+    member.setPhoneNumber(phoneNumber.getText());
+    member.setAddress(address.getText());
+    member.setEmail(email.getText());
     Task<Void> task = new Task<Void>() {
       @Override
       protected Void call() throws Exception {
@@ -140,7 +156,10 @@ public class AddNewMemController implements ViewController {
   @Override
   public void show() {
     progress.setVisible(false);
-    id.setText("");
     name.setText("");
+    phoneNumber.setText("");
+    address.setText("");
+    email.setText("");
+    id.setText("");
   }
 }

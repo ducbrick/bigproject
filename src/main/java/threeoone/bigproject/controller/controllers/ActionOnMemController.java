@@ -14,6 +14,10 @@ import threeoone.bigproject.controller.viewcontrollers.MenuController;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.services.MemberEditingService;
 import threeoone.bigproject.services.MemberRetrievalService;
+import threeoone.bigproject.util.Alerts;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Interacting with view controller and service
@@ -31,17 +35,19 @@ public class ActionOnMemController {
   private final AddNewMemController addNewMemController;
   private final EditMemController editMemController;
   private final MenuController menuController;
-   /**
-    * Registers request receivers for document handling.
-    * @param getAllMembersRequestSender the request sender for getting all member
+
+  /**
+   * Registers request receivers for document handling.
+   *
+   * @param getAllMembersRequestSender the request sender for getting all member
    */
   @Autowired
-  private void registerRequestReceiver (RequestSender<Member> getAllMembersRequestSender,
-                                        RequestSender<Member> editMemberRequestSender,
-                                         RequestSender<Member> commitChangeMemberRequestSender,
-                                        RequestSender<Member> removeMemberRequestSender,
-                                        RequestSender<Member> addMemberRequestSender,
-                                        RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
+  private void registerRequestReceiver(RequestSender<Member> getAllMembersRequestSender,
+                                       RequestSender<Member> editMemberRequestSender,
+                                       RequestSender<Member> commitChangeMemberRequestSender,
+                                       RequestSender<Member> removeMemberRequestSender,
+                                       RequestSender<Member> addMemberRequestSender,
+                                       RequestSender<SwitchScene> getTopFiveMembersRequestSender) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
     editMemberRequestSender.registerReceiver(this::editMember);
     commitChangeMemberRequestSender.registerReceiver(this::commitChangeMember);
@@ -55,22 +61,31 @@ public class ActionOnMemController {
    *
    * @param member None
    */
-  private void getListAllMembers (Member member) {
-    memberListController.setTable(FXCollections.observableArrayList(
-            memberRetrievalService.getAll()
-    ));
+  private void getListAllMembers(Member member) {
+    try {
+      List<Member> memberList = memberRetrievalService.getAll();
+      memberList.sort(Comparator.comparing(Member::getId));
+      memberListController.setTable(FXCollections.observableArrayList(memberList));
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
 
   private void getTop5(SwitchScene switchScene) {
     menuController.setUserList(FXCollections.observableArrayList(memberRetrievalService.findTop5Records()));
   }
+
   /**
    * Edits the given member by setting it in the edit member controller.
    *
    * @param member the member to be edited
    */
   private void editMember(Member member) {
-    editMemController.setChosenMember(member);
+    try {
+      editMemController.setChosenMember(member);
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
 
   /**
@@ -79,7 +94,11 @@ public class ActionOnMemController {
    * @param member the member to be added
    */
   private void addMember(Member member) {
-    addNewMemController.setMember(memberEditingService.add(member));
+    try {
+      addNewMemController.setMember(memberEditingService.add(member));
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
 
   /**
@@ -88,7 +107,11 @@ public class ActionOnMemController {
    * @param member the member whose changes are to be committed
    */
   private void commitChangeMember(Member member) {
-    memberEditingService.update(member);
+    try {
+      memberEditingService.update(member);
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
 
   /**
@@ -97,7 +120,10 @@ public class ActionOnMemController {
    * @param member the member to be removed
    */
   private void removeMember(Member member) {
-    memberEditingService.delete(member.getId());
+    try {
+      memberEditingService.delete(member.getId());
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
-
 }

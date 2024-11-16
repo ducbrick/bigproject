@@ -1,6 +1,7 @@
 package threeoone.bigproject.services;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,9 @@ public class GoogleAPIService {
   @Value("${google.api.timeout}")
   private int googleBooksTimeout;
 
+  @Value("${google.api.key}")
+  private String googleBooksKey;
+
   /**
    * Finds a book by its ISBN using the Google Books API.
    *
@@ -37,7 +41,7 @@ public class GoogleAPIService {
    */
   // TODO: save imagePath
   public Document findBookByISBN(String isbn) {
-    JsonObject response = getJson(googleBooksURL + "isbn:" + isbn);
+    JsonObject response = getJson(googleBooksURL + "isbn:" + isbn + "&key=" + googleBooksKey);
     if(response == null) {
       return null;
     }
@@ -47,10 +51,22 @@ public class GoogleAPIService {
     }
     JsonObject info = response.get("items").getAsJsonArray().get(0).getAsJsonObject().get("volumeInfo").getAsJsonObject();
     Document document = new Document(info.get("title").getAsString(), info.get("description").getAsString());
-    document.setAuthor(info.get("authors").getAsString());
+    StringBuilder authors = new StringBuilder();
+    if(info.get("authors") != null) {
+      for(JsonElement author : info.get("authors").getAsJsonArray()) {
+        authors.append(author.getAsString()).append(", ");
+      }
+      authors.delete(authors.length() - 2, authors.length());
+      document.setAuthor(authors.toString());
+    }
     document.setIsbn(isbn);
     if(info.get("categories") != null){
-      document.setCategory(info.get("categories").getAsString());
+      StringBuilder categories = new StringBuilder();
+      for(JsonElement category : info.get("categories").getAsJsonArray()) {
+        categories.append(category.getAsString()).append(", ");
+      }
+      categories.delete(categories.length() - 2, categories.length());
+      document.setCategory(categories.toString());
     }
     else document.setCategory("Unknown");
     return document;
