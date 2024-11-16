@@ -26,12 +26,15 @@ import threeoone.bigproject.util.Alerts;
 @Setter
 public class EditMemController implements ViewController {
 
-  private final  RequestSender<ViewController> switchToMemList;
-  private final RequestSender<Member>  commitChangeMemberRequestSender;
+  private final RequestSender<ViewController> switchToMemList;
+  private final RequestSender<Member> commitChangeMemberRequestSender;
   private Member chosenMember;
 
   @FXML
-  private Parent root;
+  private TextField address;
+
+  @FXML
+  private TextField email;
 
   @FXML
   private Label id;
@@ -39,13 +42,22 @@ public class EditMemController implements ViewController {
   @FXML
   private TextField name;
 
+  @FXML
+  private TextField phoneNumber;
+
+  @FXML
+  private Parent root;
+
   /**
    * Initializes the controller class. This method is automatically called
    * after the FXML file has been loaded.
    */
   @FXML
   private void initialize() {
-    // Initialization code, if necessary
+    name.setOnAction(event -> phoneNumber.requestFocus());
+    phoneNumber.setOnAction(event -> address.requestFocus());
+    address.setOnAction(event -> email.requestFocus());
+    email.setOnAction(this::pressSubmit);
   }
 
   /**
@@ -71,6 +83,9 @@ public class EditMemController implements ViewController {
       Alerts.showAlertWarning("No change!", "Name text field is empty. Member name will be remained");
     } else {
       chosenMember.setName(name.getText());
+      chosenMember.setPhoneNumber(phoneNumber.getText());
+      chosenMember.setAddress(address.getText());
+      chosenMember.setEmail(email.getText());
     }
     commitChangeMemberRequestSender.send(chosenMember);
     switchToMemList.send(this);
@@ -98,5 +113,8 @@ public class EditMemController implements ViewController {
     }
     id.setText(String.valueOf(chosenMember.getId()));
     name.setText(chosenMember.getName());
+    phoneNumber.setText(chosenMember.getPhoneNumber());
+    address.setText(chosenMember.getAddress());
+    email.setText(chosenMember.getEmail());
   }
 }

@@ -97,7 +97,10 @@ public class MemberListController implements ViewController {
     return MenuItemFactory.createMenuItem("Remove",
             "Remove Confirmation",
             "Are you sure you want to remove this member?",
-            unused -> removeMemberRequestSender.send(chosenMember));
+            unused -> {
+              removeMemberRequestSender.send(chosenMember);
+              getAllMembersRequestSender.send(null);
+            });
   }
 
   /**

@@ -174,6 +174,12 @@ public class AddNewDocController implements ViewController {
   @Override
   public void show() {
     docCover.setImage(new Image(coverPhotoPath));
+    name.setText("");
+    author.setText("");
+    description.setText("");
+    categories.setText("");
+    isbn.setText("");
+    numOfCopies.setText("");
   }
 
   /**
