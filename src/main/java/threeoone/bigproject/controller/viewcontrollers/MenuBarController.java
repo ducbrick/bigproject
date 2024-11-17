@@ -15,7 +15,7 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
  * simple ahh menu bar.
  * <p>
  * This controller controls a menubar which appears on the left of the page.
- * It has 4 buttons to: Menu, Add Document, Your Documents and Document Overview (called Borrow)
+ * It has buttons to: Menu, AddDocument, (all borrowed documents), DocumentOverview (called Borrow) and MemberList
  * </p>
  * The menubar is defined in {@code Menubar.fxml}. To include the menubar in a view,
  * use fx:include on the FXML of that view. This creates NEW objects for that view's FXML
@@ -35,6 +35,9 @@ public class MenuBarController {
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToSearch;
+  private final RequestSender<ViewController> switchToMemList;
+  private final RequestSender<ViewController> switchToLendingDetail;
+
   @FXML
   private VBox box;
   /**
@@ -54,6 +57,12 @@ public class MenuBarController {
 
   @FXML
   private Button Search;
+
+  @FXML
+  private Button MemList;
+
+  @FXML
+  private Button Lend;
 
   /**
    * actual methods to change view
@@ -82,6 +91,12 @@ public class MenuBarController {
   private void toSearch() {
     switchToSearch.send(null);
   }
+
+  @FXML
+  private void toMemberList() { switchToMemList.send(null); }
+
+  @FXML
+  private void toLend() { switchToLendingDetail.send(null); }
 
   /**
    * highlight one button according to the {@code SceneName}.<br>

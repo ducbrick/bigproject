@@ -20,21 +20,25 @@ import threeoone.bigproject.view.ViewSwitcher;
 @Component
 @RequiredArgsConstructor
 public class SwitchViewController {
-  private final MenuController menuController;
   private final ViewSwitcher viewSwitcher;
+
+  private final RegisterController registerController;
+  private final LoginController loginController;
+  private final MenuController menuController;
+
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
-  private final LoginController loginController;
   private final YourBooksController yourBooksController;
-  private final RegisterController registerController;
   private final AddNewDocController addNewDocController;
-  private final SearchPageController searchPageController;
   private final EditDocumentController editDocumentController;
-  private final EditMemController editMemController;
-  private final MemberListController memberListController;
-  private final AddNewMemController addNewMemController;
-  private final LendingDetailController lendingDetailController;
 
+  private final MemberListController memberListController;
+  private final EditMemController editMemController;
+  private final AddNewMemController addNewMemController;
+  private final MemberDetailsController memberDetailsController;
+
+  private final LendingDetailController lendingDetailController;
+  private final SearchPageController searchPageController;
   /**
    * Registers request receivers for switching to different scenes.
    *
@@ -66,7 +70,8 @@ public class SwitchViewController {
           RequestSender<ViewController> switchToEditMem,
           RequestSender<ViewController> switchToAddMem,
           RequestSender<ViewController> switchToYourBooks,
-          RequestSender<ViewController> switchToLendingDetail
+          RequestSender<ViewController> switchToLendingDetail,
+          RequestSender<ViewController> switchToMemberDetails
   ) {
     switchToDocOverview.registerReceiver(this::switchToDocOverview);
     switchToMainMenu.registerReceiver(this::switchToMainMenu);
@@ -81,6 +86,7 @@ public class SwitchViewController {
     switchToAddMem.registerReceiver(this::switchToAddMem);
     switchToYourBooks.registerReceiver(this::switchToYourBooks);
     switchToLendingDetail.registerReceiver(this::switchToLendingDetail);
+    switchToMemberDetails.registerReceiver(this::switchToMemberDetails);
   }
 
   /**
@@ -172,6 +178,11 @@ public class SwitchViewController {
   private void switchToMemList(ViewController from) {
     viewSwitcher.switchToView(memberListController);
   }
+
+  /**
+   * same as the two above and under me :)
+   */
+  private void switchToMemberDetails(ViewController from) { viewSwitcher.switchToView(memberDetailsController); }
 
   /**
    * Switches to the add new member view.
