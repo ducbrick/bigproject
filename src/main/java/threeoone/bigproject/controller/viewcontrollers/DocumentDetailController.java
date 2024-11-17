@@ -78,7 +78,6 @@ public class DocumentDetailController implements ViewController {
      */
     @Override
     public void show() {
-
         Platform.runLater(() -> {
             bookName.setText("Name:" + document.getName());
             bookDescription.setText("Description:" + document.getDescription());

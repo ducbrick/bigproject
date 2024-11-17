@@ -30,7 +30,8 @@ import java.util.*;
 /**
  * this view present information about a specific member, which include their name, address, phone number
  * email and the books they are currently borrowing.
- * TODO: lending details retrieval service
+ * the books which the member is borrowing is displayed in a interactive table
+ * TODO: laggy document detail
  */
 @Component
 @FxmlView("MemberDetails.fxml")
@@ -125,20 +126,10 @@ public class MemberDetailsController implements ViewController{
 
     /**
      * TODO: retrieve lending details of member
-     * display member's name and set table's data to member's lending details
+     * display member's info and set table's data to member's lending details
      */
     @Override
     public void show() {
-        /**member = new Member("RAHHHHHH");
-        LendingDetail lendingDetail1 = new LendingDetail(LocalDateTime.now());
-        Document doc1 = new Document("test1", "desc1");
-        doc1.setId(0);
-        lendingDetail1.setDocument(doc1);
-        lendingDetail1.setMember(member);
-        List<LendingDetail> lendingDetails = new ArrayList<>();
-        lendingDetails.add(lendingDetail1);
-        member.setLendingDetails(lendingDetails);
-         */
         ObservableList<LendingDetail> lendingDetailObservableList = FXCollections.observableList(member.getLendingDetails());
         BorrowingBooks.setItems(lendingDetailObservableList);
         Name.setText(member.getName());
