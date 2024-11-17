@@ -95,8 +95,8 @@ public class EditDocumentController implements ViewController {
         submitButton.fire();
       }
     });
-    //Image temp = new Image(coverPhotoPath);
-    //image.setImage(temp);
+    Image temp = new Image(coverPhotoPath);
+    image.setImage(temp);
   }
 
   /**
