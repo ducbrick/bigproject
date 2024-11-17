@@ -374,15 +374,6 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
-  /**
-   * Creates a bean for RequestSender that switches to the search page.
-   *
-   * @return an instance of RequestSender for switching to the search page.
-   */
-  @Bean
-  public RequestSender<ViewController> switchToSearch() {
-    return new RequestSender<>();
-  }
 
   /**
    * Creates a bean for RequestSender that switches to the edit document page.

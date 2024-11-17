@@ -34,7 +34,6 @@ public class MenuBarController {
   private final RequestSender<ViewController> switchToYourBooks;
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<ViewController> switchToMainMenu;
-  private final RequestSender<ViewController> switchToSearch;
   @FXML
   private VBox box;
   /**
@@ -80,7 +79,6 @@ public class MenuBarController {
 
   @FXML
   private void toSearch() {
-    switchToSearch.send(null);
   }
 
   /**

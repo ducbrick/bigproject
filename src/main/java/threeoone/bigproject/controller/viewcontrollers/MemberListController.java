@@ -28,7 +28,6 @@ public class MemberListController implements ViewController {
   private final RequestSender<ViewController> switchToEditMem;
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToMainMenu;
-  private final RequestSender<ViewController> switchToSearch;
   private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<Member> editMemberRequestSender;
   private final RequestSender<Member> removeMemberRequestSender;
@@ -151,15 +150,6 @@ public class MemberListController implements ViewController {
     switchToMainMenu.send(null);
   }
 
-  /**
-   * Handler for search button. Go to search page.
-   *
-   * @param event event trigger button
-   */
-  @FXML
-  private void pressSearch(ActionEvent event) {
-    switchToSearch.send(null);
-  }
 
 
   /**
