@@ -36,7 +36,7 @@ public class JavaFxApplication extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     ViewSwitcher viewSwitcher = context.getBean(ViewSwitcher.class);
-    ViewController startController = context.getBean(LoginController.class);
+    ViewController startController = context.getBean(MemberListController.class);
     viewSwitcher.setStage(stage, startController);
   }
 

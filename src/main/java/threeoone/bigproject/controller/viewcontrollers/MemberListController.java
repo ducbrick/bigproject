@@ -32,11 +32,15 @@ public class MemberListController implements ViewController {
   private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<Member> editMemberRequestSender;
   private final RequestSender<Member> removeMemberRequestSender;
-  @FXML
-  private Parent root;
 
   @FXML
-  private TableView<Member> table;
+  private TableColumn<?, ?> address;
+
+  @FXML
+  private ContextMenu contextMenu;
+
+  @FXML
+  private TableColumn<Member, String> email;
 
   @FXML
   private TableColumn<Member, String> id;
@@ -45,14 +49,20 @@ public class MemberListController implements ViewController {
   private TableColumn<Member, String> name;
 
   @FXML
-  private ContextMenu contextMenu;
+  private TableColumn<Member, String> phone;
+
+  @FXML
+  private SplitPane root;
+
+  @FXML
+  private TableView<Member> table;
 
   private Member chosenMember;
 
   /**
    * Initialized method for FXML page
    */
-  // TODO: go to member detail
+
   @FXML
   private void initialize() {
     contextMenu.getItems().add(remove());
@@ -63,8 +73,7 @@ public class MemberListController implements ViewController {
       row.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2 && (!row.isEmpty())) {
           Member member = row.getItem();
-          // Go to member detail
-//          System.out.println(member.getName());
+          // TODO: go to member detail
         }
       });
       //handle show context menu
@@ -85,6 +94,9 @@ public class MemberListController implements ViewController {
     });
     id.setCellValueFactory(new PropertyValueFactory<>("id"));
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
+    email.setCellValueFactory(new PropertyValueFactory<>("email"));
+    phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+    address.setCellValueFactory(new PropertyValueFactory<>("address"));
   }
 
   /**

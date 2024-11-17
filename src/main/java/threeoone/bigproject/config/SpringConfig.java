@@ -299,6 +299,17 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  /**
+   * Creates and returns a bean for RequestSender that handles queries for member information by ID
+   * from Lending Detail Page.
+   *
+   * @return a new instance of RequestSender for queries by member ID.
+   */
+  @Bean
+  public RequestSender<Integer> queryMemByIdFromLendingRequestSender() {
+    return new RequestSender<>();
+  }
+
   /*************************************************************************
    *  All request sender for switch scene
    ***************************************************************************/

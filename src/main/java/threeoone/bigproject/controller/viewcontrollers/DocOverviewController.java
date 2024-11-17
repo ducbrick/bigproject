@@ -178,14 +178,6 @@ public class DocOverviewController implements ViewController {
             });
   }
 
-  /**
-   * Handle action for pressing search button
-   */
-  @FXML
-  private void pressSearch() {
-    switchToSearch.send(this);
-  }
-
 
   /**
    * Sets the items in the document table with the given list.

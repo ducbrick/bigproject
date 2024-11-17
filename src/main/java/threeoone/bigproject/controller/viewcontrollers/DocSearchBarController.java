@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import lombok.Getter;
@@ -15,11 +14,7 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.*;
-import threeoone.bigproject.controller.observers.DataType;
-import threeoone.bigproject.controller.observers.QueryPublisher;
 import threeoone.bigproject.entities.Document;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The {@code SearchBarController} class manages the search functionality in the UI.
@@ -28,31 +23,40 @@ import java.util.List;
  *
  * @author HUY1902
  */
+
 @Component
-@FxmlView("MemberSearchBar.fxml")
+@FxmlView("DocSearchBar.fxml")
 @RequiredArgsConstructor
 @Getter
 public class DocSearchBarController {
-  private final QueryPublisher queryPublisher;
+  private final RequestSender<ViewController> switchToDocDetail;
   private final RequestSender<Integer> queryDocByIdRequestSender;
-  private final List<ToggleButton> toggleButtons = new ArrayList<>();
+  private final RequestSender<Document> documentDetailRequestSender;
+
   private final PauseTransition hideTimer = new PauseTransition();
 
   private final int CELL_SIZE = 30;
   private final Popup popup = new Popup();
   private final ListView<Document> documentListView = new ListView<>();
 
-  @FXML
-  private HBox hbox;
+  private enum Type {
+    Author,
+    Name,
+    Category,
+    Id
+  }
 
   @FXML
   private TextField search;
 
   @FXML
+  private Button searchButton;
+
+  @FXML
   private GridPane searchRoot;
 
   @FXML
-  private Button searchButton;
+  private ChoiceBox<Type> type;
 
 
   /**
@@ -60,11 +64,8 @@ public class DocSearchBarController {
    */
   @FXML
   private void initialize() {
-    toggleButtons.add(new ToggleButton("ID"));
-    toggleButtons.add(new ToggleButton("Name"));
-    toggleButtons.add(new ToggleButton("Author"));
-    toggleButtons.add(new ToggleButton("Category"));
-    hbox.getChildren().addAll(toggleButtons);
+    type.getItems().addAll(Type.values());
+
     hideTimer.setDuration(Duration.seconds(2));
     hideTimer.setOnFinished(event -> popup.hide());
 
@@ -80,7 +81,8 @@ public class DocSearchBarController {
 
     documentListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       if (newValue != null) {
-        queryPublisher.notifySubscribers(DataType.DOCUMENT, newValue);
+        switchToDocDetail.send(null);
+        documentDetailRequestSender.send(newValue);
         popup.hide();
       }
     });
@@ -92,6 +94,7 @@ public class DocSearchBarController {
       }
     });
     documentListView.setFixedCellSize(CELL_SIZE);
+    popup.getContent().clear();
     popup.getContent().add(documentListView);
   }
 
@@ -103,19 +106,18 @@ public class DocSearchBarController {
    */
   @FXML
   private void pressSearch(ActionEvent event) {
-    if (search.getText().isEmpty()) {
+    if (search.getText().isEmpty() || type.getValue() == null) {
       return;
     }
     documentListView.getItems().clear();
-    for (ToggleButton toggleButton : toggleButtons) {
-      if (toggleButton.isSelected()) {
-        switch (toggleButton.getText()) {
-          case "ID" -> {
-            queryDocByIdRequestSender.send(Integer.valueOf(search.getText()));
-          }
-        }
-      }
+
+    switch (type.getValue()) {
+      case Name -> {}
+      case Author -> {}
+      case Category -> {}
+      case Id -> queryDocByIdRequestSender.send(Integer.valueOf(search.getText()));
     }
+
     documentListView.setPrefHeight(documentListView.getItems().size() * CELL_SIZE);
     popup.setHeight(documentListView.getHeight());
     if (!documentListView.getItems().isEmpty() && !popup.isShowing()) {
