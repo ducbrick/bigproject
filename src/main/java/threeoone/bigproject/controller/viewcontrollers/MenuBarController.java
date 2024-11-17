@@ -104,7 +104,6 @@ public class MenuBarController {
   public void highlight(SceneName sceneName) {
     Button button = switch (sceneName) {
       case ADD_NEW_DOC -> AddBook;
-      case YOUR_BOOKS -> YourBooks;
       case DOC_OVERVIEW -> DocOverview;
       case MAIN_MENU -> Menu;
       case SEARCH -> Search;

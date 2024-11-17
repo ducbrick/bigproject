@@ -14,7 +14,7 @@
                   <Insets top="150.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="AddBook" mnemonicParsing="false" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="99.0" text="Add Book">
+            <Button fx:id="AddBook" mnemonicParsing="false" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="82.0" styleClass="normal-button" text="Add Books">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
