@@ -127,5 +127,8 @@ public class ActionOnMemController {
     }
   }
 
-  private void memberDetail(Member member) { memberDetailsController.setMember(member); }
+  private void memberDetail(Member member) {
+    Member temp = memberRetrievalService.findWithLendingDetails(member.getId());
+    memberDetailsController.setMember(temp);
+  }
 }

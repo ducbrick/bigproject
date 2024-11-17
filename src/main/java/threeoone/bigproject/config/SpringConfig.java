@@ -452,5 +452,4 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
-
 }

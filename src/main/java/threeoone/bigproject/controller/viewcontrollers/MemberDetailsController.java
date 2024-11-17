@@ -47,6 +47,15 @@ public class MemberDetailsController implements ViewController{
     @FXML
     private Label Name;
 
+    @FXML
+    private Label Phone;
+
+    @FXML
+    private Label Email;
+
+    @FXML
+    private Label Address;
+
     /**
      * the table and its columns
      */
@@ -132,6 +141,9 @@ public class MemberDetailsController implements ViewController{
          */
         ObservableList<LendingDetail> lendingDetailObservableList = FXCollections.observableList(member.getLendingDetails());
         BorrowingBooks.setItems(lendingDetailObservableList);
-        Name.setText("Name: " + member.getName());
+        Name.setText(member.getName());
+        Phone.setText(member.getAddress());
+        Address.setText(member.getAddress());
+        Email.setText(member.getEmail());
     }
 }

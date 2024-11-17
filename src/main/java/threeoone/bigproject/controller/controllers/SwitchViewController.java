@@ -20,22 +20,25 @@ import threeoone.bigproject.view.ViewSwitcher;
 @Component
 @RequiredArgsConstructor
 public class SwitchViewController {
-  private final MenuController menuController;
   private final ViewSwitcher viewSwitcher;
+
+  private final RegisterController registerController;
+  private final LoginController loginController;
+  private final MenuController menuController;
+
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
-  private final LoginController loginController;
   private final YourBooksController yourBooksController;
-  private final RegisterController registerController;
   private final AddNewDocController addNewDocController;
-  private final SearchPageController searchPageController;
   private final EditDocumentController editDocumentController;
-  private final EditMemController editMemController;
+
   private final MemberListController memberListController;
+  private final EditMemController editMemController;
   private final AddNewMemController addNewMemController;
-  private final LendingDetailController lendingDetailController;
   private final MemberDetailsController memberDetailsController;
 
+  private final LendingDetailController lendingDetailController;
+  private final SearchPageController searchPageController;
   /**
    * Registers request receivers for switching to different scenes.
    *
