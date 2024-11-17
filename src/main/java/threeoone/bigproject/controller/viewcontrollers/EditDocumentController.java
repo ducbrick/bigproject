@@ -58,7 +58,7 @@ public class EditDocumentController implements ViewController {
 
   private Document document;
 
-  //@Value("${document.photo-path.default}")
+  @Value("${document.photo-path.default}")
   private String coverPhotoPath;
 
   /**
