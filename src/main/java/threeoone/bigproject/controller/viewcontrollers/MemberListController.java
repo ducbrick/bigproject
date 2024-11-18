@@ -28,12 +28,14 @@ public class MemberListController implements ViewController {
   private final RequestSender<ViewController> switchToEditMem;
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToMainMenu;
+  private final RequestSender<ViewController> switchToSearch;
+  private final RequestSender<ViewController> switchToMemberDetails;
   private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<Member> editMemberRequestSender;
   private final RequestSender<Member> removeMemberRequestSender;
-
+  private final RequestSender<Member> memberDetailsRequestSender;
   @FXML
-  private TableColumn<?, ?> address;
+  private TableColumn<Member, String> address;
 
   @FXML
   private ContextMenu contextMenu;
@@ -72,7 +74,7 @@ public class MemberListController implements ViewController {
       row.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2 && (!row.isEmpty())) {
           Member member = row.getItem();
-          // TODO: go to member detail
+          seeMemberDetail(member);
         }
       });
       //handle show context menu
@@ -151,6 +153,14 @@ public class MemberListController implements ViewController {
   }
 
 
+  /**
+   * sends selected member to member detail page (to show it, obviously)
+   * @param member the member selected (from the table)
+   */
+  private void seeMemberDetail(Member member) {
+    memberDetailsRequestSender.send(member);
+    switchToMemberDetails.send(this);
+  }
 
   /**
    * Sets the items in the {@link #table} with the given member list.

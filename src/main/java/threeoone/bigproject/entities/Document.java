@@ -28,6 +28,7 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  *                        a total of {@link #copies} physical copies,
  *                        an {@link #author},
  *                        an {@link #isbn},
+ *                        a cover image at {@link #coverImageUrl}
  *                        and uploaded at {@link #uploadTime}.
  * A {@link Document} has an {@link #uploader},
  * representing the {@link User} who uploaded this {@link Document}.
@@ -45,7 +46,7 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  */
 @Entity
 @Table(name = "document")
-@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
+@NoArgsConstructor @Getter @Setter
 public class Document {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,12 +69,25 @@ public class Document {
 
   private String category;
 
+  @NonNull
+  @Column(name = "cover_image_url")
+  private String coverImageUrl = "threeoone/bigproject/controller/viewcontrollers/No_image_available.png";
+
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "uploader_id", nullable = false)
   private User uploader;
 
   @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
   private List <LendingDetail> lendingDetails = new ArrayList <> ();
+
+  /**
+   * Constructs a new {@link Document} with the given parameters.
+   *
+   * @param name the name of the new {@link Document}
+   */
+  public Document(@NonNull String name) {
+    this.name = name;
+  }
 
   /**
    * Constructs a new {@link Document} with the given parameters.

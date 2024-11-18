@@ -31,6 +31,8 @@ public class FxmlControllerLoader {
       fxWeaver.load(AddNewDocController.class);
       fxWeaver.load(MenuBarController.class);
       fxWeaver.load(EditDocumentController.class);
+      fxWeaver.load(MemberDetailsController.class);
+      fxWeaver.load(SearchPageController.class);
       fxWeaver.load(MemberListController.class);
       fxWeaver.load(EditMemController.class);
       fxWeaver.load(AddNewMemController.class);

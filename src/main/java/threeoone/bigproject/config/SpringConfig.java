@@ -199,6 +199,14 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  /**
+   * sends a member entity to a view that needs it.
+   *
+   * @return a new {@code RequestSender} instance for {@code Member}
+   * repeating code is a sign of code smell
+   */
+  @Bean
+  public RequestSender<Member> memberDetailsRequestSender() { return new RequestSender<>(); }
 
   @Bean
   RequestSender<SwitchScene> getTopFiveMembersRequestSender() {
@@ -270,6 +278,11 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  /**
+   * get a document of the ID sent
+   * TODO: EVIL DOPPELGANGER ABOVE ME, DO SOMETHING ABOUT IT
+   * @return
+   */
   @Bean
   public RequestSender<Integer> getDocumentByIdRequestSender() {
     return new RequestSender<>();
@@ -435,4 +448,10 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  /**
+   * same as the one above me <3
+   * @return an instance of SAME AS THE ONE ABOVE ME BUT MEMBER DETAIL
+   */
+  @Bean
+  public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
 }

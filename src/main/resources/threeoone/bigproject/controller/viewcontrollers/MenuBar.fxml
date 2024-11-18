@@ -22,6 +22,8 @@
             <Button fx:id="DocOverview" mnemonicParsing="false" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="96.0" text="Browse books" />
             <Button fx:id="YourBooks" mnemonicParsing="false" onMouseClicked="#toYourBooks" prefHeight="54.0" prefWidth="87.0" text="Your books" />
             <Button fx:id="Search" mnemonicParsing="false" onMouseClicked="#toSearch" prefHeight="58.0" prefWidth="89.0" text="Search" />
+            <Button fx:id="MemList" mnemonicParsing="false" onMouseClicked="#toMemberList" prefHeight="58.0" prefWidth="89.0" text="Browse Members" />
+            <Button fx:id="Lend" mnemonicParsing="false" onMouseClicked="#toLend" prefHeight="58.0" prefWidth="90.0" text="Lend" />
          </children>
       </VBox>
    </children>
