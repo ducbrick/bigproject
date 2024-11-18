@@ -18,6 +18,7 @@ CREATE TABLE document (
 	upload_time TIMESTAMP,
 	category VARCHAR(255),
 	copies INTEGER NOT NULL,
+	cover_image_url VARCHAR(255) NOT NULL DEFAULT 'threeoone/bigproject/controller/viewcontrollers/No_image_available.png',
 	uploader_id INTEGER REFERENCES app_user NOT NULL
 );
 

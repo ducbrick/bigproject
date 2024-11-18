@@ -140,8 +140,17 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Retrieve a Document and its lending copies")
   public void documentWithLending() {
-    Member memA = new Member("name A");
-    Member memB = new Member("name B");
+    Member memA = new Member();
+    memA.setName("name A");
+    memA.setPhoneNumber("1234567890");
+    memA.setAddress("an address");
+    memA.setEmail("abc@xyz.com");
+
+    Member memB = new Member();
+    memB.setName("name B");
+    memB.setPhoneNumber("1234567890");
+    memB.setAddress("an address");
+    memB.setEmail("abc@xyz.com");
 
     User user = new User("name", "password");
 
