@@ -312,6 +312,17 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+  /**
+   * Creates and returns a bean for RequestSender that handles queries for member information by ID
+   * from Lending Detail Page.
+   *
+   * @return a new instance of RequestSender for queries by member ID.
+   */
+  @Bean
+  public RequestSender<Integer> queryMemByIdFromLendingRequestSender() {
+    return new RequestSender<>();
+  }
+
   /*************************************************************************
    *  All request sender for switch scene
    ***************************************************************************/
@@ -376,15 +387,6 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
-  /**
-   * Creates a bean for RequestSender that switches to the search page.
-   *
-   * @return an instance of RequestSender for switching to the search page.
-   */
-  @Bean
-  public RequestSender<ViewController> switchToSearch() {
-    return new RequestSender<>();
-  }
 
   /**
    * Creates a bean for RequestSender that switches to the edit document page.

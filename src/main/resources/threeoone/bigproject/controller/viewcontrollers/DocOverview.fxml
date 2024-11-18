@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <SplitPane fx:id="root" dividerPositions="0.15776293823038398" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
    <items>
       <VBox prefHeight="200.0" prefWidth="100.0" />
@@ -48,13 +47,14 @@
             </GridPane>
          </bottom>
          <top>
-            <VBox alignment="CENTER" prefHeight="89.0" prefWidth="1021.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="searchHolder" alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
                     <Label prefHeight="46.0" prefWidth="224.0" styleClass="label" text="Document Overview">
                         <font>
                             <Font name="System Bold" size="23.0" />
                         </font>
                     </Label>
+                   <fx:include source="DocSearchBar.fxml" />
                </children>
             </VBox>
          </top>

@@ -21,15 +21,18 @@
             <VBox alignment="CENTER" prefHeight="127.0" prefWidth="968.0" BorderPane.alignment="CENTER">
                <children>
                   <Label stylesheets="@DocOverviewStyle.css" text="MEMBER LIST" />
-                  <Button mnemonicParsing="false" onAction="#pressSearch" text="Search member" />
+                   <fx:include source="MemberSearchBar.fxml" />
                </children>
             </VBox>
          </top>
          <center>
             <TableView fx:id="table" prefHeight="200.0" prefWidth="957.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="id" prefWidth="201.0" text="ID" />
-                <TableColumn fx:id="name" prefWidth="755.0" text="Member name" />
+                <TableColumn fx:id="id" prefWidth="64.0" text="ID" />
+                <TableColumn fx:id="name" prefWidth="158.0" text="Member name" />
+                  <TableColumn fx:id="phone" prefWidth="156.0" text="Phone number" />
+                  <TableColumn fx:id="email" prefWidth="188.0" text="Email" />
+                  <TableColumn fx:id="address" prefWidth="391.0" text="Address" />
               </columns>
                <contextMenu>
                   <ContextMenu fx:id="contextMenu" />

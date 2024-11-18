@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
 import javafx.util.Duration;
 import lombok.Getter;
@@ -15,11 +14,7 @@ import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.*;
-import threeoone.bigproject.controller.observers.DataType;
-import threeoone.bigproject.controller.observers.QueryPublisher;
 import threeoone.bigproject.entities.Member;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The {@code SearchBarController} class manages the search functionality in the UI.
@@ -33,37 +28,40 @@ import java.util.List;
 @RequiredArgsConstructor
 @Getter
 public class MemberSearchBarController {
-  private final QueryPublisher queryPublisher;
+
   private final RequestSender<String> queryMemByNameRequestSender;
   private final RequestSender<Integer> queryMemByIdRequestSender;
-  private final List<ToggleButton> toggleButtons = new ArrayList<>();
+
   private final PauseTransition hideTimer = new PauseTransition();
 
   private final int CELL_SIZE = 30;
   private final Popup popup = new Popup();
   private final ListView<Member> memberListView = new ListView<>();
 
-  @FXML
-  private HBox hbox;
+  private enum Type {
+    Name,
+    Id
+  }
 
   @FXML
   private TextField search;
 
   @FXML
+  private Button searchButton;
+
+  @FXML
   private GridPane searchRoot;
 
   @FXML
-  private Button searchButton;
-
+  private ChoiceBox<Type> type;
 
   /**
    * Initializes the controller, setting up the toggle buttons, list view, and popup.
    */
   @FXML
   private void initialize() {
-    toggleButtons.add(new ToggleButton("UserID"));
-    toggleButtons.add(new ToggleButton("UserName"));
-    hbox.getChildren().addAll(toggleButtons);
+    type.getItems().addAll(Type.values());
+
     hideTimer.setDuration(Duration.seconds(2));
     hideTimer.setOnFinished(event -> popup.hide());
 
@@ -79,7 +77,7 @@ public class MemberSearchBarController {
 
     memberListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
       if (newValue != null) {
-        queryPublisher.notifySubscribers(DataType.MEMBER, newValue);
+        // TODO: go to member detail page
         popup.hide();
       }
     });
@@ -91,6 +89,7 @@ public class MemberSearchBarController {
       }
     });
     memberListView.setFixedCellSize(CELL_SIZE);
+    popup.getContent().clear();
     popup.getContent().add(memberListView);
   }
 
@@ -105,19 +104,14 @@ public class MemberSearchBarController {
     if (search.getText().isEmpty()) {
       return;
     }
+
     memberListView.getItems().clear();
-    for (ToggleButton toggleButton : toggleButtons) {
-      if (toggleButton.isSelected()) {
-        switch (toggleButton.getText()) {
-          case "UserID" -> {
-            queryMemByIdRequestSender.send(Integer.valueOf(search.getText()));
-          }
-          case "UserName" -> {
-            queryMemByNameRequestSender.send(search.getText());
-          }
-        }
-      }
+
+    switch (type.getValue()) {
+      case Name -> queryMemByNameRequestSender.send(search.getText());
+      case Id -> queryMemByIdRequestSender.send(Integer.valueOf(search.getText()));
     }
+
     memberListView.setPrefHeight(memberListView.getItems().size() * CELL_SIZE);
     popup.setHeight(memberListView.getHeight());
     if (!memberListView.getItems().isEmpty() && !popup.isShowing()) {

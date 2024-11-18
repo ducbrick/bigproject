@@ -48,7 +48,6 @@ public class SwitchViewController {
    * @param switchToLogin       RequestSender for switching to login scene.
    * @param switchToSignup      RequestSender for switching to signup scene.
    * @param switchToAddNewDoc   RequestSender for switching to add new document scene.
-   * @param switchToSearch      RequestSender for switching to search scene.
    * @param switchToEditDoc     RequestSender for switching to edit document scene.
    * @param switchToMemList     RequestSender for switching to member list scene.
    * @param switchToEditMem     RequestSender for switching to edit member scene.
@@ -64,7 +63,6 @@ public class SwitchViewController {
           RequestSender<ViewController> switchToLogin,
           RequestSender<ViewController> switchToSignup,
           RequestSender<ViewController> switchToAddNewDoc,
-          RequestSender<ViewController> switchToSearch,
           RequestSender<ViewController> switchToEditDoc,
           RequestSender<ViewController> switchToMemList,
           RequestSender<ViewController> switchToEditMem,
@@ -79,7 +77,6 @@ public class SwitchViewController {
     switchToLogin.registerReceiver(this::switchToLogin);
     switchToSignup.registerReceiver(this::switchToSignup);
     switchToAddNewDoc.registerReceiver(this::switchToAddNewDoc);
-    switchToSearch.registerReceiver(this::switchToSearch);
     switchToEditDoc.registerReceiver(this::switchToEditDoc);
     switchToMemList.registerReceiver(this::switchToMemList);
     switchToEditMem.registerReceiver(this::switchToEditMem);
@@ -150,15 +147,6 @@ public class SwitchViewController {
    */
   private void switchToAddNewDoc(ViewController from) {
     viewSwitcher.switchToView(addNewDocController);
-  }
-
-  /**
-   * Switches to the search view.
-   *
-   * @param from the current view controller.
-   */
-  private void switchToSearch(ViewController from) {
-    viewSwitcher.switchToView(searchPageController);
   }
 
   /**

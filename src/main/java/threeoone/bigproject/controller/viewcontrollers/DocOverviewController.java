@@ -36,7 +36,6 @@ import threeoone.bigproject.util.MenuItemFactory;
 public class DocOverviewController implements ViewController {
   private final RequestSender<User> getListAllDocumentRequestSender;
   private final RequestSender<Document> updateDocActionRequestSender;
-  private final RequestSender<ViewController> switchToSearch;
   private final RequestSender<ViewController> switchToEditDoc;
   private final RequestSender<ViewController> switchToDocDetail;
   private final RequestSender<ViewController> switchToMainMenu;
@@ -176,14 +175,6 @@ public class DocOverviewController implements ViewController {
               editDocumentRequestSender.send(chosenDoc);
               switchToEditDoc.send(null);
             });
-  }
-
-  /**
-   * Handle action for pressing search button
-   */
-  @FXML
-  private void pressSearch() {
-    switchToSearch.send(this);
   }
 
 

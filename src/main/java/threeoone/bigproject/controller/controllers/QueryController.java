@@ -28,6 +28,7 @@ public class QueryController {
   private final MemberSearchBarController memberSearchBarController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocSearchBarController docSearchBarController;
+  private final LendingDetailController lendingDetailController;
 
   /**
    * Registers the request sender for handling ISBN queries.
@@ -41,7 +42,8 @@ public class QueryController {
                                     RequestSender<String> queryDocByCategoryRequestSender,
                                     RequestSender<Integer> queryDocByIdRequestSender,
                                     RequestSender<String> queryMemByNameRequestSender,
-                                    RequestSender<Integer> queryMemByIdRequestSender) {
+                                    RequestSender<Integer> queryMemByIdRequestSender,
+                                    RequestSender<Integer> queryMemByIdFromLendingRequestSender) {
     queryISBNGoogleRequestSender.registerReceiver(this::getQueryAndFulFill);
     queryDocByIdRequestSender.registerReceiver(this::queryDocByID);
     queryDocByNameRequestSender.registerReceiver(this::queryDocByName);
@@ -49,6 +51,7 @@ public class QueryController {
     queryDocByCategoryRequestSender.registerReceiver(this::queryDocByCategory);
     queryMemByNameRequestSender.registerReceiver(this::queryMemByName);
     queryMemByIdRequestSender.registerReceiver(this::queryMemById);
+    queryMemByIdFromLendingRequestSender.registerReceiver(this::queryMemByIdFromLending);
   }
 
   /**
@@ -130,5 +133,8 @@ public class QueryController {
     // TODO: Implement the logic to query document by category
   }
 
-
+  private void queryMemByIdFromLending(Integer id) {
+    Member member = memberRetrievalService.findById(id);
+    lendingDetailController.setMember(member);
+  }
 }
