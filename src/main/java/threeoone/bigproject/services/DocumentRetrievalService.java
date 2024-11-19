@@ -2,6 +2,7 @@ package threeoone.bigproject.services;
 
 import java.util.List;
 import java.util.Optional;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Document;
@@ -60,5 +61,62 @@ public class DocumentRetrievalService {
    */
   public List<Document> getLatestDocuments() {
     return documentRepo.findTop5ByOrderByIdDesc();
+  }
+
+  /**
+   * Retrieves a List of Documents whose name contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param name the substring to retrieve Documents
+   *
+   * @return the List of Documents whose name contain the given substring
+   */
+  public List <Document> searchByName(@NonNull String name) {
+    return documentRepo.findWithNameContaining(name);
+  }
+
+  /**
+   * Retrieves a List of Documents whose author's name contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param author the substring to retrieve Documents
+   *
+   * @return the List of Documents whose author's names contain the given substring
+   */
+  public List <Document> searchByAuthor(@NonNull String author) {
+    return documentRepo.findWithAuthorContaining(author);
+  }
+
+  /**
+   * Retrieves a List of Documents belonging to certain category(s).
+   * Returns a List of Documents whose category contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param category the category substring to retrieve Documents
+   *
+   * @return the List of Documents whose category contains the given substring
+   */
+  public List <Document> searchByCategory(@NonNull String category) {
+    return documentRepo.findWithCategoryContaining(category);
+  }
+
+  /**
+   * Retrieves a List of Documents whose isbn contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param isbn the substring to retrieve Documents
+   *
+   * @return the List of Documents whose isbn contain the given substring
+   */
+  public List <Document> searchByIsbn(@NonNull String isbn) {
+    return documentRepo.findWithIsbnContaining(isbn);
   }
 }
