@@ -32,7 +32,6 @@ public class FxmlControllerLoader {
       fxWeaver.load(MenuBarController.class);
       fxWeaver.load(EditDocumentController.class);
       fxWeaver.load(MemberDetailsController.class);
-//      fxWeaver.load(SearchPageController.class);
       fxWeaver.load(MemberListController.class);
       fxWeaver.load(EditMemController.class);
       fxWeaver.load(AddNewMemController.class);

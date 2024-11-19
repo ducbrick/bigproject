@@ -38,7 +38,6 @@ public class SwitchViewController {
   private final MemberDetailsController memberDetailsController;
 
   private final LendingDetailController lendingDetailController;
-//  private final SearchPageController searchPageController;
   /**
    * Registers request receivers for switching to different scenes.
    *
