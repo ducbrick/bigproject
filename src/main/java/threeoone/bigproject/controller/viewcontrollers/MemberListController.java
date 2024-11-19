@@ -28,7 +28,7 @@ public class MemberListController implements ViewController {
   private final RequestSender<ViewController> switchToEditMem;
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToMainMenu;
-  private final RequestSender<ViewController> switchToSearch;
+//  private final RequestSender<ViewController> switchToSearch;
   private final RequestSender<ViewController> switchToMemberDetails;
   private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<Member> editMemberRequestSender;
