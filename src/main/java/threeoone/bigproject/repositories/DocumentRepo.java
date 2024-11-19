@@ -47,4 +47,57 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
    */
   @Query("SELECT d FROM Document d WHERE d.copies > 0 ORDER BY RANDOM() LIMIT 1")
   Document findRandom();
+
+  /**
+   * Retrieves a List of Documents whose name contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param substr the substring to retrieve Documents
+   *
+   * @return the List of Documents whose name contain the given substring
+   */
+  @Query("SELECT d from Document d WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', :substr, '%'))")
+  List <Document> findWithNameContaining(@Param("substr") String substr);
+
+  /**
+   * Retrieves a List of Documents whose author's name contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param substr the substring to retrieve Documents
+   *
+   * @return the List of Documents whose author's names contain the given substring
+   */
+  @Query("SELECT d from Document d WHERE LOWER(d.author) LIKE LOWER(CONCAT('%', :substr, '%'))")
+  List <Document> findWithAuthorContaining(@Param("substr") String substr);
+
+  /**
+   * Retrieves a List of Documents belonging to certain category(s).
+   * Returns a List of Documents whose category contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param substr the category substring to retrieve Documents
+   *
+   * @return the List of Documents whose category contains the given substring
+   */
+  @Query("SELECT d from Document d WHERE LOWER(d.category) LIKE LOWER(CONCAT('%', :substr, '%'))")
+  List <Document> findWithCategoryContaining(@Param("substr") String substr);
+
+  /**
+   * Retrieves a List of Documents whose isbn contains the given substring.
+   *
+   * @apiNote the list returned will not be {@code NULL}.
+   * @apiNote this method is not case-sensitive.
+   *
+   * @param substr the substring to retrieve Documents
+   *
+   * @return the List of Documents whose isbn contain the given substring
+   */
+  @Query("SELECT d from Document d WHERE LOWER(d.isbn) LIKE LOWER(CONCAT('%', :substr, '%'))")
+  List <Document> findWithIsbnContaining(@Param("substr") String substr);
 }
