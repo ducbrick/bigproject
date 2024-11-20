@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
 
-      <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="background">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="background" stylesheets="@CSS/general.css">
          <right>
             <VBox prefHeight="616.0" prefWidth="0.0" BorderPane.alignment="CENTER">
                <children>
@@ -43,16 +43,16 @@
                         </Button>
                      </children>
                   </HBox>
-                  <VBox layoutX="593.0" layoutY="32.0" prefHeight="162.0" prefWidth="262.0">
+                  <VBox layoutX="593.0" layoutY="32.0" prefHeight="162.0" prefWidth="262.0" AnchorPane.rightAnchor="264.6">
                      <children>
-                        <Label fx:id="NumOfLendings" prefHeight="92.0" prefWidth="262.0" styleClass="button" text="Borrowing: 69 books">
+                        <Label fx:id="NumOfLendings" prefHeight="92.0" prefWidth="262.0" styleClass="normal-button" text="Borrowing: 69 books." textAlignment="CENTER" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin></Label>
-                        <Button fx:id="Random" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="89.0" prefWidth="262.0" text="Random" />
+                        <Button fx:id="Random" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="89.0" prefWidth="262.0" styleClass="normal-button" text="Random" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>
-                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="204.0" prefWidth="446.0" styleClass="pane">
+                  <VBox layoutX="86.0" layoutY="236.0" prefHeight="204.0" prefWidth="446.0" styleClass="pane" AnchorPane.leftAnchor="85.60000000000002">
                      <children>
                         <Label prefHeight="38.0" prefWidth="454.0" text="User list">
                            <font>
@@ -66,7 +66,7 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="206.0" prefWidth="463.0" styleClass="pane">
+                  <VBox layoutX="593.0" layoutY="234.0" prefHeight="206.0" prefWidth="463.0" styleClass="pane" AnchorPane.rightAnchor="63.80000000000001">
                      <children>
                         <Label prefHeight="36.0" prefWidth="456.0" text="Latest uploads">
                            <font>
@@ -83,7 +83,7 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="185.0" prefWidth="456.0" styleClass="pane">
+                  <VBox layoutX="593.0" layoutY="494.0" prefHeight="185.0" prefWidth="456.0" styleClass="pane" AnchorPane.rightAnchor="71.0">
                      <children>
                         <Label prefHeight="35.0" prefWidth="529.0" text="Latest Issued books">
                            <font>

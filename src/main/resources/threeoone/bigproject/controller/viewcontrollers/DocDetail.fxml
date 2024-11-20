@@ -5,36 +5,43 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
-   <children>
-      <fx:include source="MenuBar.fxml" />
-      <ImageView fx:id="cover" fitHeight="211.0" fitWidth="253.0" layoutX="112.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox layoutX="419.0" layoutY="127.0" prefHeight="306.0" prefWidth="456.0" styleClass="pane" stylesheets="@CSS/general.css">
+<BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
+   <center>
+      <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="bookName" prefHeight="47.0" prefWidth="266.0" text="Name (put bold text shit here)" />
-            <Label prefHeight="45.0" prefWidth="303.0" text="By *Author*" />
-            <Label prefHeight="54.0" prefWidth="458.0" text="Category" />
-            <Label fx:id="bookDescription" prefHeight="145.0" prefWidth="450.0" text="Description" />
+            <ImageView fx:id="cover" fitHeight="211.0" fitWidth="253.0" layoutX="168.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox layoutX="543.0" layoutY="127.0" prefHeight="306.0" prefWidth="456.0" styleClass="pane" stylesheets="@CSS/general.css">
+               <children>
+                  <Label fx:id="bookName" prefHeight="47.0" prefWidth="266.0" text="Name (put bold text shit here)" />
+                  <Label prefHeight="45.0" prefWidth="303.0" text="By *Author*" />
+                  <Label prefHeight="54.0" prefWidth="458.0" text="Category" />
+                  <Label fx:id="bookDescription" prefHeight="145.0" prefWidth="450.0" text="Description" />
+               </children>
+            </VBox>
+            <VBox layoutX="157.0" layoutY="460.0" prefHeight="166.0" prefWidth="274.0" styleClass="pane" stylesheets="@CSS/general.css">
+               <children>
+                  <Label prefHeight="52.0" prefWidth="260.0" text="ISBN" />
+                  <Label fx:id="uploader" prefHeight="55.0" prefWidth="266.0" text="Uploader" />
+                  <Label prefHeight="66.0" prefWidth="268.0" text="Uploaded Time" />
+               </children>
+            </VBox>
+            <Button layoutX="245.0" layoutY="360.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="98.0" styleClass="green-button" text="Borrow">
+               <stylesheets>
+                  <URL value="@CSS/general.css" />
+                  <URL value="@CSS/docDetail.css" />
+               </stylesheets>
+            </Button>
          </children>
-      </VBox>
-      <VBox layoutX="101.0" layoutY="462.0" prefHeight="166.0" prefWidth="274.0" styleClass="pane" stylesheets="@CSS/general.css">
-         <children>
-            <Label prefHeight="52.0" prefWidth="260.0" text="ISBN" />
-            <Label fx:id="uploader" prefHeight="55.0" prefWidth="266.0" text="Uploader" />
-            <Label prefHeight="66.0" prefWidth="268.0" text="Uploaded Time" />
-         </children>
-      </VBox>
-      <Button layoutX="189.0" layoutY="360.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="98.0" styleClass="green-button" text="Borrow">
          <stylesheets>
-            <URL value="@CSS/general.css" />
             <URL value="@CSS/docDetail.css" />
+            <URL value="@CSS/general.css" />
          </stylesheets>
-      </Button>
-   </children>
-   <stylesheets>
-      <URL value="@CSS/docDetail.css" />
-      <URL value="@CSS/general.css" />
-   </stylesheets>
-</AnchorPane>
+      </AnchorPane>
+   </center>
+   <left>
+      <fx:include source="MenuBar.fxml" />
+   </left>
+</BorderPane>

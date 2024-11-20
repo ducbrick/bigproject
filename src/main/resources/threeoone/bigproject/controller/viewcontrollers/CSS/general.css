@@ -48,7 +48,6 @@
 .header-label {
     -fx-font-size: 25px;
     -fx-font-style: BOLD;
-
 }
 
 .table {
@@ -63,5 +62,13 @@
     -fx-border-radius: 3px;
     -fx-background-radius: 3px;
     -fx-border-color: #2C5A77;
+}
+
+.centered-text {
+    -fx-text-alignment: center;
+}
+
+.red-button {
+    -fx-background-color: CRIMSON;
 }
 
