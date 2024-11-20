@@ -45,10 +45,6 @@
     -fx-background-color: #E0F1F8;
 }
 
-.header-label {
-    -fx-font-size: 25px;
-    -fx-font-style: BOLD;
-}
 
 .table {
     -fx-background-color: #F4F4F4;

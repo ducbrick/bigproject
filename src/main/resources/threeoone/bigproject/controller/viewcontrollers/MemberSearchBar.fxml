@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="searchRoot" alignment="CENTER" prefHeight="70.0" prefWidth="522.0" stylesheets="@DocOverviewStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberSearchBarController">
+<GridPane fx:id="searchRoot" alignment="CENTER" prefHeight="70.0" prefWidth="522.0" stylesheets="@CSS/DocOverviewStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberSearchBarController">
    <columnConstraints>
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" prefWidth="280.0" />
       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="411.0" minWidth="10.0" prefWidth="152.0" />

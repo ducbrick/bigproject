@@ -83,7 +83,7 @@
       </BorderPane>
   </items>
    <stylesheets>
-      <URL value="@docDetail.css" />
-      <URL value="@DocOverviewStyle.css" />
+      <URL value="@CSS/docDetail.css" />
+      <URL value="@CSS/DocOverviewStyle.css" />
    </stylesheets>
 </SplitPane>
