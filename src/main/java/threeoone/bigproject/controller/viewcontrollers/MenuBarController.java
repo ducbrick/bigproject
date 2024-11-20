@@ -35,6 +35,7 @@ public class MenuBarController {
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToMemList;
+  private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToLendingDetail;
   @FXML
   private VBox box;
@@ -48,16 +49,13 @@ public class MenuBarController {
   private Button DocOverview;
 
   @FXML
-  private Button YourBooks;
-
-  @FXML
   private Button Menu;
 
   @FXML
-  private Button Search;
+  private Button MemList;
 
   @FXML
-  private Button MemList;
+  private Button AddMember;
 
   @FXML
   private Button Lend;
@@ -71,11 +69,6 @@ public class MenuBarController {
   }
 
   @FXML
-  private void toYourBooks() {
-    switchToYourBooks.send(null);
-  }
-
-  @FXML
   private void toDocOverview() {
     switchToDocOverview.send(null);
   }
@@ -86,11 +79,10 @@ public class MenuBarController {
   }
 
   @FXML
-  private void toSearch() {
-  }
+  private void toMemberList() { switchToMemList.send(null); }
 
   @FXML
-  private void toMemberList() { switchToMemList.send(null); }
+  private void toAddMember() { switchToAddMem.send(null); }
 
   @FXML
   private void toLend() { switchToLendingDetail.send(null); }
@@ -106,7 +98,8 @@ public class MenuBarController {
       case ADD_NEW_DOC -> AddBook;
       case DOC_OVERVIEW -> DocOverview;
       case MAIN_MENU -> Menu;
-      case SEARCH -> Search;
+      case LENDING -> Lend;
+      case MEM_LIST -> MemList;
       default -> new Button();
     };
     button.setId("active");

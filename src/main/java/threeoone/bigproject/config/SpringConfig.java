@@ -444,9 +444,7 @@ public class SpringConfig {
    * @return an instance of RequestSender for switching to the lending detail view.
    */
   @Bean
-  public RequestSender<ViewController> switchToLendingDetail() {
-    return new RequestSender<>();
-  }
+  public RequestSender<ViewController> switchToLendingDetail() { return new RequestSender<>(); }
 
   /**
    * same as the one above me <3

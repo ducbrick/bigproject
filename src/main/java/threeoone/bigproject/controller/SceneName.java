@@ -5,19 +5,9 @@ package threeoone.bigproject.controller;
  */
 public enum SceneName {
     /**
-     * Represents the document overview scene.
-     */
-    DOC_OVERVIEW,
-
-    /**
      * Represents the menu scene.
      */
     MAIN_MENU,
-
-    /**
-     * Represents the document detail scene.
-     */
-    DOC_DETAIL,
 
     /**
      * Represents the login page.
@@ -28,21 +18,31 @@ public enum SceneName {
      * Represents the signup page.
      */
     SIGNUP,
-  
+
+    /**
+     * Represents the document overview scene.
+     */
+    DOC_OVERVIEW,
+
+    /**
+     * Represents the document detail scene.
+     */
+    DOC_DETAIL,
+
     /**
      * Represents the add new doc page
      */
     ADD_NEW_DOC,
 
     /**
-     * Represent search page
-     */
-    SEARCH,
-
-    /**
      * Represent edit document page
      */
     EDIT_DOC,
+
+    /**
+     * Represent search page
+     */
+    SEARCH,
 
     /**
      * Represent member list page
@@ -62,5 +62,10 @@ public enum SceneName {
     /**
      * Represent your book page
      */
-    YOUR_BOOKS
+    YOUR_BOOKS,
+
+    /**
+     * Lending detail page
+     */
+    LENDING
 }
