@@ -27,8 +27,6 @@ import java.io.File;
 @FxmlView("Register.fxml")
 @RequiredArgsConstructor
 public class RegisterController implements ViewController {
-  @FXML
-  private TextField displayname;
 
   @FXML
   private Label confirmMessage;
@@ -56,7 +54,6 @@ public class RegisterController implements ViewController {
    * after the fxml file has been loaded.
    */
   public void initialize() {
-    displayname.setOnAction(event -> username.requestFocus());
     username.setOnAction(event -> password.requestFocus());
     password.setOnAction(event -> confirmpass.requestFocus());
     confirmpass.setOnAction(event -> {
