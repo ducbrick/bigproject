@@ -21,14 +21,14 @@
          <top>
             <VBox alignment="CENTER" prefHeight="65.0" prefWidth="1082.0" BorderPane.alignment="CENTER">
                <children>
-                    <Label prefHeight="56.0" prefWidth="85.0" styleClass="label fade-in" text="Add New Book" textAlignment="CENTER" />
+                    <Label id="header" prefHeight="56.0" prefWidth="218.0" text="Add New Book" textAlignment="CENTER" />
                </children>
             </VBox>
          </top>
          <center>
             <SplitPane dividerPositions="0.238538681948424" BorderPane.alignment="CENTER">
                <items>
-                  <VBox alignment="CENTER" prefHeight="548.0" prefWidth="209.0" styleClass="background">
+                  <VBox alignment="CENTER" maxWidth="209.0" prefHeight="548.0" prefWidth="209.0" styleClass="background">
                      <children>
                         <ImageView fx:id="docCover" fitHeight="252.0" fitWidth="263.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
@@ -82,7 +82,7 @@
                            <GridPane.margin>
                               <Insets right="50.0" />
                            </GridPane.margin></TextField>
-                        <TextArea fx:id="description" prefHeight="11.0" prefWidth="657.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <TextArea fx:id="description" prefHeight="11.0" prefWidth="657.0" styleClass="text-area" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="20.0" right="50.0" top="20.0" />
                            </GridPane.margin>

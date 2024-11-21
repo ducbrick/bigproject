@@ -1,7 +1,6 @@
 .root {
     -fx-background-color: #f5f5f5;
     -fx-font-family: 'Arial';
-    -fx-padding: 20;
 }
 
 .abel {
@@ -59,4 +58,8 @@
 
 .fade-in-shown {
     -fx-opacity: 1;
+}
+
+.text-area {
+    -fx-control-inner-background: #DFF2EB;
 }

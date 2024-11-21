@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
    <center>
-      <AnchorPane fx:id="root" prefHeight="720.0" prefWidth="1200.0" styleClass="background" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="720.0" prefWidth="1200.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="cover" fitHeight="211.0" fitWidth="253.0" layoutX="168.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" />
             <VBox layoutX="543.0" layoutY="127.0" prefHeight="306.0" prefWidth="456.0" styleClass="pane" stylesheets="@CSS/general.css">

@@ -19,6 +19,5 @@
       <Button fx:id="DocOverview" mnemonicParsing="false" onAction="#toDocOverview" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="80.0" styleClass="normal-button" text="Browse books" />
       <Button fx:id="AddMember" mnemonicParsing="false" onAction="#toAddMember" prefHeight="58.0" prefWidth="80.0" styleClass="normal-button" text="Add Member" />
       <Button fx:id="MemList" mnemonicParsing="false" onAction="#toMemberList" onMouseClicked="#toMemberList" prefHeight="58.0" prefWidth="80.0" styleClass="normal-button" text="Browse Members" />
-      <Button fx:id="Lend" mnemonicParsing="false" onAction="#toLend" onMouseClicked="#toLend" prefHeight="58.0" prefWidth="80.0" styleClass="normal-button" text="Lend" />
    </children>
 </VBox>

@@ -46,26 +46,6 @@
     -fx-transition: transform 0.2s ease-in-out; /* Smooth transition for scaling */
 }
 
-.button {
-    -fx-background-color: #4a90e2;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-    -fx-pref-height: 35px;
-    -fx-padding: 10px;
-    -fx-cursor: hand;
-    -fx-transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.button:hover {
-    -fx-background-color: #357abd;
-}
-
-.button:pressed {
-    -fx-background-color: #2c6ba0;
-}
-
 .menu-item {
     -fx-font-size: 5px; /* Smaller font size for context menu items */
 }

@@ -9,7 +9,6 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 
 /**
  * simple ahh menu bar.
@@ -31,12 +30,12 @@ public class MenuBarController {
    * request sender to switch between views
    */
   private final RequestSender<ViewController> switchToAddNewDoc;
-  private final RequestSender<ViewController> switchToYourBooks;
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToMemList;
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToLendingDetail;
+
   @FXML
   private VBox box;
   /**
@@ -57,8 +56,6 @@ public class MenuBarController {
   @FXML
   private Button AddMember;
 
-  @FXML
-  private Button Lend;
 
   /**
    * actual methods to change view
@@ -96,9 +93,9 @@ public class MenuBarController {
   public void highlight(SceneName sceneName) {
     Button button = switch (sceneName) {
       case ADD_NEW_DOC -> AddBook;
+      case ADD_MEM -> AddMember;
       case DOC_OVERVIEW -> DocOverview;
       case MAIN_MENU -> Menu;
-      case LENDING -> Lend;
       case MEM_LIST -> MemList;
       default -> new Button();
     };
