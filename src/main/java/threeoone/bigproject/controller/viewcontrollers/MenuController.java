@@ -176,8 +176,10 @@ public class MenuController implements ViewController {
     @FXML
     public void randomBook() {
         getRandomDocumentRequestSender.send(null);
-        documentDetailRequestSender.send(randomDocument);
-        switchToDocDetail.send(this);
+        if(randomDocument != null) {
+            documentDetailRequestSender.send(randomDocument);
+            switchToDocDetail.send(this);
+        }
     }
 
     /**

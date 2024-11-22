@@ -12,7 +12,6 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.util.MenuItemFactory;
 
@@ -33,6 +32,9 @@ public class MemberListController implements ViewController {
   private final RequestSender<Member> editMemberRequestSender;
   private final RequestSender<Member> removeMemberRequestSender;
   private final RequestSender<Member> memberDetailsRequestSender;
+
+  private final MenuBarController menuBarController;
+
   @FXML
   private TableColumn<Member, String> address;
 
@@ -97,6 +99,8 @@ public class MemberListController implements ViewController {
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
+
+    menuBarController.highlight(SceneName.MEM_LIST);
   }
 
   /**

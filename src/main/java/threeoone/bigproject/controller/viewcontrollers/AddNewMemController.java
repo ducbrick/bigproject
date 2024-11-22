@@ -31,6 +31,8 @@ import threeoone.bigproject.view.ViewSwitcher;
 @FxmlView("AddNewMem.fxml")
 public class AddNewMemController implements ViewController {
 
+  private final MenuBarController menuBarController;
+
   private final RequestSender<Member> addMemberRequestSender;
   private final RequestSender<ViewController> switchToMemList;
 
@@ -73,6 +75,8 @@ public class AddNewMemController implements ViewController {
     phoneNumber.setOnAction(event -> address.requestFocus());
     address.setOnAction(event -> email.requestFocus());
     email.setOnAction(this::pressGetID);
+
+    menuBarController.highlight(SceneName.ADD_MEM);
   }
 
   /**

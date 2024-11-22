@@ -9,7 +9,6 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 
 /**
  * simple ahh menu bar.
@@ -31,11 +30,12 @@ public class MenuBarController {
    * request sender to switch between views
    */
   private final RequestSender<ViewController> switchToAddNewDoc;
-  private final RequestSender<ViewController> switchToYourBooks;
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToMemList;
+  private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToLendingDetail;
+
   @FXML
   private VBox box;
   /**
@@ -48,19 +48,14 @@ public class MenuBarController {
   private Button DocOverview;
 
   @FXML
-  private Button YourBooks;
-
-  @FXML
   private Button Menu;
-
-  @FXML
-  private Button Search;
 
   @FXML
   private Button MemList;
 
   @FXML
-  private Button Lend;
+  private Button AddMember;
+
 
   /**
    * actual methods to change view
@@ -68,11 +63,6 @@ public class MenuBarController {
   @FXML
   private void toAddBook() {
     switchToAddNewDoc.send(null);
-  }
-
-  @FXML
-  private void toYourBooks() {
-    switchToYourBooks.send(null);
   }
 
   @FXML
@@ -86,11 +76,10 @@ public class MenuBarController {
   }
 
   @FXML
-  private void toSearch() {
-  }
+  private void toMemberList() { switchToMemList.send(null); }
 
   @FXML
-  private void toMemberList() { switchToMemList.send(null); }
+  private void toAddMember() { switchToAddMem.send(null); }
 
   @FXML
   private void toLend() { switchToLendingDetail.send(null); }
@@ -104,10 +93,10 @@ public class MenuBarController {
   public void highlight(SceneName sceneName) {
     Button button = switch (sceneName) {
       case ADD_NEW_DOC -> AddBook;
-      case YOUR_BOOKS -> YourBooks;
+      case ADD_MEM -> AddMember;
       case DOC_OVERVIEW -> DocOverview;
       case MAIN_MENU -> Menu;
-      case SEARCH -> Search;
+      case MEM_LIST -> MemList;
       default -> new Button();
     };
     button.setId("active");
