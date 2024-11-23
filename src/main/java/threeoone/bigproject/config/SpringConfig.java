@@ -279,8 +279,20 @@ public class SpringConfig {
   }
 
   /**
+   * Send a query request to recommendation system
+   *
+   * @return the {@link RequestSender} to be registered
+   */
+  @Bean
+  public RequestSender<String> queryRecommendDocRequestSender() {
+    return new RequestSender<>();
+  }
+
+  // Hey bro that getDocumentByID you use so idk, i hold it back in case you need to use that
+  /**
    * get a document of the ID sent
-   * TODO: EVIL DOPPELGANGER ABOVE ME, DO SOMETHING ABOUT IT
+   * TODO: EVIL DOPPELGANGER ABOVE ME, DO SOMETHING ABOUT IT.
+   *
    * @return
    */
   @Bean

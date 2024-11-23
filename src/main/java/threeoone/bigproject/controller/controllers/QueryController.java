@@ -1,5 +1,6 @@
 package threeoone.bigproject.controller.controllers;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,11 @@ import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.services.BookRecommendService;
 import threeoone.bigproject.services.DocumentRetrievalService;
 import threeoone.bigproject.services.GoogleAPIService;
 import threeoone.bigproject.services.MemberRetrievalService;
+import threeoone.bigproject.util.Alerts;
 
 import java.util.List;
 
@@ -23,17 +26,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QueryController {
   private final AddNewDocController addNewDocController;
+  private final RecommenderController recommenderController;
   private final GoogleAPIService googleAPIService;
   private final MemberRetrievalService memberRetrievalService;
   private final MemberSearchBarController memberSearchBarController;
   private final DocumentRetrievalService documentRetrievalService;
   private final DocSearchBarController docSearchBarController;
   private final LendingDetailController lendingDetailController;
+  private final BookRecommendService bookRecommendService;
 
   /**
    * Registers the request sender for handling ISBN queries.
    *
-   * @param queryISBNGoogleRequestSender the request sender to be registered
    */
   @Autowired
   public void registerRequestSender(RequestSender<String> queryISBNGoogleRequestSender,
@@ -43,7 +47,8 @@ public class QueryController {
                                     RequestSender<Integer> queryDocByIdRequestSender,
                                     RequestSender<String> queryMemByNameRequestSender,
                                     RequestSender<Integer> queryMemByIdRequestSender,
-                                    RequestSender<Integer> queryMemByIdFromLendingRequestSender) {
+                                    RequestSender<Integer> queryMemByIdFromLendingRequestSender,
+                                    RequestSender<String> queryRecommendDocRequestSender) {
     queryISBNGoogleRequestSender.registerReceiver(this::getQueryAndFulFill);
     queryDocByIdRequestSender.registerReceiver(this::queryDocByID);
     queryDocByNameRequestSender.registerReceiver(this::queryDocByName);
@@ -52,6 +57,7 @@ public class QueryController {
     queryMemByNameRequestSender.registerReceiver(this::queryMemByName);
     queryMemByIdRequestSender.registerReceiver(this::queryMemById);
     queryMemByIdFromLendingRequestSender.registerReceiver(this::queryMemByIdFromLending);
+    queryRecommendDocRequestSender.registerReceiver(this::queryRecommendDoc);
   }
 
   /**
@@ -112,7 +118,11 @@ public class QueryController {
    * @param name the name of the document to be queried
    */
   private void queryDocByName(String name) {
-    // TODO: Implement the logic to query document by name
+    List<Document> result = documentRetrievalService.searchByName(name);
+    if(result.isEmpty()) {
+      return;
+    }
+    docSearchBarController.setResult(FXCollections.observableArrayList(result));
   }
 
   /**
@@ -121,7 +131,11 @@ public class QueryController {
    * @param author the author of the document to be queried
    */
   private void queryDocByAuthor(String author) {
-    // TODO: Implement the logic to query document by author
+    List<Document> result = documentRetrievalService.searchByAuthor(author);
+    if(result.isEmpty()) {
+      return;
+    }
+    docSearchBarController.setResult(FXCollections.observableArrayList(result));
   }
 
   /**
@@ -130,7 +144,26 @@ public class QueryController {
    * @param category the category of the document to be queried
    */
   private void queryDocByCategory(String category) {
-    // TODO: Implement the logic to query document by category
+    List<Document> result = documentRetrievalService.searchByCategory(category);
+    if(result.isEmpty()) {
+      return;
+    }
+    docSearchBarController.setResult(FXCollections.observableArrayList(result));
+  }
+
+  /**
+   * Queries recommend document for a document with title
+   * Show alert if no recommend for that document
+   *
+   * @param title the title of the document need to get recommend
+   */
+  private void queryRecommendDoc(String title) {
+    List<String> result = bookRecommendService.getRecommendedBooks(title);
+    if(result.isEmpty()) {
+      Platform.runLater(()->Alerts.showAlertWarning("No information", "No recommend for that document"));
+      return;
+    }
+    recommenderController.setResult(FXCollections.observableArrayList(result));
   }
 
   private void queryMemByIdFromLending(Integer id) {
