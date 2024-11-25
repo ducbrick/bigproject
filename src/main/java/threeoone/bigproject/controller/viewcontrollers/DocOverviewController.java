@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -70,7 +71,12 @@ public class DocOverviewController implements ViewController {
   @FXML
   private TableView<Document> table;
 
+  @FXML
+  private ListView<Document> documentList;
+
   private Document chosenDoc;
+
+  private final int CELL_SIZE = 30;
 
 
   /**
@@ -78,6 +84,24 @@ public class DocOverviewController implements ViewController {
    * document table.
    */
   public void initialize() {
+    documentList.setCellFactory(param -> new ListCell<>() {
+      @Override
+      protected void updateItem(Document item, boolean empty) {
+        super.updateItem(item, empty);
+        if (item != null) {
+          setText("ID: " + item.getId() + "; Name: " + item.getName() + "; Author: " + item.getAuthor()
+          + "; Categories: " + item.getCategory());
+        }
+      }
+    });
+
+    documentList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue != null) {
+        switchToDocDetail.send(null);
+        documentDetailRequestSender.send(newValue);
+      }
+    });
+
     table.setRowFactory(tableview -> {
       TableRow<Document> row = new TableRow<>();
       //handle click on item
@@ -112,6 +136,30 @@ public class DocOverviewController implements ViewController {
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
   }
+
+  /**
+   * Sets the search result to the list view and displays it.
+   *
+   * @param result the search result to be displayed
+   */
+  public void setResult(ObservableList<Document> result) {
+    documentList.getItems().clear();
+    documentList.getItems().addAll(result);
+    documentList.setPrefHeight(documentList.getItems().size() * CELL_SIZE);
+  }
+
+  /**
+   * Clears the items in the documentList and sets its preferred height to 0.
+   * This method is triggered by a mouse event.
+   *
+   * @param event the MouseEvent that triggers this method
+   */
+  @FXML
+  private void outListView(MouseEvent event) {
+    documentList.getItems().clear();
+    documentList.setPrefHeight(0);
+  }
+
 
   /**
    * update context menu follow which action is available for document now
