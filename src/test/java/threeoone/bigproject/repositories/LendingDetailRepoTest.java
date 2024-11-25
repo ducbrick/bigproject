@@ -25,7 +25,11 @@ class LendingDetailRepoTest {
   @DisplayName("Test build & run")
   public void test() {
     LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
-    Member member = new Member("name");
+    Member member = new Member();
+    member.setName("a name");
+    member.setPhoneNumber("0969696969");
+    member.setAddress("Ohio");
+    member.setEmail("skibidi@mog.rizz");
     Document document = new Document("name");
     User user = new User("name", "password");
 
