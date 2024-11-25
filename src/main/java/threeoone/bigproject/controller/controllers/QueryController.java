@@ -34,6 +34,7 @@ public class QueryController {
   private final DocSearchBarController docSearchBarController;
   private final LendingDetailController lendingDetailController;
   private final BookRecommendService bookRecommendService;
+  private final DocOverviewController docOverviewController;
 
   /**
    * Registers the request sender for handling ISBN queries.
@@ -109,7 +110,7 @@ public class QueryController {
     if (result == null) {
       return;
     }
-    docSearchBarController.setResult(FXCollections.observableArrayList(result));
+    docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
   /**
@@ -122,7 +123,7 @@ public class QueryController {
     if(result.isEmpty()) {
       return;
     }
-    docSearchBarController.setResult(FXCollections.observableArrayList(result));
+    docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
   /**
@@ -135,7 +136,7 @@ public class QueryController {
     if(result.isEmpty()) {
       return;
     }
-    docSearchBarController.setResult(FXCollections.observableArrayList(result));
+    docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
   /**
@@ -148,7 +149,7 @@ public class QueryController {
     if(result.isEmpty()) {
       return;
     }
-    docSearchBarController.setResult(FXCollections.observableArrayList(result));
+    docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
   /**
