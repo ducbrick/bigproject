@@ -73,6 +73,12 @@ public class Document {
   @Column(name = "cover_image_url")
   private String coverImageUrl = "threeoone/bigproject/controller/viewcontrollers/No_image_available.png";
 
+  @Column(name = "pdf_url")
+  private String pdfUrl;
+
+  @Column(name = "info_url")
+  private String infoUrl;
+
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "uploader_id", nullable = false)
   private User uploader;
