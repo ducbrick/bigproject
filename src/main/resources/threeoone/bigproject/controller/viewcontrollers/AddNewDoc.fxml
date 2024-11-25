@@ -64,7 +64,7 @@
                               <Insets right="50.0" />
                            </GridPane.margin></TextField>
                           <Label styleClass="label fade-in" text="ISBN" GridPane.rowIndex="3" />
-                          <TextField fx:id="isbn" onKeyPressed="#fulfillISBN" prefHeight="29.0" prefWidth="563.0" promptText="Optional (Can be fulfilled to get info about doc through Google API)" styleClass="text-field fade-in" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                          <TextField fx:id="isbn" onKeyPressed="#fulfillISBN" prefHeight="29.0" prefWidth="563.0" promptText="Optional (Can be fulfilled to get info about doc through Google API) (Only number)" styleClass="text-field fade-in" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -78,7 +78,7 @@
                            <GridPane.margin>
                               <Insets right="50.0" />
                            </GridPane.margin></Button>
-                        <TextField fx:id="numOfCopies" promptText="Required" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <TextField fx:id="numOfCopies" promptText="Required (Only number)" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets right="50.0" />
                            </GridPane.margin></TextField>

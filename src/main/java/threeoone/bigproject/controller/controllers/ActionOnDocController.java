@@ -120,7 +120,11 @@ public class ActionOnDocController {
    * @param document the document to be removed
    */
   private void removeDocument(Document document) {
-    documentPersistenceService.delete(document.getId());
+    try{
+      documentPersistenceService.delete(document.getId());
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
   }
 
   /**

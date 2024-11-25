@@ -66,10 +66,16 @@ public class QueryController {
    * @param isbn the ISBN to query
    */
   public void getQueryAndFulFill(String isbn) {
-    Document result = googleAPIService.findBookByISBN(isbn);
-    if (result != null) {
-      addNewDocController.fulfillInfo(result);
+    Document result = null;
+    try {
+      result = googleAPIService.findBookByISBN(isbn);
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!!!", e.getMessage());
     }
+    if (result == null) {
+      result = new Document();
+    }
+    addNewDocController.fulfillInfo(result);
   }
 
   /**

@@ -15,14 +15,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.util.Alerts;
 import threeoone.bigproject.util.FileOperation;
-
 import java.io.File;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 /**
  * Controller class for the Add New Doc scene.
@@ -121,6 +117,10 @@ public class AddNewDocController implements ViewController {
   private void pressSubmit(ActionEvent event) {
     if (name.getText().isEmpty() || author.getText().isEmpty() || numOfCopies.getText().isEmpty()) {
       Alerts.showAlertWarning("Warning!", "Fill all required fields!");
+      return;
+    }
+    if(!numOfCopies.getText().matches("\\d+") || !isbn.getText().matches("\\d+")) {
+      Alerts.showAlertWarning("Warning!", "Some field require only number");
       return;
     }
     Document document = new Document(name.getText(), description.getText(), Integer.valueOf(numOfCopies.getText()));
