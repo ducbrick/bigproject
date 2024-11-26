@@ -43,12 +43,10 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @NonNull
   @Column(unique = true)
-  @NotBlank(message = "Username must not be empty")
+  @NotEmpty(message = "Username must not be empty")
   private String username;
 
-  @NonNull
   @NotEmpty(message = "User password must not be empty")
   private String password;
 
@@ -66,5 +64,10 @@ public class User {
   public void addUploadedDocument(Document document) {
     uploadedDocuments.add(document);
     document.setUploader(this);
+  }
+
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
   }
 }
