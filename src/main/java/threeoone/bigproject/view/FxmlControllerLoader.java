@@ -37,5 +37,6 @@ public class FxmlControllerLoader {
       fxWeaver.load(AddNewMemController.class);
       fxWeaver.load(LendingDetailController.class);
       fxWeaver.load(RecommenderController.class);
+      fxWeaver.load(ScanQrController.class);
   }
 }
