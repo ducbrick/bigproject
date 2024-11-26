@@ -10,6 +10,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,38 +57,49 @@ public class Document {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @NonNull
+  @NotBlank(message = "Document name must not be empty")
+  @Size(max = 255, message = "Document name must have at most 255 characters")
   private String name;
 
   private String description;
 
-  @NonNull
+  @NotNull(message = "Document must have a number of physical copies")
+  @PositiveOrZero(message = "Document must not have a negative number of physical copies")
   private Integer copies = 0;
 
+  @Size(max = 255, message = "Document author's name must have at most 255 characters")
   private String author;
 
+  @Size(min = 13, max = 13, message = "An ISBN must have exactly 13 digits and/or hyphens")
   private String isbn;
 
   @Column(name = "upload_time")
+  @NotNull(message = "Document must have an upload time")
   private LocalDateTime uploadTime;
 
+  @Size(message = "Document categories must have at most 255 characters")
   private String category;
 
-  @NonNull
   @Column(name = "cover_image_url")
+  @NotBlank(message = "Document must have a cover image")
+  @Size(max = 255, message = "Document cover image URL must have at most 255 characters")
   private String coverImageUrl = "threeoone/bigproject/controller/viewcontrollers/No_image_available.png";
 
   @Column(name = "pdf_url")
+  @Size(max = 255, message = "Document pdf URL must have at most 255 characters")
   private String pdfUrl;
 
   @Column(name = "info_url")
+  @Size(max = 255, message = "Document info URL must have at most 255 characters")
   private String infoUrl;
 
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-  @JoinColumn(name = "uploader_id", nullable = false)
+  @JoinColumn(name = "uploader_id")
+  @NotNull(message = "Document must be uploaded by a User")
+  @Valid
   private User uploader;
 
-  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
   private List <LendingDetail> lendingDetails = new ArrayList <> ();
 
   /**
