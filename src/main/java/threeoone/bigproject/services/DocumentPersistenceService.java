@@ -1,13 +1,18 @@
 package threeoone.bigproject.services;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import jakarta.validation.Validator;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
+import java.util.Set;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 import threeoone.bigproject.exceptions.NotLoggedInException;
@@ -22,7 +27,10 @@ import threeoone.bigproject.repositories.UserRepo;
  */
 @Service
 @RequiredArgsConstructor
+@Validated
 public class DocumentPersistenceService {
+  private final Validator validator;
+
   private final DocumentRepo documentRepo;
   private final UserRepo userRepo;
   private final LoginService loginService;
@@ -41,12 +49,13 @@ public class DocumentPersistenceService {
    * @param document the {@link Document} to add
    *
    * @throws NotLoggedInException when no Users are currently logged in
+   * @throws ConstraintViolationException when the given {@link Document} violates existing constraints
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
   @Transactional
-  public Document add(@NonNull Document document) {
+  public Document add(@NotNull Document document) {
     Integer uploaderId = loginService.getLoggedInUserId();
 
     if (uploaderId == null) {
@@ -63,6 +72,12 @@ public class DocumentPersistenceService {
     document.setId(null);
     document.setUploadTime(LocalDateTime.now());
 
+    Set <ConstraintViolation <Document>> violations = validator.validate(document);
+
+    if (!violations.isEmpty()) {
+      throw new ConstraintViolationException(violations);
+    }
+
     return documentRepo.save(document);
   }
 
@@ -77,12 +92,13 @@ public class DocumentPersistenceService {
    *
    * @throws IllegalDocumentInfoException when the {@code copies} of the {@link Document} is less than the number of currently lent copies
    * @throws IllegalArgumentException when the given Document's {@code id} doesn't match any's in the Database
+   * @throws ConstraintViolationException when the given {@link Document} violates existing constraints
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
   @Transactional
-  public Document update(@NonNull Document document) {
+  public Document update(@Valid @NotNull Document document) {
     if (document.getId() == null) {
       throw new IllegalArgumentException("Attempting to update a Document with no ID");
     }
