@@ -1,9 +1,15 @@
 package threeoone.bigproject.services;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
+import jakarta.validation.Validator;
+import java.util.Set;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
@@ -18,10 +24,10 @@ import threeoone.bigproject.repositories.UserRepo;
  */
 @Service
 @RequiredArgsConstructor
+@Validated
 public class UserRegisterService {
+  private final Validator validator;
   private final UserRepo userRepo;
-  private final LoginService loginService;
-  private final IllegalCharacterFilterService illegalCharacterFilterService;
 
   /**
    * Register a new {@link User} into the Database.
@@ -29,24 +35,18 @@ public class UserRegisterService {
    *
    * @param user a User with necessary information to register.
    *
-   * @throws UserAlreadyExistException when another User with the same loginName exists
-   * @throws IllegalCredentialsException when input User have illegal credentials, such as empty name etc
-   * @throws RuntimeException when fails to save User into the database
+   * @throws UserAlreadyExistException when another User with the same username exists
+   * @throws ConstraintViolationException when the given {@link User} violates existing constraints
+   * @throws RuntimeException when unexpected errors occurs when working with the Database
    */
   @Transactional
-  public void register(@NonNull User user) throws UserAlreadyExistException, IllegalCredentialsException {
-    if (loginService.getLoggedInUserId() != null) {
-      throw new AlreadyLoggedInException("Users shouldn't register while currently logged in");
-    }
-
+  public void register(@NonNull @Valid User user) throws UserAlreadyExistException {
     user.setUsername(user.getUsername().stripTrailing());
 
-    if (user.getUsername().isEmpty()) {
-      throw new IllegalCredentialsException("Username can't be empty");
-    }
+    Set <ConstraintViolation <User>> violations = validator.validate(user);
 
-    if (user.getPassword().isEmpty()) {
-      throw new IllegalCredentialsException("Password can't be empty");
+    if (!violations.isEmpty()) {
+      throw new ConstraintViolationException(violations);
     }
 
     if (userRepo.findByUsername(user.getUsername()) != null) {

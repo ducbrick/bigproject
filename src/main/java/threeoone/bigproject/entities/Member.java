@@ -8,6 +8,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -38,17 +42,22 @@ public class Member {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @NonNull
+  @NotBlank(message = "Member name must not be empty")
+  @Size(max = 255, message = "Member name must have at most 255 characters")
   private String name;
 
-  @NonNull
   @Column(name = "phone_number")
+  @NotBlank(message = "Member must have a phone number")
+  @Size(max = 11, message = "Member phone number must have at most 11 digits")
+  @Pattern(regexp = "\\d+", message = "Member phone number must contain only digits")
   private String phoneNumber;
 
-  @NonNull
+  @NotBlank(message = "Member must have an address")
+  @Size(max = 255, message = "Member address must have at most 255 characters")
   private String address;
 
-  @NonNull
+  @NotBlank(message = "Member must have an email address")
+  @Email(message = "Member email address must be valid")
   private String email;
 
   @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -35,17 +38,19 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "app_user")
-@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
+@NoArgsConstructor @Getter @Setter
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @NonNull
   @Column(unique = true)
+  @NotBlank(message = "Username must not be empty")
+  @Size(max = 127, message = "Username must have at most 127 characters")
   private String username;
 
-  @NonNull
+  @NotEmpty(message = "User password must not be empty")
+  @Size(max = 127, message = "User password must have at most 127 characters")
   private String password;
 
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -62,5 +67,10 @@ public class User {
   public void addUploadedDocument(Document document) {
     uploadedDocuments.add(document);
     document.setUploader(this);
+  }
+
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
   }
 }
