@@ -37,7 +37,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "app_user")
-@NoArgsConstructor @Getter @Setter @RequiredArgsConstructor
+@NoArgsConstructor @Getter @Setter 
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
