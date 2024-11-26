@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class AddNewDocController implements ViewController {
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<Document> addDocumentRequestSender;
   private final RequestSender<String> queryISBNGoogleRequestSender;
-
+  private final RequestSender<Document> commitChangeDocRequestSender;
   private final MenuBarController menuBarController;
   @FXML
   private TextField author;
@@ -78,6 +79,9 @@ public class AddNewDocController implements ViewController {
   private File lastDirectory = null;
   private File selectedFile = null;
 
+  @Setter
+  private Document document;
+
   /**
    * Initializes the controller class. This method is automatically called
    * after the fxml file has been loaded.
@@ -112,26 +116,32 @@ public class AddNewDocController implements ViewController {
    *
    * @param event event trigger submit button
    */
-  // TODO: Submit send path to service
   @FXML
   private void pressSubmit(ActionEvent event) {
     if (name.getText().isEmpty() || author.getText().isEmpty() || numOfCopies.getText().isEmpty()) {
       Alerts.showAlertWarning("Warning!", "Fill all required fields!");
       return;
     }
-    if(!numOfCopies.getText().matches("\\d+") || !isbn.getText().matches("\\d+")) {
+    if(!numOfCopies.getText().matches("\\d+")
+            || (!isbn.getText().isEmpty() && !isbn.getText().matches("\\d+"))) {
       Alerts.showAlertWarning("Warning!", "Some field require only number");
       return;
     }
-    Document document = new Document(name.getText(), description.getText(), Integer.valueOf(numOfCopies.getText()));
+    document = new Document(name.getText(), description.getText(), Integer.valueOf(numOfCopies.getText()));
     document.setAuthor(author.getText());
+    if(categories.getText().isEmpty()) {
+      categories.setText("Unknown");
+    }
     document.setCategory(categories.getText());
     document.setIsbn(isbn.getText());
+
     addDocumentRequestSender.send(document);
+
     if (selectedFile == null) {
       Alerts.showAlertWarning("Warning!", "Unselected digital version for document!");
     } else {
-      FileOperation.copyFile(selectedFile.getPath(), "", document.getId().toString());
+      document.setPdfUrl(FileOperation.copyFile(selectedFile.getPath(), "", document.getId().toString()));
+      commitChangeDocRequestSender.send(document);
       Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
     }
     switchToDocOverview.send(null);

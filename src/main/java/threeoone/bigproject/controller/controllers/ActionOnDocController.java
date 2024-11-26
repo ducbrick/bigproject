@@ -13,13 +13,11 @@ import threeoone.bigproject.services.DocumentPersistenceService;
 import threeoone.bigproject.services.DocumentRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
- * Interacting with view controller and service
- * Handle logic for Document manipulation
- * Get information from service and send action to view based on that information
+ * Interacts with view controllers and services to handle logic for document manipulation.
+ * Retrieves information from services and sends actions to views based on that information.
  *
  * @author HUY1902
  */
@@ -33,12 +31,24 @@ public class ActionOnDocController {
   private final MenuController menuController;
   private final EditDocumentController editDocumentController;
   private final DocumentPersistenceService documentPersistenceService;
-
+  private final PDFReaderController pdfReaderController;
+  private final AddNewDocController addNewDocController;
 
   /**
    * Registers request receivers for document handling.
    *
-   * @param documentDetailRequestSender the request sender for document detail
+   * @param documentDetailRequestSender      request sender for document details
+   * @param getListAllDocumentRequestSender  request sender to get all documents
+   * @param updateDocActionRequestSender     request sender to update document actions
+   * @param getDocumentByIdRequestSender     request sender to get document by ID
+   * @param getLastestDocumentsRequestSender request sender to get the latest documents
+   * @param getRandomDocumentRequestSender   request sender to get a random document
+   * @param editDocumentRequestSender        request sender to edit a document
+   * @param removeDocumentRequestSender      request sender to remove a document
+   * @param borrowDocumentRequestSender      request sender to borrow a document
+   * @param addDocumentRequestSender         request sender to add a new document
+   * @param commitChangeDocRequestSender     request sender to commit changes to a document
+   * @param openDocByPdfReaderRequestSender  request sender to open a document in the PDF reader
    */
   @Autowired
   private void registerRequestReceiver(
@@ -52,10 +62,10 @@ public class ActionOnDocController {
           RequestSender<Document> removeDocumentRequestSender,
           RequestSender<Document> borrowDocumentRequestSender,
           RequestSender<Document> addDocumentRequestSender,
-          RequestSender<Document> commitChangeDocRequestSender) {
+          RequestSender<Document> commitChangeDocRequestSender,
+          RequestSender<Document> openDocByPdfReaderRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
-    updateDocActionRequestSender.registerReceiver(this::updateAvailableActionOnDocument);
     editDocumentRequestSender.registerReceiver(this::editDocument);
     removeDocumentRequestSender.registerReceiver(this::removeDocument);
     borrowDocumentRequestSender.registerReceiver(this::borrowDocument);
@@ -64,6 +74,23 @@ public class ActionOnDocController {
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
     getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
     commitChangeDocRequestSender.registerReceiver(this::commitChangeDoc);
+    openDocByPdfReaderRequestSender.registerReceiver(this::openDocByPDFReader);
+  }
+
+  /**
+   * Opens a document in the PDF reader.
+   * If an error occurs, this method showing alerts
+   * and stay in Doc Overview page
+   *
+   * @param document the document to be opened
+   */
+  private void openDocByPDFReader(Document document) {
+    try {
+      pdfReaderController.setDocument(document);
+    } catch (Exception e) {
+      Alerts.showAlertWarning("Error!!!", e.getMessage());
+      docOverviewController.setChosenDoc(null);
+    }
   }
 
   /**
@@ -77,9 +104,9 @@ public class ActionOnDocController {
   }
 
   /**
-   * return List of All Document in dataset
+   * Returns a list of all documents in the dataset.
    *
-   * @param user None
+   * @param user the user requesting the list (not used)
    */
   private void getListAllDocument(User user) {
     try {
@@ -90,19 +117,6 @@ public class ActionOnDocController {
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!", e.getMessage());
     }
-  }
-
-  /**
-   * Call service and get status about document then update available action
-   * for that document
-   *
-   * @param document document which need get status
-   */
-  // TODO: call to service
-  private void updateAvailableActionOnDocument(Document document) {
-    boolean isBorrowAvailable = true; //get from service
-    boolean isRemoveAvailable = true; //get from service
-    docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
   }
 
   /**
@@ -120,7 +134,7 @@ public class ActionOnDocController {
    * @param document the document to be removed
    */
   private void removeDocument(Document document) {
-    try{
+    try {
       documentPersistenceService.delete(document.getId());
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!", e.getMessage());
@@ -143,22 +157,37 @@ public class ActionOnDocController {
    */
   private void addDocument(Document document) {
     try {
-      documentPersistenceService.add(document);
+      addNewDocController.setDocument(documentPersistenceService.add(document));
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!!!", e.getMessage());
     }
   }
 
-
+  /**
+   * Randomly selects a document and sets it in the menu controller.
+   *
+   * @param d the document (not used)
+   */
   private void randomDocument(Document d) {
     menuController.setRandomBook(documentRetrievalService.getRandomDocument());
   }
 
+  /**
+   * Sets the latest documents in the menu controller based on ID in descending order.
+   *
+   * @param switchScene the switch scene
+   */
   private void getLastestDocByIdDesc(SwitchScene switchScene) {
-    menuController.setLastestDocuments(FXCollections.observableList(documentRetrievalService.getLatestDocuments()));
+    menuController.setLastestDocuments(
+            FXCollections.observableList(documentRetrievalService.getLatestDocuments())
+    );
   }
 
-
+  /**
+   * Retrieves a document by its ID and sets it in the menu controller.
+   *
+   * @param id the ID of the document to be retrieved
+   */
   private void getDocumentById(Integer id) {
     menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
   }
@@ -167,7 +196,7 @@ public class ActionOnDocController {
    * Commits changes to the specified document by updating it in the persistence service.
    * If an exception occurs during the update, a warning alert is shown with the error message.
    *
-   * @param document the document to be updated.
+   * @param document the document to be updated
    */
   private void commitChangeDoc(Document document) {
     try {
@@ -176,5 +205,4 @@ public class ActionOnDocController {
       Alerts.showAlertWarning("Error!!!", e.getMessage());
     }
   }
-
 }

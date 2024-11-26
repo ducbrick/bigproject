@@ -9,6 +9,7 @@ import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
+import javax.print.Doc;
 import javax.swing.text.View;
 
 /**
@@ -141,6 +142,17 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<Document> borrowDocumentRequestSender() {
+    return new RequestSender<>();
+  }
+
+
+  /**
+   * Creates a bean for opening document by pdf reader requests.
+   *
+   * @return a new {@code RequestSender} instance for {@code Document}
+   */
+  @Bean
+  public RequestSender<Document> openDocByPdfReaderRequestSender() {
     return new RequestSender<>();
   }
 
@@ -457,6 +469,16 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<ViewController> switchToLendingDetail() { return new RequestSender<>(); }
+
+  /**
+   * Creates a bean for RequestSender that switches to the PDF Reader view.
+   *
+   * @return  an instance of RequestSender for switching to the PDF Reader view.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToPDFReader() {
+    return new RequestSender<>();
+  }
 
   /**
    * same as the one above me <3

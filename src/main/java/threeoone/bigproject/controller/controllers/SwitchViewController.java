@@ -38,6 +38,7 @@ public class SwitchViewController {
   private final MemberDetailsController memberDetailsController;
 
   private final LendingDetailController lendingDetailController;
+  private final PDFReaderController pdfReaderController;
   /**
    * Registers request receivers for switching to different scenes.
    *
@@ -68,7 +69,8 @@ public class SwitchViewController {
           RequestSender<ViewController> switchToAddMem,
           RequestSender<ViewController> switchToYourBooks,
           RequestSender<ViewController> switchToLendingDetail,
-          RequestSender<ViewController> switchToMemberDetails
+          RequestSender<ViewController> switchToMemberDetails,
+          RequestSender<ViewController> switchToPDFReader
   ) {
     switchToDocOverview.registerReceiver(this::switchToDocOverview);
     switchToMainMenu.registerReceiver(this::switchToMainMenu);
@@ -83,6 +85,7 @@ public class SwitchViewController {
     switchToYourBooks.registerReceiver(this::switchToYourBooks);
     switchToLendingDetail.registerReceiver(this::switchToLendingDetail);
     switchToMemberDetails.registerReceiver(this::switchToMemberDetails);
+    switchToPDFReader.registerReceiver(this::switchToPDFReader);
   }
 
   /**
@@ -196,5 +199,14 @@ public class SwitchViewController {
    */
   private void switchToLendingDetail(ViewController from) {
     viewSwitcher.switchToView(lendingDetailController);
+  }
+
+  /**
+   * Switches to the PDF Reader view.
+   *
+   * @param from the current view controller.
+   */
+  private void switchToPDFReader(ViewController from) {
+    viewSwitcher.switchToView(pdfReaderController);
   }
 }
