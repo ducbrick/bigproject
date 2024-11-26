@@ -45,7 +45,7 @@ public class User {
   private Integer id;
 
   @Column(unique = true)
-  @NotEmpty(message = "Username must not be empty")
+  @NotBlank(message = "Username must not be empty")
   @Size(max = 127, message = "Username must have at most 127 characters")
   private String username;
 
