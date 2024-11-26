@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
@@ -23,6 +24,7 @@ import threeoone.bigproject.repositories.UserRepo;
  */
 @Service
 @RequiredArgsConstructor
+@Validated
 public class UserRegisterService {
   private final Validator validator;
   private final UserRepo userRepo;
