@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -43,9 +45,11 @@ public class User {
 
   @NonNull
   @Column(unique = true)
+  @NotBlank(message = "Username must not be empty")
   private String username;
 
   @NonNull
+  @NotEmpty(message = "User password must not be empty")
   private String password;
 
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL, orphanRemoval = true)
