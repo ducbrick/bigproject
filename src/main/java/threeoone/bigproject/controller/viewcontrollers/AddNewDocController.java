@@ -127,13 +127,20 @@ public class AddNewDocController implements ViewController {
       Alerts.showAlertWarning("Warning!", "Some field require only number");
       return;
     }
-    document = new Document(name.getText(), description.getText(), Integer.valueOf(numOfCopies.getText()));
-    document.setAuthor(author.getText());
+
     if(categories.getText().isEmpty()) {
       categories.setText("Unknown");
     }
-    document.setCategory(categories.getText());
-    document.setIsbn(isbn.getText());
+
+    document = Document.builder()
+            .name(name.getText())
+            .description(description.getText())
+            .copies(Integer.valueOf(numOfCopies.getText()))
+            .author(author.getText())
+            .category(categories.getText())
+            .isbn(isbn.getText())
+            .coverImageUrl(coverPhotoPath)
+            .build();
 
     addDocumentRequestSender.send(document);
 
@@ -165,6 +172,7 @@ public class AddNewDocController implements ViewController {
     description.setText(document.getDescription());
     author.setText(document.getAuthor());
     categories.setText(document.getCategory());
+    docCover.setImage(new Image(document.getCoverImageUrl()));
   }
 
   /**
@@ -189,6 +197,7 @@ public class AddNewDocController implements ViewController {
     categories.setText("");
     isbn.setText("");
     numOfCopies.setText("");
+    document = null;
   }
 
   /**

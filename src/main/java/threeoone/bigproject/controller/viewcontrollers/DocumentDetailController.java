@@ -136,9 +136,8 @@ public class DocumentDetailController implements ViewController {
             uploader.setText(document.getUploader().getUsername());
             ISBN.setText(document.getIsbn());
             copies.setText(document.getCopies().toString());
-            Image coverImage;
-            coverImage = new Image(document.getCoverImageUrl());
-            cover.setImage(coverImage);
+            cover.setImage(new Image(document.getCoverImageUrl()));
+            System.out.println(document.getCoverImageUrl());
         });
 
         ObservableList<LendingDetail> lendingDetail =
