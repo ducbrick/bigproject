@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -42,11 +43,13 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToAddNewDoc;
   private final RequestSender<ViewController> switchToLendingDetail;
+  private final  RequestSender<ViewController> switchToPDFReader;
 
   private final RequestSender<Document> documentDetailRequestSender;
   private final RequestSender<Document> editDocumentRequestSender;
   private final RequestSender<Document> removeDocumentRequestSender;
   private final RequestSender<Document> borrowDocumentRequestSender;
+  private final RequestSender<Document> openDocByPdfReaderRequestSender;
 
   @FXML
   private ContextMenu contextMenu;
@@ -74,6 +77,8 @@ public class DocOverviewController implements ViewController {
   @FXML
   private ListView<Document> documentList;
 
+
+  @Setter
   private Document chosenDoc;
 
   private final int CELL_SIZE = 30;
@@ -135,6 +140,11 @@ public class DocOverviewController implements ViewController {
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
+
+    contextMenu.getItems().add(edit());
+    contextMenu.getItems().add(borrow());
+    contextMenu.getItems().add(remove());
+    contextMenu.getItems().add(openPDF());
   }
 
   /**
@@ -160,22 +170,20 @@ public class DocOverviewController implements ViewController {
     documentList.setPrefHeight(0);
   }
 
-
   /**
-   * update context menu follow which action is available for document now
+   * Create open item for context menu
    *
-   * @param isBorrowAvailable can be borrowed
-   * @param isRemoveAvailable can be removed
+   * @return openPDF in context menu
    */
-  public void updateMenuContext(boolean isBorrowAvailable, boolean isRemoveAvailable) {
-    contextMenu.getItems().clear();
-    contextMenu.getItems().add(edit());
-    if (isBorrowAvailable) {
-      contextMenu.getItems().add(borrow());
-    }
-    if (isRemoveAvailable) {
-      contextMenu.getItems().add(remove());
-    }
+  private MenuItem openPDF() {
+    return MenuItemFactory.createMenuItem("Open PDF",
+            "Open Confirmation", "Are you sure you want to open this document?",
+            unused -> {
+              openDocByPdfReaderRequestSender.send(chosenDoc);
+              if(chosenDoc != null) {
+                switchToPDFReader.send(null);
+              }
+            });
   }
 
   /**
