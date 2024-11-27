@@ -127,6 +127,10 @@ public class AddNewDocController implements ViewController {
       Alerts.showAlertWarning("Warning!", "Some field require only number");
       return;
     }
+    if(numOfCopies.getText().length() > 7) {
+      Alerts.showAlertWarning("Warning!", "Number of copies not exceed 7 digits");
+      return;
+    }
     document = new Document(name.getText(), description.getText(), Integer.valueOf(numOfCopies.getText()));
     document.setAuthor(author.getText());
     if(categories.getText().isEmpty()) {
@@ -144,7 +148,6 @@ public class AddNewDocController implements ViewController {
       commitChangeDocRequestSender.send(document);
       Alerts.showAlertInfo("Successfully!", "Adding with digital document.");
     }
-    switchToDocOverview.send(null);
   }
 
   @FXML
@@ -165,6 +168,7 @@ public class AddNewDocController implements ViewController {
     description.setText(document.getDescription());
     author.setText(document.getAuthor());
     categories.setText(document.getCategory());
+    docCover.setImage(new Image(document.getCoverImageUrl()));
   }
 
   /**
