@@ -26,7 +26,7 @@ import lombok.Setter;
  * <p>
  * This entity stores information required for user login and the documents they have uploaded.
  * A {@link User} has a unique {@link #username}, a {@link #password} used for authentication
- * and a unique {@link email} address.
+ * and a unique {@link #email} address.
  * A {@link User} can upload a number of {@link Document}, represented by {@link #uploadedDocuments}.
  * <p>
  * {@link #uploadedDocuments} is a bidirectional one-to-many relationship between {@link User} and {@link Document}.
