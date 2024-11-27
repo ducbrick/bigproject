@@ -31,6 +31,9 @@ import lombok.Setter;
  * JPA requires synchronization on both sides in order to persist.
  * {@link #addUploadedDocument(Document)} sets the relationship on both sides.
  * Lombok-generated {@link Document#setUploader(User)} only sets the relationship on the {@link Document} side.
+ * <p>
+ * {@link PasswordResetToken} has a uni-directional many-to-one relationship with {@link User}.
+ * So, client must manually delete any {@link PasswordResetToken} associated to a specific {@link User} before deleting it.
  *
  * @see Document
  *
