@@ -11,7 +11,8 @@
 #title {
     -fx-font-size: 30;
     -fx-font-weight: bold;
-    -fx-font-family: Georgia,"Palatino Linotype","Book Antiqua",Palatino,serif
+    -fx-font-family: Georgia,"Palatino Linotype","Book Antiqua",Palatino,serif;
+    -fx-wrap-text: true;
 }
 
 #author {
