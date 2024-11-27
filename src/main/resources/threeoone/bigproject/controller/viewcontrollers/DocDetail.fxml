@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<SplitPane fx:id="root" dividerPositions="0.5" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
+<SplitPane fx:id="root" dividerPositions="0.5" styleClass="background" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocumentDetailController">
    <items>
       <VBox maxWidth="80.0" prefHeight="738.0" prefWidth="80.0" SplitPane.resizableWithParent="false">
          <children>
@@ -37,7 +36,7 @@
                <children>
                   <VBox prefHeight="342.0" prefWidth="704.0">
                      <children>
-                        <ImageView fx:id="cover" fitHeight="233.0" fitWidth="282.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="cover" fitHeight="264.0" fitWidth="282.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
                               <Insets left="90.0" />
                            </VBox.margin>
@@ -55,31 +54,29 @@
                   </VBox>
                   <VBox prefHeight="342.0" prefWidth="675.0" styleClass="pane" stylesheets="@CSS/general.css" GridPane.columnIndex="1">
                      <children>
-                        <HBox prefHeight="39.0" prefWidth="450.0">
+                        <Label id="title" fx:id="bookName" prefHeight="79.0" prefWidth="663.0" text="Label">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <HBox id="author" prefHeight="41.0" prefWidth="450.0">
                            <children>
-                              <Label prefHeight="46.0" prefWidth="266.0" text="Name (put bold text shit here)" />
-                              <Label fx:id="bookName" prefHeight="39.0" prefWidth="518.0" text="Label" />
+                              <Label fx:id="author" prefHeight="25.0" prefWidth="651.0" text="Loading" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="41.0" prefWidth="450.0">
-                           <children>
-                              <Label prefHeight="42.0" prefWidth="20.0" text="By " />
-                              <Label fx:id="author" prefHeight="42.0" prefWidth="385.0" text="Label" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="44.0" prefWidth="450.0">
+                        <HBox prefHeight="42.0" prefWidth="662.0">
                            <children>
                               <Label prefHeight="54.0" prefWidth="114.0" text="Category" />
-                              <Label fx:id="category" prefHeight="45.0" prefWidth="362.0" text="Label" />
+                              <Label fx:id="category" prefHeight="32.0" prefWidth="553.0" text="Loading" />
                            </children>
                         </HBox>
-                        <Label fx:id="bookDescription" prefHeight="145.0" prefWidth="450.0" text="Description" />
+                        <Label fx:id="bookDescription" prefHeight="214.0" prefWidth="655.0" text="Loading description" />
                      </children>
                      <GridPane.margin>
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </VBox>
-                  <TableView fx:id="lendings" prefHeight="307.0" prefWidth="407.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <TableView fx:id="lendings" prefHeight="307.0" prefWidth="407.0" styleClass="table" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <columns>
                       <TableColumn fx:id="MemberName" prefWidth="361.60003054142" text="Member's Name" />
                       <TableColumn fx:id="BorrowDate" prefWidth="262.3999328613281" text="Borrow Date" />
@@ -88,10 +85,10 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                      <GridPane.margin>
-                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="10.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </TableView>
-                  <GridPane gridLinesVisible="true" prefHeight="287.0" prefWidth="318.0" styleClass="pane" GridPane.rowIndex="1">
+                  <GridPane prefHeight="287.0" prefWidth="318.0" styleClass="pane" GridPane.rowIndex="1">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -103,14 +100,41 @@
                         <RowConstraints maxHeight="44.400000000000006" minHeight="10.0" prefHeight="44.400000000000006" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label fx:id="ISBN" prefHeight="52.0" prefWidth="260.0" text="ISBN here" GridPane.columnIndex="1" />
-                        <Label fx:id="uploader" prefHeight="55.0" prefWidth="266.0" text="Uploader here" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="uploadedDate" prefHeight="66.0" prefWidth="268.0" text="Uploaded Date here" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label prefHeight="79.0" prefWidth="195.0" text="ISBN:" />
-                        <Label prefHeight="87.0" prefWidth="220.0" text="Uploader:" GridPane.rowIndex="1" />
-                        <Label prefHeight="70.0" prefWidth="219.0" text="Uploaded Date:" GridPane.rowIndex="2" />
-                        <Label prefHeight="66.0" prefWidth="225.0" text="Copies available:" GridPane.rowIndex="3" />
-                        <Label fx:id="copies" prefHeight="59.0" prefWidth="254.0" text="xD" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="ISBN" prefHeight="52.0" prefWidth="260.0" text="Loading" GridPane.columnIndex="1">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label fx:id="uploader" prefHeight="55.0" prefWidth="266.0" text="Loading" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label fx:id="uploadedDate" prefHeight="66.0" prefWidth="268.0" text="Loading" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label prefHeight="79.0" prefWidth="195.0" text="ISBN:">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label prefHeight="87.0" prefWidth="220.0" text="Uploader:" GridPane.rowIndex="1">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label prefHeight="70.0" prefWidth="219.0" text="Uploaded Date:" GridPane.rowIndex="2">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label prefHeight="66.0" prefWidth="225.0" text="Copies available:" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
+                        <Label fx:id="copies" prefHeight="59.0" prefWidth="254.0" text="Loading" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding></Label>
                      </children>
                      <GridPane.margin>
                         <Insets bottom="80.0" left="70.0" right="70.0" top="50.0" />
@@ -120,7 +144,7 @@
             </GridPane>
          </center>
          <top>
-            <Label id="header" prefHeight="70.0" prefWidth="242.0" text="Document detail" BorderPane.alignment="CENTER">
+            <Label id="header" prefHeight="70.0" prefWidth="330.0" text="Document detail" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets top="20.0" />
                </BorderPane.margin>
@@ -128,4 +152,8 @@
          </top>
       </BorderPane>
    </items>
+   <stylesheets>
+      <URL value="@CSS/general.css" />
+      <URL value="@CSS/docDetail.css" />
+   </stylesheets>
 </SplitPane>

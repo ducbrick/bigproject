@@ -53,8 +53,7 @@
 }
 .table .column-header {
     -fx-background-color: #B9E5E8;
-    -fx-border-width: 0 1px 0 1px;
-    -fx-border-color: #6A9A9F;
+
 }
 
 .list {
@@ -97,4 +96,8 @@
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
+}
+
+.root {
+    -fx-font-family: Consolas;
 }

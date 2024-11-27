@@ -49,12 +49,6 @@ public class MenuController implements ViewController {
     private Parent root;
 
     /**
-     * TODO: WHAT IS MY PURPOSE?
-     */
-    @FXML
-    private Button Featured;
-
-    /**
      * TODO: custom funni background
      */
     @FXML
@@ -99,14 +93,6 @@ public class MenuController implements ViewController {
     @FXML
     private TableColumn<Document, String> Description;
 
-    /**
-     * TODO: WHERE IS MY SERVICE
-     */
-    @FXML
-    private TableView<LendingDetail> LendingList;
-
-    @FXML
-
     private Document randomDocument;
 
     @Override
@@ -124,7 +110,8 @@ public class MenuController implements ViewController {
         BookID.setCellValueFactory(new PropertyValueFactory<>("id"));
         Title.setCellValueFactory(new PropertyValueFactory<>("name"));
         Description.setCellValueFactory(new PropertyValueFactory<>("description"));
-
+        Author.setCellValueFactory(new PropertyValueFactory<>("author"));
+        CopiesAvailable.setCellValueFactory(new PropertyValueFactory<>("copies"));
         menuBarController.highlight(SceneName.MAIN_MENU);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {

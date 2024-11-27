@@ -128,7 +128,7 @@ public class DocumentDetailController implements ViewController {
     public void show() {
         Platform.runLater(() -> {
             bookName.setText(document.getName());
-            author.setText(document.getAuthor());
+            author.setText("By" + document.getAuthor());
             bookDescription.setText(document.getDescription());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
             uploadedDate.setText(document.getUploadTime().format(formatter));
