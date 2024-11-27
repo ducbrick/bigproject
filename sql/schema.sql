@@ -43,5 +43,6 @@ CREATE TABLE lending_detail (
 CREATE TABLE password_reset_token (
 	id SERIAL PRIMARY KEY,
 	value VARCHAR(64) NOT NULL UNIQUE,
+	expire_time TIMESTAMP NOT NULL,
 	user_id INTEGER REFERENCES app_user NOT NULL
 );
