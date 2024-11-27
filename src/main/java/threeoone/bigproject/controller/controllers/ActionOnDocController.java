@@ -1,5 +1,6 @@
 package threeoone.bigproject.controller.controllers;
 
+import jakarta.validation.ConstraintViolationException;
 import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class ActionOnDocController {
   private final DocumentPersistenceService documentPersistenceService;
   private final PDFReaderController pdfReaderController;
   private final AddNewDocController addNewDocController;
+  private final RequestSender<ViewController> switchToDocOverview;
 
   /**
    * Registers request receivers for document handling.
@@ -118,6 +120,8 @@ public class ActionOnDocController {
       docOverviewController.setTable(FXCollections.observableArrayList(
               documentList
       ));
+    } catch (ConstraintViolationException exception) {
+      Alerts.showAlertWarning("Error!", exception.getConstraintViolations().iterator().next().getMessage());
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!", e.getMessage());
     }
@@ -183,7 +187,12 @@ public class ActionOnDocController {
   private void addDocument(Document document) {
     try {
       addNewDocController.setDocument(documentPersistenceService.add(document));
-    } catch (Exception e) {
+      switchToDocOverview.send(null);
+    } catch (
+            ConstraintViolationException exception) {
+      Alerts.showAlertWarning("Error!", exception.getConstraintViolations().iterator().next().getMessage());
+    } catch (
+            Exception e) {
       Alerts.showAlertWarning("Error!!!", e.getMessage());
     }
   }
