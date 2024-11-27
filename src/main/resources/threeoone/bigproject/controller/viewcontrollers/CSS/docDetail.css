@@ -1,3 +1,9 @@
 .green-button {
-    -fx-background-color: #009900;
+    -fx-background-color: #32CD32;
+
+}
+.green-button:hover {
+    -fx-background-color: #006400;
+    -fx-underline:true;
+    -fx-cursor: hand;
 }

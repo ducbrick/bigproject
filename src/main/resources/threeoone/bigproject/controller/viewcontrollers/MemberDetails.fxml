@@ -14,7 +14,7 @@
 
 <SplitPane fx:id="root" dividerPositions="0.07872823618470855" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberDetailsController">
    <items>
-      <VBox minHeight="720.0" prefHeight="720.0" prefWidth="0.0" SplitPane.resizableWithParent="false">
+      <VBox minHeight="720.0" prefHeight="720.0" prefWidth="80.0" SplitPane.resizableWithParent="false">
          <children>
              <fx:include maxWidth="80.0" minWidth="80.0" prefWidth="80.0" source="MenuBar.fxml" VBox.vgrow="ALWAYS" />
          </children>
@@ -83,7 +83,10 @@
             </AnchorPane>
          </center>
          <top>
-            <Label id="header" prefHeight="72.0" prefWidth="285.0" text="Member info" BorderPane.alignment="CENTER" />
+            <Label id="header" prefHeight="60.0" prefWidth="286.0" text="Member info" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin></Label>
          </top>
       </BorderPane>
    </items>

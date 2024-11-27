@@ -45,6 +45,17 @@ public class DocumentRetrievalService {
   }
 
   /**
+   * gets a Document along with its lending details (as in who is borrowing a copy
+   * and when did they), as opposed to {@link #getDocumentById(int id)} which doesn't
+   * retrieve the Document's lending details
+   * @param id the id of the document
+   * @return the Document of said id, along with its lending details, or NULL if no document
+   * has said ID
+   */
+  public Document getDocumentWithLendingDetails(int id) {
+      return documentRepo.findWithLendingDetails(id);
+  }
+  /**
    * gets a random document which has copies > 0 (borrow-able)
    * if no document exists in database:
    * @return a random Document
