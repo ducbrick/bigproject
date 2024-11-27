@@ -51,7 +51,7 @@ public class UserRegisterController {
       registerController.showSuccessDialog();
 
       switchToLogin.send(null);
-    } catch (UserAlreadyExistException | IllegalCredentialsException | AlreadyLoggedInException e) {
+    } catch (UserAlreadyExistException | AlreadyLoggedInException e) {
       registerController.setConfirmMessage(e.getMessage());
     }
   }
