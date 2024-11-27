@@ -137,7 +137,7 @@ public class DocumentDetailController implements ViewController {
             ISBN.setText(document.getIsbn());
             copies.setText(document.getCopies().toString());
             Image coverImage;
-            coverImage = new Image(getClass().getResourceAsStream("三玖.jpg"));
+            coverImage = new Image(document.getCoverImageUrl());
             cover.setImage(coverImage);
         });
 

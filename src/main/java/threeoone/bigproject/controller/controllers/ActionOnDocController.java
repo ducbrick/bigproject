@@ -141,7 +141,7 @@ public class ActionOnDocController {
   private void updateAvailableActionOnDocument(Document document) {
     boolean isBorrowAvailable = true; //get from service
     boolean isRemoveAvailable = true; //get from service
-    docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
+    //docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
   }
 
   /**
