@@ -33,7 +33,7 @@ import lombok.Setter;
 @Table(name = "password_reset_token")
 @NoArgsConstructor @Getter @Setter
 public class PasswordResetToken {
-  public static final int TOKEN_LENGTH = 64;
+  public static final int MAX_TOKEN_LENGTH = 64;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +41,8 @@ public class PasswordResetToken {
 
   @Column(unique = true)
   @NotBlank(message = "Password reset token must have a value")
-  @Size(min = TOKEN_LENGTH, max = TOKEN_LENGTH,
-      message = "Password reset token must have exactly " + TOKEN_LENGTH + " characters")
+  @Size(max = MAX_TOKEN_LENGTH,
+      message = "Password reset token must have at most " + MAX_TOKEN_LENGTH + " characters")
   private String value;
 
   @Column(name = "expire_time")
