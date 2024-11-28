@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS password_reset_token;
 DROP TABLE IF EXISTS lending_detail;
 DROP TABLE IF EXISTs member;
 DROP TABLE IF EXISTS document;
@@ -38,4 +39,11 @@ CREATE TABLE lending_detail (
 	lend_time TIMESTAMP NOT NULL,
 	member_id INTEGER REFERENCES member NOT NULL,
 	document_id INTEGER REFERENCES document NOT NULL
+);
+
+CREATE TABLE password_reset_token (
+	id SERIAL PRIMARY KEY,
+	value VARCHAR(64) NOT NULL UNIQUE,
+	expire_time TIMESTAMP NOT NULL,
+	user_id INTEGER REFERENCES app_user NOT NULL
 );
