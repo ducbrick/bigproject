@@ -58,6 +58,8 @@ public class PasswordResetLinkSenderService {
    * @param username the username of the {@link User} who wants to reset their password
    *
    * @return whether if a {@link User} with the provided {@code username} exists
+   *
+   * @throws RuntimeException when unexpected errors occur (such as constraints violation)
    */
   @Transactional
   public boolean sendResetLink(String username) {
