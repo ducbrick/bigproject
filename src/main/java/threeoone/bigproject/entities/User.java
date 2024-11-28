@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -24,7 +25,8 @@ import lombok.Setter;
  * ORM Entity representing a user of the application.
  * <p>
  * This entity stores information required for user login and the documents they have uploaded.
- * A {@link User} has a unique {@link #username} and a {@link #password} used authentication.
+ * A {@link User} has a unique {@link #username}, a {@link #password} used for authentication
+ * and a unique {@link #email} address.
  * A {@link User} can upload a number of {@link Document}, represented by {@link #uploadedDocuments}.
  * <p>
  * {@link #uploadedDocuments} is a bidirectional one-to-many relationship between {@link User} and {@link Document}.
@@ -53,6 +55,11 @@ public class User {
   @Size(max = 127, message = "User password must have at most 127 characters")
   private String password;
 
+  @Column(unique = true)
+  @NotBlank(message = "User must have an email")
+  @Email(message = "User must have a valid email")
+  private String email;
+
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL, orphanRemoval = true)
   private List <Document> uploadedDocuments = new ArrayList <> ();
 
@@ -72,5 +79,11 @@ public class User {
   public User(String username, String password) {
     this.username = username;
     this.password = password;
+  }
+
+  public User(String username, String password, String email) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
   }
 }
