@@ -1,5 +1,7 @@
 package threeoone.bigproject.repositories;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ class PasswordResetTokenRepoTest {
     User user = new User();
     user.setUsername("skibidi");
     user.setPassword("rizz");
+    user.setEmail("skibidi@rizzler.mog");
 
     user = userRepo.save(user);
 
