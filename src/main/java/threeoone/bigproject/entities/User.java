@@ -58,6 +58,7 @@ public class User {
   @Column(unique = true)
   @NotBlank(message = "User must have an email")
   @Email(message = "User must have a valid email")
+  @Size(max = 127, message = "User email must have at most 127 character")
   private String email;
 
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL, orphanRemoval = true)
