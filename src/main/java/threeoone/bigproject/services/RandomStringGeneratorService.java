@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RandomStringGeneratorService {
-  private final String SPECIAL_CHARACTERS = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+  private final String SPECIAL_CHARACTERS = "$-_.+!*'()";
   private final String DIGITS = "0123456789";
   private final String LOWER = "qwertyuiopasdfghjklzxcvbnm";
   private final String UPPER = "QWERTYUIOPASDFGHJKLZXCVBNM";
@@ -22,7 +22,7 @@ public class RandomStringGeneratorService {
   /**
    * Generate a random String with the given length.
    * The generated String uses this method's default character set,
-   * which includes lowercase and uppercase alphabetical characters, digits, white space and special symbols.
+   * which includes lowercase and uppercase alphabetical characters, digits, white space and special symbols which are url-safe.
    *
    * @param length the desired length of the generated String
    *
