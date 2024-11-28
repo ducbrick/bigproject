@@ -2,7 +2,6 @@ package threeoone.bigproject.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,9 +28,7 @@ class UserRepoTest {
   public void countBeforeAndAfterSingleInsertion() {
     long countBefore = userRepo.count();
 
-    User user = new User("loginname", "password");
-    user.setEmail("skibidi@rizzler.mog");
-    userRepo.save(user);
+    userRepo.save(new User("loginname", "password"));
 
     long countAfter = userRepo.count();
 
@@ -44,10 +41,10 @@ class UserRepoTest {
     long countBefore = userRepo.count();
 
     List <User> users = new ArrayList <> ();
-    users.add(new User("username a", "password a", "skibidia@rizzler.mog"));
-    users.add(new User("username b", "password b", "skibidib@rizzler.mog"));
-    users.add(new User("username c", "password c", "skibidic@rizzler.mog"));
-    users.add(new User("username d", "password d", "skibidid@rizzler.mog"));
+    users.add(new User("username a", "password a"));
+    users.add(new User("username b", "password b"));
+    users.add(new User("username c", "password c"));
+    users.add(new User("username d", "password d"));
 
     for (User user : users) {
       userRepo.save(user);
@@ -64,10 +61,10 @@ class UserRepoTest {
     long countBefore = userRepo.count();
 
     List <User> users = new ArrayList <> ();
-    users.add(new User("username a", "password a", "skibidia@rizzler.mog"));
-    users.add(new User("username b", "password b", "skibidib@rizzler.mog"));
-    users.add(new User("username c", "password c", "skibidic@rizzler.mog"));
-    users.add(new User("username d", "password d", "skibidid@rizzler.mog"));
+    users.add(new User("username a", "password a"));
+    users.add(new User("username b", "password b"));
+    users.add(new User("username c", "password c"));
+    users.add(new User("username d", "password d"));
 
     userRepo.saveAll(users);
 
@@ -79,13 +76,10 @@ class UserRepoTest {
   @Test
   @DisplayName("Insert documents and retrieve uploaders")
   public void insertDocuments_retrieveAuthor() {
-    User user = new User("name", "password", "skibidi@rizzler.mog");
+    User user = new User("name", "password");
     Document docA = new Document("name a", "description a");
-    docA.setUploadTime(LocalDateTime.now());
     Document docB = new Document("name b", "description b");
-    docB.setUploadTime(LocalDateTime.now());
     Document docC = new Document("name c", "description c");
-    docC.setUploadTime(LocalDateTime.now());
 
     user.addUploadedDocument(docA);
     user.addUploadedDocument(docB);
@@ -115,10 +109,8 @@ class UserRepoTest {
   @Test
   @DisplayName("Insert user and retrieve document")
   public void insertUserRetrieveDocument() {
-    User user = new User("name", "password", "skibidi@rizzler.mog");
-    Document document = new Document("name", "desc");
-    document.setUploadTime(LocalDateTime.now());
-    user.addUploadedDocument(document);
+    User user = new User("name", "password");
+    user.addUploadedDocument(new Document("name", "desc"));
 
     user = userRepo.save(user);
 
@@ -128,7 +120,7 @@ class UserRepoTest {
 
     assertThat(documents.size()).isEqualTo(1);
 
-    document = documents.getFirst();
+    Document document = documents.getFirst();
 
     assertThat(document).isSameAs(documentRepo.findById(document.getId()).orElse(null));
   }
@@ -136,7 +128,7 @@ class UserRepoTest {
   @Test
   @DisplayName("Retrieve user with no document with findUserAndUploadedDocuments")
   public void retriveUserWithNoDocumentWith_findUserAndUploadedDocuments() {
-    User user = new User("name", "password", "skibidi@rizzler.mog");
+    User user = new User("name", "password");
     user = userRepo.save(user);
 
     assertThat(userRepo.findUserAndUploadedDocuments(user.getId())).isSameAs(user);
@@ -145,7 +137,7 @@ class UserRepoTest {
   @Test
   @DisplayName("Find user by login name")
   public void findByUsername() {
-    User user = new User("ducbrick", "password", "skibidi@rizzler.mog");
+    User user = new User("ducbrick", "password");
     user = userRepo.save(user);
     assertThat(user).isSameAs(userRepo.findByUsername(user.getUsername()));
   }
