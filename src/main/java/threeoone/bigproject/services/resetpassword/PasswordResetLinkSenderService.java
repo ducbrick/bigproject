@@ -86,12 +86,6 @@ public class PasswordResetLinkSenderService {
         + "="
         + token.getValue();
 
-    System.out.println("""
-              You made a request to reset your password.
-              Please follow this link to do so:
-              %s
-              If you did not make such a request, kindly ignore this email""".formatted(url));
-
     try {
       emailSender.sendEmail(
           user.getEmail(),
