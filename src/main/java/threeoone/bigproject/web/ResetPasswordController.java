@@ -3,6 +3,7 @@ package threeoone.bigproject.web;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.resetpassword.PasswordResetAuthenticationService;
 
@@ -12,7 +13,8 @@ public class ResetPasswordController {
   private final PasswordResetAuthenticationService authenticationService;
 
   @GetMapping("${api.resetpassword.endpoint}")
-  public String resetPassword(String tokenValue) {
+  public String resetPassword(
+      @RequestParam("${api.resetpassword.param.tokenvalue}") String tokenValue) {
     User user = authenticationService.authenticate(tokenValue);
 
     if (user == null) {
