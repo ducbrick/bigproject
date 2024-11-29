@@ -1,5 +1,6 @@
 package threeoone.bigproject.services.resetpassword;
 
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class PasswordResetAuthenticationService {
       return null;
     }
 
-    User user = token.getUser();
+    User user = (token.getExpireTime().isAfter(LocalDateTime.now()) ? token.getUser() : null);
 
     tokenRepo.delete(token);
 
