@@ -486,4 +486,19 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
+
+  /**
+   * Requests to redirect the user to the password-reset page.
+   * <p>
+   * This type of request contains a single parameter of type {@link User}.
+   * <p>
+   * Receiver of this type of request should redirect the application to the page in which
+   * the provided {@link User} can reset their password.
+   *
+   * @return the {@link RequestSender} of the described request type
+   */
+  @Bean
+  public RequestSender <User> redirectToPasswordResetPageRequestSender() {
+    return new RequestSender <> ();
+  }
 }
