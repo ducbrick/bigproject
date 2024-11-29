@@ -22,6 +22,15 @@ public interface PasswordResetTokenRepo extends ListCrudRepository <PasswordRese
   @Query("DELETE FROM PasswordResetToken t WHERE t.user.id = :userId")
   void deleteByUser(Integer userId);
 
+  /**
+   * Retrieves the unique {@link PasswordResetToken} with a specific {@code value}.
+   * As each token's {@code value} is unique, this method is guaranteed to return at most one {@link PasswordResetToken}.
+   * If no {@link PasswordResetToken} with the specified {@code value} exists, returns {@code NULL}.
+   *
+   * @param value the value of the desired {@link PasswordResetToken}
+   *
+   * @return the unique {@link PasswordResetToken} with the specified {@code value} if it exists, otherwise {@code NULL}
+   */
   @Query("SELECT t FROM PasswordResetToken t WHERE t.value = (:value)")
   PasswordResetToken findByValue(@Param("value") String value);
 }
