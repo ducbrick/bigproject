@@ -1,13 +1,24 @@
 package threeoone.bigproject.web;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import threeoone.bigproject.entities.User;
+import threeoone.bigproject.services.resetpassword.PasswordResetAuthenticationService;
 
-@RestController
+@Controller
+@RequiredArgsConstructor
 public class ResetPasswordController {
+  private final PasswordResetAuthenticationService authenticationService;
+
   @GetMapping("${api.resetpassword.endpoint}")
   public String resetPassword(String tokenValue) {
-    return "HELLO";
+    User user = authenticationService.authenticate(tokenValue);
+
+    if (user == null) {
+      return "requestdenied.html";
+    }
+
+    return "requestauthenticated.html";
   }
 }
