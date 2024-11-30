@@ -172,7 +172,8 @@ public class AddNewDocController implements ViewController {
     description.setText(document.getDescription());
     author.setText(document.getAuthor());
     categories.setText(document.getCategory());
-    docCover.setImage(new Image(document.getCoverImageUrl()));
+    coverPhotoPath = document.getCoverImageUrl();
+    docCover.setImage(new Image(coverPhotoPath));
   }
 
   /**

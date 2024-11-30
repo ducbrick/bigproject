@@ -3,13 +3,11 @@ package threeoone.bigproject.controller.viewcontrollers;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +26,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * this view present information about a specific member, which include their name, address, phone number
- * email and the books they are currently borrowing.
+ * <p>
+ * this view present information about a specific member, which include their name,
+ *  * address, phone number, email and the books they are currently borrowing.
+ * </p>
  * the books which the member is borrowing is displayed in a interactive table
+ * user can see documents details or delete the lending (as in, letting a member return a document)
  * TODO: laggy document detail
  */
 @Component
@@ -42,8 +43,15 @@ public class MemberDetailsController implements ViewController{
     private final RequestSender<Document> documentDetailRequestSender;
     private final RequestSender<ViewController> switchToDocDetail;
 
+    /**
+     * allows Lending Detail deletion in the database
+     */
+    private final RequestSender<Integer> deleteLending;
+
     @FXML
     private Parent root;
+
+    private ContextMenu contextMenu;
 
     @FXML
     private Label Name;
@@ -72,11 +80,41 @@ public class MemberDetailsController implements ViewController{
     @FXML
     private TableColumn<LendingDetail, String> Title;
 
+    /**
+     * this list holds LendingDetail from the selected member. updates in this list
+     * does NOT affect the database.
+     */
+    private ObservableList<LendingDetail> lendingDetailObservableList;
 
+    private LendingDetail lendingDetail;
+
+
+    /**
+     * initialize the TableView and the ContextMenu for returning document
+     */
     public void initialize() {
         initTable();
+        contextMenu = new ContextMenu();
+        MenuItem returnDocument = new MenuItem("Return Document");
+        contextMenu.getItems().add(returnDocument);
+
+            returnDocument.setOnAction(event -> {
+            int ID = lendingDetail.getId();
+            deleteLending.send(ID);
+            update(lendingDetail);
+        });
+
     }
 
+    /**
+     * update the observable list (delete a detail from list)
+     * this function only delete from the list that the Member object possesses,
+     * it does NOT affect the database.
+     * @param detail the LendingDetail in the list to be deleted
+     */
+    private void update(LendingDetail detail) {
+        lendingDetailObservableList.remove(detail);
+    }
 
     /**
      * initializes the columns' property
@@ -86,10 +124,20 @@ public class MemberDetailsController implements ViewController{
     private void initTable() {
         BorrowingBooks.setRowFactory(tableview -> {
             TableRow<LendingDetail> row = new TableRow<>();
+            row.setContextMenu(contextMenu);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     Document doc = row.getItem().getDocument();
                     gotoDocDetail(doc);
+                }
+            });
+            row.setOnContextMenuRequested(event -> {
+                if(!row.isEmpty()) {
+                    contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                    lendingDetail = row.getItem();
+                }
+                else {
+                    contextMenu.hide();
                 }
             });
             return row;
@@ -119,6 +167,7 @@ public class MemberDetailsController implements ViewController{
         switchToDocDetail.send(this);
     }
 
+
     @Override
     public Parent getParent() {
         return root;
@@ -130,7 +179,7 @@ public class MemberDetailsController implements ViewController{
      */
     @Override
     public void show() {
-        ObservableList<LendingDetail> lendingDetailObservableList = FXCollections.observableList(member.getLendingDetails());
+        lendingDetailObservableList = FXCollections.observableList(member.getLendingDetails());
         BorrowingBooks.setItems(lendingDetailObservableList);
         Name.setText(member.getName());
         Phone.setText(member.getAddress());
