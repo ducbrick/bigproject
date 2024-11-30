@@ -7,12 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.LoginController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
-import threeoone.bigproject.services.LoginService;
+import threeoone.bigproject.services.authentication.LoginService;
 
 /**
  * Handles the interaction logic for the Login view.

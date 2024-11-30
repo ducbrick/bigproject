@@ -13,7 +13,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import threeoone.bigproject.controller.viewcontrollers.LoginController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
-import threeoone.bigproject.services.LoginService;
+import threeoone.bigproject.services.authentication.LoginService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

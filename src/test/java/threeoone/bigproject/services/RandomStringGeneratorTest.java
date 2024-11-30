@@ -1,9 +1,10 @@
 package threeoone.bigproject.services;
 
 import org.junit.jupiter.api.Test;
+import threeoone.bigproject.util.RandomStringGenerator;
 
-class RandomStringGeneratorServiceTest {
-  RandomStringGeneratorService service = new RandomStringGeneratorService();
+class RandomStringGeneratorTest {
+  RandomStringGenerator service = new RandomStringGenerator();
 
   @Test
   void test() {

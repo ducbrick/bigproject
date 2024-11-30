@@ -1,6 +1,7 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.util;
 
 import java.util.Random;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Service;
  *
  * @author DUCBRICK
  */
-@Service
-public class RandomStringGeneratorService {
+@Component
+public class RandomStringGenerator {
   private final String SPECIAL_CHARACTERS = "$-_.+!*'()";
   private final String DIGITS = "0123456789";
   private final String LOWER = "qwertyuiopasdfghjklzxcvbnm";

@@ -1,8 +1,7 @@
-package threeoone.bigproject.services.resetpassword;
+package threeoone.bigproject.services.forgotpassword;
 
 import jakarta.mail.MessagingException;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,7 @@ import threeoone.bigproject.entities.User;
 import threeoone.bigproject.repositories.PasswordResetTokenRepo;
 import threeoone.bigproject.repositories.UserRepo;
 import threeoone.bigproject.services.EmailSenderService;
-import threeoone.bigproject.services.RandomStringGeneratorService;
+import threeoone.bigproject.util.RandomStringGenerator;
 
 /**
  * A service to send emails to Users containing the REST API uri that will authenticate requests to reset their password.
@@ -35,7 +34,7 @@ public class PasswordResetLinkSenderService {
   private final EmailSenderService emailSender;
   private final UserRepo userRepo;
   private final PasswordResetTokenRepo tokenRepo;
-  private final RandomStringGeneratorService randomStringGeneratorService;
+  private final RandomStringGenerator randomStringGeneratorService;
 
   @Value("${server.url}")
   private String serverUrl;

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.LendingDetail;
-import threeoone.bigproject.services.LendingPersistenceService;
+import threeoone.bigproject.services.persistence.LendingPersistenceService;
 
 /**
  * The {@code ActionOnLendingController} class handles actions related to lending operations.

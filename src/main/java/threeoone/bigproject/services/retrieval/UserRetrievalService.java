@@ -1,13 +1,9 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.retrieval;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.entities.LendingDetail;
-import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.repositories.UserRepo;
 

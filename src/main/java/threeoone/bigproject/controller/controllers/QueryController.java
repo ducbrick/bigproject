@@ -10,9 +10,9 @@ import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.services.BookRecommendService;
-import threeoone.bigproject.services.DocumentRetrievalService;
+import threeoone.bigproject.services.retrieval.DocumentRetrievalService;
 import threeoone.bigproject.services.GoogleAPIService;
-import threeoone.bigproject.services.MemberRetrievalService;
+import threeoone.bigproject.services.retrieval.MemberRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
 import java.util.List;
