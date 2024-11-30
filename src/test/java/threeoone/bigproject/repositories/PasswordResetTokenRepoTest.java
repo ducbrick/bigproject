@@ -68,4 +68,42 @@ class PasswordResetTokenRepoTest {
     assertThat(passwordResetTokenRepo.existsById(token1.getId())).isFalse();
     assertThat(passwordResetTokenRepo.existsById(token2.getId())).isFalse();
   }
+
+  @Test
+  @DisplayName("Retrieve token by its value")
+  void findByValue() {
+    User user = new User();
+    user.setUsername("skibidi");
+    user.setPassword("rizz");
+    user.setEmail("skibidi@rizzler.mog");
+
+    user = userRepo.save(user);
+
+    var token1 = new PasswordResetToken();
+    token1.setValue("skdjfakjsdfskdjf");
+    token1.setExpireTime(LocalDateTime.now());
+    token1.setUser(user);
+
+    token1 = passwordResetTokenRepo.save(token1);
+
+    var token2 = new PasswordResetToken();
+    token2.setValue("sdjauasjdsdkjfak");
+    token2.setExpireTime(LocalDateTime.now());
+    token2.setUser(user);
+
+    token2 = passwordResetTokenRepo.save(token2);
+
+    var token3 = new PasswordResetToken();
+    token3.setValue("slkdfasdkljfadk");
+    token3.setExpireTime(LocalDateTime.now());
+    token3.setUser(user);
+
+    token3 = passwordResetTokenRepo.save(token3);
+
+    assertThat(passwordResetTokenRepo.findByValue(null)).isNull();
+    assertThat(passwordResetTokenRepo.findByValue("skibidi")).isNull();
+    assertThat(passwordResetTokenRepo.findByValue(token1.getValue())).isSameAs(token1);
+    assertThat(passwordResetTokenRepo.findByValue(token2.getValue())).isSameAs(token2);
+    assertThat(passwordResetTokenRepo.findByValue(token3.getValue())).isSameAs(token3);
+  }
 }
