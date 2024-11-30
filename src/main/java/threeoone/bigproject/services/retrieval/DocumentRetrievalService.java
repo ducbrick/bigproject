@@ -1,4 +1,4 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.retrieval;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.authentication;
 
 import java.util.Objects;
 import org.springframework.stereotype.Service;

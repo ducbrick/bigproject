@@ -1,4 +1,4 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.authentication;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.entities.User;
-import threeoone.bigproject.exceptions.AlreadyLoggedInException;
-import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
 import threeoone.bigproject.repositories.UserRepo;
 

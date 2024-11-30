@@ -5,12 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Member;
-import threeoone.bigproject.services.MemberEditingService;
-import threeoone.bigproject.services.MemberRetrievalService;
+import threeoone.bigproject.services.persistence.MemberEditingService;
+import threeoone.bigproject.services.retrieval.MemberRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
 import java.util.Comparator;

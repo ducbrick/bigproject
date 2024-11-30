@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.repositories.UserRepo;
+import threeoone.bigproject.services.authentication.LoginService;
 
 @ExtendWith(MockitoExtension.class)
 class LoginServiceTest {

@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.repositories.DocumentRepo;
+import threeoone.bigproject.services.retrieval.DocumentRetrievalService;
 
 @ExtendWith(MockitoExtension.class)
 class DocumentRetrievalServiceTest {
