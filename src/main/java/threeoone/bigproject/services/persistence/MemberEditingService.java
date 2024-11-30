@@ -51,7 +51,7 @@ public class MemberEditingService {
    *
    * @param member the {@link Member} to update
    *
-   * @throws IllegalArgumentException when the given Document's {@code id} doesn't match any's in the Database
+   * @throws IllegalArgumentException when the given Member's {@code id} doesn't match any's in the Database
    * @throws ConstraintViolationException when the given {@link Member} violates existing constraints
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *
