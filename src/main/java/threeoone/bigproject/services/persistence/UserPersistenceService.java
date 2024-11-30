@@ -43,7 +43,7 @@ public class UserPersistenceService {
   @Transactional
   public User update(@Valid @NotNull User user) {
     if (user.getId() == null) {
-      throw new IllegalArgumentException("Attempting to update a User with no ID")
+      throw new IllegalArgumentException("Attempting to update a User with no ID");
     }
 
     if (!userRepo.existsById(user.getId())) {
