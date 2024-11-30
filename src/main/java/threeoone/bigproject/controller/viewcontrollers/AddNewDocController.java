@@ -36,9 +36,12 @@ import java.io.File;
 @FxmlView("AddNewDoc.fxml")
 public class AddNewDocController implements ViewController {
   private final RequestSender<ViewController> switchToDocOverview;
-  private final RequestSender<Document> addDocumentRequestSender;
-  private final RequestSender<String> queryISBNGoogleRequestSender;
   private final RequestSender<Document> commitChangeDocRequestSender;
+  private final RequestSender<Document> addDocumentRequestSender;
+
+  private final RequestSender<String> queryISBNGoogleRequestSender;
+
+
   private final MenuBarController menuBarController;
   @FXML
   private TextField author;

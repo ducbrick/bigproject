@@ -41,9 +41,13 @@ import java.time.format.DateTimeFormatter;
 @FxmlView("DocDetail.fxml")
 @RequiredArgsConstructor
 public class DocumentDetailController implements ViewController {
-    private final RequestSender<ViewController> switchToYourBooks;
+    private final RequestSender<ViewController> switchToPDFReader;
     private final RequestSender<ViewController> switchToLendingDetail;
+    private final RequestSender<ViewController> switchToEditDoc;
+
     private final RequestSender<Document> lendingDetailRequestSender;
+    private final RequestSender<Document> openDocByPdfReaderRequestSender;
+    private final RequestSender<Document> editDocumentRequestSender;
 
     private Document document;
 
@@ -81,6 +85,12 @@ public class DocumentDetailController implements ViewController {
     private Button borrow;
 
     @FXML
+    private Button ReadPDF;
+
+    @FXML
+    private Button editDocument;
+
+    @FXML
     private TableView<LendingDetail> lendings;
 
     @FXML
@@ -100,7 +110,7 @@ public class DocumentDetailController implements ViewController {
         });
 
         BorrowDate.setCellValueFactory(cellData -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy || hh:mm:ss");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
             LocalDateTime date = cellData.getValue().getLendTime();
             return new SimpleStringProperty(date.format(formatter));
         });
@@ -120,6 +130,18 @@ public class DocumentDetailController implements ViewController {
         switchToLendingDetail.send(null); //don't need this data
     }
 
+    @FXML
+    private void toPDFReader() {
+        openDocByPdfReaderRequestSender.send(document);
+        switchToPDFReader.send(this);
+    }
+
+    @FXML
+    private void toEdit() {
+        editDocumentRequestSender.send(document);
+        switchToEditDoc.send(this);
+    }
+
     /**
      * show the selected document
      * TODO: show default "loading" when document info is not loaded
@@ -127,6 +149,14 @@ public class DocumentDetailController implements ViewController {
     @Override
     public void show() {
         Platform.runLater(() -> {
+            if (document.getPdfUrl() == null) {
+                ReadPDF.setDisable(true);
+                ReadPDF.setId("noPDF");
+            }
+            else {
+                ReadPDF.setDisable(false);
+                ReadPDF.setId(null);
+            }
             bookName.setText(document.getName());
             author.setText("By " + document.getAuthor());
             bookDescription.setText(document.getDescription());

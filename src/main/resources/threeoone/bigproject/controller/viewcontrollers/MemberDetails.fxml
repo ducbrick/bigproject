@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane fx:id="root" dividerPositions="0.07872823618470855" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberDetailsController">
+<SplitPane fx:id="root" dividerPositions="0.07329105003523607" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberDetailsController">
    <items>
       <VBox minHeight="720.0" prefHeight="720.0" prefWidth="80.0" SplitPane.resizableWithParent="false">
          <children>

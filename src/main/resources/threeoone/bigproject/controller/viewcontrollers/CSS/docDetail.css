@@ -1,6 +1,8 @@
 .green-button {
     -fx-background-color: #32CD32;
-
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+    -fx-border-color: #000000;
 }
 .green-button:hover {
     -fx-background-color: #006400;
@@ -24,4 +26,12 @@
 
 .label {
     -fx-padding: 5px;
+}
+
+#edit {
+    -fx-background-color: #e66a3a;
+}
+
+#noPDF {
+    -fx-opacity: 0.2;
 }

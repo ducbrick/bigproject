@@ -26,7 +26,7 @@ import java.io.File;
 @FxmlView("PDFReader.fxml")
 @RequiredArgsConstructor
 public class PDFReaderController implements ViewController {
-  private final RequestSender<ViewController> switchToDocOverview;
+  private final RequestSender<ViewController> switchToDocDetail;
 
   @FXML
   private Parent root;
@@ -65,7 +65,7 @@ public class PDFReaderController implements ViewController {
    */
   @FXML
   void pressReturn(ActionEvent event) {
-    switchToDocOverview.send(null);
+    switchToDocDetail.send(null);
   }
 
   /**
