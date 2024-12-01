@@ -157,6 +157,12 @@ public class SpringConfig {
   }
 
 
+  /**
+   * Sends a RequestSender that has the document from "Document detail" specifically.
+   */
+  @Bean
+  public RequestSender<Document> lendingDetailRequestSender() { return new RequestSender<>(); }
+
   /*************************************************************************
    *  All request sender for member handler: edit, remove, add, ... (not contains query)
    ***************************************************************************/
@@ -501,4 +507,8 @@ public class SpringConfig {
   public RequestSender <User> redirectToPasswordResetPageRequestSender() {
     return new RequestSender <> ();
   }
+
+
+  @Bean
+  public RequestSender<Integer> deleteLending() { return new RequestSender<>(); }
 }
