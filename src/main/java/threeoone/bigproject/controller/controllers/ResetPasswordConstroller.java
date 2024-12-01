@@ -10,15 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.controller.RequestSender;
+import threeoone.bigproject.controller.viewcontrollers.LoginController;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.persistence.UserPersistenceService;
 import threeoone.bigproject.util.Alerts;
+import threeoone.bigproject.view.ViewSwitcher;
 
 @Controller
 @RequiredArgsConstructor
 @Validated
 public class ResetPasswordConstroller {
   private final Logger logger = LoggerFactory.getLogger(ResetPasswordConstroller.class);
+
+  private final ViewSwitcher viewSwitcher;
+  private final LoginController loginController;
 
   private final UserPersistenceService userPersistenceService;
 
@@ -30,6 +35,8 @@ public class ResetPasswordConstroller {
   private void resetPassword(@NotNull @Valid User user) {
     try {
       userPersistenceService.update(user);
+      Alerts.showAlertInfo("Success", "Password reset! Sign in to continue");
+      viewSwitcher.switchToView(loginController);
     }
     catch (ConstraintViolationException e) {
       Alerts.showAlertWarning("Error!", e.getConstraintViolations().iterator().next().getMessage());
