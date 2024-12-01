@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.viewcontrollers.LoginController;
+import threeoone.bigproject.controller.viewcontrollers.ResetPasswordView;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.persistence.UserPersistenceService;
 import threeoone.bigproject.util.Alerts;
@@ -23,13 +24,24 @@ public class ResetPasswordConstroller {
   private final Logger logger = LoggerFactory.getLogger(ResetPasswordConstroller.class);
 
   private final ViewSwitcher viewSwitcher;
+
+  private final ResetPasswordView resetPasswordView;
   private final LoginController loginController;
 
   private final UserPersistenceService userPersistenceService;
 
   @Autowired
-  private void registerRequestSenders(RequestSender <User> resetPasswordRequestSender) {
+  private void registerRequestSenders(
+    RequestSender <User> redirectToPasswordResetPageRequestSender,
+      RequestSender <User> resetPasswordRequestSender) {
+    redirectToPasswordResetPageRequestSender.registerReceiver(this::redirectToPage);
     resetPasswordRequestSender.registerReceiver(this::resetPassword);
+  }
+
+  private void redirectToPage(@NotNull @Valid User user) {
+    /*Should not throw any exceptions*/
+    resetPasswordView.setUser(user);
+    viewSwitcher.switchToView(resetPasswordView);
   }
 
   private void resetPassword(@NotNull @Valid User user) {

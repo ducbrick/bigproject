@@ -36,13 +36,8 @@ public class JavaFxApplication extends Application {
    */
   @Override
   public void start(Stage stage) throws Exception {
-    UserRepo userRepo = context.getBean(UserRepo.class);
-
     ViewSwitcher viewSwitcher = context.getBean(ViewSwitcher.class);
-    ResetPasswordView startController = context.getBean(ResetPasswordView.class);
-
-    startController.setUser(userRepo.findById(11).get());
-
+    ViewController startController = context.getBean(LoginController.class);
     viewSwitcher.setStage(stage, startController);
   }
 
