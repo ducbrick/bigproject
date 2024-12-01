@@ -4,6 +4,13 @@
     overflow: hidden; /* Prevents content from spilling over */
 }
 
+.button:hover {
+    -fx-cursor: hand;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+    -fx-border-color: #000000;
+}
+
 .menu-container:hover {
     -fx-max-width: 300px; /* Expanded height; adjust as needed */
 }
@@ -68,11 +75,28 @@
 }
 
 .red-button {
+    -fx-background-color: #850101;
+    -fx-opacity: 0.9;
+}
+
+.red-button:hover {
     -fx-background-color: CRIMSON;
+    -fx-opacity: 1;
 }
 
 #green-button {
     -fx-background-color: #009900;
+}
+.green-button {
+    -fx-background-color: #32CD32;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+    -fx-border-color: #000000;
+}
+.green-button:hover {
+    -fx-background-color: #006400;
+    -fx-underline:true;
+    -fx-cursor: hand;
 }
 
 .choice-box {
