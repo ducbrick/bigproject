@@ -17,6 +17,12 @@ import threeoone.bigproject.services.persistence.UserPersistenceService;
 import threeoone.bigproject.util.Alerts;
 import threeoone.bigproject.view.ViewSwitcher;
 
+/**
+ * A controller to handle requests related to resetting users' passwords.
+ * This class is singleton bean in Spring context.
+ *
+ * @author DUCBRICK
+ */
 @Controller
 @RequiredArgsConstructor
 @Validated
@@ -38,12 +44,25 @@ public class ResetPasswordConstroller {
     resetPasswordRequestSender.registerReceiver(this::resetPassword);
   }
 
+  /**
+   * Receives and processes a {@code redirectToPasswordResetPage} request.
+   *
+   * @param user the {@link User} to reset password
+   */
   private void redirectToPage(@NotNull @Valid User user) {
     /*Should not throw any exceptions*/
     resetPasswordView.setUser(user);
     viewSwitcher.switchToView(resetPasswordView);
   }
 
+  /**
+   * Receives and processes a {@code resetPassword} request.
+   * This method updates the given {@link User} to the Database,
+   * (specifically, only its {@code password}).
+   * After that, this method redirects the user to the login page.
+   *
+   * @param user the {@link User} to update password
+   */
   private void resetPassword(@NotNull @Valid User user) {
     try {
       userPersistenceService.update(user);

@@ -502,6 +502,19 @@ public class SpringConfig {
     return new RequestSender <> ();
   }
 
+  /**
+   * Requests to reset the {@code password} of a specific {@link User}.
+   * <p>
+   * This type of request contains a single parameter of type {@link User}.
+   * <p>
+   * Receiver of this type of request should update the data of the {@link User}
+   * entity instance parameter to the Database.
+   * Specifically, the {@link User} parameter should be a valid detached entity,
+   * whose data is the same as a managed entity in the JPA context,
+   * except the {@code password} field, which carries the new password to be updated.
+   *
+   * @return the {@link RequestSender} of the described request type
+   */
   @Bean
   public RequestSender <User> resetPasswordRequestSender() {
     return new RequestSender <> ();

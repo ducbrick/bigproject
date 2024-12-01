@@ -18,6 +18,12 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.entities.User;
 
+/**
+ * FXML Controller to handles the internal logic of {@code resetpassword.fxml}.
+ * This class is a singleton bean in Spring context.
+ *
+ * @author DUCBRICK
+ */
 @Component
 @RequiredArgsConstructor
 @FxmlView("resetpassword.fxml")
@@ -75,11 +81,20 @@ public class ResetPasswordView implements ViewController {
     pageLabel.setText(label);
   }
 
+  /**
+   * Configures the page according to the given {@link User}.
+   */
   @Override
   public void show() {
     setPageLabel();
   }
 
+  /**
+   * Sets the {@link User} that wants to have their {@code password} reset.
+   * The given {@link User} should be a valid entity from the JPA context.
+   *
+   * @param user the {@link User} that wants to have their {@code password} reset.
+   */
   public void setUser(@Valid @NonNull User user) {
     Set <ConstraintViolation <@NonNull User>> violations = validator.validate(user);
 
