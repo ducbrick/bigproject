@@ -489,7 +489,7 @@ public class SpringConfig {
 
   /**
    * same as the one above me <3
-   * @return an instance of SAME AS THE ONE ABOVE ME BUT MEMBER DETAIL
+   * @return an instance of SAME AS THE ONE ABOVE ME BUT MEMBER DETAIL.
    */
   @Bean
   public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
@@ -501,8 +501,8 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<ViewController> switchToForgetPassword() { return new RequestSender<>(); }
-  
-  /** 
+
+  /**
    * Requests to redirect the user to the password-reset page.
    * <p>
    * This type of request contains a single parameter of type {@link User}.
@@ -536,6 +536,16 @@ public class SpringConfig {
     return new RequestSender <> ();
   }
 
+    /**
+     * Returns a requestSender that request a deletion of the lending detail
+     * with the provided integer as it ID.
+     */
   @Bean
   public RequestSender<Integer> deleteLending() { return new RequestSender<>(); }
+
+  /**
+   * Return a RequestSender.
+   */
+  @Bean
+  public RequestSender<String> sendResetLinkRequestSender() { return new RequestSender<>(); }
 }
