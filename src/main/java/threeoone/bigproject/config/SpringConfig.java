@@ -501,4 +501,9 @@ public class SpringConfig {
   public RequestSender <User> redirectToPasswordResetPageRequestSender() {
     return new RequestSender <> ();
   }
+
+  @Bean
+  public RequestSender <User> resetPasswordRequestSender() {
+    return new RequestSender <> ();
+  }
 }

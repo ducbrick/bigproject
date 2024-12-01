@@ -17,7 +17,7 @@ import threeoone.bigproject.services.resetpassword.PasswordResetAuthenticationSe
  */
 @Controller
 @RequiredArgsConstructor
-public class ResetPasswordController {
+public class ResetPasswordWebController {
   private final Validator validator;
 
   private final PasswordResetAuthenticationService authenticationService;
