@@ -1,16 +1,13 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.persistence;
 
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
-import javax.print.Doc;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
-import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 import threeoone.bigproject.repositories.DocumentRepo;
 import threeoone.bigproject.repositories.LendingDetailRepo;
 import threeoone.bigproject.repositories.MemberRepo;

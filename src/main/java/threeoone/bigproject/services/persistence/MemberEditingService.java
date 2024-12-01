@@ -1,8 +1,7 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.persistence;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
-import java.util.NoSuchElementException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
-import threeoone.bigproject.entities.User;
-import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
-import threeoone.bigproject.exceptions.NotLoggedInException;
 import threeoone.bigproject.repositories.MemberRepo;
 
 /**
@@ -55,7 +51,7 @@ public class MemberEditingService {
    *
    * @param member the {@link Member} to update
    *
-   * @throws IllegalArgumentException when the given Document's {@code id} doesn't match any's in the Database
+   * @throws IllegalArgumentException when the given Member's {@code id} doesn't match any's in the Database
    * @throws ConstraintViolationException when the given {@link Member} violates existing constraints
    * @throws RuntimeException when unexpected errors occur when working with Database (such as constraints violations)
    *

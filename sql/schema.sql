@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS password_reset_token;
 DROP TABLE IF EXISTS lending_detail;
 DROP TABLE IF EXISTs member;
 DROP TABLE IF EXISTS document;
@@ -6,7 +7,8 @@ DROP TABLE IF EXISTS app_user;
 CREATE TABLE app_user (
 	id SERIAL PRIMARY KEY,
 	username VARCHAR(127) NOT NULL UNIQUE CHECK(LENGTH(TRIM(username)) > 0),
-	password VARCHAR(127) NOT NULL CHECK(LENGTH(TRIM(password)) > 0)
+	password VARCHAR(127) NOT NULL CHECK(LENGTH(TRIM(password)) > 0),
+	email VARCHAR(127) NOT NULL UNIQUE CHECK(LENGTH(TRIM(email)) > 0)
 );
 
 CREATE TABLE document (
@@ -37,4 +39,11 @@ CREATE TABLE lending_detail (
 	lend_time TIMESTAMP NOT NULL,
 	member_id INTEGER REFERENCES member NOT NULL,
 	document_id INTEGER REFERENCES document NOT NULL
+);
+
+CREATE TABLE password_reset_token (
+	id SERIAL PRIMARY KEY,
+	value VARCHAR(64) NOT NULL UNIQUE,
+	expire_time TIMESTAMP NOT NULL,
+	user_id INTEGER REFERENCES app_user NOT NULL
 );

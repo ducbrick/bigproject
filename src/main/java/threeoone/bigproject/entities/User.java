@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -24,13 +25,17 @@ import lombok.Setter;
  * ORM Entity representing a user of the application.
  * <p>
  * This entity stores information required for user login and the documents they have uploaded.
- * A {@link User} has a unique {@link #username} and a {@link #password} used authentication.
+ * A {@link User} has a unique {@link #username}, a {@link #password} used for authentication
+ * and a unique {@link #email} address.
  * A {@link User} can upload a number of {@link Document}, represented by {@link #uploadedDocuments}.
  * <p>
  * {@link #uploadedDocuments} is a bidirectional one-to-many relationship between {@link User} and {@link Document}.
  * JPA requires synchronization on both sides in order to persist.
  * {@link #addUploadedDocument(Document)} sets the relationship on both sides.
  * Lombok-generated {@link Document#setUploader(User)} only sets the relationship on the {@link Document} side.
+ * <p>
+ * {@link PasswordResetToken} has a uni-directional many-to-one relationship with {@link User}.
+ * So, client must manually delete any {@link PasswordResetToken} associated to a specific {@link User} before deleting it.
  *
  * @see Document
  *
@@ -53,6 +58,12 @@ public class User {
   @Size(max = 127, message = "User password must have at most 127 characters")
   private String password;
 
+  @Column(unique = true)
+  @NotBlank(message = "User must have an email")
+  @Email(message = "User must have a valid email")
+  @Size(max = 127, message = "User email must have at most 127 character")
+  private String email;
+
   @OneToMany(mappedBy = "uploader", cascade = CascadeType.ALL, orphanRemoval = true)
   private List <Document> uploadedDocuments = new ArrayList <> ();
 
@@ -72,5 +83,11 @@ public class User {
   public User(String username, String password) {
     this.username = username;
     this.password = password;
+  }
+
+  public User(String username, String password, String email) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
   }
 }

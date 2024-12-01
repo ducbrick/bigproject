@@ -1,4 +1,4 @@
-package threeoone.bigproject.services;
+package threeoone.bigproject.services.persistence;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -7,7 +7,6 @@ import jakarta.validation.Validator;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Set;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,7 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 import threeoone.bigproject.exceptions.NotLoggedInException;
 import threeoone.bigproject.repositories.DocumentRepo;
 import threeoone.bigproject.repositories.UserRepo;
+import threeoone.bigproject.services.authentication.LoginService;
 
 /**
  * A service to modify, which is to add, update, or delete {@link Document} entities from the Database.

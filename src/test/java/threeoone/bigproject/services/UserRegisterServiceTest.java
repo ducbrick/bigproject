@@ -17,6 +17,8 @@ import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
 import threeoone.bigproject.repositories.UserRepo;
+import threeoone.bigproject.services.authentication.LoginService;
+import threeoone.bigproject.services.authentication.UserRegisterService;
 
 @ExtendWith(MockitoExtension.class)
 class UserRegisterServiceTest {
@@ -24,8 +26,6 @@ class UserRegisterServiceTest {
   private UserRepo userRepo;
   @Mock
   private LoginService loginService;
-  @Mock
-  private IllegalCharacterFilterService illegalCharacterFilterService;
 
   @InjectMocks
   private UserRegisterService userRegisterService;

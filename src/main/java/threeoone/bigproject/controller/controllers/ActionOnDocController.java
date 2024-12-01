@@ -8,9 +8,10 @@ import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.User;
-import threeoone.bigproject.services.DocumentPersistenceService;
-import threeoone.bigproject.services.DocumentRetrievalService;
+import threeoone.bigproject.services.persistence.DocumentPersistenceService;
+import threeoone.bigproject.services.retrieval.DocumentRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
 import java.util.List;
@@ -63,6 +64,7 @@ public class ActionOnDocController {
           RequestSender<Document> borrowDocumentRequestSender,
           RequestSender<Document> addDocumentRequestSender,
           RequestSender<Document> commitChangeDocRequestSender,
+          RequestSender<Document> lendingDetailRequestSender,
           RequestSender<Document> openDocByPdfReaderRequestSender) {
     documentDetailRequestSender.registerReceiver(this::documentDetail);
     getListAllDocumentRequestSender.registerReceiver(this::getListAllDocument);
@@ -74,6 +76,7 @@ public class ActionOnDocController {
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
     getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
     commitChangeDocRequestSender.registerReceiver(this::commitChangeDoc);
+    lendingDetailRequestSender.registerReceiver(this::lendingDetail);
     openDocByPdfReaderRequestSender.registerReceiver(this::openDocByPDFReader);
   }
 
@@ -100,7 +103,8 @@ public class ActionOnDocController {
    * @param document the document whose details are to be shown
    */
   private void documentDetail(Document document) {
-    documentDetailController.setDocument(document);
+    Document temp = documentRetrievalService.getDocumentWithLendingDetails(document.getId());
+    documentDetailController.setDocument(temp);
   }
 
   /**
@@ -117,6 +121,27 @@ public class ActionOnDocController {
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!", e.getMessage());
     }
+  }
+
+  /**
+   * Used in "Document detail" to send document information to "Lending detail" page.
+   * @param document the document currently shown in "Document detail"
+   */
+  private void lendingDetail(Document document) {
+    lendingDetailController.setDocument(document);
+  }
+
+  /**
+   * Call service and get status about document then update available action
+   * for that document
+   *
+   * @param document document which need get status
+   */
+  // TODO: call to service
+  private void updateAvailableActionOnDocument(Document document) {
+    boolean isBorrowAvailable = true; //get from service
+    boolean isRemoveAvailable = true; //get from service
+    //docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
   }
 
   /**
@@ -205,4 +230,5 @@ public class ActionOnDocController {
       Alerts.showAlertWarning("Error!!!", e.getMessage());
     }
   }
+
 }

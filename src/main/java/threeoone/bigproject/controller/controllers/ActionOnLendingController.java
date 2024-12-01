@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.LendingDetail;
-import threeoone.bigproject.services.LendingPersistenceService;
+import threeoone.bigproject.services.persistence.LendingPersistenceService;
 
 /**
  * The {@code ActionOnLendingController} class handles actions related to lending operations.
@@ -24,8 +24,10 @@ public class ActionOnLendingController {
    * @param saveNewLending the request sender for saving new lending details
    */
   @Autowired
-  private void registerRequestReceiver(RequestSender<LendingDetail> saveNewLending) {
+  private void registerRequestReceiver(RequestSender<LendingDetail> saveNewLending,
+                                       RequestSender<Integer> deleteLending) {
     saveNewLending.registerReceiver(this::saveNewLending);
+    deleteLending.registerReceiver(this::deleteLendingById);
   }
 
   /**
@@ -35,5 +37,9 @@ public class ActionOnLendingController {
    */
   public void saveNewLending(LendingDetail newLending) {
     lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
+  }
+
+  public void deleteLendingById(int ID) {
+    lendingPersistenceService.delete(ID);
   }
 }

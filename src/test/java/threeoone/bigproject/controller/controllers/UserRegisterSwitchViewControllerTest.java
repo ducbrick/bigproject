@@ -7,16 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.RegisterController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.User;
-import threeoone.bigproject.exceptions.AlreadyLoggedInException;
 import threeoone.bigproject.exceptions.IllegalCredentialsException;
 import threeoone.bigproject.exceptions.UserAlreadyExistException;
-import threeoone.bigproject.services.UserRegisterService;
+import threeoone.bigproject.services.authentication.UserRegisterService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
