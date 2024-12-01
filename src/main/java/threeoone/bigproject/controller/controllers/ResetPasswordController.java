@@ -26,8 +26,8 @@ import threeoone.bigproject.view.ViewSwitcher;
 @Controller
 @RequiredArgsConstructor
 @Validated
-public class ResetPasswordConstroller {
-  private final Logger logger = LoggerFactory.getLogger(ResetPasswordConstroller.class);
+public class ResetPasswordController {
+  private final Logger logger = LoggerFactory.getLogger(ResetPasswordController.class);
 
   private final ViewSwitcher viewSwitcher;
 
