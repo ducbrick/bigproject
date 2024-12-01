@@ -57,6 +57,7 @@ public class SpringConfig {
   }
 
 
+
   /*************************************************************************
    *  All request sender for document handler: edit, remove, borrow,... (not contain query)
    ***************************************************************************/
@@ -486,4 +487,12 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
+
+  /**
+   * Creates a bean for RequestSender that switches to the Forget Password view.
+   *
+   * @return  an instance of RequestSender for switching to the Forget Password view.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToForgetPassword() { return new RequestSender<>(); }
 }
