@@ -9,6 +9,7 @@ import java.util.Set;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -36,10 +37,10 @@ public class ResetPasswordView implements ViewController {
   private Label pageLabel;
 
   @FXML
-  private TextField enteredPasswordField;
+  private PasswordField enteredPasswordField;
 
   @FXML
-  private TextField reEnteredPasswordField;
+  private PasswordField reEnteredPasswordField;
 
   @FXML
   private Label errorMessage;
