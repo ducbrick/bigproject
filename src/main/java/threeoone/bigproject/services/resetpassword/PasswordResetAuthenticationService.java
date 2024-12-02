@@ -31,7 +31,7 @@ public class PasswordResetAuthenticationService {
    */
   @Transactional
   public User authenticate(String tokenValue) {
-    var token = tokenRepo.findByValue(tokenValue);
+    PasswordResetToken token = tokenRepo.findByValue(tokenValue);
 
     if (token == null) {
       return null;

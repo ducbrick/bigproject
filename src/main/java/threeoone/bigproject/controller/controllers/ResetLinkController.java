@@ -30,6 +30,7 @@ public class ResetLinkController {
             }
         }
         catch (RuntimeException e) {
+            Alerts.showAlertWarning("Error", "Unexpected error occurred. Please try again later");
             logger.warn(e.getMessage());
         }
     }

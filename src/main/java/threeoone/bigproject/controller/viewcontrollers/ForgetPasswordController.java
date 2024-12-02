@@ -43,6 +43,7 @@ public class ForgetPasswordController implements ViewController {
   @FXML
   private void submit() {
     sendResetLinkRequestSender.send(textField.getText());
+    Alerts.showAlertInfo("Sent", "An email has been sent to your email address");
   }
 
   @FXML
