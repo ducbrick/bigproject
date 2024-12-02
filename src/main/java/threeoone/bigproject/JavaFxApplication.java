@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import threeoone.bigproject.controller.viewcontrollers.*;
-import threeoone.bigproject.repositories.UserRepo;
 import threeoone.bigproject.view.ViewSwitcher;
 
 /**
@@ -37,7 +36,7 @@ public class JavaFxApplication extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     ViewSwitcher viewSwitcher = context.getBean(ViewSwitcher.class);
-    ViewController startController = context.getBean(RegisterController.class);
+    ViewController startController = context.getBean(LoginController.class);
     viewSwitcher.setStage(stage, startController);
   }
 

@@ -1,20 +1,22 @@
 package threeoone.bigproject.controller.controllers;
 
-import jakarta.validation.ConstraintViolationException;
 import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.entities.LendingDetail;
+import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.persistence.DocumentPersistenceService;
 import threeoone.bigproject.services.retrieval.DocumentRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -37,12 +39,13 @@ public class ActionOnDocController {
   private final AddNewDocController addNewDocController;
   private final RequestSender<ViewController> switchToDocOverview;
 
+  private final Logger logger = LoggerFactory.getLogger(ActionOnDocController.class);
+
   /**
    * Registers request receivers for document handling.
    *
    * @param documentDetailRequestSender      request sender for document details
    * @param getListAllDocumentRequestSender  request sender to get all documents
-   * @param updateDocActionRequestSender     request sender to update document actions
    * @param getDocumentByIdRequestSender     request sender to get document by ID
    * @param getLastestDocumentsRequestSender request sender to get the latest documents
    * @param getRandomDocumentRequestSender   request sender to get a random document
@@ -57,7 +60,6 @@ public class ActionOnDocController {
   private void registerRequestReceiver(
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
-          RequestSender<Document> updateDocActionRequestSender,
           RequestSender<Integer> getDocumentByIdRequestSender,
           RequestSender<SwitchScene> getLastestDocumentsRequestSender,
           RequestSender<Document> getRandomDocumentRequestSender,
@@ -95,6 +97,7 @@ public class ActionOnDocController {
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!!!", e.getMessage());
       docOverviewController.setChosenDoc(null);
+      logger.warn(e.getMessage());
     }
   }
 
@@ -105,8 +108,10 @@ public class ActionOnDocController {
    * @param document the document whose details are to be shown
    */
   private void documentDetail(Document document) {
-    Document temp = documentRetrievalService.getDocumentWithLendingDetails(document.getId());
-    documentDetailController.setDocument(temp);
+    Alerts.showErrorWithLogger(()->{
+      Document temp = documentRetrievalService.getDocumentWithLendingDetails(document.getId());
+      documentDetailController.setDocument(temp);
+    }, logger);
   }
 
   /**
@@ -115,37 +120,21 @@ public class ActionOnDocController {
    * @param user the user requesting the list (not used)
    */
   private void getListAllDocument(User user) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       List<Document> documentList = documentRetrievalService.getAllDocuments();
       docOverviewController.setTable(FXCollections.observableArrayList(
               documentList
       ));
-    } catch (ConstraintViolationException exception) {
-      Alerts.showAlertWarning("Error!", exception.getConstraintViolations().iterator().next().getMessage());
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
-    }
+    }, logger);
   }
 
   /**
    * Used in "Document detail" to send document information to "Lending detail" page.
+   *
    * @param document the document currently shown in "Document detail"
    */
   private void lendingDetail(Document document) {
     lendingDetailController.setDocument(document);
-  }
-
-  /**
-   * Call service and get status about document then update available action
-   * for that document
-   *
-   * @param document document which need get status
-   */
-  // TODO: call to service
-  private void updateAvailableActionOnDocument(Document document) {
-    boolean isBorrowAvailable = true; //get from service
-    boolean isRemoveAvailable = true; //get from service
-    //docOverviewController.updateMenuContext(isBorrowAvailable, isRemoveAvailable);
   }
 
   /**
@@ -163,11 +152,9 @@ public class ActionOnDocController {
    * @param document the document to be removed
    */
   private void removeDocument(Document document) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       documentPersistenceService.delete(document.getId());
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
-    }
+    }, logger);
   }
 
   /**
@@ -185,16 +172,10 @@ public class ActionOnDocController {
    * @param document the document to be added
    */
   private void addDocument(Document document) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       addNewDocController.setDocument(documentPersistenceService.add(document));
       switchToDocOverview.send(null);
-    } catch (
-            ConstraintViolationException exception) {
-      Alerts.showAlertWarning("Error!", exception.getConstraintViolations().iterator().next().getMessage());
-    } catch (
-            Exception e) {
-      Alerts.showAlertWarning("Error!!!", e.getMessage());
-    }
+    }, logger);
   }
 
   /**
@@ -203,7 +184,9 @@ public class ActionOnDocController {
    * @param d the document (not used)
    */
   private void randomDocument(Document d) {
-    menuController.setRandomBook(documentRetrievalService.getRandomDocument());
+    Alerts.showErrorWithLogger(()->{
+      menuController.setRandomBook(documentRetrievalService.getRandomDocument());
+    }, logger);
   }
 
   /**
@@ -212,9 +195,11 @@ public class ActionOnDocController {
    * @param switchScene the switch scene
    */
   private void getLastestDocByIdDesc(SwitchScene switchScene) {
-    menuController.setLastestDocuments(
-            FXCollections.observableList(documentRetrievalService.getLatestDocuments())
-    );
+    Alerts.showErrorWithLogger(()->{
+      menuController.setLastestDocuments(
+              FXCollections.observableList(documentRetrievalService.getLatestDocuments())
+      );
+    }, logger);
   }
 
   /**
@@ -223,7 +208,9 @@ public class ActionOnDocController {
    * @param id the ID of the document to be retrieved
    */
   private void getDocumentById(Integer id) {
-    menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+    Alerts.showErrorWithLogger(()->{
+      menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+    }, logger);
   }
 
   /**
@@ -233,11 +220,8 @@ public class ActionOnDocController {
    * @param document the document to be updated
    */
   private void commitChangeDoc(Document document) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       documentPersistenceService.update(document);
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!!!", e.getMessage());
-    }
+    }, logger);
   }
-
 }

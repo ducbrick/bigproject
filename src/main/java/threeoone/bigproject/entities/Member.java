@@ -14,11 +14,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 /**
  * ORM Entity representing a member of the library.
@@ -36,13 +33,14 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "member")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @AllArgsConstructor @Builder
 public class Member {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @NotBlank(message = "Member name must not be empty")
+  @Pattern(regexp = "^(?!\\s*$)[a-zA-Z\\s]+$", message = "Member name must contain only characters")
   @Size(max = 255, message = "Member name must have at most 255 characters")
   private String name;
 

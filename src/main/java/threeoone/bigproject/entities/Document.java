@@ -11,10 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +24,12 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  * ORM Entity representing a {@link Document} in the library database.
  * <p>
  * A {@link Document} has a {@link #name},
- *                        a {@link #description},
- *                        a total of {@link #copies} physical copies,
- *                        an {@link #author},
- *                        an {@link #isbn},
- *                        a cover image at {@link #coverImageUrl}
- *                        and uploaded at {@link #uploadTime}.
+ * a {@link #description},
+ * a total of {@link #copies} physical copies,
+ * an {@link #author},
+ * an {@link #isbn},
+ * a cover image at {@link #coverImageUrl}
+ * and uploaded at {@link #uploadTime}.
  * A {@link Document} has an {@link #uploader},
  * representing the {@link User} who uploaded this {@link Document}.
  * <p>
@@ -42,13 +40,13 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  * <p>
  * Likewise, {@link #lendingDetails} is a bidirectional one-to-many relationship between {@link Document} and {@link LendingDetail}.
  *
- * @see User
- *
  * @author DUCBRICK
+ * @see User
  */
 @Entity
 @Table(name = "document")
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -68,13 +66,14 @@ public class Document {
   private Integer copies = 0;
 
   @Size(max = 255, message = "Document author's name must have at most 255 characters")
+  @NotBlank(message = "Document author's name must not be empty")
   private String author;
 
-//  @Size(min = 13, max = 13, message = "An ISBN must have exactly 13 digits and/or hyphens")
+  @Pattern(regexp = "^(97[89][0-9]{10}|[0-9]{9}[0-9Xx])$", message = "Invalid ISBN")
   private String isbn;
 
   @Column(name = "upload_time")
-  @NotNull(message = "Document must have an upload time")
+//  @NotNull(message = "Document must have an upload time")
   private LocalDateTime uploadTime;
 
   @Size(message = "Document categories must have at most 255 characters")
@@ -95,12 +94,12 @@ public class Document {
 
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
   @JoinColumn(name = "uploader_id")
-  @NotNull(message = "Document must be uploaded by a User")
+//  @NotNull(message = "Document must be uploaded by a User")
   @Valid
   private User uploader;
 
   @OneToMany(mappedBy = "document", cascade = CascadeType.ALL)
-  private List <LendingDetail> lendingDetails = new ArrayList <> ();
+  private List<LendingDetail> lendingDetails = new ArrayList<>();
 
   /**
    * Constructs a new {@link Document} with the given parameters.
@@ -114,9 +113,9 @@ public class Document {
   /**
    * Constructs a new {@link Document} with the given parameters.
    *
-   * @param name name of the new {@link Document}
+   * @param name        name of the new {@link Document}
    * @param description description of the new {@link Document}
-   * @param copies total number of copies of this Document
+   * @param copies      total number of copies of this Document
    */
   public Document(@NonNull String name, String description, @NonNull Integer copies) {
     this.name = name;
@@ -127,7 +126,7 @@ public class Document {
   /**
    * Constructs a new {@link Document} with the given parameters.
    *
-   * @param name name of the new {@link Document}
+   * @param name        name of the new {@link Document}
    * @param description description of the new {@link Document}
    */
   public Document(@NonNull String name, String description) {

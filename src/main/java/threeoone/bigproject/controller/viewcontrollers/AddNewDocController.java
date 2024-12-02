@@ -1,5 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -12,6 +14,8 @@ import javafx.stage.FileChooser;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -20,6 +24,7 @@ import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.util.Alerts;
 import threeoone.bigproject.util.FileOperation;
 import java.io.File;
+import java.util.Set;
 
 /**
  * Controller class for the Add New Doc scene.
@@ -35,6 +40,9 @@ import java.io.File;
 @RequiredArgsConstructor
 @FxmlView("AddNewDoc.fxml")
 public class AddNewDocController implements ViewController {
+  private final Logger logger = LoggerFactory.getLogger(AddNewDocController.class);
+  private final Validator validator;
+
   private final RequestSender<ViewController> switchToDocOverview;
   private final RequestSender<Document> commitChangeDocRequestSender;
   private final RequestSender<Document> addDocumentRequestSender;
@@ -76,8 +84,10 @@ public class AddNewDocController implements ViewController {
   @FXML
   private ImageView docCover;
 
+  private String coverPhotoPath = "";
+
   @Value("${document.photo-path.default}")
-  private String coverPhotoPath;
+  private String defaultCoverPhotoPath;
 
   private File lastDirectory = null;
   private File selectedFile = null;
@@ -114,6 +124,17 @@ public class AddNewDocController implements ViewController {
     chooseButton.setOnAction(event -> openFileChooser());
   }
 
+  private Integer parseCopies(String text) {
+    try {
+      return Integer.parseInt(text);
+    }
+    catch (NumberFormatException e) {
+      Alerts.showAlertWarning("Error parsing copies", e.getMessage());
+      logger.error(e.getMessage());
+    }
+    return null;
+  }
+
   /**
    * Handler for submit button
    *
@@ -121,31 +142,39 @@ public class AddNewDocController implements ViewController {
    */
   @FXML
   private void pressSubmit(ActionEvent event) {
-    if (name.getText().isEmpty() || author.getText().isEmpty() || numOfCopies.getText().isEmpty()) {
-      Alerts.showAlertWarning("Warning!", "Fill all required fields!");
-      return;
-    }
-    if(!numOfCopies.getText().matches("\\d+")
-            || (!isbn.getText().isEmpty() && !isbn.getText().matches("\\d+"))) {
-      Alerts.showAlertWarning("Warning!", "Some field require only number");
-      return;
-    }
-
-    if(categories.getText().isEmpty()) {
+    if(categories.getText() == null || categories.getText().isEmpty()) {
       categories.setText("Unknown");
     }
 
-    document = Document.builder()
+    Document.DocumentBuilder documentBuilder = Document.builder()
             .name(name.getText())
             .description(description.getText())
-            .copies(Integer.valueOf(numOfCopies.getText()))
+            .copies(parseCopies(numOfCopies.getText()))
             .author(author.getText())
-            .category(categories.getText())
-            .isbn(isbn.getText())
-            .coverImageUrl(coverPhotoPath)
-            .build();
+            .category(categories.getText());
 
-    addDocumentRequestSender.send(document);
+    if(!isbn.getText().isEmpty()) {
+      documentBuilder.isbn(isbn.getText());
+    }
+
+    if(!coverPhotoPath.isEmpty()) {
+      documentBuilder.coverImageUrl(coverPhotoPath);
+    }
+
+    document = documentBuilder.build();
+
+    Set<ConstraintViolation<Document>> violations = validator.validate(document);
+    for (ConstraintViolation<Document> violation : violations) {
+      System.out.println(violation);
+    }
+
+    if(violations.isEmpty()) {
+      addDocumentRequestSender.send(document);
+    } else {
+      Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
+      logger.warn(violations.iterator().next().getMessage());
+      return;
+    }
 
     if (selectedFile == null) {
       Alerts.showAlertWarning("Warning!", "Unselected digital version for document!");
@@ -161,7 +190,6 @@ public class AddNewDocController implements ViewController {
   private void fulfillISBN(KeyEvent event) {
     if (event.getCode() == KeyCode.ENTER) {
       queryISBNGoogleRequestSender.send(isbn.getText());
-      System.out.println(isbn.getText());
     }
   }
 
@@ -194,7 +222,7 @@ public class AddNewDocController implements ViewController {
    */
   @Override
   public void show() {
-    docCover.setImage(new Image(coverPhotoPath));
+    docCover.setImage(new Image(defaultCoverPhotoPath));
     name.setText("");
     author.setText("");
     description.setText("");

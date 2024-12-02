@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.LendingDetail;
 import threeoone.bigproject.services.persistence.LendingPersistenceService;
+import threeoone.bigproject.util.Alerts;
 
 /**
  * The {@code ActionOnLendingController} class handles actions related to lending operations.
@@ -36,10 +37,19 @@ public class ActionOnLendingController {
    * @param newLending the new lending detail to be saved
    */
   public void saveNewLending(LendingDetail newLending) {
-    lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
+    Alerts.showErrorCauseByFunction(() -> {
+      lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
+    });
   }
 
+  /**
+   * Delete te lending detail by calling to service
+   *
+   * @param ID lending detail id need to be deleted
+   */
   public void deleteLendingById(int ID) {
-    lendingPersistenceService.delete(ID);
+    Alerts.showErrorCauseByFunction(() -> {
+      lendingPersistenceService.delete(ID);
+    });
   }
 }

@@ -26,29 +26,15 @@ import threeoone.bigproject.services.authentication.LoginService;
 @RequiredArgsConstructor
 public class UserLoginController {
   private final LoginController loginController;
-  private LoginService loginService;
+  private final LoginService loginService;
   private final  RequestSender<ViewController> switchToMainMenu;
 
-  /**
-   * -- GETTER --
-   *  Get number of failed attempts. Its main purpose is for testing
-   *
-   * @return number of failed attempt
-   */
   @Getter
   private int failedAttempts = 0;
   private boolean isPauseOnMaxAttempts = false;
   private static final int MAX_ATTEMPTS = 3;
   private static final int LOCKOUT_DURATION = 5; //second
 
-  /**
-   * Register loginService for controller
-   * @param loginService : service handle login
-   */
-  @Autowired
-  public void registerService(LoginService loginService) {
-    this.loginService = loginService;
-  }
 
 
   /**

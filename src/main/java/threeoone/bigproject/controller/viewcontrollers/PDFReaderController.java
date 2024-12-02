@@ -55,6 +55,9 @@ public class PDFReaderController implements ViewController {
    * @throws Exception if an error occurs while loading the PDF
    */
   public void setDocument(Document document) throws Exception {
+    if(document.getPdfUrl() == null || document.getPdfUrl().isEmpty()) {
+      throw new Exception("PDF URL is empty");
+    }
     pdfDisplayer.loadPDF(new File(document.getPdfUrl()));
   }
 
