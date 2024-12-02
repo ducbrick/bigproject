@@ -18,11 +18,8 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 
 /**
@@ -51,7 +48,10 @@ import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
  */
 @Entity
 @Table(name = "document")
-@NoArgsConstructor @Getter @Setter
+@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Document {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,7 +70,7 @@ public class Document {
   @Size(max = 255, message = "Document author's name must have at most 255 characters")
   private String author;
 
-  @Size(min = 13, max = 13, message = "An ISBN must have exactly 13 digits and/or hyphens")
+//  @Size(min = 13, max = 13, message = "An ISBN must have exactly 13 digits and/or hyphens")
   private String isbn;
 
   @Column(name = "upload_time")

@@ -18,37 +18,37 @@
 
 <SplitPane fx:id="root" dividerPositions="0.0709515859766277" prefHeight="720.0" prefWidth="1200.0" scaleShape="false" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
     <items>
-      <VBox maxWidth="80.0" minWidth="80.0" prefHeight="200.0" prefWidth="80.0">
-         <children>
-              <fx:include source="MenuBar.fxml" />
-         </children>
-      </VBox>
+        <VBox maxWidth="80.0" minWidth="80.0" prefHeight="200.0" prefWidth="80.0">
+            <children>
+                <fx:include source="MenuBar.fxml" />
+            </children>
+        </VBox>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
             <center>
-            <StackPane BorderPane.alignment="TOP_LEFT">
-               <children>
-                      <TableView fx:id="table" prefHeight="547.0" prefWidth="1112.0" styleClass="table">
-                          <columns>
-                              <TableColumn fx:id="number" prefWidth="75.0" styleClass="table-column-header" text="Number" />
-                              <TableColumn fx:id="name" prefWidth="135.0" styleClass="table-column-header" text="Name" />
-                              <TableColumn fx:id="uploader" prefWidth="150.0" styleClass="table-column-header" text="Uploader" />
-                              <TableColumn fx:id="description" prefWidth="663.0" styleClass="table-column-header" text="Description" />
-                          </columns>
-                          <contextMenu>
-                              <ContextMenu fx:id="contextMenu">
-                        </ContextMenu>
-                          </contextMenu>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                      </TableView>
-                  <ListView fx:id="documentList" maxHeight="-Infinity" maxWidth="-Infinity" onMouseExited="#outListView" prefHeight="0.0" prefWidth="783.0" StackPane.alignment="TOP_LEFT">
-                     <StackPane.margin>
-                        <Insets left="20.0" />
-                     </StackPane.margin>
-                  </ListView>
-               </children>
-            </StackPane>
+                <StackPane BorderPane.alignment="TOP_LEFT">
+                    <children>
+                        <TableView fx:id="table" prefHeight="547.0" prefWidth="1112.0" styleClass="table">
+                            <columns>
+                                <TableColumn fx:id="number" prefWidth="75.0" styleClass="table-column-header" text="Number" />
+                                <TableColumn fx:id="name" prefWidth="135.0" styleClass="table-column-header" text="Name" />
+                                <TableColumn fx:id="uploader" prefWidth="150.0" styleClass="table-column-header" text="Uploader" />
+                                <TableColumn fx:id="description" prefWidth="663.0" styleClass="table-column-header" text="Description" />
+                            </columns>
+                            <contextMenu>
+                                <ContextMenu fx:id="contextMenu">
+                                </ContextMenu>
+                            </contextMenu>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <ListView fx:id="documentList" maxHeight="-Infinity" maxWidth="-Infinity" onMouseExited="#outListView" prefHeight="0.0" prefWidth="783.0" StackPane.alignment="TOP_LEFT">
+                            <StackPane.margin>
+                                <Insets left="20.0" />
+                            </StackPane.margin>
+                        </ListView>
+                    </children>
+                </StackPane>
             </center>
             <bottom>
                 <GridPane prefHeight="62.0" prefWidth="1104.0" BorderPane.alignment="CENTER">

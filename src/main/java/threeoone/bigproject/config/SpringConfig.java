@@ -57,6 +57,7 @@ public class SpringConfig {
   }
 
 
+
   /*************************************************************************
    *  All request sender for document handler: edit, remove, borrow,... (not contain query)
    ***************************************************************************/
@@ -156,6 +157,12 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
+
+  /**
+   * Sends a RequestSender that has the document from "Document detail" specifically.
+   */
+  @Bean
+  public RequestSender<Document> lendingDetailRequestSender() { return new RequestSender<>(); }
 
   /*************************************************************************
    *  All request sender for member handler: edit, remove, add, ... (not contains query)
@@ -488,6 +495,14 @@ public class SpringConfig {
   public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
 
   /**
+   * Creates a bean for RequestSender that switches to the Forget Password view.
+   *
+   * @return  an instance of RequestSender for switching to the Forget Password view.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToForgetPassword() { return new RequestSender<>(); }
+  
+  /** 
    * Requests to redirect the user to the password-reset page.
    * <p>
    * This type of request contains a single parameter of type {@link User}.
@@ -501,6 +516,7 @@ public class SpringConfig {
   public RequestSender <User> redirectToPasswordResetPageRequestSender() {
     return new RequestSender <> ();
   }
+
 
   /**
    * Requests to reset the {@code password} of a specific {@link User}.
@@ -519,4 +535,7 @@ public class SpringConfig {
   public RequestSender <User> resetPasswordRequestSender() {
     return new RequestSender <> ();
   }
+
+  @Bean
+  public RequestSender<Integer> deleteLending() { return new RequestSender<>(); }
 }

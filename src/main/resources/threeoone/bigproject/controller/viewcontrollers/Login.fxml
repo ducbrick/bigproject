@@ -47,11 +47,16 @@
                         <PasswordField fx:id="passwordField" layoutX="154.0" layoutY="310.0" prefHeight="25.0" prefWidth="204.0" />
                         <Label layoutX="151.0" layoutY="220.0" text="Username" />
                         <Label layoutX="153.0" layoutY="283.0" text="Password" />
-                        <Button fx:id="loginButton" layoutX="222.0" layoutY="353.0" mnemonicParsing="false" onAction="#pressLogin" prefHeight="30.0" prefWidth="88.0" styleClass="normal-button" text="Login" />
+                        <Button fx:id="loginButton" layoutX="212.0" layoutY="400.0" mnemonicParsing="false" onAction="#pressLogin" prefHeight="30.0" prefWidth="88.0" styleClass="normal-button" text="Login" />
                         <Text fx:id="message" layoutX="154.0" layoutY="348.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="149.13671875" />
-                        <Label layoutX="178.0" layoutY="404.0" nodeOrientation="RIGHT_TO_LEFT" text="Don't have an account?">
+                        <Label layoutX="168.0" layoutY="444.0" nodeOrientation="RIGHT_TO_LEFT" text="Don't have an account?">
                            <graphic>
                               <Hyperlink onAction="#pressSignUp" text="Sign up" />
+                           </graphic>
+                        </Label>
+                        <Label layoutX="168.0" layoutY="483.0" nodeOrientation="RIGHT_TO_LEFT" text="Forget password?">
+                           <graphic>
+                              <Hyperlink onAction="#pressForgetPassword" text="Click here" />
                            </graphic>
                         </Label>
                      </children>
