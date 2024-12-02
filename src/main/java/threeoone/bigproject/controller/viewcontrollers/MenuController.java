@@ -2,6 +2,7 @@ package threeoone.bigproject.controller.viewcontrollers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -10,9 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -23,9 +28,11 @@ import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @author purupurupkl
@@ -40,6 +47,7 @@ import java.time.format.DateTimeFormatter;
 public class MenuController implements ViewController {
     private final RequestSender<ViewController> switchToDocDetail;
     private final RequestSender<Document> getRandomDocumentRequestSender;
+    private final RequestSender<Integer> getTodayDocumentRequestSender;
     private final RequestSender<Document> documentDetailRequestSender;
     private final RequestSender<SwitchScene> getTopFiveMembersRequestSender;
     private final RequestSender<SwitchScene> getLastestDocumentsRequestSender;
@@ -74,7 +82,7 @@ public class MenuController implements ViewController {
      * Latest document table.
      */
     @FXML
-    private TableView<Document> LastestDocuments;
+    private TableView<Document> LatestDocuments;
     @FXML
     private TableColumn<Document, String> BookID;
     @FXML
@@ -87,6 +95,19 @@ public class MenuController implements ViewController {
     private TableColumn<Document, String> Description;
 
     private Document randomDocument;
+
+    @Setter
+    @Getter
+    private Document TodayDocument;
+
+    @FXML
+    private ImageView TodayCover;
+
+    @FXML
+    private Label TodayDescription;
+
+    @FXML
+    private Label TodayTitle;
 
     @Override
     public Parent getParent() {
@@ -105,6 +126,7 @@ public class MenuController implements ViewController {
         Description.setCellValueFactory(new PropertyValueFactory<>("description"));
         Author.setCellValueFactory(new PropertyValueFactory<>("author"));
         CopiesAvailable.setCellValueFactory(new PropertyValueFactory<>("copies"));
+
         menuBarController.highlight(SceneName.MAIN_MENU);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -119,13 +141,11 @@ public class MenuController implements ViewController {
     public void setUserList(ObservableList<Member> memberList) {
         Thread thread = new Thread(() -> MemberList.setItems(memberList));
         thread.start();
-        //BooksIssued.setCellValueFactory(new PropertyValueFactory<>("booksIssued"));
     }
 
-    public void setLastestDocuments(ObservableList<Document> lastestDocuments) {
-        LastestDocuments.setItems(lastestDocuments);
+    public void setLatestDocuments(ObservableList<Document> latestDocuments) {
+        LatestDocuments.setItems(latestDocuments);
     }
-
 
     public void setRandomBook(Document document) {
         randomDocument = document;
@@ -157,13 +177,28 @@ public class MenuController implements ViewController {
     }
 
     /**
+     * handle
+     */
+    @FXML
+    private void todayDocumentDetail() {
+        documentDetailRequestSender.send(TodayDocument);
+        switchToDocDetail.send(this);
+    }
+
+    /**
      * sets greeting based on time and set data for tables.
      */
     @Override
     public void show() {
-        getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
-        getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
-        Greeting.setText(getGreeting());
+        Platform.runLater(() ->{
+            getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+            getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+            getTodayDocumentRequestSender.send(LocalDate.now().getDayOfYear());
+            TodayTitle.setText(TodayDocument.getName());
+            TodayDescription.setText(TodayDocument.getDescription());
+            TodayCover.setImage(new Image(TodayDocument.getCoverImageUrl()));
+            Greeting.setText(getGreeting());
+        });
     }
 
 

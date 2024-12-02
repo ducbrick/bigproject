@@ -45,7 +45,7 @@ public class ActionOnDocController {
    *
    * @param documentDetailRequestSender      request sender for document details
    * @param getListAllDocumentRequestSender  request sender to get all documents
-   * @param getDocumentByIdRequestSender     request sender to get document by ID
+   * @param updateDocActionRequestSender     request sender to update document actions
    * @param getLastestDocumentsRequestSender request sender to get the latest documents
    * @param getRandomDocumentRequestSender   request sender to get a random document
    * @param editDocumentRequestSender        request sender to edit a document
@@ -59,7 +59,7 @@ public class ActionOnDocController {
   private void registerRequestReceiver(
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
-          RequestSender<Integer> getDocumentByIdRequestSender,
+          RequestSender<Integer> getTodayDocumentRequestSender,
           RequestSender<SwitchScene> getLastestDocumentsRequestSender,
           RequestSender<Document> getRandomDocumentRequestSender,
           RequestSender<Document> editDocumentRequestSender,
@@ -75,9 +75,9 @@ public class ActionOnDocController {
     removeDocumentRequestSender.registerReceiver(this::removeDocument);
     borrowDocumentRequestSender.registerReceiver(this::borrowDocument);
     addDocumentRequestSender.registerReceiver(this::addDocument);
-    getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
+    getLastestDocumentsRequestSender.registerReceiver(this::getLatestDocByIdDesc);
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
-    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
+    getTodayDocumentRequestSender.registerReceiver(this::getDailyDocument);
     commitChangeDocRequestSender.registerReceiver(this::commitChangeDoc);
     lendingDetailRequestSender.registerReceiver(this::lendingDetail);
     openDocByPdfReaderRequestSender.registerReceiver(this::openDocByPDFReader);
@@ -216,10 +216,14 @@ public class ActionOnDocController {
   }
 
   /**
-   * Retrieves a document by its ID and sets it in the menu controller.
-   *
-   * @param id the ID of the document to be retrieved
+   * used in menu to get a document based on today's date
    */
+  private void getDailyDocument(Integer day) {
+
+    List<Document> list = documentRetrievalService.getAllDocuments();
+    if (!list.isEmpty()) {
+      menuController.setTodayDocument(list.get(day % list.size()));
+    }
   private void getDocumentById(Integer id) {
     Alerts.showErrorWithLogger(()->{
       menuController.setRandomBook(documentRetrievalService.getDocumentById(id));

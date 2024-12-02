@@ -99,7 +99,7 @@ public class RegisterController implements ViewController {
       user.setPassword(password.getText());
       user.setEmail(emailInputField.getText());
       registerRequestSender.send(user);
-   
+
     }
   }
 
