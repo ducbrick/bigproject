@@ -1,5 +1,8 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import java.util.Set;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ import threeoone.bigproject.util.Alerts;
 @RequiredArgsConstructor
 @Setter
 public class EditMemController implements ViewController {
+  private final Validator validator;
 
   private final RequestSender<ViewController> switchToMemList;
   private final RequestSender<Member> commitChangeMemberRequestSender;
@@ -74,6 +78,25 @@ public class EditMemController implements ViewController {
     switchToMemList.send(null);
   }
 
+  private Member constructValidatedMember() {
+    Member member = new Member();
+
+    member.setName(name.getText());
+    member.setPhoneNumber(phoneNumber.getText());
+    member.setAddress(address.getText());
+    member.setEmail(email.getText());
+
+    Set<ConstraintViolation<Member>> violations = validator.validate(member);
+
+    if (violations.isEmpty()) {
+      return member;
+    }
+
+    Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
+
+    return null;
+  }
+
   /**
    * Handles the action when the submit button is pressed.
    * If the name field is empty, an alert is shown. Otherwise, the member's name
@@ -83,17 +106,15 @@ public class EditMemController implements ViewController {
    */
   @FXML
   private void pressSubmit(ActionEvent event) {
-    if (name.getText().isEmpty() || phoneNumber.getText().isEmpty()
-    || address.getText().isEmpty() || email.getText().isEmpty()) {
-      Alerts.showAlertWarning("No change!", "Every text field is required to change the member information.");
+    Member toBeUpdatedMember = constructValidatedMember();
+
+    if (toBeUpdatedMember == null) {
       return;
-    } else {
-      chosenMember.setName(name.getText());
-      chosenMember.setPhoneNumber(phoneNumber.getText());
-      chosenMember.setAddress(address.getText());
-      chosenMember.setEmail(email.getText());
     }
-    commitChangeMemberRequestSender.send(chosenMember);
+
+    toBeUpdatedMember.setId(chosenMember.getId());
+
+    commitChangeMemberRequestSender.send(toBeUpdatedMember);
     switchToMemList.send(this);
   }
 

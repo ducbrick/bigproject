@@ -1,5 +1,8 @@
 package threeoone.bigproject.controller.controllers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -115,8 +118,15 @@ public class ActionOnMemController {
   private void commitChangeMember(Member member) {
     try {
       memberEditingService.update(member);
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
+    catch (ConstraintViolationException e) {
+      /*Should not happen*/
+      Set <ConstraintViolation <?>> violations = e.getConstraintViolations();
+      Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
+    }
+    catch (Exception e) {
+      Alerts.showAlertWarning("Error!", "Unexpected error occured");
+      logger.warn(e.getMessage());
     }
   }
 
