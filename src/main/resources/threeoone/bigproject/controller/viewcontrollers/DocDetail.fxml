@@ -72,11 +72,11 @@
                               <Label fx:id="category" prefHeight="32.0" prefWidth="553.0" text="Loading" />
                            </children>
                         </HBox>
-                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="174.0" prefWidth="678.0">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="278.0" prefWidth="662.0">
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="278.0" prefWidth="642.0">
                                  <children>
-                                    <Label fx:id="bookDescription" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="269.0" prefWidth="664.0" styleClass="pane" text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, " wrapText="true" />
+                                    <Label fx:id="bookDescription" layoutY="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="270.0" prefWidth="650.0" styleClass="pane" text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, " wrapText="true" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -118,6 +118,7 @@
                             <RowConstraints maxHeight="59.199987792968756" minHeight="10.0" prefHeight="45.6000244140625" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="46.99997558593749" minHeight="10.0" prefHeight="35.20000000000002" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="44.400000000000006" minHeight="10.0" prefHeight="44.400000000000006" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="44.400000000000006" minHeight="10.0" prefHeight="44.400000000000006" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label fx:id="ISBN" prefHeight="52.0" prefWidth="260.0" text="Loading" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -153,7 +154,7 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </Label>
-                              <Label prefHeight="55.0" prefWidth="170.0" text="Copies available:" GridPane.rowIndex="4">
+                              <Label prefHeight="55.0" prefWidth="170.0" text="Copies:" GridPane.rowIndex="4">
                                  <padding>
                                     <Insets left="5.0" />
                                  </padding>
@@ -163,6 +164,8 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </Label>
+                              <Label prefHeight="48.0" prefWidth="163.0" text="Available for lending" GridPane.rowIndex="5" />
+                              <Label fx:id="available" prefHeight="54.0" prefWidth="242.0" text="Loading" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                            <GridPane.margin>
                               <Insets bottom="5.0" left="70.0" right="70.0" top="15.0" />

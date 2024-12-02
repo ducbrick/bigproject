@@ -2,10 +2,12 @@ package threeoone.bigproject.controller.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
+import threeoone.bigproject.controller.viewcontrollers.ForgetPasswordController;
 import threeoone.bigproject.view.ViewSwitcher;
 
 /**
@@ -22,6 +24,7 @@ import threeoone.bigproject.view.ViewSwitcher;
 public class SwitchViewController {
   private final ViewSwitcher viewSwitcher;
 
+  private final ForgetPasswordController forgetPasswordController;
   private final RegisterController registerController;
   private final LoginController loginController;
   private final MenuController menuController;
@@ -39,6 +42,8 @@ public class SwitchViewController {
 
   private final LendingDetailController lendingDetailController;
   private final PDFReaderController pdfReaderController;
+  private RequestSender switchToForgetPassword;
+
   /**
    * Registers request receivers for switching to different scenes.
    *
@@ -58,19 +63,24 @@ public class SwitchViewController {
   @Autowired
   private void registerRequestReceiver(
           RequestSender<ViewController> switchToDocOverview,
-          RequestSender<ViewController> switchToMainMenu,
           RequestSender<ViewController> switchToDocDetail,
-          RequestSender<ViewController> switchToLogin,
-          RequestSender<ViewController> switchToSignup,
           RequestSender<ViewController> switchToAddNewDoc,
           RequestSender<ViewController> switchToEditDoc,
+
+          RequestSender<ViewController> switchToMainMenu,
+          RequestSender<ViewController> switchToLogin,
+          RequestSender<ViewController> switchToSignup,
+          RequestSender<ViewController> switchToForgetPassword,
+          RequestSender<ViewController> switchToPDFReader,
+
+          RequestSender<ViewController> switchToMemberDetails,
           RequestSender<ViewController> switchToMemList,
           RequestSender<ViewController> switchToEditMem,
           RequestSender<ViewController> switchToAddMem,
+
           RequestSender<ViewController> switchToYourBooks,
-          RequestSender<ViewController> switchToLendingDetail,
-          RequestSender<ViewController> switchToMemberDetails,
-          RequestSender<ViewController> switchToPDFReader
+          RequestSender<ViewController> switchToLendingDetail
+
   ) {
     switchToDocOverview.registerReceiver(this::switchToDocOverview);
     switchToMainMenu.registerReceiver(this::switchToMainMenu);
@@ -86,6 +96,7 @@ public class SwitchViewController {
     switchToLendingDetail.registerReceiver(this::switchToLendingDetail);
     switchToMemberDetails.registerReceiver(this::switchToMemberDetails);
     switchToPDFReader.registerReceiver(this::switchToPDFReader);
+    switchToForgetPassword.registerReceiver(this::switchToForgetPassword);
   }
 
   /**
@@ -209,4 +220,12 @@ public class SwitchViewController {
   private void switchToPDFReader(ViewController from) {
     viewSwitcher.switchToView(pdfReaderController);
   }
+
+    @Qualifier("switchToForgetPassword")
+    @Autowired
+    public void setSwitchToForgetPassword(RequestSender switchToForgetPassword) {
+    this.switchToForgetPassword = switchToForgetPassword;
+  }
+
+  private void switchToForgetPassword(ViewController from) { viewSwitcher.switchToView(forgetPasswordController); }
 }

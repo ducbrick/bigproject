@@ -8,6 +8,8 @@ import threeoone.bigproject.controller.requestbodies.LendingDetail;
 import threeoone.bigproject.services.persistence.LendingPersistenceService;
 import threeoone.bigproject.util.Alerts;
 
+import java.util.NoSuchElementException;
+
 /**
  * The {@code ActionOnLendingController} class handles actions related to lending operations.
  * It is responsible for saving new lending details through the lending persistence service.
