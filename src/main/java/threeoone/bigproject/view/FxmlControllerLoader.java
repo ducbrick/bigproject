@@ -39,6 +39,7 @@ public class FxmlControllerLoader {
       fxWeaver.load(RecommenderController.class);
       fxWeaver.load(ScanQrController.class);
       fxWeaver.load(PDFReaderController.class);
+      fxWeaver.load(ForgetPasswordController.class);
       fxWeaver.load(ResetPasswordView.class);
   }
 }
