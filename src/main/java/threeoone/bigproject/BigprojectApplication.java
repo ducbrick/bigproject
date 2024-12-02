@@ -1,12 +1,8 @@
 package threeoone.bigproject;
 
 import javafx.application.Application;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
-import threeoone.bigproject.repositories.PasswordResetTokenRepo;
-import threeoone.bigproject.services.resetpassword.PasswordResetAuthenticationService;
 
 /**
  * Entry point of the application.
@@ -24,12 +20,5 @@ public class BigprojectApplication {
 	 */
 	public static void main(String[] args) {
 		Application.launch(JavaFxApplication.class, args);
-	}
-
-	@Bean
-	public CommandLineRunner commandLineRunner(PasswordResetTokenRepo repo) {
-		return args -> {
-			System.out.println(repo.findByValue("2Bc+hI5QxweNvLqsCWIKZg(XkbgCP3TuRJ17(kKLXeAS0Och.tUzNwH)(Lw!+xDJ").getUser().getUsername());
-		};
 	}
 }
