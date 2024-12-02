@@ -127,11 +127,21 @@ public class LendingDetailController implements ViewController {
     return root;
   }
 
+  private void clearData() {
+    member = null;
+    memberID.setText(null);
+    memberName.setText(null);
+    memberPhone.setText(null);
+    memberEmail.setText(null);
+    memberAddress.setText(null);
+  }
+
   /**
    * Notify the {@link ViewController} that its {@code View} is displayed.
    */
   @Override
   public void show() {
+    clearData();
   }
 
 
