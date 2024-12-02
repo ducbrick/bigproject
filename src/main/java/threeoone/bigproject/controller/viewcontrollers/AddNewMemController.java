@@ -64,9 +64,6 @@ public class AddNewMemController implements ViewController {
   @FXML
   private Parent root;
 
-  @FXML
-  private Button submit;
-
   private Member member;
 
   /**
@@ -101,12 +98,8 @@ public class AddNewMemController implements ViewController {
   }
 
   private Member constructValidatedMember() {
-    Member member = new Member();
+    Member member = Member.builder().name(name.getText()).phoneNumber(phoneNumber.getText()).address(address.getText()).email(email.getText()).build();
 
-    member.setName(name.getText());
-    member.setPhoneNumber(phoneNumber.getText());
-    member.setAddress(address.getText());
-    member.setEmail(email.getText());
 
     Set <ConstraintViolation <Member>> violations = validator.validate(member);
 
@@ -144,8 +137,8 @@ public class AddNewMemController implements ViewController {
         addMemberRequestSender.send(member);
         updateProgress(100, 100);
         Platform.runLater(() -> {
+          clearData();
           id.setText(member.getId().toString());
-          submit.requestFocus();
         });
         return null;
       }
@@ -154,6 +147,15 @@ public class AddNewMemController implements ViewController {
 
     Thread thread = new Thread(task);
     thread.start();
+  }
+
+  private void clearData() {
+    progress.setVisible(false);
+    name.setText("");
+    phoneNumber.setText("");
+    address.setText("");
+    email.setText("");
+    id.setText("");
   }
 
   /**
@@ -180,11 +182,6 @@ public class AddNewMemController implements ViewController {
    */
   @Override
   public void show() {
-    progress.setVisible(false);
-    name.setText("");
-    phoneNumber.setText("");
-    address.setText("");
-    email.setText("");
-    id.setText("");
+    clearData();
   }
 }

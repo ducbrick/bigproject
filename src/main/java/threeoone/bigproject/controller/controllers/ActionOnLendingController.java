@@ -1,14 +1,14 @@
 package threeoone.bigproject.controller.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.LendingDetail;
 import threeoone.bigproject.services.persistence.LendingPersistenceService;
 import threeoone.bigproject.util.Alerts;
-
-import java.util.NoSuchElementException;
 
 /**
  * The {@code ActionOnLendingController} class handles actions related to lending operations.
@@ -19,6 +19,8 @@ import java.util.NoSuchElementException;
 @Component
 @RequiredArgsConstructor
 public class ActionOnLendingController {
+  private final Logger logger = LoggerFactory.getLogger(ActionOnLendingController.class);
+
   private final LendingPersistenceService lendingPersistenceService;
 
   /**
@@ -39,14 +41,19 @@ public class ActionOnLendingController {
    * @param newLending the new lending detail to be saved
    */
   public void saveNewLending(LendingDetail newLending) {
-    try {
+    Alerts.showErrorWithLogger(() -> {
       lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
-    } catch (NoSuchElementException e) {
-      Alerts.showAlertWarning("Error", "This document has no physical copy available at the moment");
-    }
+    }, logger);
   }
 
+  /**
+   * Delete te lending detail by calling to service
+   *
+   * @param ID lending detail id need to be deleted
+   */
   public void deleteLendingById(int ID) {
-    lendingPersistenceService.delete(ID);
+    Alerts.showErrorWithLogger(() -> {
+      lendingPersistenceService.delete(ID);
+    }, logger);
   }
 }

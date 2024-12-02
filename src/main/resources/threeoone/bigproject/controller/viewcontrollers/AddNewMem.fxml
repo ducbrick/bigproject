@@ -43,8 +43,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#pressReturn" prefHeight="46.0" prefWidth="94.0" styleClass="normal-button" text="Return" />
-                  <Button fx:id="submit" mnemonicParsing="false" onAction="#pressSubmit" prefHeight="54.0" prefWidth="90.0" styleClass="normal-button" text="Submit" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#pressReturn" prefHeight="46.0" prefWidth="94.0" styleClass="normal-button" text="Return" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </bottom>

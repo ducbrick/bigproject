@@ -195,8 +195,8 @@ public class DocOverviewController implements ViewController {
     return MenuItemFactory.createMenuItem("Borrow",
             "Borrow Confirmation", "Are you sure you want to borrow this document?",
             unused -> {
-              borrowDocumentRequestSender.send(chosenDoc);
               switchToLendingDetail.send(null);
+              borrowDocumentRequestSender.send(chosenDoc);
             });
   }
 
