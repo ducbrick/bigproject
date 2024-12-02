@@ -1,13 +1,19 @@
 package threeoone.bigproject.controller.controllers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import java.util.Set;
 import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Member;
+import threeoone.bigproject.services.forgotpassword.PasswordResetLinkSenderService;
 import threeoone.bigproject.services.persistence.MemberEditingService;
 import threeoone.bigproject.services.retrieval.MemberRetrievalService;
 import threeoone.bigproject.util.Alerts;
@@ -25,6 +31,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ActionOnMemController {
+  private final Logger logger = LoggerFactory.getLogger(ActionOnMemController.class);
+
   private final MemberListController memberListController;
   private final MemberRetrievalService memberRetrievalService;
   private final MemberEditingService memberEditingService;
@@ -67,6 +75,7 @@ public class ActionOnMemController {
       memberListController.setTable(FXCollections.observableArrayList(memberList));
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!", e.getMessage());
+      logger.warn(e.getMessage());
     }
   }
 
@@ -96,7 +105,8 @@ public class ActionOnMemController {
     try {
       addNewMemController.setMember(memberEditingService.add(member));
     } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
+      Alerts.showAlertWarning("Error!", "Unexpected error occured! Please try again later.");
+
     }
   }
 
@@ -108,8 +118,15 @@ public class ActionOnMemController {
   private void commitChangeMember(Member member) {
     try {
       memberEditingService.update(member);
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
+    catch (ConstraintViolationException e) {
+      /*Should not happen*/
+      Set <ConstraintViolation <?>> violations = e.getConstraintViolations();
+      Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
+    }
+    catch (Exception e) {
+      Alerts.showAlertWarning("Error!", "Unexpected error occured");
+      logger.warn(e.getMessage());
     }
   }
 
