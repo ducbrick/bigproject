@@ -55,11 +55,11 @@
                         <Label text="ISBN" />
                         <Label fx:id="isbn" prefHeight="24.0" prefWidth="278.0" text="Label" GridPane.columnIndex="1" />
                         <Label text="Name" GridPane.rowIndex="1" />
-                        <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="name" styleClass="choice-box" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label prefHeight="28.0" prefWidth="61.0" text="Author" GridPane.rowIndex="2" />
-                        <TextField fx:id="author" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="author" prefHeight="3.0" prefWidth="595.0" styleClass="choice-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Category" GridPane.rowIndex="3" />
-                        <TextField fx:id="category" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="category" styleClass="choice-box" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Description" GridPane.rowIndex="4" />
                         <TextArea fx:id="description" prefHeight="50.0" prefWidth="488.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>

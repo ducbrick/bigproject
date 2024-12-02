@@ -4,8 +4,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
-import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.viewcontrollers.MenuBarController;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 
 /**
@@ -48,7 +46,8 @@ public class ViewSwitcher {
    */
   public void switchToView(ViewController controller) {
     Parent root = controller.getParent();
-    scene.setRoot(root);
     controller.show();
+    scene.setRoot(root);
+
   }
 }

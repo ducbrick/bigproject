@@ -39,7 +39,7 @@
                 </GridPane>
             </bottom>
             <top>
-                <VBox fx:id="searchHolder" alignment="CENTER" prefHeight="70.0" prefWidth="1112.0" BorderPane.alignment="CENTER">
+                <VBox fx:id="searchHolder" alignment="CENTER" prefHeight="70.0" prefWidth="1112.0">
                     <children>
                         <Label id="header" prefHeight="46.0" prefWidth="291.0" styleClass="label" text="Document Overview">
                             <font>
@@ -48,6 +48,9 @@
                         </Label>
                         <fx:include source="DocSearchBar.fxml" />
                     </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" />
+               </BorderPane.margin>
                 </VBox>
             </top>
          <center>

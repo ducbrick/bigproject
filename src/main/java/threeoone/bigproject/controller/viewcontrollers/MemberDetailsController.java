@@ -15,8 +15,6 @@ import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
@@ -42,6 +40,8 @@ public class MemberDetailsController implements ViewController{
 
     private final RequestSender<Document> documentDetailRequestSender;
     private final RequestSender<ViewController> switchToDocDetail;
+    private final RequestSender<ViewController> switchToEditMem;
+    private final RequestSender<Member> editMemberRequestSender;
 
     /**
      * allows Lending Detail deletion in the database
@@ -64,6 +64,9 @@ public class MemberDetailsController implements ViewController{
 
     @FXML
     private Label Address;
+
+    @FXML
+    private Button Edit;
 
     /**
      * the table and its columns
@@ -184,6 +187,11 @@ public class MemberDetailsController implements ViewController{
         switchToDocDetail.send(this);
     }
 
+    @FXML
+    private void toEditInfo() {
+        editMemberRequestSender.send(member);
+        switchToEditMem.send(this);
+    }
 
     @Override
     public Parent getParent() {
