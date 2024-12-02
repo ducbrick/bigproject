@@ -126,12 +126,6 @@ public class MenuController implements ViewController {
         LastestDocuments.setItems(lastestDocuments);
     }
 
-    /**
-     *
-     */
-    private void featuredBook() {
-
-    }
 
     public void setRandomBook(Document document) {
         randomDocument = document;
