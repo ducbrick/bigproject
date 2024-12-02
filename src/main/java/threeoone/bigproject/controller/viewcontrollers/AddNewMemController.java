@@ -1,5 +1,8 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import java.util.Set;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -30,6 +33,7 @@ import threeoone.bigproject.view.ViewSwitcher;
 @RequiredArgsConstructor
 @FxmlView("AddNewMem.fxml")
 public class AddNewMemController implements ViewController {
+  private final Validator validator;
 
   private final MenuBarController menuBarController;
 
@@ -96,6 +100,25 @@ public class AddNewMemController implements ViewController {
     }
   }
 
+  private Member constructValidatedMember() {
+    Member member = new Member();
+
+    member.setName(name.getText());
+    member.setPhoneNumber(phoneNumber.getText());
+    member.setAddress(address.getText());
+    member.setEmail(email.getText());
+
+    Set <ConstraintViolation <Member>> violations = validator.validate(member);
+
+    if (violations.isEmpty()) {
+      return member;
+    }
+
+    Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
+
+    return null;
+  }
+
   /**
    * Handles the action when the get ID button is pressed.
    * Sends an action request to add a new member and updates the progress indicator.
@@ -104,18 +127,16 @@ public class AddNewMemController implements ViewController {
    */
   @FXML
   private void pressGetID(ActionEvent event) {
-    if (name.getText().isEmpty() || phoneNumber.getText().isEmpty()
-            || address.getText().isEmpty() || email.getText().isEmpty()) {
-      Alerts.showAlertWarning("Not fulfill!", "You must fill required fields!");
-      return;
-    }
     progress.progressProperty().unbind();
     progress.setVisible(true);
     progress.setProgress(0);
-    member = new Member(name.getText());
-    member.setPhoneNumber(phoneNumber.getText());
-    member.setAddress(address.getText());
-    member.setEmail(email.getText());
+
+    member = constructValidatedMember();
+
+    if (member == null) {
+      return;
+    }
+
     Task<Void> task = new Task<Void>() {
       @Override
       protected Void call() throws Exception {
