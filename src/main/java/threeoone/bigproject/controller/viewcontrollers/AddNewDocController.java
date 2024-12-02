@@ -159,6 +159,8 @@ public class AddNewDocController implements ViewController {
 
     if(!coverPhotoPath.isEmpty()) {
       documentBuilder.coverImageUrl(coverPhotoPath);
+    } else {
+      documentBuilder.coverImageUrl(defaultCoverPhotoPath);
     }
 
     document = documentBuilder.build();

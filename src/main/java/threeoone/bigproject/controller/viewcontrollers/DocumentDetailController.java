@@ -129,8 +129,8 @@ public class DocumentDetailController implements ViewController {
 
     @FXML
     private void toBorrow() {
-        lendingDetailRequestSender.send(document);
         switchToLendingDetail.send(null); //don't need this data
+        lendingDetailRequestSender.send(document);
     }
 
     @FXML
@@ -171,7 +171,6 @@ public class DocumentDetailController implements ViewController {
             copies.setText(document.getCopies().toString());
             available.setText(Integer.toString(document.getCopies() - document.getLendingDetails().size()));
             cover.setImage(new Image(document.getCoverImageUrl()));
-            System.out.println(document.getCoverImageUrl());
         });
 
         ObservableList<LendingDetail> lendingDetail =

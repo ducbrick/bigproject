@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import lombok.RequiredArgsConstructor;
@@ -115,6 +116,7 @@ public class LendingDetailController implements ViewController {
     docDescription.setText(document.getDescription());
     docAuthor.setText(document.getAuthor());
     docCategory.setText(document.getCategory());
+    docPhoto.setImage(new Image(document.getCoverImageUrl()));
   }
 
   /**
