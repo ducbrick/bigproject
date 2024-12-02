@@ -38,4 +38,21 @@ public interface UserRepo extends ListCrudRepository <User, Integer> {
    */
   @Query("SELECT u FROM User u WHERE u.username = (:username)")
   public User findByUsername(@Param("username") String username);
+
+  /**
+   * Checks if a {@link User} with a specific {@code email} exists.
+   *
+   * @param email the email of the desired {@link User}
+   *
+   * @return true if a {@link User} with the specified {@code email} exists, otherwise false
+   */
+  @Query("""
+      SELECT
+        CASE
+          WHEN COUNT(u) > 0 THEN true
+          ELSE false
+        END
+      FROM User u 
+      WHERE u.email = (:email)""")
+  boolean existsByEmail(@Param("email") String email);
 }

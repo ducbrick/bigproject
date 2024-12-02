@@ -51,6 +51,10 @@ public class UserRegisterService {
       throw new UserAlreadyExistException("There is another registered user with that username");
     }
 
+    if (userRepo.existsByEmail(user.getEmail())) {
+      throw new UserAlreadyExistException("There is another registered user with that email address");
+    }
+
     user.setId(null);
     userRepo.save(user);
   }

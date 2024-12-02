@@ -46,6 +46,9 @@ public class RegisterController implements ViewController {
   @FXML
   private TextField username;
 
+  @FXML
+  private TextField emailInputField;
+
   private final RequestSender<ViewController> switchToLogin;
   private final RequestSender<User> registerRequestSender;
 
@@ -80,7 +83,11 @@ public class RegisterController implements ViewController {
   @FXML
   private void pressSignUp(ActionEvent event) {
     if(validateConfirmation()) {
-      registerRequestSender.send(new User(username.getText(), password.getText()));
+      User user = new User();
+      user.setUsername(username.getText());
+      user.setPassword(password.getText());
+      user.setEmail(emailInputField.getText());
+      registerRequestSender.send(user);
     }
   }
 

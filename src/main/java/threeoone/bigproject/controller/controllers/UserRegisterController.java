@@ -1,6 +1,9 @@
 package threeoone.bigproject.controller.controllers;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -19,6 +22,8 @@ import threeoone.bigproject.services.authentication.UserRegisterService;
 @Component
 @RequiredArgsConstructor
 public class UserRegisterController {
+  private final Logger logger = LoggerFactory.getLogger(UserRegisterController.class);
+
   private final UserRegisterService userRegisterService;
   private final RegisterController registerController;
   private final RequestSender<ViewController> switchToLogin;
@@ -46,8 +51,16 @@ public class UserRegisterController {
       registerController.showSuccessDialog();
 
       switchToLogin.send(null);
-    } catch (UserAlreadyExistException | AlreadyLoggedInException e) {
+    }
+    catch (UserAlreadyExistException e) {
       registerController.setConfirmMessage(e.getMessage());
+    }
+    catch (ConstraintViolationException e) {
+      String message = e.getConstraintViolations().iterator().next().getMessage();
+      registerController.setConfirmMessage(message);
+    }
+    catch (RuntimeException e) {
+      logger.warn(e.getMessage());
     }
   }
 }
