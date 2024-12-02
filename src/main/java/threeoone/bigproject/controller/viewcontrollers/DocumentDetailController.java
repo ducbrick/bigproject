@@ -82,6 +82,9 @@ public class DocumentDetailController implements ViewController {
     private Label copies;
 
     @FXML
+    private Label available;
+
+    @FXML
     private Button borrow;
 
     @FXML
@@ -166,6 +169,7 @@ public class DocumentDetailController implements ViewController {
             uploader.setText(document.getUploader().getUsername());
             ISBN.setText(document.getIsbn());
             copies.setText(document.getCopies().toString());
+            available.setText(Integer.toString(document.getCopies() - document.getLendingDetails().size()));
             cover.setImage(new Image(document.getCoverImageUrl()));
             System.out.println(document.getCoverImageUrl());
         });

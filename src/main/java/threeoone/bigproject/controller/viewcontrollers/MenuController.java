@@ -48,20 +48,13 @@ public class MenuController implements ViewController {
     @FXML
     private Parent root;
 
-    /**
-     * TODO: custom funni background
-     */
+
     @FXML
     private Label Greeting;
 
     @FXML
     private Label time;
 
-    /**
-     * TODO: WHERE. IS. MY. SERVICE.
-     */
-    @FXML
-    private Label NumOfLendings;
 
     @FXML
     private Button Random;
