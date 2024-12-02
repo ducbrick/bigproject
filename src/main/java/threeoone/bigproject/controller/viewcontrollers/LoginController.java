@@ -36,6 +36,7 @@ import threeoone.bigproject.entities.User;
 public class LoginController implements ViewController {
   private final RequestSender<User> loginRequestSender;
   private final RequestSender<ViewController> switchToSignup;
+  private final RequestSender<ViewController> switchToForgetPassword;
   @FXML
   private Parent root;
 
@@ -63,6 +64,15 @@ public class LoginController implements ViewController {
     passwordField.setOnAction(event -> loginButton.fire());
   }
 
+  /**
+   * Handle press event for HyperLink Forget Password, go to Forget Password page
+   *
+   * @param event event trigger HyperLink Forget Password
+   */
+  @FXML
+  void pressForgetPassword(ActionEvent event) {
+    switchToForgetPassword.send(null);
+  }
 
   /**
    * Handles the login button press action. All logic for login page now is handled by
@@ -86,6 +96,7 @@ public class LoginController implements ViewController {
 
   /**
    * Handle press event for HyperLink Signup, go to Register page
+   *
    * @param event event trigger HyperLink Signup
    */
   @FXML
