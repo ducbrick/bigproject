@@ -18,59 +18,54 @@ import threeoone.bigproject.view.ViewSwitcher;
 @RequiredArgsConstructor
 @FxmlView("ForgetPassword.fxml")
 public class ForgetPasswordController implements ViewController {
-    private final RequestSender<String> sendResetLinkRequestSender;
-    private final RequestSender<ViewController> switchToSignup;
-    private final RequestSender<ViewController> switchToLogin;
+  private final RequestSender<String> sendResetLinkRequestSender;
+  private final RequestSender<ViewController> switchToSignup;
+  private final RequestSender<ViewController> switchToLogin;
 
-    @FXML
-    private Parent root;
+  @FXML
+  private Parent root;
 
-    @FXML
-    private Button Submit;
+  @FXML
+  private Button Submit;
 
-    @FXML
-    private TextField textField;
+  @FXML
+  private TextField textField;
 
-    @FXML
-    private Label confirmation;
+  @Setter
+  private boolean flag = false;
 
-    @Setter
-    private boolean flag = false;
+  @FXML
+  private Hyperlink login;
 
-    @FXML
-    private Hyperlink login;
+  @FXML
+  private Hyperlink signup;
 
-    @FXML
-    private Hyperlink signup;
+  @FXML
+  private void submit() {
+    sendResetLinkRequestSender.send(textField.getText());
+  }
 
-    @FXML
-    private void submit() {
-        sendResetLinkRequestSender.send(textField.getText());
-        if (flag) {
-            confirmation.setVisible(true);
-        }
-        else {
-            Alerts.showAlertInfo("Failed", "Couldn't find any account with that username");
-        }
-    }
+  @FXML
+  private void toLogin() {
+    switchToLogin.send(this);
+  }
 
-    @FXML
-    private void toLogin() {
-        switchToLogin.send(this);
-    }
+  @FXML
+  private void toSignUp() {
+    switchToSignup.send(this);
+  }
 
-    @FXML
-    private void toSignUp() {
-        switchToSignup.send(this);
-    }
+  @Override
+  public Parent getParent() {
+    return root;
+  }
 
-    @Override
-    public Parent getParent() {
-        return root;
-    }
+  private void clearOldData() {
+    textField.setText("");
+  }
 
-    @Override
-    public void show() {
-
-    }
+  @Override
+  public void show() {
+    clearOldData();
+  }
 }

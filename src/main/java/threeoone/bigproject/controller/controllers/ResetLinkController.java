@@ -1,15 +1,20 @@
 package threeoone.bigproject.controller.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.viewcontrollers.ForgetPasswordController;
 import threeoone.bigproject.services.forgotpassword.PasswordResetLinkSenderService;
+import threeoone.bigproject.util.Alerts;
 
 @Component
 @RequiredArgsConstructor
 public class ResetLinkController {
+    private final Logger logger = LoggerFactory.getLogger(ResetLinkController.class);
+
     private final PasswordResetLinkSenderService passwordResetLinkSenderService;
     private final ForgetPasswordController forgetPasswordController;
 
@@ -19,9 +24,14 @@ public class ResetLinkController {
     }
 
     private void sendTo(String username) {
-        boolean result = passwordResetLinkSenderService.sendResetLink(username);
-        forgetPasswordController.setFlag(result);
-
+        try {
+            if (!passwordResetLinkSenderService.sendResetLink(username)) {
+                Alerts.showAlertWarning("Error!", "No user with that username exists");
+            }
+        }
+        catch (RuntimeException e) {
+            logger.warn(e.getMessage());
+        }
     }
 
 }
