@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.LendingDetail;
 import threeoone.bigproject.services.persistence.LendingPersistenceService;
+import threeoone.bigproject.util.Alerts;
+
+import java.util.NoSuchElementException;
 
 /**
  * The {@code ActionOnLendingController} class handles actions related to lending operations.
@@ -36,7 +39,11 @@ public class ActionOnLendingController {
    * @param newLending the new lending detail to be saved
    */
   public void saveNewLending(LendingDetail newLending) {
-    lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
+    try {
+      lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
+    } catch (NoSuchElementException e) {
+      Alerts.showAlertWarning("Error", "This document has no physical copy available at the moment");
+    }
   }
 
   public void deleteLendingById(int ID) {
