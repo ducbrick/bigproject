@@ -1,6 +1,8 @@
 package threeoone.bigproject.controller.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -17,6 +19,8 @@ import threeoone.bigproject.util.Alerts;
 @Component
 @RequiredArgsConstructor
 public class ActionOnLendingController {
+  private final Logger logger = LoggerFactory.getLogger(ActionOnLendingController.class);
+
   private final LendingPersistenceService lendingPersistenceService;
 
   /**
@@ -37,9 +41,9 @@ public class ActionOnLendingController {
    * @param newLending the new lending detail to be saved
    */
   public void saveNewLending(LendingDetail newLending) {
-    Alerts.showErrorCauseByFunction(() -> {
+    Alerts.showErrorWithLogger(() -> {
       lendingPersistenceService.lend(newLending.member().getId(), newLending.document().getId());
-    });
+    }, logger);
   }
 
   /**
@@ -48,8 +52,8 @@ public class ActionOnLendingController {
    * @param ID lending detail id need to be deleted
    */
   public void deleteLendingById(int ID) {
-    Alerts.showErrorCauseByFunction(() -> {
+    Alerts.showErrorWithLogger(() -> {
       lendingPersistenceService.delete(ID);
-    });
+    }, logger);
   }
 }

@@ -166,9 +166,6 @@ public class AddNewDocController implements ViewController {
     document = documentBuilder.build();
 
     Set<ConstraintViolation<Document>> violations = validator.validate(document);
-    for (ConstraintViolation<Document> violation : violations) {
-      System.out.println(violation);
-    }
 
     if(violations.isEmpty()) {
       addDocumentRequestSender.send(document);
