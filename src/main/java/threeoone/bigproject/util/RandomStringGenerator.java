@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Component
 public class RandomStringGenerator {
-  private final String SPECIAL_CHARACTERS = "$-_.+!*'()";
+  private final String SPECIAL_CHARACTERS = "$-_.+!*()";
   private final String DIGITS = "0123456789";
   private final String LOWER = "qwertyuiopasdfghjklzxcvbnm";
   private final String UPPER = "QWERTYUIOPASDFGHJKLZXCVBNM";

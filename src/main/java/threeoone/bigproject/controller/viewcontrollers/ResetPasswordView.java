@@ -81,11 +81,17 @@ public class ResetPasswordView implements ViewController {
     pageLabel.setText(label);
   }
 
+  private void clearOldData() {
+    enteredPasswordField.setText("");
+    reEnteredPasswordField.setText("");
+  }
+
   /**
    * Configures the page according to the given {@link User}.
    */
   @Override
   public void show() {
+    clearOldData();
     setPageLabel();
   }
 
