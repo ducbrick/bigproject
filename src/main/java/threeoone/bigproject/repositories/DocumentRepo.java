@@ -107,7 +107,7 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
    * @return the list of Documents
    */
   @Query("""
-      SELECT ld.document
+      SELECT DISTINCT ld.document
       FROM LendingDetail ld
       WHERE ld.dueTime < CURRENT_TIMESTAMP
       """)
