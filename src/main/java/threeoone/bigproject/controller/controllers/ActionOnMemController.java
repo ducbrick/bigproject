@@ -69,18 +69,17 @@ public class ActionOnMemController {
    * @param member None
    */
   private void getListAllMembers(Member member) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       List<Member> memberList = memberRetrievalService.getAll();
       memberList.sort(Comparator.comparing(Member::getId));
       memberListController.setTable(FXCollections.observableArrayList(memberList));
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
-      logger.warn(e.getMessage());
-    }
+    }, logger);
   }
 
   private void getTop5(SwitchScene switchScene) {
-    menuController.setUserList(FXCollections.observableArrayList(memberRetrievalService.findTop5Records()));
+    Alerts.showErrorWithLogger(()->{
+      menuController.setUserList(FXCollections.observableArrayList(memberRetrievalService.findTop5Records()));
+    }, logger);
   }
 
   /**
@@ -89,11 +88,9 @@ public class ActionOnMemController {
    * @param member the member to be edited
    */
   private void editMember(Member member) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       editMemController.setChosenMember(member);
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
-    }
+    }, logger);
   }
 
   /**
@@ -102,12 +99,9 @@ public class ActionOnMemController {
    * @param member the member to be added
    */
   private void addMember(Member member) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       addNewMemController.setMember(memberEditingService.add(member));
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", "Unexpected error occured! Please try again later.");
-
-    }
+    }, logger);
   }
 
   /**
@@ -116,18 +110,9 @@ public class ActionOnMemController {
    * @param member the member whose changes are to be committed
    */
   private void commitChangeMember(Member member) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       memberEditingService.update(member);
-    }
-    catch (ConstraintViolationException e) {
-      /*Should not happen*/
-      Set <ConstraintViolation <?>> violations = e.getConstraintViolations();
-      Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
-    }
-    catch (Exception e) {
-      Alerts.showAlertWarning("Error!", "Unexpected error occured");
-      logger.warn(e.getMessage());
-    }
+    }, logger);
   }
 
   /**
@@ -136,15 +121,15 @@ public class ActionOnMemController {
    * @param member the member to be removed
    */
   private void removeMember(Member member) {
-    try {
+    Alerts.showErrorWithLogger(()->{
       memberEditingService.delete(member.getId());
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!", e.getMessage());
-    }
+    }, logger);
   }
 
   private void memberDetail(Member member) {
-    Member temp = memberRetrievalService.findWithLendingDetails(member.getId());
-    memberDetailsController.setMember(temp);
+    Alerts.showErrorWithLogger(()->{
+      Member temp = memberRetrievalService.findWithLendingDetails(member.getId());
+      memberDetailsController.setMember(temp);
+    }, logger);
   }
 }

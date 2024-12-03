@@ -14,11 +14,8 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 
 /**
@@ -43,7 +40,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "app_user")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @AllArgsConstructor @Builder
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

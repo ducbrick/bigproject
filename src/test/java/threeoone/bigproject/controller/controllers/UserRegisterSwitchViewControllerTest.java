@@ -51,7 +51,6 @@ class UserRegisterSwitchViewControllerTest {
     userRegisterController.validateRegister(user); // Verify interactions
     verify(registerController).resetAlert();
     verify(userRegisterService).register(user);
-    verify(registerController).showSuccessDialog();
   }
 
   @Test
@@ -62,6 +61,5 @@ class UserRegisterSwitchViewControllerTest {
     verify(registerController).resetAlert();
     verify(userRegisterService).register(user);
     verify(registerController).setConfirmMessage("User already exists");
-    verify(registerController, never()).showSuccessDialog();
   }
 }

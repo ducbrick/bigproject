@@ -1,19 +1,26 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.User;
+import threeoone.bigproject.util.Alerts;
 
 import java.io.File;
+import java.util.Set;
 
 /**
  * ViewController for Register Page
@@ -27,6 +34,8 @@ import java.io.File;
 @FxmlView("Register.fxml")
 @RequiredArgsConstructor
 public class RegisterController implements ViewController {
+  private final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+  private final Validator validator;
 
   @FXML
   private Label confirmMessage;
@@ -48,6 +57,7 @@ public class RegisterController implements ViewController {
 
   @FXML
   private TextField emailInputField;
+
 
   private final RequestSender<ViewController> switchToLogin;
   private final RequestSender<User> registerRequestSender;
@@ -82,12 +92,14 @@ public class RegisterController implements ViewController {
    */
   @FXML
   private void pressSignUp(ActionEvent event) {
+
     if(validateConfirmation()) {
       User user = new User();
       user.setUsername(username.getText());
       user.setPassword(password.getText());
       user.setEmail(emailInputField.getText());
       registerRequestSender.send(user);
+   
     }
   }
 
@@ -106,7 +118,7 @@ public class RegisterController implements ViewController {
    */
   @Override
   public void show() {
-
+    clearDataInPage();
   }
 
   /**
@@ -122,12 +134,7 @@ public class RegisterController implements ViewController {
    * Alert when user signup successfully
    */
   public void showSuccessDialog() {
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("Registration Successful");
-    alert.setHeaderText(null);
-    alert.setContentText("You have registered successfully!\nPlease log in to your account");
-    alert.showAndWait();
-    alert.close();
+    Alerts.showAlertInfo("Registration Successful","You have registered successfully!\nPlease log in to your account");
   }
 
   /**
@@ -139,6 +146,7 @@ public class RegisterController implements ViewController {
 
   /**
    * Compare confirmation and password
+   *
    * @return true if equal; otherwise, false
    */
   private boolean validateConfirmation() {
@@ -150,4 +158,13 @@ public class RegisterController implements ViewController {
       return true;
     }
   }
+
+  private void clearDataInPage() {
+    email.clear();
+    username.clear();
+    password.clear();
+    confirmpass.clear();
+    confirmMessage.setText("");
+  }
+
 }

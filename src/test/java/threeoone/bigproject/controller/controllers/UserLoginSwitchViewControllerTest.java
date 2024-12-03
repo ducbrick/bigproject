@@ -84,7 +84,7 @@ class UserLoginSwitchViewControllerTest extends ApplicationTest {
   @DisplayName("authenticateLoginWithExceptionFromService")
   void authenticateLoginWithExceptionFromService() {
     User user = new User("valid", "valid");
-    userLoginController.registerService(loginService);
+    //userLoginController.registerService(loginService);
     when(loginService.login(user)).thenThrow(new AlreadyLoggedInException("False"));
     userLoginController.authenticateLogin(user);
     verify(loginController, times(1)).setMessage("False");
@@ -94,7 +94,7 @@ class UserLoginSwitchViewControllerTest extends ApplicationTest {
   @DisplayName("loginAuthenticationFail")
   void loginAuthenticationFail() {
     User user = new User("valid", "valid");
-    userLoginController.registerService(loginService);
+    //userLoginController.registerService(loginService);
     when(loginService.login(user)).thenReturn(false);
     userLoginController.authenticateLogin(user);
     verify(loginController, times(1)).setMessage("Username or password doesn't match. Attempt 1");

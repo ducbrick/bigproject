@@ -3,6 +3,8 @@ package threeoone.bigproject.controller.controllers;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
@@ -16,6 +18,7 @@ import threeoone.bigproject.services.retrieval.MemberRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Controller class for handling queries (contain {@link Document} and {@link  Member})
@@ -25,13 +28,14 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class QueryController {
+  private final Logger logger = LoggerFactory.getLogger(QueryController.class);
+
   private final AddNewDocController addNewDocController;
   private final RecommenderController recommenderController;
   private final GoogleAPIService googleAPIService;
   private final MemberRetrievalService memberRetrievalService;
   private final MemberSearchBarController memberSearchBarController;
   private final DocumentRetrievalService documentRetrievalService;
-  private final DocSearchBarController docSearchBarController;
   private final LendingDetailController lendingDetailController;
   private final BookRecommendService bookRecommendService;
   private final DocOverviewController docOverviewController;
@@ -67,16 +71,14 @@ public class QueryController {
    * @param isbn the ISBN to query
    */
   public void getQueryAndFulFill(String isbn) {
-    Document result = null;
-    try {
-      result = googleAPIService.findBookByISBN(isbn);
-    } catch (Exception e) {
-      Alerts.showAlertWarning("Error!!!", e.getMessage());
+    AtomicReference<Document> result = new AtomicReference<>();
+    Alerts.showErrorWithLogger(()->{
+      result.set(googleAPIService.findBookByISBN(isbn));
+    }, logger);
+    if (result.get() == null) {
+      result.set(new Document());
     }
-    if (result == null) {
-      result = new Document();
-    }
-    addNewDocController.fulfillInfo(result);
+    addNewDocController.fulfillInfo(result.get());
   }
 
   /**
@@ -167,14 +169,16 @@ public class QueryController {
   private void queryRecommendDoc(String title) {
     List<String> result = bookRecommendService.getRecommendedBooks(title);
     if(result.isEmpty()) {
-      Platform.runLater(()->Alerts.showAlertWarning("No information", "No recommend for that document"));
+      Platform.runLater(()->Alerts.showAlertWarning("No information!", "No recommend for that document"));
       return;
     }
     recommenderController.setResult(FXCollections.observableArrayList(result));
   }
 
   private void queryMemByIdFromLending(Integer id) {
-    Member member = memberRetrievalService.findById(id);
-    lendingDetailController.setMember(member);
+    Alerts.showErrorWithLogger(()->{
+      Member member = memberRetrievalService.findById(id);
+      lendingDetailController.setMember(member);
+    }, logger);
   }
 }
