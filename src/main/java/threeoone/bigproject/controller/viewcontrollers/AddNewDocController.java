@@ -44,6 +44,7 @@ public class AddNewDocController implements ViewController {
   private final Validator validator;
 
   private final RequestSender<ViewController> switchToDocOverview;
+  private final RequestSender<ViewController> switchToScanQR;
   private final RequestSender<Document> commitChangeDocRequestSender;
   private final RequestSender<Document> addDocumentRequestSender;
 
@@ -135,6 +136,11 @@ public class AddNewDocController implements ViewController {
     return null;
   }
 
+  @FXML
+  private void pressQR(ActionEvent event) {
+    switchToScanQR.send(null);
+  }
+
   /**
    * Handler for submit button
    *
@@ -191,6 +197,11 @@ public class AddNewDocController implements ViewController {
       queryISBNGoogleRequestSender.send(isbn.getText());
     }
   }
+
+  public void setIsbn(String isbnString) {
+    isbn.setText(isbnString);
+  }
+
 
   /**
    * Auto fulfill information text field with give document's info
