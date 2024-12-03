@@ -71,22 +71,22 @@
                            <GridPane.margin>
                               <Insets right="50.0" />
                            </GridPane.margin></TextField>
-                          <Label styleClass="label fade-in" text="Description" GridPane.rowIndex="4" />
-                          <Label styleClass="label fade-in" text="Number of copies" GridPane.rowIndex="5" />
-                          <Label styleClass="label fade-in" text="Document" GridPane.rowIndex="6" />
-                          <Button fx:id="chooseButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="1074.0" styleClass="button fade-in" text="No File Selected" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <GridPane.margin>
-                              <Insets right="50.0" />
-                           </GridPane.margin></Button>
-                        <TextField fx:id="numOfCopies" promptText="Required (Only number)" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <GridPane.margin>
-                              <Insets right="50.0" />
-                           </GridPane.margin></TextField>
                         <TextArea fx:id="description" prefHeight="11.0" prefWidth="657.0" styleClass="text-area" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets bottom="20.0" right="50.0" top="20.0" />
                            </GridPane.margin>
                         </TextArea>
+                        <TextField fx:id="numOfCopies" promptText="Required (Only number)" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets right="50.0" />
+                           </GridPane.margin></TextField>
+                          <Button fx:id="chooseButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="1074.0" styleClass="button fade-in" text="No File Selected" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <GridPane.margin>
+                              <Insets right="50.0" />
+                           </GridPane.margin></Button>
+                          <Label styleClass="label fade-in" text="Description" GridPane.rowIndex="4" />
+                          <Label styleClass="label fade-in" text="Number of copies" GridPane.rowIndex="5" />
+                          <Label styleClass="label fade-in" text="Document" GridPane.rowIndex="6" />
                      </children>
                   </GridPane>
                </items>
