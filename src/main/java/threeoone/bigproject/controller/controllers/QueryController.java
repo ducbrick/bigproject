@@ -42,7 +42,6 @@ public class QueryController {
 
   /**
    * Registers the request sender for handling ISBN queries.
-   *
    */
   @Autowired
   public void registerRequestSender(RequestSender<String> queryISBNGoogleRequestSender,
@@ -72,13 +71,13 @@ public class QueryController {
    */
   public void getQueryAndFulFill(String isbn) {
     AtomicReference<Document> result = new AtomicReference<>();
-    Alerts.showErrorWithLogger(()->{
+    Alerts.showErrorWithLogger(() -> {
       result.set(googleAPIService.findBookByISBN(isbn));
     }, logger);
     if (result.get() == null) {
       result.set(new Document());
     }
-    addNewDocController.fulfillInfo(result.get());
+    Platform.runLater(() -> addNewDocController.fulfillInfo(result.get()));
   }
 
   /**
@@ -128,7 +127,7 @@ public class QueryController {
    */
   private void queryDocByName(String name) {
     List<Document> result = documentRetrievalService.searchByName(name);
-    if(result.isEmpty()) {
+    if (result.isEmpty()) {
       return;
     }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
@@ -141,7 +140,7 @@ public class QueryController {
    */
   private void queryDocByAuthor(String author) {
     List<Document> result = documentRetrievalService.searchByAuthor(author);
-    if(result.isEmpty()) {
+    if (result.isEmpty()) {
       return;
     }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
@@ -154,7 +153,7 @@ public class QueryController {
    */
   private void queryDocByCategory(String category) {
     List<Document> result = documentRetrievalService.searchByCategory(category);
-    if(result.isEmpty()) {
+    if (result.isEmpty()) {
       return;
     }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
@@ -168,15 +167,15 @@ public class QueryController {
    */
   private void queryRecommendDoc(String title) {
     List<String> result = bookRecommendService.getRecommendedBooks(title);
-    if(result.isEmpty()) {
-      Platform.runLater(()->Alerts.showAlertWarning("No information!", "No recommend for that document"));
+    if (result.isEmpty()) {
+      Platform.runLater(() -> Alerts.showAlertWarning("No information!", "No recommend for that document"));
       return;
     }
     recommenderController.setResult(FXCollections.observableArrayList(result));
   }
 
   private void queryMemByIdFromLending(Integer id) {
-    Alerts.showErrorWithLogger(()->{
+    Alerts.showErrorWithLogger(() -> {
       Member member = memberRetrievalService.findById(id);
       lendingDetailController.setMember(member);
     }, logger);

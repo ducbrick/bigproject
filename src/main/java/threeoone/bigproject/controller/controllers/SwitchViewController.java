@@ -42,22 +42,23 @@ public class SwitchViewController {
 
   private final LendingDetailController lendingDetailController;
   private final PDFReaderController pdfReaderController;
-  private RequestSender switchToForgetPassword;
+
+  private final ScanQrController scanQrController;
 
   /**
    * Registers request receivers for switching to different scenes.
    *
-   * @param switchToDocOverview RequestSender for switching to document overview scene.
-   * @param switchToMainMenu    RequestSender for switching to main menu scene.
-   * @param switchToDocDetail   RequestSender for switching to document detail scene.
-   * @param switchToLogin       RequestSender for switching to login scene.
-   * @param switchToSignup      RequestSender for switching to signup scene.
-   * @param switchToAddNewDoc   RequestSender for switching to add new document scene.
-   * @param switchToEditDoc     RequestSender for switching to edit document scene.
-   * @param switchToMemList     RequestSender for switching to member list scene.
-   * @param switchToEditMem     RequestSender for switching to edit member scene.
-   * @param switchToAddMem      RequestSender for switching to add new member scene.
-   * @param switchToYourBooks   RequestSender for switching to your books scene.
+   * @param switchToDocOverview   RequestSender for switching to document overview scene.
+   * @param switchToMainMenu      RequestSender for switching to main menu scene.
+   * @param switchToDocDetail     RequestSender for switching to document detail scene.
+   * @param switchToLogin         RequestSender for switching to login scene.
+   * @param switchToSignup        RequestSender for switching to signup scene.
+   * @param switchToAddNewDoc     RequestSender for switching to add new document scene.
+   * @param switchToEditDoc       RequestSender for switching to edit document scene.
+   * @param switchToMemList       RequestSender for switching to member list scene.
+   * @param switchToEditMem       RequestSender for switching to edit member scene.
+   * @param switchToAddMem        RequestSender for switching to add new member scene.
+   * @param switchToYourBooks     RequestSender for switching to your books scene.
    * @param switchToLendingDetail RequestSender for switching to lending detail scene.
    */
   @Autowired
@@ -79,8 +80,9 @@ public class SwitchViewController {
           RequestSender<ViewController> switchToAddMem,
 
           RequestSender<ViewController> switchToYourBooks,
-          RequestSender<ViewController> switchToLendingDetail
+          RequestSender<ViewController> switchToLendingDetail,
 
+          RequestSender<ViewController> switchToScanQR
   ) {
     switchToDocOverview.registerReceiver(this::switchToDocOverview);
     switchToMainMenu.registerReceiver(this::switchToMainMenu);
@@ -97,6 +99,7 @@ public class SwitchViewController {
     switchToMemberDetails.registerReceiver(this::switchToMemberDetails);
     switchToPDFReader.registerReceiver(this::switchToPDFReader);
     switchToForgetPassword.registerReceiver(this::switchToForgetPassword);
+    switchToScanQR.registerReceiver(this::switchToScanQR);
   }
 
   /**
@@ -183,7 +186,9 @@ public class SwitchViewController {
   /**
    * same as the two above and under me :)
    */
-  private void switchToMemberDetails(ViewController from) { viewSwitcher.switchToView(memberDetailsController); }
+  private void switchToMemberDetails(ViewController from) {
+    viewSwitcher.switchToView(memberDetailsController);
+  }
 
   /**
    * Switches to the add new member view.
@@ -221,11 +226,11 @@ public class SwitchViewController {
     viewSwitcher.switchToView(pdfReaderController);
   }
 
-    @Qualifier("switchToForgetPassword")
-    @Autowired
-    public void setSwitchToForgetPassword(RequestSender switchToForgetPassword) {
-    this.switchToForgetPassword = switchToForgetPassword;
+  private void switchToForgetPassword(ViewController from) {
+    viewSwitcher.switchToView(forgetPasswordController);
   }
 
-  private void switchToForgetPassword(ViewController from) { viewSwitcher.switchToView(forgetPasswordController); }
+  private void switchToScanQR(ViewController from) {
+    viewSwitcher.switchToView(scanQrController);
+  }
 }
