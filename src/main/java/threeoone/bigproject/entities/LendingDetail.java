@@ -20,7 +20,8 @@ import lombok.Setter;
 
 /**
  * ORM Entity representing detail about a lent {@link Document}.
- * A {@link LendingDetail} has a {@link #lendTime}, representing the timestamp when the Document was lent.
+ * A {@link LendingDetail} has a {@link #lendTime}, representing the timestamp when the Document was lent,
+ * and {@link #dueTime}, representing the deadline before which the lending {@link Member} is required to return the lent {@link Document}.
  * <p>
  * {@link #member} is a bidirectional many-to-one relationship between {@link Member} and {@link LendingDetail}.
  * JPA requires synchronization on both sides in order to persist.
@@ -42,6 +43,10 @@ public class LendingDetail {
   @Column(name = "lend_time")
   @NotNull(message = "Details about a document lending must include a lend time")
   private LocalDateTime lendTime;
+
+  @Column(name = "due_time")
+  @NotNull(message = "Details about a document lending must include a due time")
+  private LocalDateTime dueTime;
 
   @JoinColumn(name = "member_id", nullable = false)
   @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
