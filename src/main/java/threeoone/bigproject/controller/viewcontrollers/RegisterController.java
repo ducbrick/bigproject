@@ -160,7 +160,7 @@ public class RegisterController implements ViewController {
   }
 
   private void clearDataInPage() {
-    email.clear();
+//    email.clear();
     username.clear();
     password.clear();
     confirmpass.clear();
