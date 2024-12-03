@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
+import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 
@@ -48,4 +49,16 @@ public interface MemberRepo extends ListCrudRepository <Member, Integer> {
 
   @Query("SELECT m FROM Member m ORDER BY m.id LIMIT 5")
   List<Member> findTop5ByOrderByIdDesc();
+
+  /**
+   * Retrieves a list of Members that has at least {@code 1} overdue documents.
+   *
+   * @return the list of Members
+   */
+  @Query("""
+      SELECT DISTINCT ld.member
+      FROM LendingDetail ld
+      WHERE ld.dueTime < CURRENT_TIMESTAMP
+      """)
+  List <Member> getOverdueMembers();
 }

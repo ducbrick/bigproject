@@ -83,4 +83,13 @@ public class MemberRetrievalService {
   }
 
   public List<Member> findTop5Records() { return memberRepo.findTop5ByOrderByIdDesc(); }
+
+  /**
+   * Retrieves a list of Members that has at least {@code 1} overdue documents.
+   *
+   * @return the list of Members
+   */
+  public List <Member> getOverdueMembers() {
+    return memberRepo.getOverdueMembers();
+  }
 }

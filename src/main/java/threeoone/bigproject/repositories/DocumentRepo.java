@@ -100,4 +100,16 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
    */
   @Query("SELECT d from Document d WHERE LOWER(d.isbn) LIKE LOWER(CONCAT('%', :substr, '%'))")
   List <Document> findWithIsbnContaining(@Param("substr") String substr);
+
+  /**
+   * Retrieves a list of Documents that has at least {@code 1} copies being overdue.
+   *
+   * @return the list of Documents
+   */
+  @Query("""
+      SELECT DISTINCT ld.document
+      FROM LendingDetail ld
+      WHERE ld.dueTime < CURRENT_TIMESTAMP
+      """)
+  List <Document> getOverdueDocuments();
 }

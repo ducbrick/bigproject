@@ -37,6 +37,7 @@ CREATE TABLE member (
 CREATE TABLE lending_detail (
 	id SERIAL PRIMARY KEY,
 	lend_time TIMESTAMP NOT NULL,
+	due_time TIMESTAMP NOT NULL,
 	member_id INTEGER REFERENCES member NOT NULL,
 	document_id INTEGER REFERENCES document NOT NULL
 );
