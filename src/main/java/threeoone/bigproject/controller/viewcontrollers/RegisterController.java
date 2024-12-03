@@ -56,7 +56,8 @@ public class RegisterController implements ViewController {
   private TextField username;
 
   @FXML
-  private TextField email;
+  private TextField emailInputField;
+
 
   private final RequestSender<ViewController> switchToLogin;
   private final RequestSender<User> registerRequestSender;
@@ -91,15 +92,14 @@ public class RegisterController implements ViewController {
    */
   @FXML
   private void pressSignUp(ActionEvent event) {
-    User user = User.builder().username(username.getText()).email(email.getText()).password(password.getText()).build();
 
-    Set<ConstraintViolation<User>> violations = validator.validate(user);
-
-    if (validateConfirmation() && violations.isEmpty()) {
+    if(validateConfirmation()) {
+      User user = new User();
+      user.setUsername(username.getText());
+      user.setPassword(password.getText());
+      user.setEmail(emailInputField.getText());
       registerRequestSender.send(user);
-    } else {
-      Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
-      logger.warn(violations.iterator().next().getMessage());
+   
     }
   }
 

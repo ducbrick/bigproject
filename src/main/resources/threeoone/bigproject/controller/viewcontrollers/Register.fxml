@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.RegisterController">
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.RegisterController">
    <center>
       <AnchorPane prefHeight="720.0" prefWidth="1200.0" styleClass="background" BorderPane.alignment="CENTER">
          <children>
@@ -43,7 +43,8 @@
                         <Insets left="30.0" top="40.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="email" promptText="Enter your email">
+
+                  <TextField fx:id="emailInputField" promptText="Enter your email">
                      <VBox.margin>
                         <Insets left="30.0" right="50.0" />
                      </VBox.margin>
@@ -78,7 +79,7 @@
                         <Insets left="30.0" right="50.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Label fx:id="confirmMessage" prefHeight="16.0" prefWidth="208.0" styleClass="label">
+                  <Label fx:id="confirmMessage" prefHeight="20.0" styleClass="label">
                      <VBox.margin>
                         <Insets left="30.0" />
                      </VBox.margin></Label>
