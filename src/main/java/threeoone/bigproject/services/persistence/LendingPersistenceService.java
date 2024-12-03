@@ -3,6 +3,7 @@ package threeoone.bigproject.services.persistence;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import threeoone.bigproject.entities.Document;
@@ -15,6 +16,9 @@ import threeoone.bigproject.repositories.MemberRepo;
 @Service
 @RequiredArgsConstructor
 public class LendingPersistenceService {
+  @Value("${document.lending.deadline.day}")
+  private int lendDeadlineAsDays;
+
   private final LendingDetailRepo lendingDetailRepo;
   private final MemberRepo memberRepo;
   private final DocumentRepo documentRepo;
@@ -22,7 +26,9 @@ public class LendingPersistenceService {
   /**
    * Saves a new {@link LendingDetail} from the given {@code memberId} and {@code documentId}.
    * This method constructs a new {@link LendingDetail} Entity instance
-   * from the given {@code memberId}, {@code documentId}, the {@link LocalDateTime} at the moment,
+   * from the given {@code memberId}, {@code documentId},
+   * the lend time as {@link LocalDateTime} at the moment,
+   * the due time as specified by the {@code document.lending.deadline.day} property,
    * sets up bidirectional relationships and saves it to the Database.
    * The {@link Document} must have at least {@code 1} physical copy in order to be lent.
    *
@@ -55,7 +61,10 @@ public class LendingPersistenceService {
       throw new NoSuchElementException("The requested Document has no remaining physical copies");
     }
 
-    LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
+    LendingDetail lendingDetail = new LendingDetail();
+    lendingDetail.setLendTime(LocalDateTime.now());
+    lendingDetail.setDueTime(lendingDetail.getLendTime().plusDays(lendDeadlineAsDays));
+
     member.lendDocument(lendingDetail);
     document.lendDocument(lendingDetail);
 
