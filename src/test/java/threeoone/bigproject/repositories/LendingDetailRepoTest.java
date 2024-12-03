@@ -24,14 +24,23 @@ class LendingDetailRepoTest {
   @Test
   @DisplayName("Test build & run")
   public void test() {
-    LendingDetail lendingDetail = new LendingDetail(LocalDateTime.now());
     Member member = new Member();
     member.setName("a name");
     member.setPhoneNumber("0969696969");
     member.setAddress("Ohio");
     member.setEmail("skibidi@mog.rizz");
+
     Document document = new Document("name");
-    User user = new User("name", "password");
+    document.setAuthor("sigma");
+
+    User user = new User();
+    user.setUsername("name");
+    user.setPassword("skibidi");
+    user.setEmail("skibidi@rizzler.mog");
+
+    LendingDetail lendingDetail = new LendingDetail();
+    lendingDetail.setLendTime(LocalDateTime.now());
+    lendingDetail.setDueTime(LocalDateTime.now());
 
     member.lendDocument(lendingDetail);
     document.lendDocument(lendingDetail);

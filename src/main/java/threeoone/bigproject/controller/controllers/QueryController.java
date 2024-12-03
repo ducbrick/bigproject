@@ -44,7 +44,6 @@ public class QueryController {
 
   /**
    * Registers the request sender for handling ISBN queries.
-   *
    */
   @Autowired
   public void registerRequestSender(RequestSender<String> queryISBNGoogleRequestSender,
@@ -74,13 +73,13 @@ public class QueryController {
    */
   public void getQueryAndFulFill(String isbn) {
     AtomicReference<Document> result = new AtomicReference<>();
-    Alerts.showErrorWithLogger(()->{
+    Alerts.showErrorWithLogger(() -> {
       result.set(googleAPIService.findBookByISBN(isbn));
     }, logger);
     if (result.get() == null) {
       result.set(new Document());
     }
-    addNewDocController.fulfillInfo(result.get());
+    Platform.runLater(() -> addNewDocController.fulfillInfo(result.get()));
   }
 
   /**
@@ -156,15 +155,15 @@ public class QueryController {
    */
   private void queryRecommendDoc(String title) {
     List<String> result = bookRecommendService.getRecommendedBooks(title);
-    if(result.isEmpty()) {
-      Platform.runLater(()->Alerts.showAlertWarning("No information!", "No recommend for that document"));
+    if (result.isEmpty()) {
+      Platform.runLater(() -> Alerts.showAlertWarning("No information!", "No recommend for that document"));
       return;
     }
     recommenderController.setResult(FXCollections.observableArrayList(result));
   }
 
   private void queryMemByIdFromLending(Integer id) {
-    Alerts.showErrorWithLogger(()->{
+    Alerts.showErrorWithLogger(() -> {
       Member member = memberRetrievalService.findById(id);
       lendingDetailController.setMember(member);
     }, logger);

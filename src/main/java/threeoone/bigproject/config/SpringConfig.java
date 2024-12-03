@@ -503,6 +503,14 @@ public class SpringConfig {
   public RequestSender<ViewController> switchToForgetPassword() { return new RequestSender<>(); }
 
   /**
+   * Creates a bean for RequestSender that switches to Scan QR view.
+   *
+   * @return  an instance of RequestSender for switching to the Scan QR view.
+   */
+  @Bean
+  public RequestSender<ViewController> switchToScanQR() { return new RequestSender<>(); }
+
+  /**
    * Requests to redirect the user to the password-reset page.
    * <p>
    * This type of request contains a single parameter of type {@link User}.
@@ -548,4 +556,24 @@ public class SpringConfig {
    */
   @Bean
   public RequestSender<String> sendResetLinkRequestSender() { return new RequestSender<>(); }
+
+  /*************************************************************************
+   *  All request sender for QR
+   ***************************************************************************/
+
+  /**
+   * Return a Request Sender that queries qr image from server and set back to View Controller requests it
+   *
+   * @return the {@link RequestSender}
+   */
+  @Bean
+  public RequestSender<ViewController> getQRImageFromServer() {return new RequestSender<>(); }
+
+  /**
+   * Return ISBN which is scanned from QR Code and set it for add new document page
+   *
+   * @return the {@link RequestSender}
+   */
+  @Bean
+  public RequestSender<String> setISBNToAddNewPage() {return new RequestSender<>(); }
 }

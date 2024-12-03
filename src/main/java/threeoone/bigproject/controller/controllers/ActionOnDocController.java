@@ -10,13 +10,11 @@ import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.services.persistence.DocumentPersistenceService;
 import threeoone.bigproject.services.retrieval.DocumentRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**

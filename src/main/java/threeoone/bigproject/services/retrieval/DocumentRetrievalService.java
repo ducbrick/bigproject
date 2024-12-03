@@ -130,4 +130,13 @@ public class DocumentRetrievalService {
   public List <Document> searchByIsbn(@NonNull String isbn) {
     return documentRepo.findWithIsbnContaining(isbn);
   }
+
+  /**
+   * Retrieves a list of Documents that has at least {@code 1} copies being overdue.
+   *
+   * @return the list of Documents
+   */
+  public List <Document> getOverdueDocuments() {
+    return documentRepo.getOverdueDocuments();
+  }
 }
