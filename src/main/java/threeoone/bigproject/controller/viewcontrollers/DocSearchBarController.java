@@ -16,6 +16,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.*;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.entities.User;
 
 /**
  * The {@code SearchBarController} class manages the search functionality in the UI.
@@ -27,20 +28,21 @@ import threeoone.bigproject.entities.Document;
 @FxmlView("DocSearchBar.fxml")
 @RequiredArgsConstructor
 @Getter
-public class DocSearchBarController {
+public class
+DocSearchBarController {
   private final RequestSender<ViewController> switchToDocDetail;
   private final RequestSender<Integer> queryDocByIdRequestSender;
   private final RequestSender<Document> documentDetailRequestSender;
   private final RequestSender<String> queryDocByNameRequestSender;
   private final RequestSender<String> queryDocByAuthorRequestSender;
   private final RequestSender<String> queryDocByCategoryRequestSender;
+  private final RequestSender<User> getListAllDocumentRequestSender;
 
 
   private enum Type {
     Author,
     Name,
-    Category,
-    Id
+    Category
   }
 
   @FXML
@@ -62,7 +64,7 @@ public class DocSearchBarController {
   @FXML
   private void initialize() {
     type.getItems().addAll(Type.values());
-    type.setValue(Type.Id);
+    type.setValue(Type.Name);
 
     search.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
@@ -78,7 +80,8 @@ public class DocSearchBarController {
    */
   @FXML
   private void pressSearch(ActionEvent event) {
-    if (search.getText().isEmpty() || type.getValue() == null) {
+    if (search.getText().isEmpty() || search.getText().matches("\\s+")) {
+      getListAllDocumentRequestSender.send(null);
       return;
     }
 
@@ -86,7 +89,6 @@ public class DocSearchBarController {
       case Name -> queryDocByNameRequestSender.send(search.getText());
       case Author -> queryDocByAuthorRequestSender.send(search.getText());
       case Category -> queryDocByCategoryRequestSender.send(search.getText());
-      case Id -> queryDocByIdRequestSender.send(Integer.valueOf(search.getText()));
     }
 
   }

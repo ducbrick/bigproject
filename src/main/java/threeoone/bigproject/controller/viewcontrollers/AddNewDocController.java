@@ -107,7 +107,7 @@ public class AddNewDocController implements ViewController {
     categories.setOnAction(event -> isbn.requestFocus());
     isbn.setOnAction(event -> description.requestFocus());
     description.setOnKeyPressed(event -> {
-      if(event.getCode() == KeyCode.ENTER) {
+      if(event.getCode() == KeyCode.TAB) {
         numOfCopies.requestFocus();
       }
     });

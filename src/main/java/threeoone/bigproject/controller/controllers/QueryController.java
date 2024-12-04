@@ -17,6 +17,7 @@ import threeoone.bigproject.services.GoogleAPIService;
 import threeoone.bigproject.services.retrieval.MemberRetrievalService;
 import threeoone.bigproject.util.Alerts;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -39,6 +40,7 @@ public class QueryController {
   private final LendingDetailController lendingDetailController;
   private final BookRecommendService bookRecommendService;
   private final DocOverviewController docOverviewController;
+  private final MemberListController memberListController;
 
   /**
    * Registers the request sender for handling ISBN queries.
@@ -86,11 +88,12 @@ public class QueryController {
    * @param id the ID of the member to be queried
    */
   private void queryMemById(Integer id) {
-    Member result = memberRetrievalService.findById(id);
-    if (result == null) {
-      return;
+    Member member = memberRetrievalService.findById(id);
+    List<Member> result = new ArrayList<>();
+    if(member != null) {
+      result.add(member);
     }
-    memberSearchBarController.setResult(FXCollections.observableArrayList(result));
+    memberListController.setTable(FXCollections.observableArrayList(result));
   }
 
   /**
@@ -100,10 +103,7 @@ public class QueryController {
    */
   private void queryMemByName(String name) {
     List<Member> result = memberRetrievalService.findWhoseNamesContain(name);
-    if (result.isEmpty()) {
-      return;
-    }
-    memberSearchBarController.setResult(FXCollections.observableArrayList(result));
+    memberListController.setTable(FXCollections.observableArrayList(result));
   }
 
 
@@ -114,9 +114,6 @@ public class QueryController {
    */
   private void queryDocByID(Integer id) {
     Document result = documentRetrievalService.getDocumentById(id);
-    if (result == null) {
-      return;
-    }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
@@ -127,9 +124,6 @@ public class QueryController {
    */
   private void queryDocByName(String name) {
     List<Document> result = documentRetrievalService.searchByName(name);
-    if (result.isEmpty()) {
-      return;
-    }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
@@ -140,9 +134,6 @@ public class QueryController {
    */
   private void queryDocByAuthor(String author) {
     List<Document> result = documentRetrievalService.searchByAuthor(author);
-    if (result.isEmpty()) {
-      return;
-    }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 
@@ -153,9 +144,6 @@ public class QueryController {
    */
   private void queryDocByCategory(String category) {
     List<Document> result = documentRetrievalService.searchByCategory(category);
-    if (result.isEmpty()) {
-      return;
-    }
     docOverviewController.setResult(FXCollections.observableArrayList(result));
   }
 

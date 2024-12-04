@@ -1,14 +1,10 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
-import javafx.animation.PauseTransition;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Popup;
-import javafx.util.Duration;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -31,12 +27,7 @@ public class MemberSearchBarController {
 
   private final RequestSender<String> queryMemByNameRequestSender;
   private final RequestSender<Integer> queryMemByIdRequestSender;
-
-  private final PauseTransition hideTimer = new PauseTransition();
-
-  private final int CELL_SIZE = 30;
-  private final Popup popup = new Popup();
-  private final ListView<Member> memberListView = new ListView<>();
+  private final RequestSender<Member> getAllMembersRequestSender;
 
   private enum Type {
     Name,
@@ -50,9 +41,6 @@ public class MemberSearchBarController {
   private Button searchButton;
 
   @FXML
-  private GridPane searchRoot;
-
-  @FXML
   private ChoiceBox<Type> type;
 
   /**
@@ -61,36 +49,13 @@ public class MemberSearchBarController {
   @FXML
   private void initialize() {
     type.getItems().addAll(Type.values());
-
-    hideTimer.setDuration(Duration.seconds(2));
-    hideTimer.setOnFinished(event -> popup.hide());
-
-    memberListView.setCellFactory(param -> new ListCell<>() {
-      @Override
-      protected void updateItem(Member item, boolean empty) {
-        super.updateItem(item, empty);
-        if (item != null) {
-          setText("ID: " + item.getId() + "; Name: " + item.getName());
-        }
-      }
-    });
-
-    memberListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-      if (newValue != null) {
-        // TODO: go to member detail page
-        popup.hide();
-      }
-    });
+    type.setValue(Type.Id);
 
     search.setOnKeyPressed(event -> {
-      popup.hide();
       if (event.getCode() == KeyCode.ENTER) {
         searchButton.fire();
       }
     });
-    memberListView.setFixedCellSize(CELL_SIZE);
-    popup.getContent().clear();
-    popup.getContent().add(memberListView);
   }
 
   /**
@@ -101,32 +66,14 @@ public class MemberSearchBarController {
    */
   @FXML
   private void pressSearch(ActionEvent event) {
-    if (search.getText().isEmpty()) {
+    if (search.getText().isEmpty() || search.getText().matches("\\s+")) {
+      getAllMembersRequestSender.send(null);
       return;
     }
-
-    memberListView.getItems().clear();
 
     switch (type.getValue()) {
       case Name -> queryMemByNameRequestSender.send(search.getText());
       case Id -> queryMemByIdRequestSender.send(Integer.valueOf(search.getText()));
     }
-
-    memberListView.setPrefHeight(memberListView.getItems().size() * CELL_SIZE);
-    popup.setHeight(memberListView.getHeight());
-    if (!memberListView.getItems().isEmpty() && !popup.isShowing()) {
-      popup.show(search, search.localToScreen(search.getBoundsInLocal()).getMinX(),
-              search.localToScreen(search.getBoundsInLocal()).getMaxY());
-    }
   }
-
-  /**
-   * Sets the search result to the list view and displays it.
-   *
-   * @param result the search result to be displayed
-   */
-  public void setResult(ObservableList<Member> result) {
-    memberListView.getItems().addAll(result);
-  }
-
 }

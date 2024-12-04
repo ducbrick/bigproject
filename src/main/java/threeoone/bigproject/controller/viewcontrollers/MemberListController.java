@@ -23,7 +23,8 @@ import threeoone.bigproject.util.MenuItemFactory;
 @Component
 @FxmlView("MemberList.fxml")
 @RequiredArgsConstructor
-public class MemberListController implements ViewController {
+public class
+MemberListController implements ViewController {
   private final RequestSender<ViewController> switchToEditMem;
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToMainMenu;
@@ -158,6 +159,7 @@ public class MemberListController implements ViewController {
 
   /**
    * sends selected member to member detail page (to show it, obviously)
+   *
    * @param member the member selected (from the table)
    */
   private void seeMemberDetail(Member member) {
