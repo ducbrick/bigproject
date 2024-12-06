@@ -50,6 +50,7 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<Document> removeDocumentRequestSender;
   private final RequestSender<Document> borrowDocumentRequestSender;
   private final RequestSender<Document> openDocByPdfReaderRequestSender;
+  private final RequestSender<ViewController> getListOfOverdueDoc;
 
   @FXML
   private ContextMenu contextMenu;
@@ -215,6 +216,11 @@ public class DocOverviewController implements ViewController {
   private void pressDocToGoToDetail(Document document) {
     documentDetailRequestSender.send(document);
     switchToDocDetail.send(this);
+  }
+
+  @FXML
+  private void pressGetOverdue() {
+    getListOfOverdueDoc.send(null);
   }
 
   /**

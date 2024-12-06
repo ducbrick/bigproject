@@ -36,6 +36,7 @@ public class ActionOnDocController {
   private final PDFReaderController pdfReaderController;
   private final AddNewDocController addNewDocController;
   private final RequestSender<ViewController> switchToDocOverview;
+  private final RequestSender<ViewController> getListOfOverdueDoc;
 
   private final Logger logger = LoggerFactory.getLogger(ActionOnDocController.class);
 
@@ -80,6 +81,20 @@ public class ActionOnDocController {
     commitChangeDocRequestSender.registerReceiver(this::commitChangeDoc);
     lendingDetailRequestSender.registerReceiver(this::lendingDetail);
     openDocByPdfReaderRequestSender.registerReceiver(this::openDocByPDFReader);
+    getListOfOverdueDoc.registerReceiver(this::getListOfOverdueDoc);
+  }
+
+  /**
+   * Call {@link DocumentRetrievalService} to get list of overdue document
+   * and set it for table of {@link DocOverviewController}
+   *
+   * @param viewController from
+   */
+  private void getListOfOverdueDoc(ViewController viewController) {
+    Alerts.showErrorWithLogger(() -> {
+      List<Document> result = documentRetrievalService.getOverdueDocuments();
+      docOverviewController.setTable(FXCollections.observableList(result));
+    }, logger);
   }
 
   /**

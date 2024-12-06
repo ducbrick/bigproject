@@ -25,6 +25,7 @@
                 <GridPane prefHeight="62.0" prefWidth="1104.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -32,7 +33,8 @@
                     </rowConstraints>
                     <children>
                         <Button mnemonicParsing="false" onAction="#pressBack" prefHeight="26.0" prefWidth="128.0" styleClass="normal-button" text="Return" />
-                        <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="26.0" prefWidth="150.0" styleClass="normal-button" text="Add New Document" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="26.0" prefWidth="150.0" styleClass="normal-button" text="Add New Document" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#pressGetOverdue" text="Get Overdue Document" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
             </bottom>
