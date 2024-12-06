@@ -9,6 +9,7 @@ import threeoone.bigproject.entities.LendingDetail;
 import threeoone.bigproject.entities.Member;
 
 import java.util.List;
+import threeoone.bigproject.entities.User;
 
 /**
  * Simple Spring Data JPA repository for {@link Document} entity.
@@ -112,4 +113,21 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
       WHERE ld.dueTime < CURRENT_TIMESTAMP
       """)
   List <Document> getOverdueDocuments();
+
+  /**
+   * Checks if a {@link Document} with a specific {@code isbn} exists.
+   *
+   * @param isbn the email of the desired {@link Document}
+   *
+   * @return true if a {@link Document} with the specified {@code isbn} exists, otherwise false
+   */
+  @Query("""
+      SELECT
+        CASE
+          WHEN COUNT(d) > 0 THEN true
+          ELSE false
+        END
+      FROM Document d
+      WHERE d.isbn = (:isbn)""")
+  boolean existsByIsbn(@Param("isbn") String isbn);
 }
