@@ -45,6 +45,7 @@
             <GridPane prefHeight="107.0" prefWidth="968.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
@@ -52,7 +53,8 @@
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" onAction="#pressReturn" styleClass="normal-button" text="Return" />
-                  <Button id="green-button" mnemonicParsing="false" onAction="#pressAdd" styleClass="normal-button" text="Add new member" GridPane.columnIndex="1" />
+                  <Button id="green-button" mnemonicParsing="false" onAction="#pressAdd" styleClass="normal-button" text="Add new member" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#pressGetOverdue" text="Members With Overdue Document" GridPane.columnIndex="1" />
                </children>
             </GridPane>
          </bottom>

@@ -29,10 +29,12 @@ MemberListController implements ViewController {
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToMemberDetails;
+
   private final RequestSender<Member> getAllMembersRequestSender;
   private final RequestSender<Member> editMemberRequestSender;
   private final RequestSender<Member> removeMemberRequestSender;
   private final RequestSender<Member> memberDetailsRequestSender;
+  private final RequestSender<ViewController> getOverdueMember;
 
   private final MenuBarController menuBarController;
 
@@ -154,6 +156,11 @@ MemberListController implements ViewController {
   @FXML
   private void pressReturn(ActionEvent event) {
     switchToMainMenu.send(null);
+  }
+
+  @FXML
+  private void pressGetOverdue(ActionEvent event) {
+    getOverdueMember.send(null);
   }
 
 

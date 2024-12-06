@@ -53,7 +53,8 @@ public class ActionOnMemController {
                                        RequestSender<Member> removeMemberRequestSender,
                                        RequestSender<Member> addMemberRequestSender,
                                        RequestSender<SwitchScene> getTopFiveMembersRequestSender,
-                                       RequestSender<Member> memberDetailsRequestSender) {
+                                       RequestSender<Member> memberDetailsRequestSender,
+                                       RequestSender<ViewController> getOverdueMember) {
     getAllMembersRequestSender.registerReceiver(this::getListAllMembers);
     editMemberRequestSender.registerReceiver(this::editMember);
     commitChangeMemberRequestSender.registerReceiver(this::commitChangeMember);
@@ -61,6 +62,19 @@ public class ActionOnMemController {
     addMemberRequestSender.registerReceiver(this::addMember);
     getTopFiveMembersRequestSender.registerReceiver(this::getTop5);
     memberDetailsRequestSender.registerReceiver(this::memberDetail);
+    getOverdueMember.registerReceiver(this::getOverdueMember);
+  }
+
+  /**
+   * Call {@link MemberRetrievalService} get list of member and set it for table in {@link MemberListController}
+   *
+   * @param viewController from {@link MemberListController}
+   */
+  private void getOverdueMember(ViewController viewController) {
+    Alerts.showErrorWithLogger(()-> {
+      List<Member> result = memberRetrievalService.getOverdueMembers();
+      memberListController.setTable(FXCollections.observableList(result));
+    }, logger);
   }
 
   /**

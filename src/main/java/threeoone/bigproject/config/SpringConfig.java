@@ -3,14 +3,12 @@ package threeoone.bigproject.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import threeoone.bigproject.controller.RequestSender;
-import threeoone.bigproject.controller.requestbodies.*;
+import threeoone.bigproject.controller.requestbodies.LendingDetail;
+import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.ViewController;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
-
-import javax.print.Doc;
-import javax.swing.text.View;
 
 /**
  * {@code Spring} configuration class.
@@ -55,7 +53,6 @@ public class SpringConfig {
   public RequestSender<LendingDetail> saveNewLending() {
     return new RequestSender<>();
   }
-
 
 
   /*************************************************************************
@@ -162,7 +159,19 @@ public class SpringConfig {
    * Sends a RequestSender that has the document from "Document detail" specifically.
    */
   @Bean
-  public RequestSender<Document> lendingDetailRequestSender() { return new RequestSender<>(); }
+  public RequestSender<Document> lendingDetailRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Send a request to service to take all overdue book and set it back to table in {@link threeoone.bigproject.controller.viewcontrollers.DocOverviewController}
+   *
+   * @return corresponding {@link RequestSender}
+   */
+  @Bean
+  public RequestSender<ViewController> getListOfOverdueDoc() {
+    return new RequestSender<>();
+  }
 
   /*************************************************************************
    *  All request sender for member handler: edit, remove, add, ... (not contains query)
@@ -225,7 +234,20 @@ public class SpringConfig {
    * repeating code is a sign of code smell
    */
   @Bean
-  public RequestSender<Member> memberDetailsRequestSender() { return new RequestSender<>(); }
+  public RequestSender<Member> memberDetailsRequestSender() {
+    return new RequestSender<>();
+  }
+
+  /**
+   * Call service {@link threeoone.bigproject.services.retrieval.MemberRetrievalService} to get list
+   * of members who have overdue documents (at least 1) and set it for table in {@link threeoone.bigproject.controller.viewcontrollers.MemberListController}
+   *
+   * @return {@link RequestSender} with method registered in {@link threeoone.bigproject.controller.controllers.ActionOnMemController}
+   */
+  @Bean
+  public RequestSender<ViewController> getOverdueMember() {
+    return new RequestSender<>();
+  }
 
   @Bean
   RequestSender<SwitchScene> getTopFiveMembersRequestSender() {
@@ -308,6 +330,7 @@ public class SpringConfig {
   }
 
   // Hey bro that getDocumentByID you use so idk, i hold it back in case you need to use that
+
   /**
    * get a document of the ID sent
    * TODO: EVIL DOPPELGANGER ABOVE ME, DO SOMETHING ABOUT IT.
@@ -475,12 +498,14 @@ public class SpringConfig {
    * @return an instance of RequestSender for switching to the lending detail view.
    */
   @Bean
-  public RequestSender<ViewController> switchToLendingDetail() { return new RequestSender<>(); }
+  public RequestSender<ViewController> switchToLendingDetail() {
+    return new RequestSender<>();
+  }
 
   /**
    * Creates a bean for RequestSender that switches to the PDF Reader view.
    *
-   * @return  an instance of RequestSender for switching to the PDF Reader view.
+   * @return an instance of RequestSender for switching to the PDF Reader view.
    */
   @Bean
   public RequestSender<ViewController> switchToPDFReader() {
@@ -489,26 +514,33 @@ public class SpringConfig {
 
   /**
    * same as the one above me <3
+   *
    * @return an instance of SAME AS THE ONE ABOVE ME BUT MEMBER DETAIL.
    */
   @Bean
-  public RequestSender<ViewController> switchToMemberDetails() { return new RequestSender<>(); }
+  public RequestSender<ViewController> switchToMemberDetails() {
+    return new RequestSender<>();
+  }
 
   /**
    * Creates a bean for RequestSender that switches to the Forget Password view.
    *
-   * @return  an instance of RequestSender for switching to the Forget Password view.
+   * @return an instance of RequestSender for switching to the Forget Password view.
    */
   @Bean
-  public RequestSender<ViewController> switchToForgetPassword() { return new RequestSender<>(); }
+  public RequestSender<ViewController> switchToForgetPassword() {
+    return new RequestSender<>();
+  }
 
   /**
    * Creates a bean for RequestSender that switches to Scan QR view.
    *
-   * @return  an instance of RequestSender for switching to the Scan QR view.
+   * @return an instance of RequestSender for switching to the Scan QR view.
    */
   @Bean
-  public RequestSender<ViewController> switchToScanQR() { return new RequestSender<>(); }
+  public RequestSender<ViewController> switchToScanQR() {
+    return new RequestSender<>();
+  }
 
   /**
    * Requests to redirect the user to the password-reset page.
@@ -521,8 +553,8 @@ public class SpringConfig {
    * @return the {@link RequestSender} of the described request type
    */
   @Bean
-  public RequestSender <User> redirectToPasswordResetPageRequestSender() {
-    return new RequestSender <> ();
+  public RequestSender<User> redirectToPasswordResetPageRequestSender() {
+    return new RequestSender<>();
   }
 
 
@@ -540,22 +572,26 @@ public class SpringConfig {
    * @return the {@link RequestSender} of the described request type
    */
   @Bean
-  public RequestSender <User> resetPasswordRequestSender() {
-    return new RequestSender <> ();
+  public RequestSender<User> resetPasswordRequestSender() {
+    return new RequestSender<>();
   }
 
-    /**
-     * Returns a requestSender that request a deletion of the lending detail
-     * with the provided integer as it ID.
-     */
+  /**
+   * Returns a requestSender that request a deletion of the lending detail
+   * with the provided integer as it ID.
+   */
   @Bean
-  public RequestSender<Integer> deleteLending() { return new RequestSender<>(); }
+  public RequestSender<Integer> deleteLending() {
+    return new RequestSender<>();
+  }
 
   /**
    * Return a RequestSender.
    */
   @Bean
-  public RequestSender<String> sendResetLinkRequestSender() { return new RequestSender<>(); }
+  public RequestSender<String> sendResetLinkRequestSender() {
+    return new RequestSender<>();
+  }
 
   /*************************************************************************
    *  All request sender for QR
@@ -567,13 +603,18 @@ public class SpringConfig {
    * @return the {@link RequestSender}
    */
   @Bean
-  public RequestSender<ViewController> getQRImageFromServer() {return new RequestSender<>(); }
+  public RequestSender<ViewController> getQRImageFromServer() {
+    return new RequestSender<>();
+  }
 
   /**
    * Return ISBN which is scanned from QR Code and set it for add new document page
    *
-   * @return the {@link RequestSender}
+   * @return the {@link RequestSender
+   * }
    */
   @Bean
-  public RequestSender<String> setISBNToAddNewPage() {return new RequestSender<>(); }
+  public RequestSender<String> setISBNToAddNewPage() {
+    return new RequestSender<>();
+  }
 }
