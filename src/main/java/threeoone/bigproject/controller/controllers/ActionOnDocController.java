@@ -45,7 +45,6 @@ public class ActionOnDocController {
    *
    * @param documentDetailRequestSender      request sender for document details
    * @param getListAllDocumentRequestSender  request sender to get all documents
-   * @param updateDocActionRequestSender     request sender to update document actions
    * @param getLastestDocumentsRequestSender request sender to get the latest documents
    * @param getRandomDocumentRequestSender   request sender to get a random document
    * @param editDocumentRequestSender        request sender to edit a document
@@ -207,9 +206,9 @@ public class ActionOnDocController {
    *
    * @param switchScene the switch scene
    */
-  private void getLastestDocByIdDesc(SwitchScene switchScene) {
+  private void getLatestDocByIdDesc(SwitchScene switchScene) {
     Alerts.showErrorWithLogger(()->{
-      menuController.setLastestDocuments(
+      menuController.setLatestDocuments(
               FXCollections.observableList(documentRetrievalService.getLatestDocuments())
       );
     }, logger);
@@ -224,12 +223,13 @@ public class ActionOnDocController {
     if (!list.isEmpty()) {
       menuController.setTodayDocument(list.get(day % list.size()));
     }
-  private void getDocumentById(Integer id) {
-    Alerts.showErrorWithLogger(()->{
-      menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
-    }, logger);
-  }
 
+  }
+    private void getDocumentById(Integer id) {
+      Alerts.showErrorWithLogger(() -> {
+        menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+      }, logger);
+    }
   /**
    * Commits changes to the specified document by updating it in the persistence service.
    * If an exception occurs during the update, a warning alert is shown with the error message.
