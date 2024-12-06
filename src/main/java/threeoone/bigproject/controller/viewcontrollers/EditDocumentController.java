@@ -1,5 +1,8 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -14,12 +17,15 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
+import threeoone.bigproject.util.Alerts;
 
 /**
  * This class handles for edit document page
@@ -30,6 +36,10 @@ import threeoone.bigproject.entities.Document;
 @FxmlView("EditDocument.fxml")
 @RequiredArgsConstructor
 public class EditDocumentController implements ViewController {
+  private final Validator validator;
+  private final Logger logger = LoggerFactory.getLogger(EditDocumentController.class);
+
+
   private final RequestSender<Document> commitChangeDocRequestSender;
   private final RequestSender<ViewController> switchToDocOverview;
   @FXML
@@ -127,6 +137,14 @@ public class EditDocumentController implements ViewController {
   @FXML
   private void pressSubmit(ActionEvent event) {
     commitNewInfo();
+
+    Set <ConstraintViolation <Document>> violations = validator.validate(document);
+
+    if (!violations.isEmpty()) {
+      Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());
+      return;
+    }
+
     commitChangeDocRequestSender.send(document);
     switchToDocOverview.send(this);
   }

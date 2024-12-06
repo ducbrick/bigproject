@@ -130,7 +130,7 @@ public class AddNewDocController implements ViewController {
       return Integer.parseInt(text);
     }
     catch (NumberFormatException e) {
-      Alerts.showAlertWarning("Error parsing copies", e.getMessage());
+      Alerts.showAlertWarning("Error!", "Document's copies must be a number");
       logger.error(e.getMessage());
     }
     return null;
@@ -152,10 +152,16 @@ public class AddNewDocController implements ViewController {
       categories.setText("Unknown");
     }
 
+    Integer copies = parseCopies(numOfCopies.getText());
+
+    if (copies == null) {
+      return;
+    }
+
     Document.DocumentBuilder documentBuilder = Document.builder()
             .name(name.getText())
             .description(description.getText())
-            .copies(parseCopies(numOfCopies.getText()))
+            .copies(copies)
             .author(author.getText())
             .category(categories.getText());
 
