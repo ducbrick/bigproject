@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -128,13 +129,15 @@ public class MenuController implements ViewController {
         CopiesAvailable.setCellValueFactory(new PropertyValueFactory<>("copies"));
 
         menuBarController.highlight(SceneName.MAIN_MENU);
+        Platform.runLater(() -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
+                time.setText(LocalDateTime.now().format(formatter));
+            }));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        });
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
-            time.setText(LocalDateTime.now().format(formatter));
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
     }
 
 
@@ -190,16 +193,16 @@ public class MenuController implements ViewController {
      */
     @Override
     public void show() {
-        Platform.runLater(() ->{
-            getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
-            getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
-            getTodayDocumentRequestSender.send(LocalDate.now().getDayOfYear());
-            TodayTitle.setText(TodayDocument.getName());
-            TodayDescription.setText(TodayDocument.getDescription());
+        getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+        getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
+        getTodayDocumentRequestSender.send(LocalDate.now().getDayOfYear());
+        TodayTitle.setText(TodayDocument.getName());
+        TodayDescription.setText(TodayDocument.getDescription());
+        Greeting.setText(getGreeting());
+
+        Thread thread = new Thread(() -> Platform.runLater(() ->{
             TodayCover.setImage(new Image(TodayDocument.getCoverImageUrl()));
-            Greeting.setText(getGreeting());
-        });
+        }));
+        thread.start();
     }
-
-
 }

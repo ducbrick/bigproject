@@ -46,8 +46,8 @@ public class ViewSwitcher {
    */
   public void switchToView(ViewController controller) {
     Parent root = controller.getParent();
-    controller.show();
     scene.setRoot(root);
+    controller.show();
 
   }
 }
