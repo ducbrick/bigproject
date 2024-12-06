@@ -11,11 +11,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -34,7 +34,9 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "lending_detail")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor
+@Getter
+@Setter
 public class LendingDetail {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,5 +64,9 @@ public class LendingDetail {
 
   public LendingDetail(LocalDateTime lendTime) {
     this.lendTime = lendTime;
+  }
+
+  public boolean isOverdue() {
+    return this.dueTime.isBefore(LocalDateTime.now());
   }
 }

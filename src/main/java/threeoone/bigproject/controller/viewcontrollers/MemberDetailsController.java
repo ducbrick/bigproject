@@ -80,6 +80,9 @@ public class MemberDetailsController implements ViewController{
     @FXML
     private TableColumn<LendingDetail, String> Title;
 
+    @FXML
+    private TableColumn<LendingDetail, String> dueTime;
+
     /**
      * this list holds LendingDetail from the selected member. updates in this list
      * does NOT affect the database.
@@ -123,7 +126,17 @@ public class MemberDetailsController implements ViewController{
      */
     private void initTable() {
         BorrowingBooks.setRowFactory(tableview -> {
-            TableRow<LendingDetail> row = new TableRow<>();
+            TableRow<LendingDetail> row = new TableRow<>() {
+                @Override
+                protected void updateItem(LendingDetail item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if(item != null && item.isOverdue()) {
+                        setStyle("-fx-background-color: lightcoral;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            };
             row.setContextMenu(contextMenu);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
@@ -155,6 +168,10 @@ public class MemberDetailsController implements ViewController{
         Title.setCellValueFactory(cellData -> {
             Document doc = cellData.getValue().getDocument();
             return new SimpleStringProperty(doc.getName());
+        });
+        dueTime.setCellValueFactory(cellData -> {
+            LocalDateTime date = cellData.getValue().getDueTime();
+            return new SimpleStringProperty(date.format(DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy")));
         });
     }
 
