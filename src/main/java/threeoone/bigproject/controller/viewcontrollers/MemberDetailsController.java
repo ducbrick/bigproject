@@ -132,6 +132,8 @@ public class MemberDetailsController implements ViewController{
                     super.updateItem(item, empty);
                     if(item != null && item.isOverdue()) {
                         setStyle("-fx-background-color: lightcoral;");
+                    } else {
+                        setStyle("");
                     }
                 }
             };
