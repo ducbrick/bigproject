@@ -81,7 +81,17 @@ public class LendingDetailController implements ViewController {
   private void initialize() {
     memberID.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
-        queryMemByIdFromLendingRequestSender.send(Integer.valueOf(memberID.getText()));
+        try {
+          if (memberID.getText() == null || memberID.getText().isEmpty()) {
+            throw new NumberFormatException();
+          }
+
+          Integer id = Integer.parseInt(memberID.getText());
+          queryMemByIdFromLendingRequestSender.send(id);
+        }
+        catch (NumberFormatException e) {
+          Alerts.showAlertWarning("Error!", "The entered member ID must be a number");
+        }
       }
     });
   }
