@@ -70,7 +70,6 @@ public class MenuController implements ViewController {
 
     /**
      * Member list table. Show 5 member of smallest ID.
-     * TODO: make this actually do something pls
      */
     @FXML
     private TableView<Member> MemberList;
@@ -129,31 +128,40 @@ public class MenuController implements ViewController {
         CopiesAvailable.setCellValueFactory(new PropertyValueFactory<>("copies"));
 
         menuBarController.highlight(SceneName.MAIN_MENU);
-        Platform.runLater(() -> {
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
-                time.setText(LocalDateTime.now().format(formatter));
-            }));
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.play();
+        Thread thread = new Thread(() -> {
+            Platform.runLater(() -> {
+                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
+                    time.setText(LocalDateTime.now().format(formatter));
+                }));
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+            });
         });
-
+        thread.start();
     }
 
 
     public void setUserList(ObservableList<Member> memberList) {
-        Thread thread = new Thread(() -> MemberList.setItems(memberList));
-        thread.start();
+        MemberList.setItems(memberList);
+
     }
 
     public void setLatestDocuments(ObservableList<Document> latestDocuments) {
         LatestDocuments.setItems(latestDocuments);
     }
 
+    /**
+     * setter for the random book.
+     */
     public void setRandomBook(Document document) {
         randomDocument = document;
     }
 
+    /**
+     * set the greeting based on current time.
+     * @return a string as the greeting
+     */
     private String getGreeting() {
         LocalTime now = LocalTime.now();
 
@@ -167,8 +175,9 @@ public class MenuController implements ViewController {
             return "Good night!\nGet some sleep :)";
         }
     }
+
     /**
-     * sends user to a random document's page.
+     * sends user to a random document's detail page.
      */
     @FXML
     public void randomBook() {
@@ -180,7 +189,7 @@ public class MenuController implements ViewController {
     }
 
     /**
-     * handle
+     * switch to document detail page to see today's document's details.
      */
     @FXML
     private void todayDocumentDetail() {
@@ -195,14 +204,25 @@ public class MenuController implements ViewController {
     public void show() {
         getTopFiveMembersRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
         getLastestDocumentsRequestSender.send(new SwitchScene(SceneName.MAIN_MENU));
-        getTodayDocumentRequestSender.send(LocalDate.now().getDayOfYear());
-        TodayTitle.setText(TodayDocument.getName());
-        TodayDescription.setText(TodayDocument.getDescription());
         Greeting.setText(getGreeting());
+        setTodayDocumentDetail();
+    }
 
-        Thread thread = new Thread(() -> Platform.runLater(() ->{
-            TodayCover.setImage(new Image(TodayDocument.getCoverImageUrl()));
-        }));
-        thread.start();
+    /**
+     * show today's document's detail.
+     * if there's no document, do nothing (default text in fxml will show instead).
+     */
+    public void setTodayDocumentDetail() {
+        getTodayDocumentRequestSender.send(LocalDate.now().getDayOfYear());
+        if (TodayDocument != null) {
+            TodayTitle.setText(TodayDocument.getName());
+            TodayDescription.setText(TodayDocument.getDescription());
+
+
+            Thread thread = new Thread(() -> Platform.runLater(() ->{
+                TodayCover.setImage(new Image(TodayDocument.getCoverImageUrl()));
+            }));
+            thread.start();
+        }
     }
 }

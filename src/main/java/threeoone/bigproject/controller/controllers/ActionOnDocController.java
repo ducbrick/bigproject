@@ -241,8 +241,8 @@ public class ActionOnDocController {
     if (!list.isEmpty()) {
       menuController.setTodayDocument(list.get(day % list.size()));
     }
-
   }
+
     private void getDocumentById(Integer id) {
       Alerts.showErrorWithLogger(() -> {
         menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
