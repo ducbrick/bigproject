@@ -9,16 +9,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
-import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.entities.Document;
-import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.util.MenuItemFactory;
 
@@ -52,8 +49,6 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<Document> openDocByPdfReaderRequestSender;
   private final RequestSender<ViewController> getListOfOverdueDoc;
 
-  @FXML
-  private ContextMenu contextMenu;
 
   private final MenuBarController menuBarController;
 
@@ -84,8 +79,25 @@ public class DocOverviewController implements ViewController {
    * document table.
    */
   public void initialize() {
+    ContextMenu contextMenu = new ContextMenu();
+    contextMenu.getItems().add(edit());
+    contextMenu.getItems().add(borrow());
+    contextMenu.getItems().add(remove());
+    contextMenu.getItems().add(openPDF());
+
     table.setRowFactory(tableview -> {
-      TableRow<Document> row = new TableRow<>();
+      TableRow<Document> row = new TableRow<>() {
+        @Override
+        protected void updateItem(Document item, boolean empty) {
+          super.updateItem(item, empty);
+          if(item != null && !empty) {
+            setContextMenu(contextMenu);
+          }
+          else {
+            setContextMenu(null);
+          }
+        }
+      };
       //handle click on item
       row.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2 && (!row.isEmpty())) {
@@ -117,11 +129,6 @@ public class DocOverviewController implements ViewController {
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
-
-    contextMenu.getItems().add(edit());
-    contextMenu.getItems().add(borrow());
-    contextMenu.getItems().add(remove());
-    contextMenu.getItems().add(openPDF());
   }
 
   /**
