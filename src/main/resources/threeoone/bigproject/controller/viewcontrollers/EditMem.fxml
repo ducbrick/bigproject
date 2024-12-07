@@ -41,9 +41,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#pressReturn" prefHeight="52.0" prefWidth="83.0" text="Return" />
-                  <Button mnemonicParsing="false" onAction="#pressSubmit" prefHeight="49.0" prefWidth="71.0" styleClass="green-button" text="Submit" GridPane.columnIndex="2" />
-                  <Button fx:id="resetButton" mnemonicParsing="false" onAction="#fulFillInfo" prefHeight="42.0" prefWidth="65.0" styleClass="red-button" text="Reset" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#pressSubmit" prefHeight="49.0" prefWidth="71.0" styleClass="green-button" text="Submit" GridPane.columnIndex="1" />
+                  <Button fx:id="resetButton" mnemonicParsing="false" onAction="#fulFillInfo" prefHeight="42.0" prefWidth="65.0" styleClass="red-button" text="Reset" />
                </children>
             </GridPane>
          </bottom>

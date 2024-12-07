@@ -158,21 +158,10 @@ MemberListController implements ViewController {
     switchToAddMem.send(this);
   }
 
-  /**
-   * Handler for return button. Return Main menu
-   *
-   * @param event event trigger button
-   */
-  @FXML
-  private void pressReturn(ActionEvent event) {
-    switchToMainMenu.send(null);
-  }
-
   @FXML
   private void pressGetOverdue(ActionEvent event) {
     getOverdueMember.send(null);
   }
-
 
   /**
    * sends selected member to member detail page (to show it, obviously)

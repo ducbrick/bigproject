@@ -68,15 +68,6 @@ public class EditMemController implements ViewController {
     email.setOnAction(this::pressSubmit);
   }
 
-  /**
-   * Handles the action when the return button is pressed.
-   *
-   * @param event the event triggered when the return button is pressed
-   */
-  @FXML
-  private void pressReturn(ActionEvent event) {
-    switchToMemList.send(null);
-  }
 
   private Member constructValidatedMember() {
     Member member = new Member();

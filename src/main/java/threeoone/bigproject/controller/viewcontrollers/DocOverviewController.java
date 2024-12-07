@@ -232,15 +232,6 @@ public class DocOverviewController implements ViewController {
   }
 
   /**
-   * Handles the event when the back button is pressed.
-   * Switches the scene to the menu view.
-   */
-  @FXML
-  private void pressBack() {
-    switchToMainMenu.send(this);
-  }
-
-  /**
    * Switching to Add New Doc page when press Add Doc button
    *
    * @param event event trigger add new doc button

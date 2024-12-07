@@ -48,9 +48,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#pressReturn" styleClass="normal-button" text="Return" />
-                  <Button id="green-button" mnemonicParsing="false" onAction="#pressAdd" styleClass="normal-button" text="Add new member" GridPane.columnIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#pressGetOverdue" text="Members With Overdue Document" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#pressAdd" styleClass="green-button" text="Add new member" GridPane.columnIndex="2" />
+                  <Button id="edit" mnemonicParsing="false" onAction="#pressGetOverdue" styleClass="normal-button" text="Members With Overdue Documents" />
                </children>
             </GridPane>
          </bottom>

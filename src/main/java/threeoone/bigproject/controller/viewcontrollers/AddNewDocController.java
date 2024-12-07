@@ -74,9 +74,6 @@ public class AddNewDocController implements ViewController {
   private TextField numOfCopies;
 
   @FXML
-  private Button returnButton;
-
-  @FXML
   private SplitPane root;
 
   @FXML
@@ -117,8 +114,6 @@ public class AddNewDocController implements ViewController {
         submitButton.fire();
       }
     });
-
-    returnButton.setOnAction(event -> switchToDocOverview.send(null));
 
     menuBarController.highlight(SceneName.ADD_NEW_DOC);
 
@@ -245,6 +240,7 @@ public class AddNewDocController implements ViewController {
     categories.setText("");
     isbn.setText("");
     numOfCopies.setText("");
+    chooseButton.setText("Select File");
     document = null;
   }
 

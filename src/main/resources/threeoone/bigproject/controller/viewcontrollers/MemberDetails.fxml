@@ -105,7 +105,7 @@
                         <Insets bottom="20.0" right="10.0" />
                      </GridPane.margin>
                   </TableView>
-                  <Button id="edit" fx:id="Edit" mnemonicParsing="false" prefHeight="38.0" prefWidth="70.0" text="Edit" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                  <Button id="edit" fx:id="Edit" mnemonicParsing="false" onAction="#toEditInfo" onMouseClicked="#toEditInfo" prefHeight="38.0" prefWidth="70.0" text="Edit" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                      <GridPane.margin>
                         <Insets bottom="10.0" />
                      </GridPane.margin>

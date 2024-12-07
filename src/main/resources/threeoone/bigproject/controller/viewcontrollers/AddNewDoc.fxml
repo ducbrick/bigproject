@@ -22,7 +22,7 @@
          <top>
             <VBox alignment="CENTER" prefHeight="65.0" prefWidth="1082.0" BorderPane.alignment="CENTER">
                <children>
-                    <Label id="header" prefHeight="56.0" prefWidth="218.0" text="Add New Book" textAlignment="CENTER" />
+                    <Label id="header" prefHeight="56.0" prefWidth="234.0" text="Add New Book" textAlignment="CENTER" />
                </children>
             </VBox>
          </top>
@@ -119,7 +119,6 @@
               </rowConstraints>
                <children>
                     <Button fx:id="submitButton" mnemonicParsing="false" onAction="#pressSubmit" styleClass="green-button" text="Submit" GridPane.columnIndex="1" />
-                  <Button fx:id="returnButton" mnemonicParsing="false" styleClass="normal-button" text="Return" />
                </children>
             </GridPane>
          </bottom>

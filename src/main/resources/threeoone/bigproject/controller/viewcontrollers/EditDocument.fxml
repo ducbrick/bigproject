@@ -29,7 +29,6 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#pressReturn" text="Return" />
                   <Button mnemonicParsing="false" onAction="#pressReset" prefHeight="30.0" prefWidth="65.0" styleClass="red-button" text="Reset" GridPane.columnIndex="2" />
                   <Button fx:id="submitButton" mnemonicParsing="false" onAction="#pressSubmit" prefHeight="31.0" prefWidth="64.0" styleClass="green-button" text="Submit" GridPane.columnIndex="1" />
                </children>

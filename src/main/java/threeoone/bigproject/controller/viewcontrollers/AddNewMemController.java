@@ -80,16 +80,6 @@ public class AddNewMemController implements ViewController {
     menuBarController.highlight(SceneName.ADD_MEM);
   }
 
-  /**
-   * Handles the action when the return button is pressed.
-   *
-   * @param event the event triggered when the return button is pressed
-   */
-  @FXML
-  private void pressReturn(ActionEvent event) {
-    switchToMemList.send(null);
-  }
-
   @FXML
   private void fulfill(KeyEvent event) {
     if (event.getCode() == KeyCode.ENTER) {

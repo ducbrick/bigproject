@@ -32,9 +32,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button mnemonicParsing="false" onAction="#pressBack" prefHeight="26.0" prefWidth="128.0" styleClass="normal-button" text="Return" />
-                        <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="26.0" prefWidth="150.0" styleClass="normal-button" text="Add New Document" GridPane.columnIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#pressGetOverdue" text="Get Overdue Document" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="26.0" prefWidth="150.0" styleClass="normal-button" text="Add New Document" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#pressGetOverdue" text="Get Overdue Document" GridPane.columnIndex="2" />
                     </children>
                 </GridPane>
             </bottom>
