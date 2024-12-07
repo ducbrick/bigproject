@@ -16,7 +16,7 @@ CREATE TABLE document (
 	name VARCHAR(255) NOT NULL CHECK(LENGTH(TRIM(name)) > 0),
 	author VARCHAR(255),
 	description BPCHAR,
-	isbn VARCHAR(13),
+	isbn VARCHAR(13) UNIQUE,
 	upload_time TIMESTAMP,
 	category VARCHAR(255),
 	copies INTEGER NOT NULL,

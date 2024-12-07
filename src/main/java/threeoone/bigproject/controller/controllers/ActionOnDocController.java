@@ -11,6 +11,8 @@ import threeoone.bigproject.controller.requestbodies.SwitchScene;
 import threeoone.bigproject.controller.viewcontrollers.*;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+import threeoone.bigproject.exceptions.DocumentAlreadyExistException;
+import threeoone.bigproject.exceptions.NotLoggedInException;
 import threeoone.bigproject.services.persistence.DocumentPersistenceService;
 import threeoone.bigproject.services.retrieval.DocumentRetrievalService;
 import threeoone.bigproject.util.Alerts;
@@ -185,10 +187,26 @@ public class ActionOnDocController {
    * @param document the document to be added
    */
   private void addDocument(Document document) {
-    Alerts.showErrorWithLogger(()->{
-      addNewDocController.setDocument(documentPersistenceService.add(document));
+    if (document == null) {
+      logger.warn("Tried to add a NULL Document");
+      return;
+    }
+
+    try {
+      document = documentPersistenceService.add(document);
+      addNewDocController.setDocument(document);
       switchToDocOverview.send(null);
-    }, logger);
+    }
+    catch (DocumentAlreadyExistException e) {
+      Alerts.showAlertWarning("Error!", e.getMessage());
+    }
+    catch (NotLoggedInException e) {
+      /*Should not happen*/
+      logger.warn(e.getMessage());
+    }
+    catch (RuntimeException e) {
+      logger.warn(e.getMessage());
+    }
   }
 
   /**
