@@ -69,6 +69,7 @@ public class Document {
   @NotBlank(message = "Document author's name must not be empty")
   private String author;
 
+  @Column(unique = true)
   @Pattern(regexp = "^(97[89][0-9]{10}|[0-9]{9}[0-9Xx])$", message = "Invalid ISBN")
   private String isbn;
 

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
+import threeoone.bigproject.exceptions.DocumentAlreadyExistException;
 import threeoone.bigproject.exceptions.IllegalDocumentInfoException;
 import threeoone.bigproject.exceptions.NotLoggedInException;
 import threeoone.bigproject.repositories.DocumentRepo;
@@ -55,11 +56,15 @@ public class DocumentPersistenceService {
    * @return the saved {@link Document} Entity instance, which may be different from the given instance
    */
   @Transactional
-  public Document add(@NotNull Document document) {
+  public Document add(@NotNull Document document) throws DocumentAlreadyExistException {
     Integer uploaderId = loginService.getLoggedInUserId();
 
     if (uploaderId == null) {
       throw new NotLoggedInException("Attempting to upload a Document while not logged in");
+    }
+
+    if (documentRepo.existsByIsbn(document.getIsbn())) {
+      throw new DocumentAlreadyExistException("Another document with that ISBN already exists");
     }
 
     User uploader = userRepo.findUserAndUploadedDocuments(uploaderId);
