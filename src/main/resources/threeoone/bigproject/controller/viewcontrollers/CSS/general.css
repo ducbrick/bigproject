@@ -125,3 +125,10 @@
 .root {
     -fx-font-family: Consolas;
 }
+
+#edit {
+    -fx-background-color: #e66a3a;
+    -fx-border-color: #2C5A77;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+}

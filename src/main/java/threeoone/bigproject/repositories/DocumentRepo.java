@@ -50,6 +50,12 @@ public interface DocumentRepo extends ListCrudRepository <Document, Integer> {
   Document findRandom();
 
   /**
+   * count the number of documents
+   */
+  @Query("SELECT count(*) FROM Document d")
+  Integer countAll();
+
+  /**
    * Retrieves a List of Documents whose name contains the given substring.
    *
    * @apiNote the list returned will not be {@code NULL}.

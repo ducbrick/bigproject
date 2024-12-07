@@ -48,7 +48,7 @@
             </GridPane>
          </bottom>
          <center>
-            <GridPane BorderPane.alignment="CENTER">
+            <GridPane styleClass="pane" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="491.0" minWidth="10.0" prefWidth="159.6000244140625" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="951.9999755859374" minWidth="10.0" prefWidth="951.9999755859374" />

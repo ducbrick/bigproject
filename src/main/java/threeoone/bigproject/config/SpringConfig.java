@@ -338,7 +338,7 @@ public class SpringConfig {
    * @return
    */
   @Bean
-  public RequestSender<Integer> getDocumentByIdRequestSender() {
+  public RequestSender<Integer> getTodayDocumentRequestSender() {
     return new RequestSender<>();
   }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,13 +11,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MenuController">
    <children>
 
       <BorderPane prefHeight="200.0" prefWidth="200.0" styleClass="background" stylesheets="@CSS/general.css">
@@ -37,9 +38,9 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="823.2000549316405" minWidth="10.0" prefWidth="588.0000244140625" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="695.199951171875" minHeight="10.0" prefHeight="222.80001831054688" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="253.39999999999998" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="244.59999999999997" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="695.199951171875" minHeight="10.0" prefHeight="217.59999389648436" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="216.00000610351566" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="287.19999999999993" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                   <VBox prefHeight="200.0" prefWidth="442.0">
@@ -62,7 +63,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox prefHeight="206.0" prefWidth="463.0" styleClass="pane" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+                  <VBox prefHeight="242.0" prefWidth="470.0" styleClass="pane" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
                      <children>
                         <Label prefHeight="36.0" prefWidth="456.0" text="Latest uploads">
                            <font>
@@ -72,13 +73,13 @@
                               <Insets left="5.0" />
                            </padding>
                         </Label>
-                        <TableView fx:id="LastestDocuments" prefHeight="178.0" prefWidth="457.0" styleClass="table" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="LatestDocuments" prefHeight="158.0" prefWidth="459.0" styleClass="table" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="BookID" prefWidth="31.99999612569809" text="ID" />
                             <TableColumn fx:id="Title" prefWidth="152.800048828125" text="Title" />
                               <TableColumn fx:id="Author" prefWidth="103.99993896484375" text="Author" />
-                              <TableColumn fx:id="CopiesAvailable" prefWidth="81.60009765625" text="Copies" />
-                              <TableColumn fx:id="Description" prefWidth="129.5999267578125" text="Description" />
+                              <TableColumn fx:id="CopiesAvailable" prefWidth="52.00006103515625" text="Copies" />
+                              <TableColumn fx:id="Description" prefWidth="128.79998779296875" text="Description" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -91,7 +92,7 @@
                   </VBox>
                   <VBox prefHeight="204.0" prefWidth="446.0" styleClass="pane" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label prefHeight="38.0" prefWidth="478.0" text="New users">
+                        <Label prefHeight="37.0" prefWidth="478.0" text="New users">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -99,7 +100,7 @@
                               <Insets left="5.0" />
                            </padding>
                         </Label>
-                        <TableView fx:id="MemberList" prefHeight="177.0" prefWidth="440.0" styleClass="table" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="MemberList" prefHeight="95.0" prefWidth="517.0" styleClass="table" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="MemberID" prefWidth="43.99999779462814" text="ID" />
                             <TableColumn fx:id="MemberName" prefWidth="163.20003128051758" text="Member Name" />
@@ -117,52 +118,34 @@
                   </VBox>
                   <VBox prefHeight="162.0" prefWidth="262.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES">
                      <children>
-                        <Button fx:id="Random" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="100.0" prefWidth="259.0" styleClass="normal-button" text="Random" VBox.vgrow="ALWAYS" />
+                        <Button fx:id="Random" mnemonicParsing="false" onMouseClicked="#randomBook" prefHeight="154.0" prefWidth="259.0" styleClass="normal-button" text="Random" VBox.vgrow="ALWAYS" />
                      </children>
                      <GridPane.margin>
                         <Insets left="30.0" top="20.0" />
                      </GridPane.margin>
                   </VBox>
-                  <TilePane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                  <HBox id="today-document" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#todayDocumentDetail" prefHeight="258.0" prefWidth="514.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <ImageView fx:id="TodayCover" fitHeight="256.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin></ImageView>
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="238.0" prefWidth="319.0">
                            <children>
-                              <ImageView fitHeight="198.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label text="Label" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fitHeight="198.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label text="Label" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fitHeight="198.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label text="Label" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fitHeight="198.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label text="Label" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fitHeight="198.0" fitWidth="221.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label text="Label" />
+                              <Label prefHeight="73.0" prefWidth="334.0" style="-fx-alignment: center;" text="Today's Document" />
+                              <Label fx:id="TodayDescription" prefHeight="126.0" prefWidth="309.0" style="-fx-alignment: center; -fx-wrap-text: true;" text="Brief description" />
+                              <Label id="today-document-title" fx:id="TodayTitle" prefHeight="101.0" prefWidth="334.0" text="Title" />
                            </children>
                         </VBox>
                      </children>
-                     <GridPane.margin>
-                        <Insets top="10.0" />
-                     </GridPane.margin>
-                  </TilePane>
+                  </HBox>
                </children>
             </GridPane>
          </center>
       </BorderPane>
    </children>
+   <stylesheets>
+      <URL value="@CSS/general.css" />
+      <URL value="@CSS/menu.css" />
+   </stylesheets>
 </StackPane>

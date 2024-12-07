@@ -24,7 +24,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#pressReturn" prefHeight="46.0" prefWidth="94.0" styleClass="normal-button" text="Document Detail">
                      <VBox.margin>
-                        <Insets right="1000.0" />
+                        <Insets right="990.0" />
                      </VBox.margin></Button>
                </children>
             </VBox>

@@ -32,7 +32,7 @@
                     </rowConstraints>
                     <children>
                         <Button mnemonicParsing="false" onAction="#pressReturn" text="Return" />
-                        <Button mnemonicParsing="false" onAction="#pressSubmit" styleClass="normal-button" text="Submit" GridPane.columnIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#pressSubmit" styleClass="green-button" text="Submit" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
             </bottom>

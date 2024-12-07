@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.repositories.DocumentRepo;
@@ -55,6 +57,7 @@ public class DocumentRetrievalService {
   public Document getDocumentWithLendingDetails(int id) {
       return documentRepo.findWithLendingDetails(id);
   }
+
   /**
    * gets a random document which has copies > 0 (borrow-able)
    * if no document exists in database:
@@ -64,6 +67,11 @@ public class DocumentRetrievalService {
   public Document getRandomDocument(){
     return documentRepo.findRandom();
   }
+
+  /**
+   * get the number of documents in the repo
+   */
+  public Integer getNumberOfDocuments() { return documentRepo.countAll(); }
 
   /**
    * gets the last 5 document (sort by ID)

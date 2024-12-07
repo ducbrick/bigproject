@@ -33,7 +33,7 @@
                      <font>
                         <Font size="22.0" />
                      </font></Label>
-                  <Label prefHeight="166.0" prefWidth="334.0" text="Create your account and start managing, NOW!" wrapText="true" />
+                  <Label alignment="TOP_LEFT" prefHeight="166.0" prefWidth="334.0" text="Create your account and start managing, NOW!" wrapText="true" />
                </children>
             </VBox>
             <VBox layoutX="538.0" layoutY="203.0" prefHeight="314.0" prefWidth="454.0" styleClass="login-pane" stylesheets="@CSS/login.css">

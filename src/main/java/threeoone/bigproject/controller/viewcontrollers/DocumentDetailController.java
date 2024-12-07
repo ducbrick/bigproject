@@ -7,10 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -67,7 +64,7 @@ public class DocumentDetailController implements ViewController {
     private Label category;
 
     @FXML
-    private Label bookDescription;
+    private TextArea bookDescription;
 
     @FXML
     private Label uploader;
@@ -151,30 +148,36 @@ public class DocumentDetailController implements ViewController {
      */
     @Override
     public void show() {
-        Platform.runLater(() -> {
-            if (document.getPdfUrl() == null) {
-                ReadPDF.setDisable(true);
-                ReadPDF.setId("noPDF");
-            }
-            else {
-                ReadPDF.setDisable(false);
-                ReadPDF.setId(null);
-            }
-            bookName.setText(document.getName());
-            author.setText("By " + document.getAuthor());
-            bookDescription.setText(document.getDescription());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
-            uploadedDate.setText(document.getUploadTime().format(formatter));
-            category.setText(document.getCategory());
-            uploader.setText(document.getUploader().getUsername());
-            ISBN.setText(document.getIsbn());
-            copies.setText(document.getCopies().toString());
-            available.setText(Integer.toString(document.getCopies() - document.getLendingDetails().size()));
-            cover.setImage(new Image(document.getCoverImageUrl()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy | HH:mm:ss");
+        String name = document.getName();
+        bookName.setText(name);
+        author.setText("By" + document.getAuthor());
+        bookDescription.setText(document.getDescription());
+        uploadedDate.setText(document.getUploadTime().format(formatter));
+        category.setText(document.getCategory());
+        uploader.setText(document.getUploader().getUsername());
+        ISBN.setText(document.getIsbn());
+        copies.setText(Integer.toString(document.getCopies()));
+        available.setText(Integer.toString(document.getCopies() - document.getLendingDetails().size()));
+        if (document.getPdfUrl() == null) {
+            ReadPDF.setDisable(true);
+            ReadPDF.setId("noPDF");
+            ReadPDF.setText("PDF unavailable");
+        }
+        else {
+            ReadPDF.setDisable(false);
+            ReadPDF.setId(null);
+            ReadPDF.setText("Read PDF");
+        }
+        Thread thread = new Thread(() -> {
+            Image temp = new Image(document.getCoverImageUrl());
+            ObservableList<LendingDetail> lendingDetail =
+                    FXCollections.observableList(document.getLendingDetails());
+            Platform.runLater(() -> {
+                cover.setImage(temp);
+                lendings.setItems(lendingDetail);
+            });
         });
-
-        ObservableList<LendingDetail> lendingDetail =
-                FXCollections.observableList(document.getLendingDetails());
-        lendings.setItems(lendingDetail);
+        thread.start();
     }
 }

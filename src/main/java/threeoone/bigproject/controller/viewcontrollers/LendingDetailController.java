@@ -1,5 +1,6 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -126,7 +127,13 @@ public class LendingDetailController implements ViewController {
     docDescription.setText(document.getDescription());
     docAuthor.setText(document.getAuthor());
     docCategory.setText(document.getCategory());
-    docPhoto.setImage(new Image(document.getCoverImageUrl()));
+    Thread thread = new Thread(() -> {
+      Image temp = new Image(document.getCoverImageUrl());
+      Platform.runLater(() -> {
+        docPhoto.setImage(temp);
+      });
+    });
+    thread.start();
   }
 
   /**

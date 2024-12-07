@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.geometry.Insets?>
 <SplitPane fx:id="root" dividerPositions="0.0709515859766277" prefHeight="720.0" prefWidth="1200.0" scaleShape="false" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
     <items>
         <VBox maxWidth="80.0" minWidth="80.0" prefHeight="200.0" prefWidth="80.0">
@@ -39,7 +40,7 @@
                 </GridPane>
             </bottom>
             <top>
-                <VBox fx:id="searchHolder" alignment="CENTER" prefHeight="70.0" prefWidth="1112.0" BorderPane.alignment="CENTER">
+                <VBox fx:id="searchHolder" alignment="CENTER" prefHeight="70.0" prefWidth="1112.0">
                     <children>
                         <Label id="header" prefHeight="46.0" prefWidth="291.0" styleClass="label" text="Document Overview">
                             <font>
@@ -48,6 +49,9 @@
                         </Label>
                         <fx:include source="DocSearchBar.fxml" />
                     </children>
+               <BorderPane.margin>
+                  <Insets bottom="5.0" />
+               </BorderPane.margin>
                 </VBox>
             </top>
          <center>

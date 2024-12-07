@@ -47,7 +47,6 @@ public class ActionOnDocController {
    *
    * @param documentDetailRequestSender      request sender for document details
    * @param getListAllDocumentRequestSender  request sender to get all documents
-   * @param getDocumentByIdRequestSender     request sender to get document by ID
    * @param getLastestDocumentsRequestSender request sender to get the latest documents
    * @param getRandomDocumentRequestSender   request sender to get a random document
    * @param editDocumentRequestSender        request sender to edit a document
@@ -61,7 +60,7 @@ public class ActionOnDocController {
   private void registerRequestReceiver(
           RequestSender<Document> documentDetailRequestSender,
           RequestSender<User> getListAllDocumentRequestSender,
-          RequestSender<Integer> getDocumentByIdRequestSender,
+          RequestSender<Integer> getTodayDocumentRequestSender,
           RequestSender<SwitchScene> getLastestDocumentsRequestSender,
           RequestSender<Document> getRandomDocumentRequestSender,
           RequestSender<Document> editDocumentRequestSender,
@@ -77,9 +76,9 @@ public class ActionOnDocController {
     removeDocumentRequestSender.registerReceiver(this::removeDocument);
     borrowDocumentRequestSender.registerReceiver(this::borrowDocument);
     addDocumentRequestSender.registerReceiver(this::addDocument);
-    getLastestDocumentsRequestSender.registerReceiver(this::getLastestDocByIdDesc);
+    getLastestDocumentsRequestSender.registerReceiver(this::getLatestDocByIdDesc);
     getRandomDocumentRequestSender.registerReceiver(this::randomDocument);
-    getDocumentByIdRequestSender.registerReceiver(this::getDocumentById);
+    getTodayDocumentRequestSender.registerReceiver(this::getDailyDocument);
     commitChangeDocRequestSender.registerReceiver(this::commitChangeDoc);
     lendingDetailRequestSender.registerReceiver(this::lendingDetail);
     openDocByPdfReaderRequestSender.registerReceiver(this::openDocByPDFReader);
@@ -225,25 +224,30 @@ public class ActionOnDocController {
    *
    * @param switchScene the switch scene
    */
-  private void getLastestDocByIdDesc(SwitchScene switchScene) {
+  private void getLatestDocByIdDesc(SwitchScene switchScene) {
     Alerts.showErrorWithLogger(()->{
-      menuController.setLastestDocuments(
+      menuController.setLatestDocuments(
               FXCollections.observableList(documentRetrievalService.getLatestDocuments())
       );
     }, logger);
   }
 
   /**
-   * Retrieves a document by its ID and sets it in the menu controller.
-   *
-   * @param id the ID of the document to be retrieved
+   * used in menu to get a document based on today's date
    */
-  private void getDocumentById(Integer id) {
-    Alerts.showErrorWithLogger(()->{
-      menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
-    }, logger);
-  }
+  private void getDailyDocument(Integer day) {
 
+    List<Document> list = documentRetrievalService.getAllDocuments();
+    if (!list.isEmpty()) {
+      menuController.setTodayDocument(list.get(day % list.size()));
+    }
+
+  }
+    private void getDocumentById(Integer id) {
+      Alerts.showErrorWithLogger(() -> {
+        menuController.setRandomBook(documentRetrievalService.getDocumentById(id));
+      }, logger);
+    }
   /**
    * Commits changes to the specified document by updating it in the persistence service.
    * If an exception occurs during the update, a warning alert is shown with the error message.

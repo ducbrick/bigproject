@@ -28,10 +28,11 @@
     -fx-padding: 5px;
 }
 
-#edit {
-    -fx-background-color: #e66a3a;
-}
+
 
 #noPDF {
     -fx-opacity: 0.2;
+}
+#description {
+    -fx-control-inner-background: #7AB2D3;
 }
