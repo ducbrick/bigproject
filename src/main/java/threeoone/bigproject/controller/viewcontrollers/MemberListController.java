@@ -42,9 +42,6 @@ MemberListController implements ViewController {
   private TableColumn<Member, String> address;
 
   @FXML
-  private ContextMenu contextMenu;
-
-  @FXML
   private TableColumn<Member, String> email;
 
   @FXML
@@ -70,10 +67,23 @@ MemberListController implements ViewController {
 
   @FXML
   private void initialize() {
+    ContextMenu contextMenu = new ContextMenu();
     contextMenu.getItems().add(remove());
     contextMenu.getItems().add(edit());
+
     table.setRowFactory(tableview -> {
-      TableRow<Member> row = new TableRow<>();
+      TableRow<Member> row = new TableRow<>() {
+        @Override
+        protected void updateItem(Member item, boolean empty) {
+          super.updateItem(item, empty);
+          if(item != null && !empty) {
+            setContextMenu(contextMenu);
+          }
+          else {
+            setContextMenu(null);
+          }
+        }
+      };
       //handle click on item
       row.setOnMouseClicked(event -> {
         if (event.getClickCount() == 2 && (!row.isEmpty())) {
@@ -181,6 +191,7 @@ MemberListController implements ViewController {
    * @param memberObservableList An observable list of members to be displayed in the table
    */
   public void setTable(ObservableList<Member> memberObservableList) {
+    table.getItems().clear();
     table.setItems(memberObservableList);
   }
 
