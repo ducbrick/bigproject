@@ -128,6 +128,7 @@ public class DocOverviewController implements ViewController {
             -> new SimpleIntegerProperty(table.getItems().indexOf(cellData.getValue()) + 1));
     uploader.setCellValueFactory(cellData
             -> new SimpleStringProperty(cellData.getValue().getUploader().getUsername()));
+
     menuBarController.highlight(SceneName.DOC_OVERVIEW);
   }
 

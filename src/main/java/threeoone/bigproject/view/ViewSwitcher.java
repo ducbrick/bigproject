@@ -48,6 +48,5 @@ public class ViewSwitcher {
     Parent root = controller.getParent();
     scene.setRoot(root);
     controller.show();
-
   }
 }

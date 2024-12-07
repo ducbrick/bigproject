@@ -94,16 +94,41 @@ public class DocumentDetailController implements ViewController {
     private TableView<LendingDetail> lendings;
 
     @FXML
+    private TableColumn<LendingDetail, String> MemberID;
+
+    @FXML
     private TableColumn<LendingDetail, String> MemberName;
 
     @FXML
     private TableColumn<LendingDetail, String> BorrowDate;
+
+    @FXML
+    private TableColumn<LendingDetail, String> ReturnDate;
 
     public Parent getParent() {
         return root;
     }
 
     public void initialize() {
+        lendings.setRowFactory(tableview -> {
+            TableRow<LendingDetail> row = new TableRow<>() {
+                @Override
+                protected void updateItem(LendingDetail item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item != null && item.isOverdue()) {
+                        setStyle("-fx-background-color: lightcoral;");
+                    } else {
+                        setStyle(null);
+                    }
+                }
+            };
+            return row;
+        });
+        MemberID.setCellValueFactory(data -> {
+            Member member = data.getValue().getMember();
+            return new SimpleStringProperty(member.getId().toString());
+        });
+
         MemberName.setCellValueFactory(cellData -> {
             Member member = cellData.getValue().getMember();
             return new SimpleStringProperty(member.getName());
@@ -114,6 +139,13 @@ public class DocumentDetailController implements ViewController {
             LocalDateTime date = cellData.getValue().getLendTime();
             return new SimpleStringProperty(date.format(formatter));
         });
+
+        ReturnDate.setCellValueFactory(cellData -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDateTime date = cellData.getValue().getDueTime();
+            return new SimpleStringProperty(date.format(formatter));
+        });
+
     }
 
     /**
