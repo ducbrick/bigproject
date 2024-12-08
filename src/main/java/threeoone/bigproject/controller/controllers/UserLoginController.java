@@ -28,6 +28,7 @@ public class UserLoginController {
   private final LoginController loginController;
   private final LoginService loginService;
   private final  RequestSender<ViewController> switchToMainMenu;
+  private final RequestSender<ViewController> switchToLogin;
 
   @Getter
   private int failedAttempts = 0;
@@ -45,6 +46,16 @@ public class UserLoginController {
   @Autowired
   private void registerLoginRequestReceiver(RequestSender<User> loginRequestSender) {
     loginRequestSender.registerReceiver(this::authenticateLogin);
+  }
+
+  @Autowired
+  private void registerLogoutRequestReceiver(RequestSender<User> logoutRequestSender) {
+    logoutRequestSender.registerReceiver(this::logout);
+  }
+
+  private void logout(User user) {
+    loginService.logout();
+    switchToLogin.send(null);
   }
 
   /**

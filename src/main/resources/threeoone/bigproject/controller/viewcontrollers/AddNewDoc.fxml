@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -64,10 +65,25 @@
                               <Insets left="10.0" right="50.0" />
                            </GridPane.margin></TextField>
                           <Label styleClass="label fade-in" text="ISBN" GridPane.rowIndex="3" />
-                          <TextField fx:id="isbn" onKeyPressed="#fulfillISBN" prefHeight="29.0" prefWidth="563.0" promptText="Optional (Can be fulfilled to get info about doc through Google API) (Only number)" styleClass="text-field fade-in" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                                <TextField fx:id="isbn" onKeyPressed="#fulfillISBN" prefHeight="29.0" prefWidth="594.0" promptText="Optional (Can be fulfilled to get info about doc through Google API)" styleClass="text-field fade-in">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button mnemonicParsing="false" onAction="#pressQR" prefHeight="29.0" prefWidth="67.0" text="QR Scan" />
+                           </children>
+                        </HBox>
+                        <TextArea fx:id="description" prefHeight="11.0" prefWidth="657.0" styleClass="text-area" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <GridPane.margin>
+                              <Insets bottom="20.0" left="10.0" right="50.0" top="20.0" />
+                           </GridPane.margin>
+                        </TextArea>
+                        <TextField fx:id="numOfCopies" promptText="Required (Only number)" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="10.0" right="50.0" />
                            </GridPane.margin></TextField>

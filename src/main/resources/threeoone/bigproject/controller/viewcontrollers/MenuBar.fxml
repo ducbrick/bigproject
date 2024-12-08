@@ -35,5 +35,6 @@
          <graphic>
             <FontIcon iconLiteral="unil-users-alt" wrappingWidth="5.599974989891052" />
          </graphic></Button>
+      <Button mnemonicParsing="false" onAction="#pressLogout" prefHeight="52.0" prefWidth="90.0" styleClass="normal-button" text="Log out" />
    </children>
 </VBox>
