@@ -70,6 +70,9 @@ public class DocOverviewController implements ViewController {
   @FXML
   private TableView<Document> table;
 
+  @FXML
+  private Button overdueButton;
+
   @Setter
   private Document chosenDoc;
 
@@ -228,6 +231,12 @@ public class DocOverviewController implements ViewController {
 
   @FXML
   private void pressGetOverdue() {
+    String currentStyle = overdueButton.getId();
+    if (currentStyle.equals("red-button")) {
+      overdueButton.setId("redder-button");
+    } else {
+      overdueButton.setId("red-button");
+    }
     getListOfOverdueDoc.send(null);
   }
 

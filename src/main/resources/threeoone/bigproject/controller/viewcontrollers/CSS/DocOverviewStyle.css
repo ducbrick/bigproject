@@ -49,3 +49,24 @@
 .menu-item {
     -fx-font-size: 5px; /* Smaller font size for context menu items */
 }
+
+
+#red-button {
+    -fx-background-color: CRIMSON;
+    -fx-opacity: 1;
+}
+
+#red-button:hover {
+    -fx-background-color: #850101;
+    -fx-opacity: 0.9;
+}
+
+#redder-button {
+    -fx-background-color: #850101;
+    -fx-opacity: 0.9;
+}
+
+#redder-button:hover {
+    -fx-background-color: CRIMSON;
+    -fx-opacity: 1;
+}
