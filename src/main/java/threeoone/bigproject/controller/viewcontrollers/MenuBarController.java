@@ -1,6 +1,7 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -9,6 +10,7 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
+import threeoone.bigproject.entities.User;
 
 /**
  * simple ahh menu bar.
@@ -35,6 +37,8 @@ public class MenuBarController {
   private final RequestSender<ViewController> switchToMemList;
   private final RequestSender<ViewController> switchToAddMem;
   private final RequestSender<ViewController> switchToLendingDetail;
+
+  private final RequestSender<User> logoutRequestSender;
 
   @FXML
   private VBox box;
@@ -84,6 +88,10 @@ public class MenuBarController {
   @FXML
   private void toLend() { switchToLendingDetail.send(null); }
 
+  @FXML
+  private void pressLogout(ActionEvent event) {
+    logoutRequestSender.send(null);
+  }
   /**
    * highlight one button according to the {@code SceneName}.<br>
    * For this method to actually works,

@@ -70,7 +70,7 @@ public class LoginController implements ViewController {
    * @param event event trigger HyperLink Forget Password
    */
   @FXML
-  void pressForgetPassword(ActionEvent event) {
+  private void pressForgetPassword(ActionEvent event) {
     switchToForgetPassword.send(null);
   }
 
