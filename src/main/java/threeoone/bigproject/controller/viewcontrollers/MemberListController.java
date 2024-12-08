@@ -1,5 +1,6 @@
 package threeoone.bigproject.controller.viewcontrollers;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,13 +8,17 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 import threeoone.bigproject.controller.RequestSender;
 import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.entities.Member;
 import threeoone.bigproject.util.MenuItemFactory;
+
+import java.util.List;
 
 /**
  * Class for handle Member List page
@@ -59,7 +64,16 @@ MemberListController implements ViewController {
   @FXML
   private TableView<Member> table;
 
+  @FXML
+  private Button overdueButton;
+
   private Member chosenMember;
+
+  @Setter @Getter
+  private ObservableList<Member> allMembers;
+
+  @Setter
+  private ObservableList<Member> overdueMembers;
 
   /**
    * Initialized method for FXML page
@@ -128,7 +142,10 @@ MemberListController implements ViewController {
             "Are you sure you want to remove this member?",
             unused -> {
               removeMemberRequestSender.send(chosenMember);
-              getAllMembersRequestSender.send(null);
+              table.getItems().remove(chosenMember);
+              //getAllMembersRequestSender.send(null);
+              //getOverdueMember.send(null);
+              //setTable(allMembers);
             });
   }
 
@@ -160,7 +177,14 @@ MemberListController implements ViewController {
 
   @FXML
   private void pressGetOverdue(ActionEvent event) {
-    getOverdueMember.send(null);
+    if (table.getItems() == allMembers) {
+      setTable(overdueMembers);
+      overdueButton.setText("All Members");
+    }
+    else {
+      setTable(allMembers);
+      overdueButton.setText("Members With Overdue Document");
+    }
   }
 
   /**
@@ -180,7 +204,7 @@ MemberListController implements ViewController {
    * @param memberObservableList An observable list of members to be displayed in the table
    */
   public void setTable(ObservableList<Member> memberObservableList) {
-    table.getItems().clear();
+    //table.getItems().clear();
     table.setItems(memberObservableList);
   }
 
@@ -199,6 +223,8 @@ MemberListController implements ViewController {
    */
   @Override
   public void show() {
+    getOverdueMember.send(null);
     getAllMembersRequestSender.send(null);
+    setTable(allMembers);
   }
 }

@@ -16,7 +16,7 @@
 
 <SplitPane fx:id="root" dividerPositions="0.13793103448275862" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.EditDocumentController">
   <items>
-      <fx:include source="MenuBar.fxml" />
+      <fx:include minWidth="89.0" source="MenuBar.fxml" />
       <BorderPane prefHeight="680.0" prefWidth="1056.0">
          <bottom>
             <GridPane prefHeight="117.0" prefWidth="978.0" BorderPane.alignment="CENTER">

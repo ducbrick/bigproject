@@ -93,8 +93,7 @@ public class ActionOnDocController {
    */
   private void getListOfOverdueDoc(ViewController viewController) {
     Alerts.showErrorWithLogger(() -> {
-      List<Document> result = documentRetrievalService.getOverdueDocuments();
-      docOverviewController.setTable(FXCollections.observableList(result));
+      docOverviewController.setOverdueDocuments(FXCollections.observableList(documentRetrievalService.getOverdueDocuments()));
     }, logger);
   }
 
@@ -135,10 +134,7 @@ public class ActionOnDocController {
    */
   private void getListAllDocument(User user) {
     Alerts.showErrorWithLogger(()->{
-      List<Document> documentList = documentRetrievalService.getAllDocuments();
-      docOverviewController.setTable(FXCollections.observableArrayList(
-              documentList
-      ));
+      docOverviewController.setAllDocuments(FXCollections.observableList(documentRetrievalService.getAllDocuments()));
     }, logger);
   }
 

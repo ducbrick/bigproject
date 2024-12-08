@@ -29,7 +29,7 @@
             </VBox>
          </right>
          <left>
-            <fx:include source="MenuBar.fxml" />
+            <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" />
          </left>
          <center>
             <GridPane BorderPane.alignment="CENTER">

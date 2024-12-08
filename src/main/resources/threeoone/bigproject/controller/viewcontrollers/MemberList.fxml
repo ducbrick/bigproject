@@ -13,7 +13,7 @@
 
 <SplitPane fx:id="root" dividerPositions="0.070260347129506" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberListController">
   <items>
-      <fx:include source="MenuBar.fxml" />
+      <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <VBox alignment="CENTER" prefHeight="127.0" prefWidth="968.0" BorderPane.alignment="CENTER">
@@ -49,7 +49,7 @@
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" onAction="#pressAdd" styleClass="green-button" text="Add new member" GridPane.columnIndex="2" />
-                  <Button id="edit" mnemonicParsing="false" onAction="#pressGetOverdue" styleClass="normal-button" text="Members With Overdue Documents" />
+                  <Button id="edit" fx:id="overdueButton" mnemonicParsing="false" onAction="#pressGetOverdue" styleClass="normal-button" text="Members With Overdue Documents" />
                </children>
             </GridPane>
          </bottom>

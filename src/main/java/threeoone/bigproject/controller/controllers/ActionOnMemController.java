@@ -72,8 +72,7 @@ public class ActionOnMemController {
    */
   private void getOverdueMember(ViewController viewController) {
     Alerts.showErrorWithLogger(()-> {
-      List<Member> result = memberRetrievalService.getOverdueMembers();
-      memberListController.setTable(FXCollections.observableList(result));
+      memberListController.setOverdueMembers(FXCollections.observableList(memberRetrievalService.getOverdueMembers()));
     }, logger);
   }
 
@@ -84,9 +83,8 @@ public class ActionOnMemController {
    */
   private void getListAllMembers(Member member) {
     Alerts.showErrorWithLogger(()->{
-      List<Member> memberList = memberRetrievalService.getAll();
-      memberList.sort(Comparator.comparing(Member::getId));
-      memberListController.setTable(FXCollections.observableArrayList(memberList));
+      memberListController.setAllMembers(FXCollections.observableList(memberRetrievalService.getAll()));
+      memberListController.getAllMembers().sort(Comparator.comparing(Member::getId));
     }, logger);
   }
 

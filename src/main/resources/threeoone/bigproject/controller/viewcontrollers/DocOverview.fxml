@@ -15,9 +15,9 @@
 
 <SplitPane fx:id="root" dividerPositions="0.0709515859766277" prefHeight="720.0" prefWidth="1200.0" scaleShape="false" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.DocOverviewController">
     <items>
-        <VBox maxWidth="80.0" minWidth="80.0" prefHeight="200.0" prefWidth="80.0">
+        <VBox maxWidth="89.0" minWidth="89.0" prefHeight="200.0" prefWidth="89.0">
             <children>
-                <fx:include source="MenuBar.fxml" />
+                <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" />
             </children>
         </VBox>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -33,7 +33,7 @@
                     </rowConstraints>
                     <children>
                         <Button mnemonicParsing="false" onAction="#pressAddDoc" prefHeight="20.0" prefWidth="142.0" styleClass="green-button" text="Add New Document" GridPane.columnIndex="1" />
-                  <Button id="red-button" fx:id="overdueButton" mnemonicParsing="false" onAction="#pressGetOverdue" stylesheets="@CSS/DocOverviewStyle.css" text="Get Overdue Document" GridPane.columnIndex="2" />
+                  <Button id="overdue-red-button" fx:id="overdueButton" mnemonicParsing="false" onAction="#pressGetOverdue" stylesheets="@CSS/DocOverviewStyle.css" text="Get Overdue Document" GridPane.columnIndex="2" />
                     </children>
                 </GridPane>
             </bottom>

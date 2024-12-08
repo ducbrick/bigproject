@@ -17,7 +17,7 @@
 
 <SplitPane fx:id="root" dividerPositions="0.0645412130637636" prefHeight="720.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.AddNewDocController">
    <items>
-        <fx:include source="MenuBar.fxml" />
+        <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <VBox alignment="CENTER" prefHeight="65.0" prefWidth="1082.0" BorderPane.alignment="CENTER">

@@ -51,22 +51,22 @@
 }
 
 
-#red-button {
+#overdue-red-button {
     -fx-background-color: CRIMSON;
     -fx-opacity: 1;
 }
 
-#red-button:hover {
+#overdue-red-button:hover {
     -fx-background-color: #850101;
     -fx-opacity: 0.9;
 }
 
-#redder-button {
+#all-doc-redder-button {
     -fx-background-color: #850101;
     -fx-opacity: 0.9;
 }
 
-#redder-button:hover {
+#all-doc-redder-button:hover {
     -fx-background-color: CRIMSON;
     -fx-opacity: 1;
 }
