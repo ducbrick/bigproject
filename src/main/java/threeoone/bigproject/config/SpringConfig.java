@@ -490,15 +490,6 @@ public class SpringConfig {
     return new RequestSender<>();
   }
 
-  /**
-   * Creates a bean for RequestSender that switches to your book page.
-   *
-   * @return an instance of RequestSender for switching to your book page.
-   */
-  @Bean
-  public RequestSender<ViewController> switchToYourBooks() {
-    return new RequestSender<>();
-  }
 
   /**
    * Creates a bean for RequestSender that switches to the lending detail view.

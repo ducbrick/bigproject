@@ -98,7 +98,7 @@ public class ScanQrController implements ViewController {
   @FXML
   private void pressGetISBN(ActionEvent event) {
     try {
-      BufferedImage bf = null;
+      BufferedImage bf;
       bf = ImageIO.read(new FileInputStream(imagePath));
       BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(
               new BufferedImageLuminanceSource(bf)));
@@ -146,7 +146,10 @@ public class ScanQrController implements ViewController {
 
   @FXML
   private void pressGetFromServer(ActionEvent event) {
-    getQRImageFromServer.send(this);
+    Thread thread = new Thread(() -> {
+      getQRImageFromServer.send(this);
+    });
+    thread.start();
   }
 
   /**

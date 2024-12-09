@@ -110,16 +110,6 @@ public class EditDocumentController implements ViewController {
   }
 
   /**
-   * Method handled press Return button. Return to Doc Overview page
-   *
-   * @param event event trigger button
-   */
-  @FXML
-  private void pressReturn(ActionEvent event) {
-    switchToDocOverview.send(null);
-  }
-
-  /**
    * Method handles press Reset button. Set all info turn back default
    *
    * @param event event trigger button

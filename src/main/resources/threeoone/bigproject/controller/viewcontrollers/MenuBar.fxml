@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
@@ -12,7 +13,7 @@
             <Insets top="150.0" />
          </VBox.margin>
          <graphic>
-            <FontIcon iconLiteral="antf-home" wrappingWidth="24.799928665161133" />
+            <FontIcon iconLiteral="antf-home" wrappingWidth="11.999940872192383" />
          </graphic>
       </Button>
       <Button fx:id="AddBook" mnemonicParsing="false" onAction="#toAddBook" onMouseClicked="#toAddBook" prefHeight="54.0" prefWidth="90.0" styleClass="normal-button" text="Add Book">
@@ -20,12 +21,12 @@
             <Insets />
          </VBox.margin>
          <graphic>
-            <FontIcon iconLiteral="antf-book" wrappingWidth="15.200011253356934" />
+            <FontIcon iconLiteral="antf-file-add" wrappingWidth="9.0" />
          </graphic>
       </Button>
       <Button fx:id="DocOverview" mnemonicParsing="false" onAction="#toDocOverview" onMouseClicked="#toDocOverview" prefHeight="54.0" prefWidth="88.0" styleClass="normal-button" text="Browse books">
          <graphic>
-            <FontIcon iconLiteral="antf-file-add" wrappingWidth="12.000000476837158" />
+            <FontIcon iconLiteral="antf-book" wrappingWidth="12.000000476837158" />
          </graphic></Button>
       <Button fx:id="AddMember" mnemonicParsing="false" onAction="#toAddMember" prefHeight="58.0" prefWidth="92.0" styleClass="normal-button" text="Add Member">
          <graphic>
@@ -33,8 +34,12 @@
          </graphic></Button>
       <Button fx:id="MemList" mnemonicParsing="false" onAction="#toMemberList" onMouseClicked="#toMemberList" prefHeight="56.0" prefWidth="89.0" styleClass="normal-button" text="Browse Members">
          <graphic>
-            <FontIcon iconLiteral="unil-users-alt" wrappingWidth="5.599974989891052" />
+            <FontIcon iconLiteral="unil-users-alt" wrappingWidth="14.399962782859802" />
          </graphic></Button>
-      <Button mnemonicParsing="false" onAction="#pressLogout" prefHeight="52.0" prefWidth="90.0" styleClass="normal-button" text="Log out" />
+      <Region prefHeight="240.0" prefWidth="86.0" VBox.vgrow="ALWAYS" />
+      <Button mnemonicParsing="false" onAction="#pressLogout" prefHeight="52.0" prefWidth="90.0" styleClass="normal-button" text="Log out">
+         <graphic>
+            <FontIcon iconLiteral="anto-poweroff" wrappingWidth="12.0" />
+         </graphic></Button>
    </children>
 </VBox>

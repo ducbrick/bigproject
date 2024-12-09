@@ -13,7 +13,7 @@
 
 <SplitPane fx:id="root" dividerPositions="0.070260347129506" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" stylesheets="@CSS/general.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.MemberListController">
   <items>
-      <fx:include source="MenuBar.fxml" />
+      <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <VBox alignment="CENTER" prefHeight="127.0" prefWidth="968.0" BorderPane.alignment="CENTER">
@@ -48,9 +48,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#pressReturn" styleClass="normal-button" text="Return" />
-                  <Button id="green-button" mnemonicParsing="false" onAction="#pressAdd" styleClass="normal-button" text="Add new member" GridPane.columnIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#pressGetOverdue" text="Members With Overdue Document" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#pressAdd" styleClass="green-button" text="Add new member" GridPane.columnIndex="2" />
+                  <Button id="edit" fx:id="overdueButton" mnemonicParsing="false" onAction="#pressGetOverdue" styleClass="normal-button" text="Members With Overdue Documents" />
                </children>
             </GridPane>
          </bottom>
