@@ -11,13 +11,23 @@ Instructors:
 - TS. Võ Đình Hiếu
 - CN. Vũ Trọng Thanh
 
+# Table of Contents
+1. [Overview](#Overview)
+2. [Prerequisite](#Prerequisite)
+3. [Installing](#Installing)
+4. [Configuring](#Configuring)
+	1. [Accessing application configuration file](<#Accessing application configuration file>)
+	2. [Configure your database](<#Configure your database>)
+	3. [Install JDK 21](<#Install JDK 21>)
+5. [Run the application](<#Run the application>)
+
 # Overview
 
 This repository contains the source code and necessary resources/instructions to build, run and use a library management application.
 
 The application is intended to be a simple and efficient application to aid librarians in managing books, members, and library transactions. It streamlines tasks like tracking inventory, handling checkouts and returns, and maintaining members records. 
 
-The rest of this page will guide you through the process of installing and configuring the application.
+The rest of this page will guide you through the process of installing and configuring the application. For this project documentation, refer to [this page](README-documentation.md)
 
 # Prerequisite
 
