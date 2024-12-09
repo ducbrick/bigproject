@@ -36,7 +36,7 @@ class LendingDetailRepoTest {
     User user = new User();
     user.setUsername("name");
     user.setPassword("skibidi");
-    user.setEmail("skibidi@rizzler.mog");
+    user.setEmail("skjdfkas@rizzler.mog");
 
     LendingDetail lendingDetail = new LendingDetail();
     lendingDetail.setLendTime(LocalDateTime.now());
