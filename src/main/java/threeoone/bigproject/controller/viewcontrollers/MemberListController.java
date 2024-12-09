@@ -223,6 +223,7 @@ MemberListController implements ViewController {
    */
   @Override
   public void show() {
+    overdueButton.setText("Members With Overdue Document");
     getOverdueMember.send(null);
     getAllMembersRequestSender.send(null);
     setTable(allMembers);

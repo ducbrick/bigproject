@@ -241,12 +241,12 @@ public class DocOverviewController implements ViewController {
   private void pressGetOverdue() {
     if (table.getItems() == overdueDocuments) {
       overdueButton.setId("all-doc-redder-button");
-      overdueButton.setText("Get Overdue Document");
+      overdueButton.setText("Get Overdue Documents");
       setTable(allDocuments);
 
     } else {
       overdueButton.setId("overdue-red-button");
-      overdueButton.setText("Get All Document");
+      overdueButton.setText("Get All Documents");
       setTable(overdueDocuments);
     }
   }
@@ -276,6 +276,8 @@ public class DocOverviewController implements ViewController {
    */
   @Override
   public void show() {
+    overdueButton.setId("all-doc-redder-button");
+    overdueButton.setText("Get Overdue Documents");
     getListOfOverdueDoc.send(null);
     getListAllDocumentRequestSender.send(null);
     setTable(allDocuments);
