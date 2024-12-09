@@ -49,3 +49,24 @@
 .menu-item {
     -fx-font-size: 5px; /* Smaller font size for context menu items */
 }
+
+
+#overdue-red-button {
+    -fx-background-color: CRIMSON;
+    -fx-opacity: 1;
+}
+
+#overdue-red-button:hover {
+    -fx-background-color: #850101;
+    -fx-opacity: 0.9;
+}
+
+#all-doc-redder-button {
+    -fx-background-color: #850101;
+    -fx-opacity: 0.9;
+}
+
+#all-doc-redder-button:hover {
+    -fx-background-color: CRIMSON;
+    -fx-opacity: 1;
+}

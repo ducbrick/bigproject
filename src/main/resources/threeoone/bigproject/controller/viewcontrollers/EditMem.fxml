@@ -13,7 +13,7 @@
 
 <SplitPane fx:id="root" dividerPositions="0.06942590120160214" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" styleClass="background" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="threeoone.bigproject.controller.viewcontrollers.EditMemController">
   <items>
-      <fx:include source="MenuBar.fxml" />
+      <fx:include minWidth="89.0" source="MenuBar.fxml" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <top>
             <GridPane prefHeight="136.0" prefWidth="991.0" BorderPane.alignment="CENTER">
@@ -41,9 +41,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" onAction="#pressReturn" prefHeight="52.0" prefWidth="83.0" text="Return" />
-                  <Button mnemonicParsing="false" onAction="#pressSubmit" prefHeight="49.0" prefWidth="71.0" styleClass="green-button" text="Submit" GridPane.columnIndex="2" />
-                  <Button fx:id="resetButton" mnemonicParsing="false" onAction="#fulFillInfo" prefHeight="42.0" prefWidth="65.0" styleClass="red-button" text="Reset" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#pressSubmit" prefHeight="49.0" prefWidth="71.0" styleClass="green-button" text="Submit" GridPane.columnIndex="1" />
+                  <Button fx:id="resetButton" mnemonicParsing="false" onAction="#fulFillInfo" prefHeight="42.0" prefWidth="65.0" styleClass="red-button" text="Reset" />
                </children>
             </GridPane>
          </bottom>

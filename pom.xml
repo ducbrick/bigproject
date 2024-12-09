@@ -216,6 +216,8 @@
                         <version>1.18.34</version>
                     </path>
                 </annotationProcessorPaths>
+                    <source>21</source>
+                    <release>21</release>
                 </configuration>
             </plugin>
         </plugins>

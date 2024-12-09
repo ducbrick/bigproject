@@ -31,7 +31,6 @@ public class SwitchViewController {
 
   private final DocOverviewController docOverviewController;
   private final DocumentDetailController documentDetailController;
-  private final YourBooksController yourBooksController;
   private final AddNewDocController addNewDocController;
   private final EditDocumentController editDocumentController;
 
@@ -58,7 +57,6 @@ public class SwitchViewController {
    * @param switchToMemList       RequestSender for switching to member list scene.
    * @param switchToEditMem       RequestSender for switching to edit member scene.
    * @param switchToAddMem        RequestSender for switching to add new member scene.
-   * @param switchToYourBooks     RequestSender for switching to your books scene.
    * @param switchToLendingDetail RequestSender for switching to lending detail scene.
    */
   @Autowired
@@ -79,7 +77,6 @@ public class SwitchViewController {
           RequestSender<ViewController> switchToEditMem,
           RequestSender<ViewController> switchToAddMem,
 
-          RequestSender<ViewController> switchToYourBooks,
           RequestSender<ViewController> switchToLendingDetail,
 
           RequestSender<ViewController> switchToScanQR
@@ -94,7 +91,6 @@ public class SwitchViewController {
     switchToMemList.registerReceiver(this::switchToMemList);
     switchToEditMem.registerReceiver(this::switchToEditMem);
     switchToAddMem.registerReceiver(this::switchToAddMem);
-    switchToYourBooks.registerReceiver(this::switchToYourBooks);
     switchToLendingDetail.registerReceiver(this::switchToLendingDetail);
     switchToMemberDetails.registerReceiver(this::switchToMemberDetails);
     switchToPDFReader.registerReceiver(this::switchToPDFReader);
@@ -136,15 +132,6 @@ public class SwitchViewController {
    */
   private void switchToLogin(ViewController from) {
     viewSwitcher.switchToView(loginController);
-  }
-
-  /**
-   * Switches to the your books view.
-   *
-   * @param from the current view controller.
-   */
-  private void switchToYourBooks(ViewController from) {
-    viewSwitcher.switchToView(yourBooksController);
   }
 
   /**

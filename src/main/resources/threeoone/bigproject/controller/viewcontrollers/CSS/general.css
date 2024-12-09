@@ -60,7 +60,6 @@
 }
 .table .column-header {
     -fx-background-color: #B9E5E8;
-
 }
 
 .list {
@@ -84,6 +83,7 @@
     -fx-opacity: 1;
 }
 
+
 #green-button {
     -fx-background-color: #009900;
 }
@@ -94,7 +94,7 @@
     -fx-border-color: #000000;
 }
 .green-button:hover {
-    -fx-background-color: #006400;
+    -fx-background-color: #007000;
     -fx-underline:true;
     -fx-cursor: hand;
 }
@@ -116,7 +116,7 @@
 }
 
 #header {
-    -fx-font-family: 'Montserrat';
+    -fx-font-family: 'Times New Roman';
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
@@ -131,4 +131,8 @@
     -fx-border-color: #2C5A77;
     -fx-background-radius: 2px;
     -fx-border-radius: 2px;
+}
+
+#edit:hover {
+    -fx-background-color: #C76E00;
 }

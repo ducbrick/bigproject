@@ -13,7 +13,7 @@
 #title {
     -fx-font-size: 30;
     -fx-font-weight: bold;
-    -fx-font-family: Georgia,"Palatino Linotype","Book Antiqua",Palatino,serif;
+    -fx-font-family: 'Times New Roman'
     -fx-wrap-text: true;
 }
 
