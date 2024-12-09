@@ -16,10 +16,10 @@ Instructors:
 2. [Prerequisite](#Prerequisite)
 3. [Installing](#Installing)
 4. [Configuring](#Configuring)
-	1. [Accessing application configuration file](<#Accessing application configuration file>)
-	2. [Configure your database](<#Configure your database>)
-	3. [Install JDK 21](<#Install JDK 21>)
-5. [Run the application](<#Run the application>)
+	1. [Accessing application configuration file](#accessing-application-configuration-file)
+	2. [Configure your database](#configure-your-database)
+	3. [Install JDK 21](#install-jdk-21)
+5. [Run the application](#run-the-application)
 
 # Overview
 

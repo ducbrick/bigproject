@@ -1,5 +1,18 @@
 This page contains the documentation about this project's source code, API, principles and architecture
 
+# Table of Contents
+
+1. [Tech stack](#tech-stack)
+2. [Architecture](#Architecture)
+	1. [High level architecture](#high-level-architecture)
+		1. [Data Access Layer](#data-access-layer)
+		2. [Service Layer](#service-layer)
+		3. [Presentation Layer](#presentation-layer)
+	2. [Presentation Layer in details](#presentation-layer-in-details)
+		1. [ViewController](#ViewController)
+		2. [RequestSender](#RequestSender)
+		3. [Controller](#Controller)
+
 # Tech stack
 
 This project makes use of the following dependencies as its main tech stack:
@@ -40,14 +53,14 @@ The Presentation Layer is the topmost layer, responsible for interacting with th
 
 The presentation layer is modeled after the Front Controller and MVC pattern. Specifically, the layer is sub-divided into the following components:
 
-### `ViewController`
+### ViewController
 
 Each `ViewController` and its associated `fxml` file, makes up a page of the application, in which the `ViewController` is responsible for handling the internal logic of the page. The `ViewController` displays data provided by other components, and communicates with other components in a form of "requests".
 
-### `RequestSender` 
+### RequestSender 
 
 The component that encapsulates the layer's "requests". Each `RequestSender` denotes a single type of request, with a specific set of arguments. A `RequestSender` is responsible for forwarding any request it received to the receiving components.
 
-### `Controller`
+### Controller
 
 Acts as the intermediary between other components. Each `Controller` is responsible for receiving and handling requests, retrieving from and delegating to Services, and managing `ViewController`.
