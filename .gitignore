@@ -34,5 +34,5 @@ build/
 .codiumai
 /src/main/resources/Document
 /.secret
-/out
 /.obsidian
+/out
