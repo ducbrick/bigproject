@@ -175,6 +175,7 @@ public class AddNewDocController implements ViewController {
     Set<ConstraintViolation<Document>> violations = validator.validate(document);
 
     if(violations.isEmpty()) {
+      coverPhotoPath = defaultCoverPhotoPath;
       addDocumentRequestSender.send(document);
     } else {
       Alerts.showAlertWarning("Error!", violations.iterator().next().getMessage());

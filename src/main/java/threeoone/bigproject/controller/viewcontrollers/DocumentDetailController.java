@@ -25,8 +25,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * TODO: if book is not borrowed, presents a borrow button
- * TODO: return button to the last view (e.g. if accessing book details from "your books", return to "your books")
  * This controller manages the "Document detail" view.
  * This view presents the information of a book, currently including:
  *      The cover of the book (if it exists)
@@ -176,7 +174,7 @@ public class DocumentDetailController implements ViewController {
 
     /**
      * show the selected document
-     * TODO: show default "loading" when document info is not loaded
+     *
      */
     @Override
     public void show() {
