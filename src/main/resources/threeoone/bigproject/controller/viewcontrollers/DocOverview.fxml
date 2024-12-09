@@ -17,7 +17,7 @@
     <items>
         <VBox maxWidth="89.0" minWidth="89.0" prefHeight="200.0" prefWidth="89.0">
             <children>
-                <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" />
+                <fx:include maxWidth="89.0" minWidth="89.0" prefWidth="89.0" source="MenuBar.fxml" VBox.vgrow="ALWAYS" />
             </children>
         </VBox>
         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -38,7 +38,7 @@
                 </GridPane>
             </bottom>
             <top>
-                <VBox fx:id="searchHolder" alignment="CENTER" prefHeight="70.0" prefWidth="1112.0">
+                <VBox alignment="CENTER" prefHeight="70.0" prefWidth="1112.0">
                     <children>
                         <Label id="header" prefHeight="46.0" prefWidth="291.0" styleClass="label" text="Document Overview">
                             <font>

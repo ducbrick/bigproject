@@ -37,6 +37,9 @@
             <FontIcon iconLiteral="unil-users-alt" wrappingWidth="14.399962782859802" />
          </graphic></Button>
       <Region prefHeight="240.0" prefWidth="86.0" VBox.vgrow="ALWAYS" />
-      <Button mnemonicParsing="false" onAction="#pressLogout" prefHeight="52.0" prefWidth="90.0" styleClass="normal-button" text="Log out" />
+      <Button mnemonicParsing="false" onAction="#pressLogout" prefHeight="52.0" prefWidth="90.0" styleClass="normal-button" text="Log out">
+         <graphic>
+            <FontIcon iconLiteral="anto-poweroff" wrappingWidth="12.0" />
+         </graphic></Button>
    </children>
 </VBox>

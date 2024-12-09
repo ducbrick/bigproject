@@ -38,8 +38,8 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="823.2000549316405" minWidth="10.0" prefWidth="588.0000244140625" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints maxHeight="695.199951171875" minHeight="10.0" prefHeight="217.59999389648436" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="216.00000610351566" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="695.199951171875" minHeight="10.0" prefHeight="242.2" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="191.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="462.4" minHeight="10.0" prefHeight="287.19999999999993" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
@@ -90,7 +90,7 @@
                         <Insets left="30.0" right="30.0" />
                      </GridPane.margin>
                   </VBox>
-                  <VBox prefHeight="204.0" prefWidth="446.0" styleClass="pane" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <VBox prefHeight="204.0" prefWidth="523.0" styleClass="pane" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <Label prefHeight="37.0" prefWidth="478.0" text="New users">
                            <font>
@@ -100,7 +100,7 @@
                               <Insets left="5.0" />
                            </padding>
                         </Label>
-                        <TableView fx:id="MemberList" prefHeight="95.0" prefWidth="517.0" styleClass="table" VBox.vgrow="ALWAYS">
+                        <TableView fx:id="MemberList" prefHeight="157.0" prefWidth="517.0" styleClass="table" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="MemberID" prefWidth="43.99999779462814" text="ID" />
                             <TableColumn fx:id="MemberName" prefWidth="163.20003128051758" text="Member Name" />
