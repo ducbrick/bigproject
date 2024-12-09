@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,39 @@ class DocumentRepoTest {
   @Autowired
   private UserRepo userRepo;
 
+  private final String s = "qwertyuiopasdfghjklzxcvbnm";
+  private final Random rand = new Random();
+
   @Test
   @DisplayName("Test compile & runtime")
   public void testCompile() {
     documentRepo.count();
+  }
+
+  private String randomString() {
+    StringBuilder builder = new StringBuilder();
+
+    for (int i = 1; i <= 6; i++) {
+      builder.append(s.charAt(rand.nextInt(s.length())));
+    }
+
+    return builder.toString();
+  }
+
+  private User newUser() {
+    User user = new User();
+    user.setUsername(randomString());
+    user.setPassword(randomString());
+    user.setEmail(randomString() + "@" + randomString() + ".com");
+    return user;
+  }
+
+  private Document newDocument() {
+    Document document = new Document();
+    document.setName(randomString());
+    document.setCopies(rand.nextInt(1, 10));
+    document.setAuthor(randomString());
+    return document;
   }
 
   @Test
@@ -41,8 +71,9 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert into database")
   public void insertIntoDatabase() {
-    User user = new User("name", "password");
-    Document document = new Document("name", "description", 1);
+    User user = newUser();
+
+    Document document = newDocument();
     user.addUploadedDocument(document);
 
     long countBefore = documentRepo.count();
@@ -51,14 +82,14 @@ class DocumentRepoTest {
 
     assertThat(documentRepo.count()).isEqualTo(countBefore + 1);
 
-    Document anotherDoc = new Document("another name", "same description", 1);
+    Document anotherDoc = newDocument();
     user.addUploadedDocument(anotherDoc);
 
     documentRepo.save(anotherDoc);
 
     assertThat(documentRepo.count()).isEqualTo(countBefore + 2);
 
-    document.setName("old name");
+    document.setName(document.getName());
 
     documentRepo.save(document);
 
@@ -68,10 +99,11 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with the same uploader")
   public void insertDocumentsWithSameAuthor() {
-    User user = new User("name", "password");
-    Document docA = new Document("name a", "description a", 1);
-    Document docB = new Document("name b", "description b", 1);
-    Document docC = new Document("name c", "description c", 1);
+    User user = newUser();
+
+    Document docA = newDocument();
+    Document docB = newDocument();
+    Document docC = newDocument();
 
     user.addUploadedDocument(docA);
     user.addUploadedDocument(docB);
@@ -90,11 +122,11 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Insert documents with different uploaders")
   public void insertDocumentsWithDifferentAuthors() {
-    User userA = new User("name a", "password");
-    User userB = new User("name b", "password");
+    User userA = newUser();
+    User userB = newUser();
 
-    Document docA = new Document("name a", "description a", 1);
-    Document docB = new Document("name b", "description b", 1);
+    Document docA = newDocument();
+    Document docB = newDocument();
 
     userA.addUploadedDocument(docA);
     userB.addUploadedDocument(docB);
@@ -108,8 +140,8 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Cascade insert document and uploader")
   public void cascadeInsert() {
-    User user = new User("name", "password");
-    Document document = new Document("name", "desc", 1);
+    User user = newUser();
+    Document document = newDocument();
     user.addUploadedDocument(document);
 
     long countBefore = userRepo.count();
@@ -124,9 +156,10 @@ class DocumentRepoTest {
   @Test
   @DisplayName("Retrieve a Document with no lending copies")
   public void documentWithNoLending() {
-    User user = new User("ahihi", "password");
+    User user = newUser();
 
-    Document document = new Document("name");
+    Document document = newDocument();
+
     user.addUploadedDocument(document);
 
     document = documentRepo.save(document);
@@ -152,18 +185,24 @@ class DocumentRepoTest {
     memB.setAddress("an address");
     memB.setEmail("abc@xyz.com");
 
-    User user = new User("name", "password");
+    User user = newUser();
 
-    Document document = new Document("name");
+    Document document = newDocument();
+
     user.addUploadedDocument(document);
 
-    LendingDetail detailA = new LendingDetail(LocalDateTime.now());
-    LendingDetail detailB = new LendingDetail(LocalDateTime.now());
+    LendingDetail detailA = new LendingDetail();
+    detailA.setLendTime(LocalDateTime.now());
+    detailA.setDueTime(LocalDateTime.now());
+
+    LendingDetail detailB = new LendingDetail();
+    detailB.setLendTime(LocalDateTime.now());
+    detailB.setDueTime(LocalDateTime.now());
 
     memA.lendDocument(detailA);
     memB.lendDocument(detailB);
 
-    document.lendDocument(detailA);
+    document.lendDocument(detailA); 
     document.lendDocument(detailB);
 
     document = documentRepo.save(document);

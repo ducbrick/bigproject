@@ -23,41 +23,24 @@ class PasswordResetTokenRepoTest {
   PasswordResetTokenRepo passwordResetTokenRepo;
 
   @Test
-  void test() {
-    User user = new User();
-    user.setUsername("skibidi");
-    user.setPassword("rizz");
-    user.setEmail("skibidi@rizzler.mog");
-
-    user = userRepo.save(user);
-
-    var token = new PasswordResetToken();
-    token.setValue("skdjfasdfjksldfasd");
-    token.setExpireTime(LocalDateTime.now());
-    token.setUser(user);
-
-    token = passwordResetTokenRepo.save(token);
-  }
-
-  @Test
   @DisplayName("Delete tokens associated to a user")
   void deleteTokensAssociatedToAUser() {
     User user = new User();
-    user.setUsername("skibidi");
-    user.setPassword("rizz");
-    user.setEmail("skibidi@rizzler.mog");
+    user.setUsername("dsifajks");
+    user.setPassword("sdlkfjsd");
+    user.setEmail("sadjfaklfds@rizzler.mog");
 
     user = userRepo.save(user);
 
     var token1 = new PasswordResetToken();
-    token1.setValue("skdjfakjsdfskdjf");
+    token1.setValue("skldfkja");
     token1.setExpireTime(LocalDateTime.now());
     token1.setUser(user);
 
     token1 = passwordResetTokenRepo.save(token1);
 
     var token2 = new PasswordResetToken();
-    token2.setValue("sdjauasjdsdkjfak");
+    token2.setValue("sadjfasdlkfj");
     token2.setExpireTime(LocalDateTime.now());
     token2.setUser(user);
 
@@ -73,28 +56,28 @@ class PasswordResetTokenRepoTest {
   @DisplayName("Retrieve token by its value")
   void findByValue() {
     User user = new User();
-    user.setUsername("skibidi");
-    user.setPassword("rizz");
-    user.setEmail("skibidi@rizzler.mog");
+    user.setUsername("sdafjklsdf");
+    user.setPassword("ijsdafksa");
+    user.setEmail("sdjfklsadf@rizzler.mog");
 
     user = userRepo.save(user);
 
     var token1 = new PasswordResetToken();
-    token1.setValue("skdjfakjsdfskdjf");
+    token1.setValue("klsjdafsdfk");
     token1.setExpireTime(LocalDateTime.now());
     token1.setUser(user);
 
     token1 = passwordResetTokenRepo.save(token1);
 
     var token2 = new PasswordResetToken();
-    token2.setValue("sdjauasjdsdkjfak");
+    token2.setValue("ksdafjakfsd");
     token2.setExpireTime(LocalDateTime.now());
     token2.setUser(user);
 
     token2 = passwordResetTokenRepo.save(token2);
 
     var token3 = new PasswordResetToken();
-    token3.setValue("slkdfasdkljfadk");
+    token3.setValue("lksdjkalsdfj");
     token3.setExpireTime(LocalDateTime.now());
     token3.setUser(user);
 

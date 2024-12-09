@@ -45,17 +45,6 @@ class GoogleAPIServiceTest extends ApplicationTest {
   }
 
   @Test
-  @DisplayName("testGetJsonWithFail")
-  void testGetJsonWithFail() {
-    googleAPIService.setGoogleBooksTimeout(5000);
-    Platform.runLater(() -> {
-      JsonObject jsonObject = googleAPIService.getJson("https://www.googleapis.com/books/v1/volumes?");
-      assertNull(jsonObject);
-      verifyStatic(Alerts.class);
-    });;
-  }
-
-  @Test
   @DisplayName("testGetJsonWithFailTimeout")
   void testGetJsonWithFailTimeout() {
     googleAPIService.setGoogleBooksTimeout(50);

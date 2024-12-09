@@ -36,7 +36,7 @@ public class PasswordResetLinkSenderService {
   private final PasswordResetTokenRepo tokenRepo;
   private final RandomStringGenerator randomStringGeneratorService;
 
-  @Value("${server.url}")
+  @Value("${api.url}")
   private String serverUrl;
 
   @Value("${api.resetpassword.endpoint}")
