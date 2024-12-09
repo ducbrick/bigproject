@@ -1,5 +1,7 @@
 package threeoone.bigproject.controller.controllers;
 
+import javafx.application.Platform;
+import javafx.scene.image.Image;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +45,8 @@ public class ActionOnQRController {
    */
   private void getQRImageFromServer(ViewController viewController) {
     try {
-      scanQrController.setQrImage(qrImageService.getNewestQrImage());
+      Image image = qrImageService.getNewestQrImage();
+      Platform.runLater(() -> scanQrController.setQrImage(image));
     } catch (Exception e) {
       Alerts.showAlertWarning("Error!", e.getMessage());
       logger.error(e.getMessage());

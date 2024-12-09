@@ -119,6 +119,6 @@ public class LoginController implements ViewController {
    */
   @Override
   public void show() {
-
+    passwordField.setText(null);
   }
 }

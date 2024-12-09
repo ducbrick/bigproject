@@ -2,6 +2,7 @@ package threeoone.bigproject.controller.viewcontrollers;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,8 @@ import threeoone.bigproject.controller.SceneName;
 import threeoone.bigproject.entities.Document;
 import threeoone.bigproject.entities.User;
 import threeoone.bigproject.util.MenuItemFactory;
+
+import java.util.List;
 
 /**
  * Controller class for the Document Overview scene.
@@ -40,7 +43,7 @@ public class DocOverviewController implements ViewController {
   private final RequestSender<ViewController> switchToMainMenu;
   private final RequestSender<ViewController> switchToAddNewDoc;
   private final RequestSender<ViewController> switchToLendingDetail;
-  private final  RequestSender<ViewController> switchToPDFReader;
+  private final RequestSender<ViewController> switchToPDFReader;
 
   private final RequestSender<Document> documentDetailRequestSender;
   private final RequestSender<Document> editDocumentRequestSender;
@@ -70,8 +73,17 @@ public class DocOverviewController implements ViewController {
   @FXML
   private TableView<Document> table;
 
+  @FXML
+  private Button overdueButton;
+
   @Setter
   private Document chosenDoc;
+
+  @Setter
+  private ObservableList<Document> allDocuments;
+
+  @Setter
+  private ObservableList<Document> overdueDocuments;
 
 
   /**
@@ -90,10 +102,9 @@ public class DocOverviewController implements ViewController {
         @Override
         protected void updateItem(Document item, boolean empty) {
           super.updateItem(item, empty);
-          if(item != null && !empty) {
+          if (item != null && !empty) {
             setContextMenu(contextMenu);
-          }
-          else {
+          } else {
             setContextMenu(null);
           }
         }
@@ -138,7 +149,7 @@ public class DocOverviewController implements ViewController {
    * @param result the search result to be displayed
    */
   public void setResult(ObservableList<Document> result) {
-    table.getItems().clear();
+    //table.getItems().clear();
     table.getItems().addAll(result);
   }
 
@@ -152,7 +163,7 @@ public class DocOverviewController implements ViewController {
             "Open Confirmation", "Are you sure you want to open this document?",
             unused -> {
               openDocByPdfReaderRequestSender.send(chosenDoc);
-              if(chosenDoc != null) {
+              if (chosenDoc != null) {
                 switchToPDFReader.send(null);
               }
             });
@@ -172,7 +183,6 @@ public class DocOverviewController implements ViewController {
             });
   }
 
-
   /**
    * Creates a menu item for removing an item.
    * Displays a confirmation dialog when the menu item is selected.
@@ -185,7 +195,8 @@ public class DocOverviewController implements ViewController {
             "Are you sure you want to remove this document?",
             unused -> {
               removeDocumentRequestSender.send(chosenDoc);
-              getListAllDocumentRequestSender.send(null);
+              allDocuments.remove(chosenDoc);
+              overdueDocuments.remove(chosenDoc);
             });
   }
 
@@ -228,16 +239,16 @@ public class DocOverviewController implements ViewController {
 
   @FXML
   private void pressGetOverdue() {
-    getListOfOverdueDoc.send(null);
-  }
+    if (table.getItems() == overdueDocuments) {
+      overdueButton.setId("all-doc-redder-button");
+      overdueButton.setText("Get Overdue Document");
+      setTable(allDocuments);
 
-  /**
-   * Handles the event when the back button is pressed.
-   * Switches the scene to the menu view.
-   */
-  @FXML
-  private void pressBack() {
-    switchToMainMenu.send(this);
+    } else {
+      overdueButton.setId("overdue-red-button");
+      overdueButton.setText("Get All Document");
+      setTable(overdueDocuments);
+    }
   }
 
   /**
@@ -265,6 +276,8 @@ public class DocOverviewController implements ViewController {
    */
   @Override
   public void show() {
+    getListOfOverdueDoc.send(null);
     getListAllDocumentRequestSender.send(null);
+    setTable(allDocuments);
   }
 }
