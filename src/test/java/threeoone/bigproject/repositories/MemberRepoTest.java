@@ -147,13 +147,26 @@ class MemberRepoTest {
     member.setAddress("an address");
     member.setEmail("abc@xyz.com");
 
-    User user = new User("name", "password");
+    User user = new User();
+    user.setUsername("slkdfj");
+    user.setPassword("saldkfj");
+    user.setEmail("lskadf@sdfl.com");
 
-    Document docA = new Document("doc a");
-    Document docB = new Document("doc b");
+    Document docA = new Document();
+    docA.setName("lksjdf");
+    docA.setAuthor("slkfj");
 
-    LendingDetail detailA = new LendingDetail(LocalDateTime.now());
-    LendingDetail detailB = new LendingDetail(LocalDateTime.now());
+    Document docB = new Document();
+    docB.setName("lkjf");
+    docB.setAuthor("lksfaa");
+
+    LendingDetail detailA = new LendingDetail();
+    detailA.setDueTime(LocalDateTime.now());
+    detailA.setLendTime(LocalDateTime.now());
+
+    LendingDetail detailB = new LendingDetail();
+    detailB.setLendTime(LocalDateTime.now());
+    detailB.setDueTime(LocalDateTime.now());
 
     user.addUploadedDocument(docA);
     user.addUploadedDocument(docB);
