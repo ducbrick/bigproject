@@ -18,7 +18,9 @@ Instructors:
 4. [Configuring](#Configuring)
 	1. [Accessing application configuration file](#accessing-application-configuration-file)
 	2. [Configure your database](#configure-your-database)
-	3. [Install JDK 21](#install-jdk-21)
+	3. [Configure Google API key](#configure-google-api-key)
+	4. [Configure email API](#configure-email-api)
+	5. [Install JDK 21](#install-jdk-21)
 5. [Run the application](#run-the-application)
 
 # Overview
@@ -75,6 +77,47 @@ Finally, you need to provide your database url, username and password to the con
 spring.datasource.url = jdbc:postgresql://localhost:5432/postgres
 spring.datasource.username = postgres
 spring.datasource.password = 123456
+```
+
+## Configure Google API key
+
+To create your application's API key:
+
+1. Go to the [API Console](https://console.developers.google.com/).
+2. From the project list, select a project or create a new one (if you haven't had one yet)
+3. If the API & service page isn't already open, open the left side menu and select **APIs & services**.
+4. On the left, choose **Credentials**.
+5. Click **Create credentials** and then select **API key**.
+
+*Note after creating API key*: 
+You should make your API key restrict by following this step:
+
+1. Go to the [API Console](https://console.developers.google.com/).
+2. On the left, choose **Credentials**.
+3. In **API Keys** list, choose ellipsis icon to show context menu.
+4. In context menu pop-up,  choose **Edit API key**.
+5. Now you can set set an **application restriction** and **API restrictions**
+
+After you've obtained your API key, configure the property file accordingly, for example:
+
+```
+google.api.key = abcxyz
+```
+
+## Configure email API
+
+Follow the following instructions to set up your gmail API account:
+
+1. Access this [link](https://myaccount.google.com/signinoptions/twosv) and turn on 2-step verification if you haven't had one yet.
+2. In this page, scroll down then choose **App passwords** 
+3. Set **App name** then press **Create**
+4. A pop-up screen will appear with your app password
+
+Once you're done, edit the property file to use your gmail account and password, for example:
+
+```
+spring.mail.username = skibidi@gmail.com
+spring.mail.password = abcxyz
 ```
 
 ## Install JDK 21
